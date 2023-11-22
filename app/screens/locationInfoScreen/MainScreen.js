@@ -2,6 +2,7 @@ import React from 'react';
 import { ImageBackground, StyleSheet, Dimensions } from 'react-native';
 import Header from './Header';
 import BottomTabBar from './BottomTabBar';
+import InfoScreen from './InfoScreen';
 import { View } from 'react-native';
 
 
@@ -12,13 +13,14 @@ function MainScreen() {
     return (
         <View>
             <ImageBackground 
-                source={require('../../assets/negiriPerlisBackground.png')} // Update with the correct path to your image
+                source={require('../../assets/negiriPerlisBackground.png')} 
                 style={styles.backgroundImage}
                 resizeMode= "contain"
             >
                 <Header />
             </ImageBackground>
-            <BottomTabBar />
+            <InfoScreen />
+            {/* <BottomTabBar /> */}
         </View>
     );
 }

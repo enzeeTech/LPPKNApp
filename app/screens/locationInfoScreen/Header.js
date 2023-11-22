@@ -26,17 +26,17 @@ function Header() {
 
 const styles = StyleSheet.create({
     outerContainer: {
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 40, // adjusted for status bar
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 40, 
         backgroundColor: '#9448DA',
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
     },
     headerContainer: {
-        height: 68, // Ensures enough space for the content
+        height: 68, 
         flexDirection: 'row',
-        alignItems: 'center', // Centers content vertically
-        justifyContent: 'space-between', // Spaces out the back button, title, and settings icon
-        paddingHorizontal: 15, // Adds horizontal padding within the container
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        paddingHorizontal: 15, 
     },
     headerText: {
         color: '#F5F5F5',

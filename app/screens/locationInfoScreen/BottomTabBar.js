@@ -61,14 +61,14 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     // This container will ensure that the touchable area for the icons is large enough
-    // padding: 20, // Adjust padding as needed
+    // padding: 20, 
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
   sideIconContainer: {
     flexDirection: 'row',
-    width: '50%', // Adjust the width as necessary
+    width: '50%', 
     justifyContent: 'space-evenly',
   },
   icon: {
@@ -79,9 +79,9 @@ const styles = StyleSheet.create({
   },
   largeIcon: {
     padding: 20,
-    width: 60, // slightly larger to compensate for the more extended text
-    height: 80, // slightly larger
-    resizeMode: 'contain', // This will make sure the icon scales within the given dimensions
+    width: 60, 
+    height: 80, 
+    resizeMode: 'contain', 
   },
   centerButton: {
     backgroundColor: '#8A2BE2',
@@ -100,10 +100,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     resizeMode: 'contain',
-    borderRadius: 35, // If the button is circular
+    borderRadius: 35, 
     borderColor: 'white', 
     borderWidth: 3, 
-    overflow: 'hidden', // Keeps the image inside the circular border
+    overflow: 'hidden', 
     backgroundColor: 'white',
     marginBottom: 30,
   },

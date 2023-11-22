@@ -36,11 +36,11 @@ function InfoScreen(props) {
                 </View>
 
                 {/* Buttons */}
-                <TouchableOpacity style={styles.buttonOne}>
+                <TouchableOpacity style={styles.buttonOne} onPress={() => console.log('Lihat Peta Button Pressed!')}>
                     <Text style={styles.buttonTextOne}>Lihat Peta</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonTwo}>
+                <TouchableOpacity style={styles.buttonTwo} onPress={() => console.log('Hubungi Pejabat Button Pressed!')}>
                     <Text style={styles.buttonTextTwo}>Hubungi Pejabat</Text>
                 </TouchableOpacity>
             </View>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     buttonTwo: {
         backgroundColor: '#FFFFFF',
         padding: 15,
-        borderRadius: 5,
+        borderRadius: 10,
         alignItems: 'center',
         marginTop: 10,
         borderWidth: 1,

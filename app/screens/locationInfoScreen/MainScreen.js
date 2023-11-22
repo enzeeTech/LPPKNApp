@@ -12,19 +12,24 @@ const screenHeight = Dimensions.get('window').height;
 function MainScreen() {
     return (
         <View style={styles.container}>
+            {/* Creating header */}
             <View style={styles.headerContainer}>
                 <Header />
             </View>
+            {/* Creating image background */}
             <View style={styles.imageContainer}>
                 <ImageBackground 
                     source={require('../../assets/negiriPerlisBackground.png')} 
                     style={styles.backgroundImage}
-                    resizeMode="cover"
+                    resizeMode='stretch'
                 >
                 </ImageBackground>
             </View>
-            <InfoScreen />
-            {/* <BottomTabBar /> */}
+            {/* Creating Info Screen background */}
+            <View style={styles.infoContainer}>
+                <InfoScreen />
+            </View>
+            <BottomTabBar />
         </View>
     );
 }
@@ -37,18 +42,24 @@ const styles = StyleSheet.create({
     headerContainer: {
         position: 'absolute',
         width: '100%',
+        // height: '100%',
         zIndex: 10, 
     },
     imageContainer: {
         width: '100%', 
-        height: screenHeight / 4, 
+        height: screenHeight / 3.5, 
         marginTop: 95,
     },
     backgroundImage: {
         width: '100%', 
         height: '100%',
     },
-   
+   infoContainer: {
+        zIndex: 10,
+        width: '100%',
+        position: 'relative',
+        marginTop: -16,
+   }
 });
 
 export default MainScreen;

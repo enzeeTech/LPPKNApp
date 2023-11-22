@@ -36,6 +36,7 @@ function BottomTabBar(){
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#FFFFFF',
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -52,8 +53,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 5, height: 5 },
+    // shadowRadius: 10,
+    // shadowOffset: { width: 5, height: 5 },
     elevation: 10, // for Android shadow
     height: 60,
     // marginHorizontal: 10,

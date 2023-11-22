@@ -32,7 +32,7 @@ function InfoScreen(props) {
                 {/* Operating Hours */}
                 <View style={styles.infoContainer}>
                     <Image source={require('../../assets/timeIcon.png')} style={styles.icon} />
-                    <Text style={styles.infoText}>Isnin - Jumaat              8.00 pagi - 5.30 petang</Text>
+                    <Text style={styles.infoText}>Isnin - Jumaat                8.00 pagi - 5.30 petang</Text>
                 </View>
 
                 {/* Buttons */}
@@ -50,10 +50,13 @@ function InfoScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFFFFF',
-        padding: 10,
-        borderRadius: 5,
+        backgroundColor: 'transparent',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        // padding: 10,
+        // borderRadius: 5, 
         flexDirection: 'colummn',
+        marginTop: 0,
         //   flex: 1,
     },
     contentContainer: {
@@ -66,19 +69,22 @@ const styles = StyleSheet.create({
     titleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 20,
+        paddingTop: 10,
+        paddingLeft: 10,
         maxWidth: '80%',
     },
     infoContainerLocation: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 5,
+        paddingTop: 20,
+        paddingLeft: 5,
     },
     infoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         maxWidth: '60%', 
         paddingVertical: 5,
+        paddingLeft: 5,
     },
     
     doubleInfoContainer: {
@@ -111,6 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 26,
         fontWeight: 'bold',
         paddingBottom: 10,
+        paddingLeft: 10,
       },
     infoText: {
         flex: 1,
@@ -132,7 +139,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center', 
         width: 300, 
-        marginTop: 10,
+        marginTop: 30,
     },
     buttonTwo: {
         // backgroundColor: '#FFFFFF',

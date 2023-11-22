@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         justifyContent: 'space-between',
         paddingHorizontal: 15, 
+        paddingTop: 10,
     },
     headerText: {
         color: '#F5F5F5',
@@ -106,15 +107,15 @@ const styles = StyleSheet.create({
         textAlign: 'center', 
     },
     iconStyleBack: {
-        width: 45, 
-        height: 45, 
+        width: 25, 
+        height: 25, 
         resizeMode: 'contain',
     },
     iconStyleSetting: {
-        width: 45, 
-        height: 45, 
+        width: 25, 
+        height: 25, 
         resizeMode: 'contain',
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
     },
 });
 

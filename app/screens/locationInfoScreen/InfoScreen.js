@@ -12,27 +12,27 @@ function InfoScreen(props) {
                 </View>
 
                 {/* Address */}
-                <View style={styles.infoContainer}>
-                    <Image source={require('../../assets/locationPinIcon.png')} style={styles.icon} />
+                <View style={styles.infoContainerLocation}>
+                    <Image source={require('../../assets/locationPinIcon.png')} style={styles.iconLocation} />
                     <Text style={styles.infoText}>Tingkat 1, Bangunan Persekutuan Kangar, Persiaran Jubli Emas, 01000 Kangar, Perlis</Text>
                 </View>
 
-                {/* Phone */}
-                <View style={styles.infoContainer}>
-                    <Image source={require('../../assets/phoneIcon.png')} style={styles.icon} />
-                    <Text style={styles.infoText}>04-9762855</Text>
-                </View>
+                <View style={styles.doubleInfoContainer}>
+                    <View style={styles.infoContainer}>
+                        <Image source={require('../../assets/phoneIcon.png')} style={styles.icon} />
+                        <Text style={styles.infoText}>04-9762855</Text>
+                    </View>
 
-                {/* Fax */}
-                <View style={styles.infoContainer}>
-                    <Image source={require('../../assets/faxIcon.png')} style={styles.icon} />
-                    <Text style={styles.infoText}>04-9762855</Text>
+                    <View style={styles.infoContainer}>
+                        <Image source={require('../../assets/faxIcon.png')} style={styles.icon} />
+                        <Text style={styles.infoText}>04-9762855</Text>
+                    </View>
                 </View>
 
                 {/* Operating Hours */}
                 <View style={styles.infoContainer}>
                     <Image source={require('../../assets/timeIcon.png')} style={styles.icon} />
-                    <Text style={styles.infoText}>Isnin - Jumaat 8.00 pagi - 5.30 petang</Text>
+                    <Text style={styles.infoText}>Isnin - Jumaat              8.00 pagi - 5.30 petang</Text>
                 </View>
 
                 {/* Buttons */}
@@ -50,29 +50,55 @@ function InfoScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#FFFFFF',
-      padding: 10,
-      borderRadius: 5,
-      flexDirection: 'colummn',
-    //   flex: 1,
+        backgroundColor: '#FFFFFF',
+        padding: 10,
+        borderRadius: 5,
+        flexDirection: 'colummn',
+        //   flex: 1,
     },
     contentContainer: {
         padding: 10,
+        backgroundColor: '#FFF',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        marginTop: 0,
     },
     titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 20,
+        maxWidth: '80%',
+    },
+    infoContainerLocation: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 5,
     },
     infoContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingVertical: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        maxWidth: '60%', 
+        paddingVertical: 5,
+    },
+    
+    doubleInfoContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 5,
+        maxWidth: '85%',
     },
     icon: {
-      width: 20,
-      height: 20, 
-      marginRight: 10,
+        width: 25,
+        height: 25, 
+        marginRight: 10,
+        resizeMode: 'contain',
+    },
+    iconLocation: {
+        width: 25,
+        height: 30, 
+        marginRight: 10,
+        resizeMode: 'contain',
     },
     iconBuilding: {
         width: 40,
@@ -80,38 +106,57 @@ const styles = StyleSheet.create({
         marginRight: 10,
       },
     infoTextTitle: {
-        // flex: 1,
+        flex: 1,
         color: '#9448DA',
         fontSize: 26,
         fontWeight: 'bold',
-        paddingBottom: 5,
+        paddingBottom: 10,
       },
     infoText: {
-    //   flex: 1,
-      color: '#777777',
-      fontSize: 15,
-      paddingVertical: 5
+        flex: 1,
+        color: '#777777',
+        fontWeight: '600',
+        fontSize: 15,
+        paddingVertical: 5
     },
     buttonOne: {
-      backgroundColor: '#9448DA',
-      padding: 15,
-      borderRadius: 10,
-      alignItems: 'center',
-      marginTop: 10,
-    },
-    buttonTwo: {
-        backgroundColor: '#FFFFFF',
-        padding: 15,
+        // backgroundColor: '#9448DA',
+        // padding: 15,
+        // borderRadius: 10,
+        // alignItems: 'center',
+        // marginTop: 10,
+        backgroundColor: '#9448DA',
+        paddingVertical: 15, 
+        paddingHorizontal: 20, 
         borderRadius: 10,
         alignItems: 'center',
+        alignSelf: 'center', 
+        width: 300, 
         marginTop: 10,
+    },
+    buttonTwo: {
+        // backgroundColor: '#FFFFFF',
+        // padding: 15,
+        // borderRadius: 10,
+        // alignItems: 'center',
+        // marginTop: 10,
+        // borderWidth: 1,
+        // borderColor: '#9448DA',
+        backgroundColor: '#FFFFFF',
+        paddingVertical: 15, 
+        paddingHorizontal: 20, 
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: '#9448DA',
+        alignItems: 'center',
+        alignSelf: 'center', 
+        width: 300, 
+        marginTop: 10,
       },
     buttonTextOne: {
-      color: '#FFFFFF',
-      fontWeight: 'bold',
-      fontSize: 16,
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
     buttonTextTwo: {
         color: '#9448DA',

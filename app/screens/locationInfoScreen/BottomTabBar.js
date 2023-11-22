@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   iconContainer: {
-    // This container will ensure that the touchable area for the icons is large enough
     // padding: 20, 
     justifyContent: 'center',
     alignItems: 'center',

@@ -14,7 +14,9 @@ function InfoScreen(props) {
                 {/* Address */}
                 <View style={styles.infoContainerLocation}>
                     <Image source={require('../../assets/locationPinIcon.png')} style={styles.iconLocation} />
-                    <Text style={styles.infoText}>Tingkat 1, Bangunan Persekutuan Kangar, Persiaran Jubli Emas, 01000 Kangar, Perlis</Text>
+                    <View style={styles.textContainerLocation}>
+                        <Text style={styles.infoText}>Tingkat 1, Bangunan Persekutuan Kangar, Persiaran Jubli Emas, 01000 Kangar, Perlis</Text>
+                    </View>
                 </View>
 
                 <View style={styles.doubleInfoContainer}>
@@ -32,17 +34,24 @@ function InfoScreen(props) {
                 {/* Operating Hours */}
                 <View style={styles.infoContainer}>
                     <Image source={require('../../assets/timeIcon.png')} style={styles.icon} />
-                    <Text style={styles.infoText}>Isnin - Jumaat                8.00 pagi - 5.30 petang</Text>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.infoTextColumn}>Isnin - Jumaat</Text>
+                        <Text style={styles.infoTextColumn}>8.00 pagi - 5.30 petang</Text>
+                    </View>
                 </View>
 
                 {/* Buttons */}
-                <TouchableOpacity style={styles.buttonOne} onPress={() => console.log('Lihat Peta Button Pressed!')}>
-                    <Text style={styles.buttonTextOne}>Lihat Peta</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonContainer}>
+                    {/* Button Lihat Peta */}
+                    <TouchableOpacity style={styles.buttonOne} onPress={() => console.log('Lihat Peta Button Pressed!')}>
+                        <Text style={styles.buttonTextOne}>Lihat Peta</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonTwo} onPress={() => console.log('Hubungi Pejabat Button Pressed!')}>
-                    <Text style={styles.buttonTextTwo}>Hubungi Pejabat</Text>
-                </TouchableOpacity>
+                    {/* Button Hubungi Pejabat */}
+                    <TouchableOpacity style={styles.buttonTwo} onPress={() => console.log('Hubungi Pejabat Button Pressed!')}>
+                        <Text style={styles.buttonTextTwo}>Hubungi Pejabat</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -83,27 +92,37 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         maxWidth: '60%', 
-        paddingVertical: 5,
         paddingLeft: 5,
     },
-    
+    textContainer: {
+        flexDirection: 'column', 
+        paddingTop: 5,
+        height: 50, 
+    },
+    textContainerLocation: {
+        flex: 1,
+        height: 50, 
+        paddingTop: 5,
+    },
     doubleInfoContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 5,
+        paddingVertical: 7,
         maxWidth: '85%',
     },
     icon: {
         width: 25,
         height: 25, 
         marginRight: 10,
+        marginBottom: 15,
         resizeMode: 'contain',
     },
     iconLocation: {
         width: 25,
         height: 30, 
         marginRight: 10,
+        marginBottom: 15,
         resizeMode: 'contain',
     },
     iconBuilding: {
@@ -120,18 +139,25 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
       },
     infoText: {
-        flex: 1,
         color: '#777777',
         fontWeight: '600',
         fontSize: 15,
-        paddingVertical: 5
+        lineHeight: 15,
+        paddingLeft: 5,
+        marginBottom: 12,
+    },
+    infoTextColumn: {
+         color: '#777777',
+         fontWeight: '600',
+         fontSize: 15,
+         lineHeight: 15,
+         paddingLeft: 5,
+    },
+    buttonContainer: {
+        paddingTop: 20,
+        alignItems: 'center',
     },
     buttonOne: {
-        // backgroundColor: '#9448DA',
-        // padding: 15,
-        // borderRadius: 10,
-        // alignItems: 'center',
-        // marginTop: 10,
         backgroundColor: '#9448DA',
         paddingVertical: 15, 
         paddingHorizontal: 20, 
@@ -139,16 +165,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center', 
         width: 300, 
-        marginTop: 30,
     },
     buttonTwo: {
-        // backgroundColor: '#FFFFFF',
-        // padding: 15,
-        // borderRadius: 10,
-        // alignItems: 'center',
-        // marginTop: 10,
-        // borderWidth: 1,
-        // borderColor: '#9448DA',
         backgroundColor: '#FFFFFF',
         paddingVertical: 15, 
         paddingHorizontal: 20, 

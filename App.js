@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import MainScreen from './app/screens/locationInfoScreen/MainScreen';
+import LocationInfoScreen from './app/screens/locationInfoScreen/LocationInfoScreen';
 import { useFonts } from 'expo-font';
 
 export default function App() {
@@ -9,7 +9,7 @@ export default function App() {
   });
 
   return (
-    <MainScreen />
+    <LocationInfoScreen />
   );
 }
 

@@ -1,69 +1,88 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-
-const Tab = createBottomTabNavigator();
+import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 function BottomTabBar() {
+  const navigation = useNavigation();
+
+  const handleHomePress = () => {
+    navigation.navigate('HomeScreen');
+  };
+
+  const handleLocationPress = () => {
+    navigation.navigate('LocationInfoScreen');
+  };
+
+  const handleChatPress = () => {
+    navigation.navigate('ChatScreen');
+  };
+
+  const handleSupportPress = () => {
+    navigation.navigate('SupportScreen');
+  };
+
+  const handleFeedbackPress = () => {
+    navigation.navigate('FeedbackScreen');
+  };
+
   return (
-    <Tab.Navigator tabBarOptions={{ showLabel: false }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: () => (
+    <View style={styles.container}>
+      <View style={styles.navBar}>
+        {/* Left side Icons */}
+        <View style={styles.iconContainerHome}>
+          <TouchableOpacity onPress={handleHomePress}>
             <Image source={require('../../assets/utamaIcon.png')} style={styles.icon} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Location"
-        component={LocationScreen}
-        options={{
-          tabBarIcon: () => (
+          </TouchableOpacity>
+        </View>
+        <View style={styles.iconContainerLocation}>
+          <TouchableOpacity onPress={handleLocationPress}>
             <Image source={require('../../assets/lokasiIcon.png')} style={styles.icon} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="TanyaKasih"
-        component={TanyaKasihScreen}
-        options={{
-          tabBarIcon: () => (
-            <View style={styles.centerButtonContainer}>
-              <Image source={require('../../assets/tanyaKasihIcon.png')} style={styles.centerButton} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Perkhidmatan"
-        component={PerkhidmatanScreen}
-        options={{
-          tabBarIcon: () => (
+          </TouchableOpacity>
+        </View>
+
+        {/* Center Button */}
+        <TouchableOpacity
+          style={styles.centerButtonContainer}
+          onPress={handleChatPress}
+        >
+          <Image source={require('../../assets/tanyaKasihIcon.png')} style={styles.centerButton} />
+        </TouchableOpacity>
+
+        {/* Right side Icons */}
+        <View style={styles.iconContainerService}>
+          <TouchableOpacity onPress={handleSupportPress}>
             <Image source={require('../../assets/perkhidmatanIcon.png')} style={styles.serviceIcon} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Aduan"
-        component={AduanScreen}
-        options={{
-          tabBarIcon: () => (
+          </TouchableOpacity>
+        </View>
+        <View style={styles.iconContainerFeedback}>
+          <TouchableOpacity onPress={handleFeedbackPress}>
             <Image source={require('../../assets/aduanIcon.png')} style={styles.icon} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#FFFFFF',
+    position: 'absolute',
     justifyContent: 'center',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    elevation: 10,
+    height: 60,
+    flex: 1,
   },
   icon: {
     width: 40,
@@ -75,6 +94,12 @@ const styles = StyleSheet.create({
     height: 75,
     resizeMode: 'contain',
   },
+  iconContainerLocation: {
+    paddingRight: 10,
+  },
+  iconContainerHome: {
+    paddingRight: 20,
+  },
   centerButtonContainer: {
     width: 60,
     height: 60,
@@ -82,11 +107,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
     shadowOpacity: 0.5,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 0 },
     elevation: 10,
+    marginBottom: 40,
   },
   centerButton: {
     width: 70,
@@ -99,3 +124,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 });
+
+export default BottomTabBar;

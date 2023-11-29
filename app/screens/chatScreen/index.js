@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-function FeedbackScreen() {
+function ChatScreen() {
   return (
     <View style={styles.container}>
-      <Text>This is the Home Screen</Text>
+      <Text>This is the Chat Screen</Text>
       {/* You can add any placeholder content here */}
     </View>
   );
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FeedbackScreen;
+export default ChatScreen;

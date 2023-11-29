@@ -46,10 +46,6 @@ function LocationInfoScreen() {
             <View style={styles.infoContainer}>
                 <InfoScreen />
             </View>
-            <View style={styles.bottomBarContainer}>
-                {/* <BottomTabBar /> */}
-                <BottomNavBar />
-            </View>
         </SafeAreaView>
     );
 }

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -37,7 +37,8 @@ export default function App() {
     return (
       <TouchableOpacity
         style={{
-          top: -25,
+          top: -21,
+          top: Platform.OS === 'ios' ? -17 : -25,
           justifyContent: 'center',
           alignItems: 'center',
           ...styles.shadow
@@ -137,19 +138,15 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     position: 'absolute',
-    // bottom: 10,
-    // left: 10,
-    // right: 10,
     elevation: 10,
     backgroundColor: '#FFFF',
-    // borderRadius: 15,
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     height: Platform.OS === 'ios' ? 75 : 60,
-    // shadowOpacity: 0.05,
-    // shadowRadius: 10,
-    // shadowColor: '#000',
-    // shadowOffset: { height: 10, width: 10 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { height: '10%', width: 0 },
   },
   tabIcon: {
     width: 40,
@@ -160,25 +157,15 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    // backgroundColor: '#FFF',
     justifyContent: 'center',
     alignItems: 'center',
-    // shadowOpacity: 0.5,
-    // shadowRadius: 10,
-    // shadowOffset: { width: 0, height: 0 },
-    // elevation: 10,
-    // marginBottom: 40,
+    elevation: 10,
   },
-
   customIcon: {
     width: 70, 
     height: 70, 
   },
   shadow: {
-    // shadowOpacity: 0.1,
-    // shadowRadius: 3,
-    // shadowColor: '#000',
-    // shadowOffset: { height: 3, width: 0 },
     shadowColor: '#000',
     shadowOpacity: 0.5,
     shadowRadius: 10,

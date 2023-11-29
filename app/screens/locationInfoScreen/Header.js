@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#9448DA',
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
-        // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 40, 
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight-20: 0,
     },
     headerContainer: {
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         justifyContent: 'space-between',
         paddingHorizontal: 15, 
-        paddingTop: 10,
     },
     headerText: {
         color: '#F5F5F5',

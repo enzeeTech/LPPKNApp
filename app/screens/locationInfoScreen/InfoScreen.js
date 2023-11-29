@@ -1,7 +1,8 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-function InfoScreen(props) {
+function InfoScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
@@ -32,7 +33,7 @@ function InfoScreen(props) {
                 </View>
 
                 {/* Operating Hours */}
-                <View style={styles.infoContainer}>
+                <View style={styles.infoContainerTime}>
                     <Image source={require('../../assets/timeIcon.png')} style={styles.icon} />
                     <View style={styles.textContainer}>
                         <Text style={styles.infoTextColumn}>Isnin - Jumaat</Text>
@@ -62,37 +63,37 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        // padding: 10,
-        // borderRadius: 5, 
         flexDirection: 'colummn',
         marginTop: 0,
-        //   flex: 1,
     },
     contentContainer: {
         padding: 10,
-        // backgroundColor: '#FFF',
-        // borderTopLeftRadius: 20,
-        // borderTopRightRadius: 20,
-        // marginTop: 0,
     },
     titleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 10,
-        paddingLeft: 10,
+        paddingLeft: Platform.OS === 'ios' ? 5 : 15,
         maxWidth: '80%',
     },
     infoContainerLocation: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 20,
-        paddingLeft: 5,
+        paddingTop: 17,
+        paddingLeft: Platform.OS === 'ios' ? 5 : 15,
     },
     infoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         maxWidth: '60%', 
-        paddingLeft: 5,
+        paddingLeft: Platform.OS === 'ios' ? 5 : 15,
+    },
+    infoContainerTime: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        maxWidth: '60%', 
+        paddingLeft: Platform.OS === 'ios' ? 5 : 15,
+        paddingBottom: Platform.OS === 'ios' ? 5 : 15,
     },
     textContainer: {
         flexDirection: 'column', 
@@ -154,7 +155,8 @@ const styles = StyleSheet.create({
          paddingLeft: 5,
     },
     buttonContainer: {
-        paddingTop: 20,
+        paddingTop: '2%',
+        // paddingBottom: '20%',
         alignItems: 'center',
         // marginBottom: 20,
     },

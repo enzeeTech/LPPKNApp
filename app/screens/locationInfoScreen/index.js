@@ -14,8 +14,8 @@ function LocationInfoScreen() {
     const bottomNavBarHeight = insets.bottom;
 
     const infoContainerStyle = {
-        flex: 1, // Make the infoContainer expand to fill the remaining space
-        paddingBottom: bottomNavBarHeight, // Add padding to accommodate the bottom navigation bar
+        flex: 1, 
+        paddingBottom: bottomNavBarHeight, 
     };
 
     return (
@@ -39,24 +39,22 @@ function LocationInfoScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1, 
-        // backgroundColor: '#FFFFFF', 
         backgroundColor: '#9448DA',
-        // postion: 'relative',
+
     },
     headerContainer: {
-        backgroundColor: 'transparent', // Make the header background transparent
+        backgroundColor: 'transparent', 
         zIndex: 5,
-        // marginTop: 20,
     },
     imageContainer: {
         width: '100%',
-        height: screenHeight / 3.2,
-        position: 'absolute', // Position the image container absolutely
+        height: screenHeight * 0.3,
+        position: 'absolute', 
         zIndex: -1,
     },
     image: {
         width: '100%',
-        height: screenHeight / 3.2,
+        height: screenHeight * 0.3,
         marginTop: -15,
         marginBottom: -20,
     },
@@ -66,13 +64,10 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         // flex: 1,
-        backgroundColor: '#FFF', // Adjust the background color as needed
+        backgroundColor: '#FFF', 
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        paddingTop: 10,
-      },
-      bottomBarContainer: {
-        // zIndex: 15, // Adjust the z-index if needed
+        // paddingTop: '10%',
       },
 });
 

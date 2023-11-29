@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         padding: 10,
-        backgroundColor: '#FFF',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        marginTop: 0,
+        // backgroundColor: '#FFF',
+        // borderTopLeftRadius: 20,
+        // borderTopRightRadius: 20,
+        // marginTop: 0,
     },
     titleContainer: {
         flexDirection: 'row',
@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         paddingTop: 20,
         alignItems: 'center',
+        // marginBottom: 20,
     },
     buttonOne: {
         backgroundColor: '#9448DA',

@@ -1,49 +1,35 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 import Header from './Header';
-import BottomTabBar from './BottomTabBar';
 import InfoScreen from './InfoScreen';
-import BottomNavBar from './BottomNavBar';
 import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 // Get the full height of the screen
 const screenHeight = Dimensions.get('window').height;
 
 function LocationInfoScreen() {
+    const insets = useSafeAreaInsets();
+    const bottomNavBarHeight = insets.bottom;
+
+    const infoContainerStyle = {
+        flex: 1, // Make the infoContainer expand to fill the remaining space
+        paddingBottom: bottomNavBarHeight, // Add padding to accommodate the bottom navigation bar
+    };
+
     return (
-        // <View style={styles.container}>
-        //     {/* Creating header */}
-        //     <View style={styles.headerContainer}>
-        //         <Header />
-        //     </View>
-        //     {/* Creating image background */}
-        //     <View style={styles.imageContainer}>
-        //         <ImageBackground 
-        //             source={require('../../assets/negiriPerlisBackground.png')} 
-        //             style={styles.backgroundImage}
-        //             resizeMode='stretch'
-        //         >
-        //         </ImageBackground>
-        //     </View>
-        //     {/* Creating Info Screen background */}
-        //     <View style={styles.infoContainer}>
-        //         <InfoScreen />
-        //     </View>
-        //     <BottomTabBar />
-        // </View>
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <Header />
             </View>
-            <View style={styles.imageContainer}>
-                <ImageBackground
-                    source={require('../../assets/negiriPerlisBackground.png')}
-                    style={styles.image}
-                    resizeMode="stretch"
-                ></ImageBackground>
-            </View>
-            <View style={styles.infoContainer}>
+            <ImageBackground
+                source={require('../../assets/negiriPerlisBackground.png')}
+                style={styles.image}
+                resizeMode="stretch"
+            >
+            </ImageBackground>
+            <View style={[styles.infoContainer, infoContainerStyle]}>
                 <InfoScreen />
             </View>
         </SafeAreaView>
@@ -55,28 +41,35 @@ const styles = StyleSheet.create({
         flex: 1, 
         // backgroundColor: '#FFFFFF', 
         backgroundColor: '#9448DA',
-        postion: 'relative',
+        // postion: 'relative',
     },
     headerContainer: {
-        width: '100%',
-        zIndex: 15, 
+        backgroundColor: 'transparent', // Make the header background transparent
+        zIndex: 5,
+        // marginTop: 20,
     },
     imageContainer: {
         width: '100%',
-        height: screenHeight / 3.3,
+        height: screenHeight / 3.2,
+        position: 'absolute', // Position the image container absolutely
+        zIndex: -1,
     },
     image: {
-        width: '100%', 
-        height: screenHeight / 3.3, 
-        position: 'absolute',
+        width: '100%',
+        height: screenHeight / 3.2,
+        marginTop: -15,
+        marginBottom: -20,
     },
     backgroundImage: {
         width: '100%', 
         height: '100%',
     },
     infoContainer: {
-        flex: 1,
-        zIndex: 10,
+        // flex: 1,
+        backgroundColor: '#FFF', // Adjust the background color as needed
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        paddingTop: 10,
       },
       bottomBarContainer: {
         // zIndex: 15, // Adjust the z-index if needed

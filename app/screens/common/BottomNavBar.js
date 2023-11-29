@@ -1,9 +1,15 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 
 function BottomTabBar() {
   const navigation = useNavigation();
+  const state = useNavigationState(state => state);
+
+  // Get current route name
+  const currentRoute = state.routes[state.index].name;
+
+  const isActive = routeName => currentRoute === routeName;
 
   const handleHomePress = () => {
     navigation.navigate('HomeScreen');
@@ -31,12 +37,12 @@ function BottomTabBar() {
         {/* Left side Icons */}
         <View style={styles.iconContainerHome}>
           <TouchableOpacity onPress={handleHomePress}>
-            <Image source={require('../../assets/utamaIcon.png')} style={styles.icon} />
+          <Image source={isActive('HomeScreen') ? require('../../assets/UtamaActive.png') : require('../../assets/utamaIcon.png')} style={styles.icon} />
           </TouchableOpacity>
         </View>
         <View style={styles.iconContainerLocation}>
           <TouchableOpacity onPress={handleLocationPress}>
-            <Image source={require('../../assets/lokasiIcon.png')} style={styles.icon} />
+          <Image source={isActive('HomeScreen') ? require('../../assets/LokasiActive.png') : require('../../assets/lokasiIcon.png')} style={styles.icon} />
           </TouchableOpacity>
         </View>
 
@@ -51,12 +57,12 @@ function BottomTabBar() {
         {/* Right side Icons */}
         <View style={styles.iconContainerService}>
           <TouchableOpacity onPress={handleSupportPress}>
-            <Image source={require('../../assets/perkhidmatanIcon.png')} style={styles.serviceIcon} />
+          <Image source={isActive('HomeScreen') ? require('../../assets/PerkhidmatanActive.png') : require('../../assets/perkhidmatanIcon.png')} style={styles.icon} />
           </TouchableOpacity>
         </View>
         <View style={styles.iconContainerFeedback}>
           <TouchableOpacity onPress={handleFeedbackPress}>
-            <Image source={require('../../assets/aduanIcon.png')} style={styles.icon} />
+          <Image source={isActive('HomeScreen') ? require('../../assets/AduanActive.png') : require('../../assets/aduanIcon.png')} style={styles.icon} />
           </TouchableOpacity>
         </View>
       </View>

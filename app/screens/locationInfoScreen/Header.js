@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
         // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 40, 
-        // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight-20: 0,
     },
     headerContainer: {
         height: 68, 

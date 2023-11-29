@@ -1,15 +1,130 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import MainScreen from './app/screens/locationInfoScreen/MainScreen';
+import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView} from 'react-native';
 import { useFonts } from 'expo-font';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import LocationInfoScreen from './app/screens/locationInfoScreen/index';
+import HomeScreen from './app/screens/homeScreen/index';
+import LocationScreen from './app/screens/locationInfoScreen/index';
+import ChatScreen from './app/screens/chatScreen/index';
+import SupportScreen from './app/screens/supportScreen/index';
+import FeedbackScreen from './app/screens/feedbackScreen/index';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+const Tab = createBottomTabNavigator();
+
+
+const tabBarOptions = {
+  showLabel: false 
+};
 
 export default function App() {
-  useFonts({
-    'roboto-regular': require('./app/assets/fonts/Roboto-Regular.ttf'),
+  // Load the custom font
+  const [loaded] = useFonts({
+    'roboto-regular': require('./app/assets/fonts/Roboto-Regular.ttf'), 
   });
 
+  if (!loaded) {
+    // Font is not loaded yet
+    return null;
+  }
+
+  function CustomTabBarButton({ onPress }) {
+    // This is the custom component for the middle button
+    const navigation = useNavigation();
+
+    return (
+      <TouchableOpacity
+        style={{
+          top: -25,
+          justifyContent: 'center',
+          alignItems: 'center',
+          ...styles.shadow
+        }}
+        onPress={() => navigation.navigate('ChatScreen')}
+      >
+        <View style={styles.customButton}>
+          <Image
+            source={require('./app/assets/tanyaKasihIcon.png')}
+            style={styles.customIcon}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  const containerStyle = {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+
   return (
-    <MainScreen />
+    <SafeAreaProvider style={{flex:1}}>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName="HomeScreen"
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused }) => {
+              // Add logic to determine the icon based on the route and focus state
+              let iconSource;
+              let iconStyle = styles.tabIcon; // default style
+              if (route.name === 'HomeScreen') {
+                iconSource = focused
+                  ? require('./app/assets/UtamaActive.png')
+                  : require('./app/assets/utamaIcon.png');
+              } else if (route.name === 'LocationInfoScreen') {
+                iconSource = focused
+                  ? require('./app/assets/LokasiActive.png')
+                  : require('./app/assets/lokasiIcon.png');
+              } else if (route.name === 'SupportScreen') {
+                iconSource = focused
+                  ? require('./app/assets/PerkhidmatanActive.png')
+                  : require('./app/assets/perkhidmatanIcon.png');
+                iconStyle = {...styles.tabIcon, width: 80, height: 80 };
+              } else if (route.name === 'FeedbackScreen') {
+                iconSource = focused
+                  ? require('./app/assets/AduanActive.png')
+                  : require('./app/assets/aduanIcon.png');
+              }
+              return (
+                <Image
+                  source={iconSource}
+                  style={iconStyle}
+                  resizeMode="contain"
+                />
+              );
+            },
+            tabBarButton: (props) => {
+              // Customize the tab bar button for ChatScreen
+              if (route.name === 'ChatScreen') {
+                return <CustomTabBarButton {...props} />;
+              } else {
+                // This is the default behavior for other buttons
+                return <TouchableOpacity {...props} />;
+              }
+            },
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarStyle: styles.tabBar,
+          })}
+        >
+          {/* Define Tab.Screen components for each screen */}
+          <Tab.Screen name="HomeScreen" component={HomeScreen} />
+          <Tab.Screen name="LocationInfoScreen" component={LocationScreen} />
+          <Tab.Screen
+            name="ChatScreen"
+            component={ChatScreen}
+            options={{
+              tabBarButton: () => <CustomTabBarButton />,
+            }}
+          />
+          <Tab.Screen name="SupportScreen" component={SupportScreen} />
+          <Tab.Screen name="FeedbackScreen" component={FeedbackScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 
@@ -19,5 +134,55 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  tabBar: {
+    position: 'absolute',
+    // bottom: 10,
+    // left: 10,
+    // right: 10,
+    elevation: 10,
+    backgroundColor: '#FFFF',
+    // borderRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    height: Platform.OS === 'ios' ? 75 : 60,
+    // shadowOpacity: 0.05,
+    // shadowRadius: 10,
+    // shadowColor: '#000',
+    // shadowOffset: { height: 10, width: 10 },
+  },
+  tabIcon: {
+    width: 40,
+    height: 40,
+    marginTop: Platform.OS === 'ios' ? 10 : 0,
+  },
+  customButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    // backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // shadowOpacity: 0.5,
+    // shadowRadius: 10,
+    // shadowOffset: { width: 0, height: 0 },
+    // elevation: 10,
+    // marginBottom: 40,
+  },
+
+  customIcon: {
+    width: 70, 
+    height: 70, 
+  },
+  shadow: {
+    // shadowOpacity: 0.1,
+    // shadowRadius: 3,
+    // shadowColor: '#000',
+    // shadowOffset: { height: 3, width: 0 },
+    shadowColor: '#000',
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: 10, // for Android shadow
   },
 });

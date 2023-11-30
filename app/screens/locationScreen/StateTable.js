@@ -39,6 +39,7 @@ function StateTable() {
                     >
                         <Text style={{
                             color: isPressed ? '#FFFFFF' : '#777777',
+                            fontWeight: isPressed ? 'bold' : 'normal',
                              }}>
                             {nameList[buttonIndex]}
                         </Text>
@@ -88,9 +89,7 @@ const styles = StyleSheet.create({
         width: 114
     },
     buttonText: {
-        fontFamily: 'Roboto-Regular',
         fontSize: 14,
-        fontWeight: '900',
         color: '#777777',
         textAlign: 'center',
     },

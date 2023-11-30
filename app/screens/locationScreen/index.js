@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Table, Row, Rows } from 'react-native-table-component';
 import Header from './LocationScreenHeader';
@@ -23,17 +22,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1, 
         backgroundColor: '#9448DA',
-        backgroundColor: 'transparent',
+        // backgroundColor: 'transparent',
 
     },
     headerContainer: {
         backgroundColor: 'transparent', 
-        // zIndex: 5,
+        zIndex: 5,
     },
     stateContainer: {
         flex: 1, 
         backgroundColor: '#FFFF',
         // zIndex: 1,
+        marginTop: -12,
     },
     bodyText: {
         color: '#777777',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         paddingLeft: '4%',
         fontSize: 12,
         fontFamily: 'Roboto-Regular',
-        paddingTop: '5%',
+        paddingTop: '8%',
         // flex: 1, 
         // textAlign: 'center', 
     },

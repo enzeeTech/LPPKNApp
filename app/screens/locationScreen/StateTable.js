@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import DetailsComponent from './DetailsSection';
 
 function StateTable() {
     const numRows = 5;
@@ -13,7 +14,7 @@ function StateTable() {
     const [activeButtonIndex, setActiveButtonIndex] = useState(null);
 
     const handleItemPress = (index) => {
-        // Toggle the active state or set it to null if it's already active
+        // Toggle the active state or set it to null if it's already active thus deactivating it
         setActiveButtonIndex(activeButtonIndex === index ? null : index);
     };
 
@@ -38,8 +39,6 @@ function StateTable() {
                     >
                         <Text style={{
                             color: isPressed ? '#FFFFFF' : '#777777',
-                            
-                             
                              }}>
                             {nameList[buttonIndex]}
                         </Text>
@@ -54,16 +53,16 @@ function StateTable() {
         );
     }
 
-    // To show the active state text, make sure to check if the index is not null
+    // For testing purposes
     const activeStateText = activeButtonIndex !== null ? nameList[activeButtonIndex] : "None";
 
     return (
         <View style={styles.container}>
             {buttons}
-            {/* Show the active button's name or "None" if no button is active */}
-            <Text style={styles.activeStateText}>
-                {`Active: ${activeStateText}`}
-            </Text>
+            {/* Render the DetailsComponent only if the activeButtonIndex is not null */}
+            {activeButtonIndex !== null && (
+                <DetailsComponent activeState={nameList[activeButtonIndex]} />
+            )}
         </View>
     );
 }

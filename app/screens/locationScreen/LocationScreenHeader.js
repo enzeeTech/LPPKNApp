@@ -5,19 +5,15 @@ function Header() {
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={() => console.log('Back Button Pressed!')}>
-                    <Image 
-                        source={require('../../assets/backArrowKey.png')}
-                        style = {styles.iconStyleBack}
-                    />
-                </TouchableOpacity>
-                <Text style={styles.headerText}>Lokasi Premis LPPKN</Text>
-                <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
-                    <Image 
-                        source={require('../../assets/settingsIcon.png')}
-                        style = {styles.iconStyleSetting}
-                    />
-                </TouchableOpacity>
+                <Text style={styles.headerText}>Lokasi</Text>
+                <View style={styles.iconContainer}>
+                    <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+                        <Image 
+                            source={require('../../assets/settingsIcon.png')}
+                            style = {styles.iconStyleSetting}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -34,8 +30,6 @@ const styles = StyleSheet.create({
         height: 68, 
         flexDirection: 'row',
         alignItems: 'center', 
-        justifyContent: 'space-between',
-        paddingHorizontal: 15, 
     },
     headerText: {
         color: '#F5F5F5',
@@ -45,16 +39,14 @@ const styles = StyleSheet.create({
         flex: 1, 
         textAlign: 'center', 
     },
-    iconStyleBack: {
-        width: 25, 
-        height: 25, 
-        resizeMode: 'contain',
+    iconContainer: {
+        marginLeft: '65%',
+        paddingRight: 15,
     },
     iconStyleSetting: {
         width: 25, 
         height: 25, 
         resizeMode: 'contain',
-        backgroundColor: 'transparent',
     },
 });
 

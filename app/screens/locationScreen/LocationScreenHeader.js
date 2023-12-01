@@ -33,9 +33,8 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: '#F5F5F5',
-        fontWeight: '700',
+        fontWeight: 'bold',
         fontSize: 20,
-        fontFamily: 'Roboto-Regular',
         flex: 1, 
         textAlign: 'center', 
     },

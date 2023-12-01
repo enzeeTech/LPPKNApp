@@ -4,27 +4,28 @@ import { ScrollView } from 'react-native';
 import CustomTile from './CustomTile';
 
 const DetailsComponent = ({ activeState }) => {
+
+    const handlePress = () => {
+        console.log('Tile Pressed!');
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Lokasi Premis LPPKN</Text>
             {/* <Text style={styles.text}>Details for: {activeState}</Text> */}
-            <ScrollView style={styles.scrollView}>
-                <CustomTile />
-                <CustomTile />
-                <CustomTile />
-                <CustomTile />
-                <CustomTile />
-            </ScrollView>
+            <CustomTile onPress={handlePress} />
+            <CustomTile />
+            <CustomTile />
+            <CustomTile />
+            <CustomTile />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        // paddingTop: 20,
         flex: 1,
         marginTop: 10,
-        // backgroundColor: 'green',
     },
     headerText: {
         fontSize: 20,
@@ -35,10 +36,6 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: '#333'
-    },
-    scrollView: {
-        // backgroundColor: 'pink',
-        // marginTop: 1,
     },
 });
 

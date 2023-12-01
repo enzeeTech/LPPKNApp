@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
 import { useFonts } from 'expo-font';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './app/screens/homeScreen/index';
 import LocationScreen from './app/screens/locationScreen/index';
-import LocationInfoScreen from './app/screens/locationInfoScreen/index';
+// import LocationInfoScreen from './app/screens/locationInfoScreen/index';
 import ChatScreen from './app/screens/chatScreen/index';
 import SupportScreen from './app/screens/supportScreen/index';
 import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TestComponent from './app/screens/locationScreen/CustomTile';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,7 +35,8 @@ export default function App() {
     const navigation = useNavigation();
 
     return (
-      <TouchableOpacity
+      <GestureHandlerRootView style={{flex: 1}}>
+        <TouchableOpacity
         style={{
           top: -21,
           top: Platform.OS === 'ios' ? -17 : -25,
@@ -44,14 +45,16 @@ export default function App() {
           ...styles.shadow
         }}
         onPress={() => navigation.navigate('ChatScreen')}
-      >
-        <View style={styles.customButton}>
-          <Image
-            source={require('./app/assets/tanyaKasihIcon.png')}
-            style={styles.customIcon}
-          />
-        </View>
-      </TouchableOpacity>
+        >
+          <View style={styles.customButton}>
+            <Image
+              source={require('./app/assets/tanyaKasihIcon.png')}
+              style={styles.customIcon}
+            />
+          </View>
+        </TouchableOpacity> 
+      </GestureHandlerRootView>
+      
     );
   }
 
@@ -143,10 +146,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     height: Platform.OS === 'ios' ? 75 : 60,
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
     shadowColor: '#000',
-    shadowOffset: { height: '10%', width: 0 },
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.20,
+    shadowRadius: 8,
+    elevation: 3, // for Android shadow
   },
   tabIcon: {
     width: 40,
@@ -166,10 +170,10 @@ const styles = StyleSheet.create({
     height: 70, 
   },
   shadow: {
-    // shadowColor: '#000',
-    // shadowOpacity: 0.5,
-    // shadowRadius: 10,
-    // shadowOffset: { width: 0, height: 0 },
-    elevation: 10, // for Android shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.7,
+    shadowRadius: 1,
+    elevation: 10,
   },
 });

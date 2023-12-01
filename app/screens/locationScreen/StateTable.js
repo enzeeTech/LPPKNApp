@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import DetailsComponent from './DetailsSection';
 
 function StateTable() {
     const numRows = 5;
     const numColumns = 3;
     const nameList = [
-        'Perlis', 'Kedah', 'Pulau Pinang', 'Perak', 'Selangor', 'WP Kuala Lumpur',
-        'Negeri Sembilan', 'Melaka', 'Johor', 'Pahang', 'Terengganu', 'Kelantan', 'Sabah',
+        'Perlis', 'Kedah', 'Pulau Pinang', 'Perak', 'Selangor', 'WP                   Kuala Lumpur',
+        'Negeri  Sembilan', 'Melaka', 'Johor', 'Pahang', 'Terengganu', 'Kelantan', 'Sabah',
         'WP Labuan', 'Sarawak'
     ];
 
@@ -39,7 +39,9 @@ function StateTable() {
                     >
                         <Text style={{
                             color: isPressed ? '#FFFFFF' : '#777777',
-                            fontWeight: isPressed ? 'bold' : 'normal',
+                            fontWeight: isPressed ? 'bold' : '600',
+                            fontSize: Platform.OS === 'ios' ? 14 : 16,
+                            textAlign: 'center',
                              }}>
                             {nameList[buttonIndex]}
                         </Text>
@@ -72,7 +74,7 @@ function StateTable() {
 
 const styles = StyleSheet.create({
     container: { 
-        flex: 1, 
+        // flex: 1, 
         padding: '4%', 
         paddingTop: '1%',
     },
@@ -87,8 +89,9 @@ const styles = StyleSheet.create({
         borderWidth: 1.2,
         alignItems: 'center',
         justifyContent: 'center',
-        height: 48,
-        width: 114
+        height: 49,
+        // width: 114,
+        width: Platform.OS === 'ios' ? 114 : 80,
     },
     buttonText: {
         fontSize: 14,

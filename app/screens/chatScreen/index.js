@@ -7,7 +7,7 @@ const ChatScreen = () => {
   let router = useRouter();
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, paddingTop: 50, paddingBottom: 38 }}>
       {/* https://gist.github.com/hetmann/bda29c335da8bb51f8e2e2d520edf3b6?permalink_comment_id=3869363 */}
       {/* https://github.com/react-native-webview/react-native-webview/issues/447#issuecomment-477201365 */}
       <WebView

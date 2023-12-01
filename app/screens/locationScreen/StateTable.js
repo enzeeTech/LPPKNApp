@@ -61,9 +61,11 @@ function StateTable() {
         <View style={styles.container}>
             {buttons}
             {/* Render the DetailsComponent only if the activeButtonIndex is not null */}
-            {activeButtonIndex !== null && (
-                <DetailsComponent activeState={nameList[activeButtonIndex]} />
-            )}
+            <View style={styles.listView}>
+                {activeButtonIndex !== null && (
+                    <DetailsComponent activeState={nameList[activeButtonIndex]} />
+                )}
+            </View>
         </View>
     );
 }
@@ -104,6 +106,10 @@ const styles = StyleSheet.create({
     },
     buttonInactive: {
         backgroundColor: '#EAFFEE', // Inactive button color
+    },
+    listView: {
+        flex: 1,
+        marginTop: 20,
     },
 });
 

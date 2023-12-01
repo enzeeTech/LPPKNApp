@@ -4,33 +4,24 @@ import Header from './LocationScreenHeader';
 
 function CustomTile() {
   return (
-    <SafeAreaView style={styles.container}>
-        <View style={styles.headerContainer}>
-            <Header />
+    <View style={styles.tileContainer}>
+        <View style={styles.imageContainer}>
+            <Image source={require('../../assets/dummyImage.png')} style={styles.image} />
         </View>
-        <View style={styles.testTextContainer}>
-            <Text style={styles.titleTest}>Dummy Text</Text>
-            <Text style={styles.subtitle}>Seperation</Text>
-        </View>
-        <View style={styles.tileContainer}>
-            <View style={styles.imageContainer}>
-                <Image source={require('../../assets/dummyImage.png')} style={styles.image} />
+        <View style={styles.infoParentContainer}>
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>LOCATION HEADING</Text>
             </View>
-            <View style={styles.infoParentContainer}>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>LOCATION HEADING</Text>
-                </View>
-                <View style={styles.detailsContainer}>
-                    <Image source={require('../../assets/timeIcon.png')} style={styles.imageIcon} />
-                    <View style={styles.textContainer}>
-                        <Text style={styles.subHeading}>Waktu Operasi</Text>
-                        <Text style={styles.infoText}>Isnin - Jumaat</Text>
-                        <Text style={styles.infoText}>8.00 pagi - 5.30 petang</Text>
-                    </View>
+            <View style={styles.detailsContainer}>
+                <Image source={require('../../assets/timeIcon.png')} style={styles.imageIcon} />
+                <View style={styles.textContainer}>
+                    <Text style={styles.subHeading}>Waktu Operasi</Text>
+                    <Text style={styles.infoText}>Isnin - Jumaat</Text>
+                    <Text style={styles.infoText}>8.00 pagi - 5.30 petang</Text>
                 </View>
             </View>
         </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -45,14 +36,13 @@ const styles = StyleSheet.create({
         zIndex: 5,
     },
     tileContainer: {
-        // flex: 1,
         backgroundColor: '#FFFF',
-        // marginTop: -12,
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,
         borderBottomLeftRadius: 12,
         borderBottomRightRadius: 12,
-        margin:'5%',
+        marginTop: 10,
+        marginLeft: '5%',
         height: 134,
         width: '90%',
         elevation: 3,
@@ -63,14 +53,12 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         flex: 1,
-        // backgroundColor: 'blue',
         width: '35%',
     },
     image: {
         width: '100%',
         height: 134,
         resizeMode: 'stretch',
-        // borderRadius: 30,
     },
     imageIcon: {
         width: 18,
@@ -81,42 +69,25 @@ const styles = StyleSheet.create({
     },
     infoParentContainer: {
         flexDirection: 'column',
-        // backgroundColor: 'yellow',
         width: '65%',
         height: 134,
         marginLeft: '35%',
-        // justifyContent: 'center',
-        // alignItems: 'center',
     },
     infoText: {
         color: '#777777',
-        // fontWeight: '600',
         fontSize: 12,
         lineHeight: 15,
-        // paddingLeft: 5,
         marginLeft: '7%',
    },
     titleContainer: {
-        // flex: 1,
-        // backgroundColor: 'red',
         width: '100%',
         height: 50,
-        // marginLeft: '35%',
-        // marginBottom: 84,
-        // justifyContent: 'center',
-        // alignItems: 'center',
     },
     textContainer: {
-        // flex: 1,
-        // backgroundColor: 'yellow',
         width: '65%',
         height: 84,
-        // marginLeft: '35%',
-        // justifyContent: 'center',
-        // alignItems: 'center',
     },
     testTextContainer: {
-        // flex: 1,
         marginLeft: 20,
     },
     title: {
@@ -127,14 +98,9 @@ const styles = StyleSheet.create({
         marginLeft: '8%',
     },
     detailsContainer: {
-        // flex: 1,
         flexDirection: 'row',
-        // backgroundColor: 'green',
         width: '100%',
         height: 84,
-        // marginLeft: '35%',
-        // justifyContent: 'center',
-        // alignItems: 'center',
     },
     titleTest: {
         fontSize: 18,

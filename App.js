@@ -113,7 +113,7 @@ export default function App() {
         >
           {/* Tab screens */}
           <Tab.Screen name="HomeScreen" component={HomeScreen} />
-          <Tab.Screen name="LocationScreen" component={TestComponent} />
+          <Tab.Screen name="LocationScreen" component={LocationScreen} />
           <Tab.Screen
             name="ChatScreen"
             component={ChatScreen}

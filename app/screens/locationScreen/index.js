@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Table, Row, Rows } from 'react-native-table-component';
+import { ScrollView } from 'react-native';
 import Header from './LocationScreenHeader';
 import StateTable from './StateTable';
 
@@ -10,10 +10,13 @@ function LocationScreen() {
         <View style={styles.headerContainer}>
             <Header />
         </View>
-        <View style={styles.stateContainer}>
+        <ScrollView style={styles.stateContainer}>
             <Text style={styles.bodyText}>Pilih Negeri</Text>
             <StateTable />
-        </View>
+        </ScrollView>
+        {/* <View style={styles.stateContainer}>
+            
+        </View> */}
     </SafeAreaView>
   );
 }

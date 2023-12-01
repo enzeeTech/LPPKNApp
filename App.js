@@ -11,6 +11,7 @@ import SupportScreen from './app/screens/supportScreen/index';
 import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import TestComponent from './app/screens/locationScreen/CustomTile';
 
 const Tab = createBottomTabNavigator();
 
@@ -112,7 +113,7 @@ export default function App() {
         >
           {/* Tab screens */}
           <Tab.Screen name="HomeScreen" component={HomeScreen} />
-          <Tab.Screen name="LocationScreen" component={LocationScreen} />
+          <Tab.Screen name="LocationScreen" component={TestComponent} />
           <Tab.Screen
             name="ChatScreen"
             component={ChatScreen}

@@ -110,6 +110,7 @@ export default function App() {
             headerShown: false,
             tabBarShowLabel: false,
             tabBarStyle: styles.tabBar,
+            tabBarHideOnKeyboard: true, // hide tab bar when keyboard opens for android
           })}
         >
           {/* Define Tab.Screen components for each screen */}

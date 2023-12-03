@@ -1,27 +1,46 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
 import Header from './BulletinMainHeader';
+import { Platform } from 'react-native';
 
 function BulletinMain() {
+
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    console.log(`Search query: ${query}`); // Logging the search query
+  };
+
+  const handleBackPress = () => {
+    setSearchQuery(''); // Clear the search query
+    Keyboard.dismiss(); // Dismiss the keyboard if it's open
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Header />
+        <Header onBackPress={handleBackPress} />
       </View>
       <View style={styles.subHeaderContainer}>
-        <TouchableOpacity style={styles.searchTab} onPress={() => console.log('Search Tab Pressed!')}>
+        <View style={styles.searchTab}>
           <View style={styles.searchIconContainer}>
             <Image 
               source={require('../../assets/searchButton.png')}
               style = {styles.searchIcon}
             />
             <View style={styles.seachTextContainer}>
-              <Text style={styles.searchText}>
-                Masukkan carian
-              </Text>
+              <TextInput 
+                style={styles.searchText}
+                placeholder="Masukkan carian"
+                value={searchQuery}
+                onChangeText={handleSearch}
+              >
+              </TextInput>
             </View>
           </View>
-        </TouchableOpacity>
+        </View>
         <TouchableOpacity style={styles.sarineIconContainer} onPress={() => console.log('Sarine Button Pressed!')}> 
           <Image
               source={require('../../assets/sarineButton.png')}
@@ -83,6 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: '5%',
     marginLeft: '8%',
+    marginBottom: Platform.OS === 'android' ? '4.5%' : 0,
   },
   sarineIconContainer: {
     width: '13%',

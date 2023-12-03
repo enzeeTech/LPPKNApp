@@ -1,11 +1,11 @@
 import React from 'react';
 import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 
-function BulletinMainHeader() {
+const BulletinMainHeader = ({onBackPress}) => {
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={() => console.log('Back Button Pressed!')}>
+                <TouchableOpacity onPress={onBackPress}>
                     <Image 
                         source={require('../../assets/backArrowKey.png')}
                         style = {styles.iconStyleBack}

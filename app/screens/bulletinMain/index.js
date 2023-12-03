@@ -1,12 +1,28 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
 import Header from './BulletinMainHeader';
 import { Platform } from 'react-native';
 
 function BulletinMain() {
 
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+        setKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+        setKeyboardVisible(false);
+    });
+
+    return () => {
+        keyboardDidShowListener.remove();
+        keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -14,8 +30,12 @@ function BulletinMain() {
   };
 
   const handleBackPress = () => {
-    setSearchQuery(''); // Clear the search query
-    Keyboard.dismiss(); // Dismiss the keyboard if it's open
+    if (isKeyboardVisible) {
+      // setSearchQuery(''); // Clear the search query 
+      Keyboard.dismiss(); // Dismiss the keyboard
+    } else {
+      console.log('back button pressed to go to home screen');
+    }
   };
 
   return (

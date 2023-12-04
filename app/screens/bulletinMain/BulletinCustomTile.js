@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Platform, TouchableOpacity, Pressable } from 'react-native';
 // import { TouchableOpacity} from 'react-native-gesture-handler';
 
-const CustomBulletinTile = ({ onPress }) => {
+const CustomBulletinTile = ({ onPress, image, title, date }) => {
 
     const handleTilePress = () => {
         console.log('Tile Item Pressed!');
@@ -21,13 +21,13 @@ const CustomBulletinTile = ({ onPress }) => {
         onPress={handleTilePress}
         >
             <View style={styles.imageContainer}>
-                <Image source={require('../../assets/testImageBulletin.png')} style={styles.image} />
+                <Image source={image} style={styles.image} />
                 <View style={styles.overlayContainer}>
                     <View style={styles.textContainer}>
-                        <Text style={styles.titleText} numberOfLines={2}>Forum Hari Penduduk Sedunia 2023</Text>
+                        <Text style={styles.titleText} numberOfLines={2}>{title}</Text>
                         {/* for testing long text */}
                         {/* <Text style={styles.titleText} numberOfLines={2}>Lawatan Pengerusi LPPKN YBhg. Dato Sri Rohani binti Abdul Karim ke Pusat Keluarga LPKKN Negeri Sembilan</Text> */}
-                        <Text style={styles.dateText}>16 Ogos 2023</Text>
+                        <Text style={styles.dateText}>{date}</Text>
                     </View>
                     <TouchableOpacity style={styles.buttonContainer} onPress={handleShareButtonPress}>
                         <Image source={require('../../assets/shareIcon.png')} style={styles.imageIcon} />
@@ -46,16 +46,15 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-        marginTop: 10,
+        marginTop: 30,
         marginLeft: '2.5%',
         height: 200,
         width: '95%',
-        elevation: 3,
+        elevation: 4,
         shadowColor: "#000",
         shadowOffset: {width: 0, height: 2},
-        shadowOpacity: 0.15,
-        shadowRadius: 10, 
-        marginTop: 100,
+        shadowOpacity: 0.25,
+        shadowRadius: 4, 
     },
     imageContainer: {
         width: '100%',

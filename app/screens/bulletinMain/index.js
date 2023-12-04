@@ -5,6 +5,7 @@ import Header from './BulletinMainHeader';
 import { Platform } from 'react-native';
 import { ScrollView } from 'react-native';
 import BulletinDetailsSection from './BulletinDetailsSection';
+import SarinBottomSheet from './SarinBottomSheet';
 
 function BulletinMain() {
 
@@ -106,6 +107,9 @@ function BulletinMain() {
     }
   };
 
+  {/*Definitions for bottom sheet visibility*/}
+  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -134,7 +138,7 @@ function BulletinMain() {
               </View>
             </View>
           </View>
-          <TouchableOpacity style={styles.sarineIconContainer} onPress={() => console.log('Sarine Button Pressed!')}> 
+          <TouchableOpacity style={styles.sarineIconContainer} onPress={() => setBottomSheetVisible(true)}> 
             <Image
                 source={require('../../assets/sarineButton.png')}
                 style = {styles.sarineIcon}
@@ -143,6 +147,10 @@ function BulletinMain() {
         </View>
         <BulletinDetailsSection items={bulletinItems} onLoadMore={hasMoreItems ? loadMoreItems : null} />
       </ScrollView>
+      <SarinBottomSheet
+            isVisible={isBottomSheetVisible}
+            onClose={() => setBottomSheetVisible(false)}
+          />
     </SafeAreaView>
   );
 }

@@ -12,6 +12,8 @@ import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import BulletinMain from './app/screens/bulletinMain/index';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 // import CustomTile from './app/screens/bulletinMain/BulletinCustomTile';
 
 const Tab = createBottomTabNavigator();
@@ -64,71 +66,73 @@ export default function App() {
   };
 
   return (
-    <SafeAreaProvider style={{flex:1}}>
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName="HomeScreen"
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused }) => {
-              // Add logic to determine the icon based on the route and focus state
-              let iconSource;
-              let iconStyle = styles.tabIcon; // default style
-              if (route.name === 'HomeScreen') {
-                iconSource = focused
-                  ? require('./app/assets/UtamaActive.png')
-                  : require('./app/assets/utamaIcon.png');
-              } else if (route.name === 'LocationInfoScreen') {
-                iconSource = focused
-                  ? require('./app/assets/LokasiActive.png')
-                  : require('./app/assets/lokasiIcon.png');
-              } else if (route.name === 'SupportScreen') {
-                iconSource = focused
-                  ? require('./app/assets/PerkhidmatanActive.png')
-                  : require('./app/assets/perkhidmatanIcon.png');
-                iconStyle = {...styles.tabIcon, width: 80, height: 80 };
-              } else if (route.name === 'FeedbackScreen') {
-                iconSource = focused
-                  ? require('./app/assets/AduanActive.png')
-                  : require('./app/assets/aduanIcon.png');
-              }
-              return (
-                <Image
-                  source={iconSource}
-                  style={iconStyle}
-                  resizeMode="contain"
-                />
-              );
-            },
-            tabBarButton: (props) => {
-              // Customize the tab bar button for ChatScreen
-              if (route.name === 'ChatScreen') {
-                return <CustomTabBarButton {...props} />;
-              } else {
-                // This is the default behavior for other buttons
-                return <TouchableOpacity {...props} />;
-              }
-            },
-            headerShown: false,
-            tabBarShowLabel: false,
-            tabBarStyle: styles.tabBar,
-            tabBarHideOnKeyboard: true, // hide tab bar when keyboard opens for android
-          })}
-        >
-          {/* Define Tab.Screen components for each screen */}
-          <Tab.Screen name="HomeScreen" component={BulletinMain} />
-          <Tab.Screen name="LocationInfoScreen" component={LocationScreen} />
-          <Tab.Screen
-            name="ChatScreen"
-            component={ChatScreen}
-            options={{
-              tabBarButton: () => <CustomTabBarButton />,
-            }}
-          />
-          <Tab.Screen name="SupportScreen" component={SupportScreen} />
-          <Tab.Screen name="FeedbackScreen" component={FeedbackScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider style={{flex:1}}>
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName="HomeScreen"
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused }) => {
+                // Add logic to determine the icon based on the route and focus state
+                let iconSource;
+                let iconStyle = styles.tabIcon; // default style
+                if (route.name === 'HomeScreen') {
+                  iconSource = focused
+                    ? require('./app/assets/UtamaActive.png')
+                    : require('./app/assets/utamaIcon.png');
+                } else if (route.name === 'LocationInfoScreen') {
+                  iconSource = focused
+                    ? require('./app/assets/LokasiActive.png')
+                    : require('./app/assets/lokasiIcon.png');
+                } else if (route.name === 'SupportScreen') {
+                  iconSource = focused
+                    ? require('./app/assets/PerkhidmatanActive.png')
+                    : require('./app/assets/perkhidmatanIcon.png');
+                  iconStyle = {...styles.tabIcon, width: 80, height: 80 };
+                } else if (route.name === 'FeedbackScreen') {
+                  iconSource = focused
+                    ? require('./app/assets/AduanActive.png')
+                    : require('./app/assets/aduanIcon.png');
+                }
+                return (
+                  <Image
+                    source={iconSource}
+                    style={iconStyle}
+                    resizeMode="contain"
+                  />
+                );
+              },
+              tabBarButton: (props) => {
+                // Customize the tab bar button for ChatScreen
+                if (route.name === 'ChatScreen') {
+                  return <CustomTabBarButton {...props} />;
+                } else {
+                  // This is the default behavior for other buttons
+                  return <TouchableOpacity {...props} />;
+                }
+              },
+              headerShown: false,
+              tabBarShowLabel: false,
+              tabBarStyle: styles.tabBar,
+              tabBarHideOnKeyboard: true, // hide tab bar when keyboard opens for android
+            })}
+          >
+            {/* Define Tab.Screen components for each screen */}
+            <Tab.Screen name="HomeScreen" component={BulletinMain} />
+            <Tab.Screen name="LocationInfoScreen" component={LocationScreen} />
+            <Tab.Screen
+              name="ChatScreen"
+              component={ChatScreen}
+              options={{
+                tabBarButton: () => <CustomTabBarButton />,
+              }}
+            />
+            <Tab.Screen name="SupportScreen" component={SupportScreen} />
+            <Tab.Screen name="FeedbackScreen" component={FeedbackScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

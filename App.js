@@ -12,6 +12,7 @@ import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import BulletinMain from './app/screens/bulletinMain/index';
+// import CustomTile from './app/screens/bulletinMain/BulletinCustomTile';
 
 const Tab = createBottomTabNavigator();
 

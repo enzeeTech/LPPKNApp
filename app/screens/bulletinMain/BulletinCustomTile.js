@@ -25,8 +25,6 @@ const CustomBulletinTile = ({ onPress, image, title, date }) => {
                 <View style={styles.overlayContainer}>
                     <View style={styles.textContainer}>
                         <Text style={styles.titleText} numberOfLines={2}>{title}</Text>
-                        {/* for testing long text */}
-                        {/* <Text style={styles.titleText} numberOfLines={2}>Lawatan Pengerusi LPPKN YBhg. Dato Sri Rohani binti Abdul Karim ke Pusat Keluarga LPKKN Negeri Sembilan</Text> */}
                         <Text style={styles.dateText}>{date}</Text>
                     </View>
                     <TouchableOpacity style={styles.buttonContainer} onPress={handleShareButtonPress}>
@@ -46,13 +44,13 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-        marginTop: 30,
-        marginLeft: '2.5%',
+        marginTop: 35,
+        marginLeft: '5%',
         height: 200,
-        width: '95%',
+        width: '90%',
         elevation: 4,
         shadowColor: "#000",
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: {width: 0, height: 1},
         shadowOpacity: 0.25,
         shadowRadius: 4, 
     },

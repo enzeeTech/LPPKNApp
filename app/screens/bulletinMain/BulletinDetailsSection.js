@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native';
 import CustomBulletinTile from './BulletinCustomTile';
 
 const BulletinDetailsSection = ({ items, onLoadMore }) => {
@@ -34,7 +34,7 @@ const BulletinDetailsSection = ({ items, onLoadMore }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginBottom: 60,
+        marginBottom: Platform.OS === 'ios' ? 100 : 150,
     },
     loadMoreContainer: {
         backgroundColor: '#FFFFFF',

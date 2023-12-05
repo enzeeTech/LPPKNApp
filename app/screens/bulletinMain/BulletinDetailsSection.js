@@ -25,7 +25,7 @@ const BulletinDetailsSection = ({ items, onLoadMore }) => {
                         {/* If this is the last item, add the gradient overlay */}
                         {isLastItem && onLoadMore && (
                         <LinearGradient
-                            colors={['transparent', 'rgba(255,255,255,0.9)', 'rgba(255,255,255,1)']}
+                            colors={['rgba(255,255,255,0.3)', 'rgba(255,255,255,0.9)', 'rgba(255,255,255,1)']}
                             style={styles.gradient}
                             locations={[0, 0.5, 1]} // Adjust these numbers to change the gradient effect
                         />

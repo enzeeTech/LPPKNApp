@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, TouchableOpacity, Dimensions } from 'react-native';
 import Header from './BulletinInfoHeader';
 import InfoSection from './BulletinInfoSection';
+import { ScrollView } from 'react-native';
 
 
 // Get the full height of the screen
@@ -23,14 +24,16 @@ const BulletinInfoMain = () => {
             <View style={styles.headerContainer}>
                 <Header/>
             </View>
-            <ImageBackground
-                source={require('../../assets/beritaInfoImage.png')}
-                style={styles.image}
-                resizeMode="cover"
-            ></ImageBackground>
-            <View style={[styles.infoContainer, infoContainerStyle]}>
-                <InfoSection/>
-            </View>
+            <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: -13}}>
+                <ImageBackground
+                    source={require('../../assets/beritaInfoImage.png')}
+                    style={styles.image}
+                    resizeMode="cover"
+                ></ImageBackground>
+                <View style={[styles.infoContainer, infoContainerStyle]}>
+                        <InfoSection/>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -40,27 +43,26 @@ const styles = StyleSheet.create({
         flex: 1, 
         backgroundColor: '#9448DA',
         // backgroundColor: 'transparent',
+    },
+    headerContainer: {
+        backgroundColor: '#9448DA', 
+        zIndex: 5,
+        justifyContent: 'center',
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+    },
+    image: {
+        width: '100%',
+        height: screenHeight * 0.3,
+        // marginTop: 0,
 
-        },
-        headerContainer: {
-            backgroundColor: 'transparent', 
-            zIndex: 1,
-            justifyContent: 'center',
-        },
-        image: {
-            width: '100%',
-            height: screenHeight * 0.3,
-            marginTop: -10,
-
-        },
-        infoContainer: {
-            // flex: 1,
-            backgroundColor: '#FFF', 
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            // paddingTop: '10%',
-            marginTop: '-5%',
-          },
+    },
+    infoContainer: {
+        backgroundColor: '#FFF', 
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        marginTop: '-5%',
+    },
 });
 
 export default BulletinInfoMain;

@@ -48,8 +48,15 @@ const SarinBottomSheet = ({ isVisible, onClose }) => {
       backgroundStyle={styles.background}
     >
         <View style={styles.contentContainer}>
-            <Text>Your content here</Text>
-            {/* ... other content ... */}
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>Saring</Text>
+          </View>
+          <View style={styles.subHeaderContainer}>
+            <Text style={styles.subHeaderText}>Bulan</Text>
+          </View>
+          <View style={styles.buttonGridContainer}>
+            
+          </View>
         </View>
     </BottomSheet>
   );
@@ -58,12 +65,12 @@ const SarinBottomSheet = ({ isVisible, onClose }) => {
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
     padding: 16,
-    backgroundColor: 'white', // or any color you want for the bottom sheet's background
+    backgroundColor: 'white', 
   },
   background: {
-    backgroundColor: 'white', // or any color you want
+    backgroundColor: 'white', 
     shadowColor: '#000',
     shadowOffset: {
         width: 0,
@@ -72,8 +79,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 10,
     elevation: 5, // for Android shadow
-    borderTopLeftRadius: 20, // Adjust radius to your liking
-    borderTopRightRadius: 20, // Adjust radius to your liking
+    borderTopLeftRadius: 20, 
+    borderTopRightRadius: 20, 
     },
   customButtonContainer: {
     height: 20,
@@ -81,10 +88,24 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: 'transparent', 
-    // zIndex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 5,
+  },
+  headerText: {
+    fontSize: 21,
+    fontWeight: 'bold',
+    color: '#9448DA',
+    marginTop: '-3%',
+  },
+  subHeaderContainer: {
+    backgroundColor: 'transparent', 
+    justifyContent: 'left',
+    alignItems: 'left',
+  },
+  subHeaderText: {
+    fontSize: 14,
+    color: '#777777',
+    marginTop: '7%',
   },
 });
 

@@ -1,24 +1,27 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-// import BottomNavBar from '../common/BottomNavBar';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import Header from './HomeScreenHeader';
 
-function HomeScreen() {
+const HomeScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text>This is the Home Screen</Text>
-      {/* <View>
-        <BottomNavBar />
-      </View> */}
-      {/* You can add any placeholder content here */}
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Header />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+      flex: 1, 
+      backgroundColor: '#FFFFFF',
+      backgroundColor: 'transparent',
+
+  },
+  headerContainer: {
+      backgroundColor: 'transparent', 
+      zIndex: 5,
   },
 });
 

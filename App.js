@@ -63,6 +63,8 @@ export default function App() {
 
   return (
     <SafeAreaProvider style={{flex:1}}>
+      {/* Set status bar colour to dark */}
+      <StatusBar barStyle="dark-content" /> 
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName="HomeScreen"

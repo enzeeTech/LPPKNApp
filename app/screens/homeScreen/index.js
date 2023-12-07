@@ -1,11 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions, Image, Platform} from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity} from 'react-native';
 import { ScrollView } from 'react-native';
 import Header from './HomeScreenHeader';
 import ServiceIcon from './ServiceIcon';
 
 const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
 
 // Array of icons and labels
 const iconsData = [
@@ -41,7 +40,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{height: screenHeight * 2}}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.headerContainer}>
           <Header />
         </View>
@@ -54,12 +53,42 @@ const HomeScreen = () => {
         </View>
         {/* PERKHIDMATAN SECTION */}
         <View style={styles.perkhidmatanContainer}>
-          <Text style={styles.perkhidmatanText}>Perkhidmatan</Text>
+          <Text style={styles.sectionText}>Perkhidmatan</Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.gridContainer}>
               {renderRow(iconsData.slice(0, 8))}
               {renderRow(iconsData.slice(8, 16))}
             </View>
+          </ScrollView>
+        </View>
+        {/* Berita LPPKN SECTION */}
+        <View style={styles.beritaContainer}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.sectionText}>Berita LPPKN</Text>
+            <TouchableOpacity onPress={() => console.log('Lihat Semua Berita LPPKN Button Pressed!')}>
+              <Text style={styles.sectionSubText}>Lihat Semua {'>'}</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {/* <View style={styles.gridContainer}>
+              {renderRow(iconsData.slice(0, 8))}
+              {renderRow(iconsData.slice(8, 16))}
+            </View> */}
+          </ScrollView>
+        </View>
+        {/* Sorotan SECTION */}
+        <View style={styles.sorotanContainer}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.sorotanText}>Sorotan</Text>
+            <TouchableOpacity onPress={() => console.log('Lihat Semua Berita LPPKN Button Pressed!')}>
+              <Text style={styles.sorotanSubText}>Lihat Semua {'>'}</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {/* <View style={styles.gridContainer}>
+              {renderRow(iconsData.slice(0, 8))}
+              {renderRow(iconsData.slice(8, 16))}
+            </View> */}
           </ScrollView>
         </View>
       </ScrollView>
@@ -69,9 +98,8 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: screenHeight * 2,
+    flex: 1,
     backgroundColor: '#FFFFFF',
-
   },
   headerContainer: {
     backgroundColor: 'transparent', 
@@ -83,30 +111,68 @@ const styles = StyleSheet.create({
     marginTop: -13,
   },
   perkhidmatanContainer: {
-    // backgroundColor: 'yellow',
     flexDirection: 'column',
     height: 280,
-    marginTop: 15,
+    marginTop: 25,
   },
-  perkhidmatanText: {
+  sectionText: {
     textAlign: 'left',
     fontWeight: 'bold',
     color: '#9448DA',
-    fontWeight: 'bold',
+    fontWeight: '800',
     height: 30,
     fontSize: 19,
-    marginLeft: 10,
+    marginLeft: 13,
+  },
+  sectionSubText: {
+    textAlign: 'right',
+    fontWeight: '600',
+    color: '#9A9C9E',
+    fontSize: 11,
+    marginTop: 9,
+    marginRight: 20,
+  },
+  sorotanSubText: {
+    textAlign: 'right',
+    fontWeight: '600',
+    color: '#9A9C9E',
+    fontSize: 11,
+    marginTop: 28,
+    marginRight: 20,
+    marginBottom: 20,
   },
   gridContainer: {
     flexDirection: 'column',
     flexWrap: 'wrap',
-    width: Platform.OS === 'ios' ? screenWidth * 1.87 : screenWidth * 1.8, 
+    width: Platform.OS === 'ios' ? screenWidth * 1.95 : screenWidth * 1.86, 
     marginLeft: 3,
   },
   rowContainer: {
     flexDirection: 'row',
     width: screenWidth, 
     justifyContent: 'space-between',
+  },
+  beritaContainer: {
+    backgroundColor: 'yellow',
+    flexDirection: 'column',
+    height: 400,
+    marginTop: 15,
+  },
+  sorotanContainer: { 
+    backgroundColor: '#ECDDFF',
+    flexDirection: 'column',
+    height: 350,
+    marginTop: 15,
+  },
+  sorotanText: {
+    textAlign: 'left',
+    fontWeight: 'bold',
+    color: '#9448DA',
+    fontWeight: '800',
+    height: 30,
+    fontSize: 19,
+    marginLeft: 13,
+    marginTop: 20,
   },
 });
 

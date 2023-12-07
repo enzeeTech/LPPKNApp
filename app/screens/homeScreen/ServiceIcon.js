@@ -6,7 +6,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, Platform }
 const screenWidth = Dimensions.get('window').width;
 const iconsPerRow = 4;
 const padding = 10; // Padding on each side of the icon
-const iconContainerWidth = (screenWidth / iconsPerRow) - (padding * 2.8); 
+const iconContainerWidth = (screenWidth / iconsPerRow) - (padding * 2.4); 
 const iconSize = iconContainerWidth / 2; 
 
 const ServiceIcon = ({ iconSource, label }) => {
@@ -33,13 +33,14 @@ const ServiceIcon = ({ iconSource, label }) => {
 const styles = StyleSheet.create({
   iconWrapper: {
     width: iconContainerWidth+7,
+    marginTop: 10,
     alignItems: 'center',
-    margin: Platform.OS === 'ios' ? padding / 1.4 : padding / 2, 
+    margin: Platform.OS === 'ios' ? padding / 1.5 : padding / 2, 
     
   },
   iconCircle: {
-    width: iconContainerWidth,
-    height: iconContainerWidth,
+    width: iconContainerWidth/1.1,
+    height: iconContainerWidth/1.1,
     borderRadius: iconContainerWidth / 2, 
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   },
   iconLabel: {
     marginTop: 7, 
-    fontSize: Platform.OS === 'android' ? 10 : 9, 
+    fontSize: Platform.OS === 'android' ? 10 : 10, 
     color: '#777777', 
     textAlign: 'center', 
     fontWeight: '700', 

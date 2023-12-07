@@ -40,18 +40,18 @@ const newsData = [
 const HomeScreen = () => {
 
   // Function to render each row
-  const renderRow = (iconsForRow) => (
+  const renderRow = (slicedIconsRow) => (
     <View style={styles.rowContainer}>
-      {iconsForRow.map((icon, index) => (
+      {slicedIconsRow.map((icon, index) => (
         <ServiceIcon key={`icon-${index}`} iconSource={icon.iconSource} label={icon.label} />
       ))}
     </View>
   );
 
   // Function to render each news row
-  const renderNewsRow = (newsForRow) => (
+  const renderNewsRow = (slicedNewsRow) => (
     <View style={styles.newsRowContainer}>
-      {newsForRow.map((news, index) => (
+      {slicedNewsRow.map((news, index) => (
         <NewsItem key={`news-${index}`} title={news.title} date={news.date} imageUrl={news.imageUrl} />
       ))}
     </View>
@@ -81,11 +81,11 @@ const HomeScreen = () => {
             </View>
           </ScrollView>
         </View>
-        {/* Berita LPPKN SECTION */}
+        {/* BERITA LPPKN SECTION */}
         <View style={styles.beritaContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.sectionText}>Berita LPPKN</Text>
-            <TouchableOpacity onPress={() => console.log('Lihat Semua Berita LPPKN Button Pressed!')}>
+            <TouchableOpacity onPress={() => console.log('Lihat Semua Button Pressed!')}>
               <Text style={styles.sectionSubText}>Lihat Semua {'>'}</Text>
             </TouchableOpacity>
           </View>
@@ -98,11 +98,11 @@ const HomeScreen = () => {
             </View>
           </ScrollView>
         </View>
-        {/* Sorotan SECTION */}
+        {/* SOROTAN SECTION */}
         <View style={styles.sorotanContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.sorotanText}>Sorotan</Text>
-            <TouchableOpacity onPress={() => console.log('Lihat Semua Berita LPPKN Button Pressed!')}>
+            <TouchableOpacity onPress={() => console.log('Lihat Semua Button Pressed!')}>
               <Text style={styles.sorotanSubText}>Lihat Semua {'>'}</Text>
             </TouchableOpacity>
           </View>
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   slidingNewsContainer: {
-    backgroundColor: 'red',
     height: 230,
     marginTop: -13,
   },

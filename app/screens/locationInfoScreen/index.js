@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
     headerContainer: {
         backgroundColor: 'transparent', 
         zIndex: 5,
+        shadowOffset: {width: 0, height: 6.7},
+        shadowColor: "#000",
+        shadowOpacity: 0.25,
+        shadowRadius: 4, 
+        elevation: 5,
     },
     imageContainer: {
         width: '100%',

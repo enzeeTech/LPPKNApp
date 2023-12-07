@@ -145,10 +145,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     height: Platform.OS === 'ios' ? 75 : 60,
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
     shadowColor: '#000',
-    shadowOffset: { height: '10%', width: 0 },
+    shadowOffset: { height: -1, width: 0 },
   },
   tabIcon: {
     width: 40,
@@ -169,9 +169,9 @@ const styles = StyleSheet.create({
   },
   shadow: {
     shadowColor: '#000',
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: -1 },
     elevation: 10, // for Android shadow
   },
 });

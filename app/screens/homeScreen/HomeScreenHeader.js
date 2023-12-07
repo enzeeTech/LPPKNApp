@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight-20: 0,
+        shadowColor: "#000",
+        shadowOffset: {width: 0, height: 7},
+        shadowOpacity: 0.25,
+        shadowRadius: 4, 
+        elevation: 5,
     },
     headerContainer: {
         height: 68, 
@@ -58,12 +63,12 @@ const styles = StyleSheet.create({
     iconStyleHome: {
         width: 150, 
         height: 150, 
-        marginLeft: 5,
         resizeMode: 'contain',  
     },
     iconStyleSetting: {
         width: 22, 
         height: 22, 
+        marginRight: 5,
         resizeMode: 'contain',
         backgroundColor: 'transparent',
     },

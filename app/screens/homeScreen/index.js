@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, SafeAreaView, Dimensions, Image, Platform, Touc
 import { ScrollView } from 'react-native';
 import Header from './HomeScreenHeader';
 import ServiceIcon from './ServiceIcon';
+import NewsItem from './NewsItem';
 
 const screenWidth = Dimensions.get('window').width;
 
-// Array of icons and labels
+// Array of icons and labels for each row of icons
 const iconsData = [
   { iconSource: require('../../assets/subfertiliti.png'), label: 'Subfertiliti' },
   { iconSource: require('../../assets/perancangKeluarga.png'), label: 'Perancang Keluarga' },
@@ -26,6 +27,16 @@ const iconsData = [
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
 ];
 
+// Array of image, title, and date for news
+const newsData = [
+  { title: 'Sambutan Hari Wanita Antarabangsa di Dewan Perdana FELDA, Kuala Lumpur',  date:'9 Mac 2023', imageUrl: require('../../assets/homeDummy1.png')},
+  { title: 'Program Kempen Kesedaran Kanser Reproduktif Wanita(WCaRe) Kuching',  date:'30 Jan 2023', imageUrl: require('../../assets/homeDummy2.png')},
+  { title: '850,000 Remaja Sertai Program PPK di Pusat Remaja KafeTEEN',  date:'13 Feb 2023', imageUrl: require('../../assets/homeDummy3.png')},
+  { title: 'Sambutan Hari Wanita Antarabangsa di Dewan Perdana FELDA, Kuala Lumpur',  date:'9 Mac 2023', imageUrl: require('../../assets/homeDummy1.png')},
+  { title: 'Program Kempen Kesedaran Kanser Reproduktif Wanita(WCaRe) Kuching',  date:'30 Jan 2023', imageUrl: require('../../assets/homeDummy2.png')},
+  { title: '850,000 Remaja Sertai Program PPK di Pusat Remaja KafeTEEN',  date:'13 Feb 2023', imageUrl: require('../../assets/homeDummy3.png')},
+];
+
 const HomeScreen = () => {
 
   // Function to render each row
@@ -33,6 +44,15 @@ const HomeScreen = () => {
     <View style={styles.rowContainer}>
       {iconsForRow.map((icon, index) => (
         <ServiceIcon key={`icon-${index}`} iconSource={icon.iconSource} label={icon.label} />
+      ))}
+    </View>
+  );
+
+  // Function to render each news row
+  const renderNewsRow = (newsForRow) => (
+    <View style={styles.newsRowContainer}>
+      {newsForRow.map((news, index) => (
+        <NewsItem key={`news-${index}`} title={news.title} date={news.date} imageUrl={news.imageUrl} />
       ))}
     </View>
   );
@@ -70,10 +90,12 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {/* <View style={styles.gridContainer}>
-              {renderRow(iconsData.slice(0, 8))}
-              {renderRow(iconsData.slice(8, 16))}
-            </View> */}
+            <View style={styles.beritaGridContainer}>
+                {/* Render the news rows */}
+                {renderNewsRow(newsData.slice(0, 2))}
+                {renderNewsRow(newsData.slice(2, 4))}
+                {renderNewsRow(newsData.slice(4, 6))}
+            </View>
           </ScrollView>
         </View>
         {/* Sorotan SECTION */}
@@ -85,10 +107,7 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {/* <View style={styles.gridContainer}>
-              {renderRow(iconsData.slice(0, 8))}
-              {renderRow(iconsData.slice(8, 16))}
-            </View> */}
+            
           </ScrollView>
         </View>
       </ScrollView>
@@ -129,7 +148,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#9A9C9E',
     fontSize: 11,
-    marginTop: 9,
+    marginTop: 6,
     marginRight: 20,
   },
   sorotanSubText: {
@@ -137,15 +156,20 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#9A9C9E',
     fontSize: 11,
-    marginTop: 28,
+    marginTop: 27,
     marginRight: 20,
     marginBottom: 20,
   },
   gridContainer: {
     flexDirection: 'column',
     flexWrap: 'wrap',
-    width: Platform.OS === 'ios' ? screenWidth * 1.95 : screenWidth * 1.86, 
+    width: Platform.OS === 'ios' ? screenWidth * 1.95 : screenWidth * 1.88, 
     marginLeft: 3,
+  },
+  beritaGridContainer: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    width: Platform.OS === 'ios' ? screenWidth * 1.65: screenWidth * 1.55, 
   },
   rowContainer: {
     flexDirection: 'row',
@@ -153,10 +177,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   beritaContainer: {
-    backgroundColor: 'yellow',
     flexDirection: 'column',
-    height: 400,
+    height: 450,
     marginTop: 15,
+  },
+  newsRowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', 
+    padding: 10,
   },
   sorotanContainer: { 
     backgroundColor: '#ECDDFF',

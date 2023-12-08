@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const NewsItem = ({ title, date, imageUrl }) => {
+const NewsItem = ({ title, date, imageSource: imageSource }) => {
   // Handle press event for the news item
   const handlePress = () => {
     console.log(`${title} pressed!`);
@@ -9,7 +9,7 @@ const NewsItem = ({ title, date, imageUrl }) => {
 
   return (
     <TouchableOpacity style={styles.newsItemContainer} onPress={handlePress}>
-      <Image source={imageUrl} style={styles.imageStyle} />
+      <Image source={imageSource} style={styles.imageStyle} />
       <View style={styles.textContainer}>
         <Text style={styles.titleStyle} numberOfLines={3}>{title}</Text>
         <Text style={styles.dateStyle}>{date}</Text>

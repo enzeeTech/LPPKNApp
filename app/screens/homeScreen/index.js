@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native';
 import Header from './HomeScreenHeader';
 import ServiceIcon from './ServiceIcon';
 import NewsItem from './NewsItem';
+import PosterItem from './PosterItem';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -29,16 +30,24 @@ const iconsData = [
 
 // Array of image, title, and date for news
 const newsData = [
-  { title: 'Sambutan Hari Wanita Antarabangsa di Dewan Perdana FELDA, Kuala Lumpur',  date:'9 Mac 2023', imageUrl: require('../../assets/homeDummy1.png')},
-  { title: 'Program Kempen Kesedaran Kanser Reproduktif Wanita(WCaRe) Kuching',  date:'30 Jan 2023', imageUrl: require('../../assets/homeDummy2.png')},
-  { title: '850,000 Remaja Sertai Program PPK di Pusat Remaja KafeTEEN',  date:'13 Feb 2023', imageUrl: require('../../assets/homeDummy3.png')},
-  { title: 'Sambutan Hari Wanita Antarabangsa di Dewan Perdana FELDA, Kuala Lumpur',  date:'9 Mac 2023', imageUrl: require('../../assets/homeDummy1.png')},
-  { title: 'Program Kempen Kesedaran Kanser Reproduktif Wanita(WCaRe) Kuching',  date:'30 Jan 2023', imageUrl: require('../../assets/homeDummy2.png')},
-  { title: '850,000 Remaja Sertai Program PPK di Pusat Remaja KafeTEEN',  date:'13 Feb 2023', imageUrl: require('../../assets/homeDummy3.png')},
+  { title: 'Sambutan Hari Wanita Antarabangsa di Dewan Perdana FELDA, Kuala Lumpur',  date:'9 Mac 2023', imageSource: require('../../assets/homeDummy1.png')},
+  { title: 'Program Kempen Kesedaran Kanser Reproduktif Wanita(WCaRe) Kuching',  date:'30 Jan 2023', imageSource: require('../../assets/homeDummy2.png')},
+  { title: '850,000 Remaja Sertai Program PPK di Pusat Remaja KafeTEEN',  date:'13 Feb 2023', imageSource: require('../../assets/homeDummy3.png')},
+  { title: 'Sambutan Hari Wanita Antarabangsa di Dewan Perdana FELDA, Kuala Lumpur',  date:'9 Mac 2023', imageSource: require('../../assets/homeDummy1.png')},
+  { title: 'Program Kempen Kesedaran Kanser Reproduktif Wanita(WCaRe) Kuching',  date:'30 Jan 2023', imageSource: require('../../assets/homeDummy2.png')},
+  { title: '850,000 Remaja Sertai Program PPK di Pusat Remaja KafeTEEN',  date:'13 Feb 2023', imageSource: require('../../assets/homeDummy3.png')},
 ];
 
-const HomeScreen = () => {
+// Array of image, title, and date for poster
+const posterData = [
+  { title: 'Pertandingan KASIH Keluarga Challenge',  date:'20 September 2023', imageSource: require('../../assets/poster1.png')},
+  { title: 'Kempen Bulan Perancang Keluarga',  date:'10 September 2023', imageSource: require('../../assets/poster2.png')},
+  { title: 'Kajian Kepuasan Pelanggan Klinik LPPKN 2023',  date:'29 Ogos 2023', imageSource: require('../../assets/poster3.png')},
+  { title: 'Sambutan Ulangtahun LPPKN ke-57',  date:'15 Jun 2023', imageSource: require('../../assets/poster4.png')},
+];
 
+
+const HomeScreen = () => {
   // Function to render each row
   const renderRow = (slicedIconsRow) => (
     <View style={styles.rowContainer}>
@@ -52,7 +61,21 @@ const HomeScreen = () => {
   const renderNewsRow = (slicedNewsRow) => (
     <View style={styles.newsRowContainer}>
       {slicedNewsRow.map((news, index) => (
-        <NewsItem key={`news-${index}`} title={news.title} date={news.date} imageUrl={news.imageUrl} />
+        <NewsItem key={`news-${index}`} title={news.title} date={news.date} imageSource={news.imageSource} />
+      ))}
+    </View>
+  );
+  
+  // Function to render each poster row
+  const renderPosterRow = (posterRow) => (
+    <View style={styles.posterRowContainer}>
+      {posterRow.map((poster, index) => (
+        <PosterItem
+          key={`poster-${index}`}
+          title={poster.title}
+          date={poster.date}
+          imageSource={poster.imageSource}
+        />
       ))}
     </View>
   );
@@ -107,7 +130,10 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            
+            <View>
+                {/* Render the poster row */}
+                {renderPosterRow(posterData)}
+            </View>
           </ScrollView>
         </View>
       </ScrollView>
@@ -185,10 +211,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', 
     padding: 10,
   },
+  posterRowContainer: {
+    flexDirection: 'row',
+    // justifyContent: 'space-between', 
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
   sorotanContainer: { 
     backgroundColor: '#ECDDFF',
     flexDirection: 'column',
-    height: 350,
+    height: 500,
     marginTop: 15,
   },
   sorotanText: {

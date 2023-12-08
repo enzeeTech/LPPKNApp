@@ -83,10 +83,10 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Header />
+      </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.headerContainer}>
-          <Header />
-        </View>
         {/* SLIDING NEWS SECTION */}
         <View style={styles.slidingNewsContainer}>
           {/* <Text style={{textAlign: 'center', paddingTop: 110, fontWeight: 'bold'}}>Sliding news here</Text> */}
@@ -108,8 +108,9 @@ const HomeScreen = () => {
         <View style={styles.beritaContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.sectionText}>Berita LPPKN</Text>
-            <TouchableOpacity onPress={() => console.log('Lihat Semua Button Pressed!')}>
-              <Text style={styles.sectionSubText}>Lihat Semua {'>'}</Text>
+            <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => console.log('Lihat Semua Button Pressed!')}>
+              <Text style={styles.sectionSubText}>Lihat Semua</Text>
+              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrow}/>
             </TouchableOpacity>
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -125,8 +126,9 @@ const HomeScreen = () => {
         <View style={styles.sorotanContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.sorotanText}>Sorotan</Text>
-            <TouchableOpacity onPress={() => console.log('Lihat Semua Button Pressed!')}>
-              <Text style={styles.sorotanSubText}>Lihat Semua {'>'}</Text>
+            <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => console.log('Lihat Semua Button Pressed!')}>
+              <Text style={styles.sorotanSubText}>Lihat Semua</Text>
+              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan}/>
             </TouchableOpacity>
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -174,7 +176,22 @@ const styles = StyleSheet.create({
     color: '#9A9C9E',
     fontSize: 11,
     marginTop: 6,
-    marginRight: 20,
+  },
+  rightArrow: {
+    width: 8, 
+    height: 8, 
+    marginTop: Platform.OS === 'ios' ? 8.5 : 10.4, 
+    marginRight: 10, 
+    marginLeft: 3, 
+    resizeMode: 'contain'
+  },
+  rightArrowSorotan: {
+    width: 8, 
+    height: 8, 
+    marginTop: Platform.OS === 'ios' ? 29.5 : 30.7, 
+    marginRight: 10, 
+    marginLeft: 3, 
+    resizeMode: 'contain'
   },
   sorotanSubText: {
     textAlign: 'right',
@@ -182,7 +199,6 @@ const styles = StyleSheet.create({
     color: '#9A9C9E',
     fontSize: 11,
     marginTop: 27,
-    marginRight: 20,
     marginBottom: 20,
   },
   gridContainer: {
@@ -215,13 +231,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'space-between', 
     paddingBottom: 10,
-    paddingLeft: 10,
+    paddingLeft: 5,
     paddingRight: 10,
   },
   sorotanContainer: { 
     backgroundColor: '#ECDDFF',
     flexDirection: 'column',
-    height: 500,
+    height: 470,
     marginTop: 15,
   },
   sorotanText: {

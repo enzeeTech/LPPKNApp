@@ -20,7 +20,7 @@ const ServiceIcon = ({ iconSource, label }) => {
         <TouchableOpacity 
             style={styles.iconWrapper} 
             onPress={handlePress}
-            activeOpacity={Platform.OS === 'ios' ? 0.2 : 0.85}
+            activeOpacity={Platform.OS === 'ios' ? 0.2 : 0.75}
         >
         <View style={styles.iconCircle}>
             <Image source={iconSource} style={styles.icon} />

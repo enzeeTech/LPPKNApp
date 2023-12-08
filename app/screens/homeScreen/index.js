@@ -6,6 +6,7 @@ import ServiceIcon from './ServiceIcon';
 import NewsItem from './NewsItem';
 import PosterItem from './PosterItem';
 
+
 const screenWidth = Dimensions.get('window').width;
 
 // Array of icons and labels for each row of icons
@@ -48,11 +49,14 @@ const posterData = [
 
 
 const HomeScreen = () => {
-  // Function to render each row
+  // Function to render each row of icons
   const renderRow = (slicedIconsRow) => (
     <View style={styles.rowContainer}>
       {slicedIconsRow.map((icon, index) => (
-        <ServiceIcon key={`icon-${index}`} iconSource={icon.iconSource} label={icon.label} />
+        <ServiceIcon 
+          key={`icon-${index}`} 
+          iconSource={icon.iconSource} 
+          label={icon.label} />
       ))}
     </View>
   );
@@ -61,7 +65,11 @@ const HomeScreen = () => {
   const renderNewsRow = (slicedNewsRow) => (
     <View style={styles.newsRowContainer}>
       {slicedNewsRow.map((news, index) => (
-        <NewsItem key={`news-${index}`} title={news.title} date={news.date} imageSource={news.imageSource} />
+        <NewsItem 
+          key={`news-${index}`} 
+          title={news.title} 
+          date={news.date} 
+          imageSource={news.imageSource} />
       ))}
     </View>
   );
@@ -86,7 +94,7 @@ const HomeScreen = () => {
       <View style={styles.headerContainer}>
         <Header />
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView style={{marginTop: -9}} showsVerticalScrollIndicator={false}>
         {/* SLIDING NEWS SECTION */}
         <View style={styles.slidingNewsContainer}>
           {/* <Text style={{textAlign: 'center', paddingTop: 110, fontWeight: 'bold'}}>Sliding news here</Text> */}
@@ -146,10 +154,13 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: screenWidth,
     backgroundColor: '#FFFFFF',
   },
   headerContainer: {
-    backgroundColor: 'transparent', 
+    backgroundColor: '#FFFFFF', 
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15,
     zIndex: 5,
   },
   slidingNewsContainer: {
@@ -229,7 +240,6 @@ const styles = StyleSheet.create({
   },
   posterRowContainer: {
     flexDirection: 'row',
-    // justifyContent: 'space-between', 
     paddingBottom: 10,
     paddingLeft: 5,
     paddingRight: 10,

@@ -1,22 +1,38 @@
-import React from 'react';
-import { Image, TouchableOpacity, StyleSheet, View, Text, Platform, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import { Image, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, View, Text, Platform, StatusBar, Dimensions } from 'react-native';
+import DropdownMenu from './DropDownMenu';
 
 function Header() {
+    const [isMenuVisible, setMenuVisible] = useState(false);
+
+    const handleMenuItemSelect = (item) => {
+        console.log(`${item} selected`);
+        setMenuVisible(false); // Closes the menu after selection
+    };
+
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
+                {/* SEARCH BUTTON */}
                 <TouchableOpacity onPress={() => console.log('Search Button Pressed!')}>
                     <Image 
                         source={require('../../assets/searchIconHome.png')}
                         style = {styles.iconStyleSearch}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => console.log('Logo Button Pressed!')}>
+                {/* LOGO BUTTON */}
+                <TouchableWithoutFeedback onPress={() => setMenuVisible(!isMenuVisible)}>
                     <Image 
                         source={require('../../assets/lppknLogoHome.png')}
                         style = {styles.iconStyleHome}
                     />
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
+                <DropdownMenu 
+                    isVisible={isMenuVisible} 
+                    onItemSelect={handleMenuItemSelect}
+                    onClose={() => setMenuVisible(false)}
+                />
+                {/* SETTINGS BUTTON */}
                 <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                     <Image 
                         source={require('../../assets/settingsIconHome.png')}
@@ -45,7 +61,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center', 
         justifyContent: 'space-between',
-        paddingHorizontal: 15, 
+        paddingHorizontal: 15,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        backgroundColor: '#FFF',
     },
     headerText: {
         color: '#F5F5F5',

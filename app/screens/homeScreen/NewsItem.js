@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const NewsItem = ({ title, date, imageSource: imageSource }) => {
+const NewsItem = ({ title, date, imageSource }) => {
   // Handle press event for the news item
   const handlePress = () => {
     console.log(`${title} pressed!`);

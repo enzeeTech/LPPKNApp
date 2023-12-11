@@ -6,7 +6,6 @@ import ServiceIcon from './ServiceIcon';
 import NewsItem from './NewsItem';
 import PosterItem from './PosterItem';
 
-
 const screenWidth = Dimensions.get('window').width;
 
 // Array of icons and labels for each row of icons
@@ -87,7 +86,6 @@ const HomeScreen = () => {
       ))}
     </View>
   );
-
 
   return (
     <SafeAreaView style={styles.container}>

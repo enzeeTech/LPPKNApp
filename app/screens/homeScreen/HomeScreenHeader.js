@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
 import { Image, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, View, Text, Platform, StatusBar, Dimensions } from 'react-native';
 import DropdownMenu from './DropDownMenu';
+import SettingsScreen from './SettingsMenu';
 
 function Header() {
     const [isMenuVisible, setMenuVisible] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
 
     const handleMenuItemSelect = (item) => {
         console.log(`${item} selected`);
         setMenuVisible(false); // Closes the menu after selection
+    };
+
+        // Open the settings overlay
+    const openSettings = () => {
+        setShowSettings(true);
+    };
+
+    // Close the settings overlay
+    const closeSettings = () => {
+        setShowSettings(false);
     };
 
     return (
@@ -33,12 +45,16 @@ function Header() {
                     onClose={() => setMenuVisible(false)}
                 />
                 {/* SETTINGS BUTTON */}
-                <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+                <TouchableOpacity onPress={openSettings}>
                     <Image 
                         source={require('../../assets/settingsIconHome.png')}
                         style = {styles.iconStyleSetting}
                     />
                 </TouchableOpacity>
+                {/* Settings Overlay */}
+                {showSettings && (
+                    <SettingsScreen onClose={closeSettings} />
+                )}
             </View>
         </View>
     );

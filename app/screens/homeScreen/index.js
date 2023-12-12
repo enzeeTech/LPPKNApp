@@ -95,11 +95,15 @@ const HomeScreen = () => {
   // Function to toggle the visibility of the search bar
   const toggleSearch = () => {
     setSearchVisible(!searchVisible);
+    if (!searchVisible) {
+      setSearchQuery('');
+    }
   };
 
   // Function to hide the search bar
   const hideSearch = () => {
     setSearchVisible(false);
+    setSearchQuery('');
   };
 
   const handleSearchPress = (query) => {
@@ -132,6 +136,7 @@ const HomeScreen = () => {
               <TextInput 
                 style={styles.searchText}
                 placeholder="Masukkan carian"
+                placeholderTextColor={'#A6A6A6'}
                 value={searchQuery}
                 onChangeText={updateSearchQuery}
               >
@@ -359,7 +364,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   searchText: {
-    color: '#A6A6A6',
+    color: 'black',
     fontSize: 14,
     marginTop: Platform.OS === 'ios' ? '3.5%' : '2%',
     marginLeft: '8%',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity, Dimensions, Image, TouchableWithoutFeedback, Platform } from 'react-native';
-import CustomSwitchLanguage from './switches/CustomSwitchLanguage';
-import CustomSwitchNotif from './switches/CustomSwitchNotif';
+import CustomSwitchLanguage from '../switches/CustomSwitchLanguage';
+import CustomSwitchNotif from '../switches/CustomSwitchNotif';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -33,7 +33,7 @@ const SettingsScreen = ({ onClose }) => {
         <TouchableWithoutFeedback>
           <View style={styles.settingsContainer}>
             <TouchableOpacity onPress={onClose} style={styles.backButtonContainer}>
-              <Image source={require('../../assets/backButtonHome.png')} style={styles.backButton}/>
+              <Image source={require('../../../assets/backButtonHome.png')} style={styles.backButton}/>
             </TouchableOpacity>
             <View style={styles.settingItemContainer}>
               <View style={styles.settingItemInfoContainer}>

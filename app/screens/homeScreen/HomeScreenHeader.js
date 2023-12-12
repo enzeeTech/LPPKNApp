@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Image, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, View, TextInput, Platform, StatusBar, Dimensions } from 'react-native';
-import DropdownMenu from './DropDownMenu';
-import SettingsScreen from './SettingsMenu';
+import DropdownMenu from './menuScreens/DropDownMenu';
+import SettingsScreen from './menuScreens/SettingsMenu';
 import { useNavigation } from '@react-navigation/native';
 
 

@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { ScrollView } from 'react-native';
 import Header from './HomeScreenHeader';
-import ServiceIcon from './ServiceIcon';
-import NewsItem from './NewsItem';
-import PosterItem from './PosterItem';
+import ServiceIcon from './customTiles/ServiceIcon';
+import NewsItem from './customTiles/NewsItem';
+import PosterItem from './customTiles/PosterItem';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -102,10 +102,13 @@ const HomeScreen = () => {
     setSearchVisible(false);
   };
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    console.log(`Search query: ${query}`); // Logging the search query
+  const handleSearchPress = (query) => {
+    console.log(`Search query: ${searchQuery}`); // Logging the search query upon button press
   };
+
+  const updateSearchQuery = (query) => {
+    setSearchQuery(query);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -130,13 +133,13 @@ const HomeScreen = () => {
                 style={styles.searchText}
                 placeholder="Masukkan carian"
                 value={searchQuery}
-                onChangeText={handleSearch}
+                onChangeText={updateSearchQuery}
               >
               </TextInput>
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.confirmIconContainer} onPress={() => console.log('Cari Button Pressed!')}> 
+        <TouchableOpacity style={styles.confirmIconContainer} onPress={handleSearchPress}> 
           <Text style={styles.confirmText}>Cari</Text>
         </TouchableOpacity>
       </View>

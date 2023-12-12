@@ -46,7 +46,6 @@ const posterData = [
   { title: 'Sambutan Ulangtahun LPPKN ke-57',  date:'15 Jun 2023', imageSource: require('../../assets/poster4.png')},
 ];
 
-
 const HomeScreen = () => {
   // Function to render each row of icons
   const renderRow = (slicedIconsRow) => (
@@ -87,9 +86,11 @@ const HomeScreen = () => {
     </View>
   );
   
-  // SEARCH BAR FUNCTIONS AND DECLARATIONS
+  //////// SEARCH BAR FUNCTIONS AND DECLARATIONS ////////
+
   // State to store the visibility of the search bar
   const [searchVisible, setSearchVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Function to toggle the visibility of the search bar
   const toggleSearch = () => {
@@ -99,6 +100,11 @@ const HomeScreen = () => {
   // Function to hide the search bar
   const hideSearch = () => {
     setSearchVisible(false);
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    console.log(`Search query: ${query}`); // Logging the search query
   };
 
   return (
@@ -113,12 +119,27 @@ const HomeScreen = () => {
       )}
       {searchVisible && (
         <View style={styles.searchBarContainer}>
-          <TextInput
-            style={styles.searchBar}
-            placeholder="Type here to search"
-            autoFocus={true}
-          />
+        <View style={styles.searchTab}>
+          <View style={styles.searchIconContainer}>
+            <Image 
+              source={require('../../assets/greenSearchIcon.png')}
+              style = {styles.searchIcon}
+            />
+            <View style={styles.seachTextContainer}>
+              <TextInput 
+                style={styles.searchText}
+                placeholder="Masukkan carian"
+                value={searchQuery}
+                onChangeText={handleSearch}
+              >
+              </TextInput>
+            </View>
+          </View>
         </View>
+        <TouchableOpacity style={styles.confirmIconContainer} onPress={() => console.log('Cari Button Pressed!')}> 
+          <Text style={styles.confirmText}>Cari</Text>
+        </TouchableOpacity>
+      </View>
       )}
       <ScrollView style={{marginTop: -9}} showsVerticalScrollIndicator={false}>
         {/* SLIDING NEWS SECTION */}
@@ -177,6 +198,7 @@ const HomeScreen = () => {
   );
 }
 
+// Stylesheet for the HomeScreen component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -285,6 +307,70 @@ const styles = StyleSheet.create({
     fontSize: 19,
     marginLeft: 13,
     marginTop: 20,
+  },
+  searchOverlay: {
+    position: 'absolute',
+    top: 100,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    zIndex: 1,
+  },
+  searchBarContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#9448DA',
+    height: 100,
+    width: '100%',
+    marginTop: '-5%',
+    zIndex: 2,
+  },
+  searchTab: {
+    width: '75%',
+    height: 40,
+    marginTop: '9%',
+    marginLeft: '6%',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderWidth: 2,
+    borderColor: '#CBCBCB',
+    backgroundColor: '#FFFFFF',
+    zIndex: 2,
+  },
+  searchIconContainer: {
+    width: '10%',
+    height: '100%',
+    flexDirection: 'row',
+    marginLeft: 8,
+  },
+  searchIcon: {
+    width: '80%',
+    height: '70%',
+    resizeMode: 'contain',
+    marginTop: '15%',
+  },
+  seachTextContainer: {
+    width: 250,
+    height: '100%',
+  },
+  searchText: {
+    color: '#A6A6A6',
+    fontSize: 14,
+    marginTop: Platform.OS === 'ios' ? '3.5%' : '2%',
+    marginLeft: '8%',
+  },
+  confirmIconContainer: {
+    width: '13%',
+    height: '20%',
+    marginTop: '11.5%',
+    marginLeft: '4%',
+  },
+  confirmText: {
+    color: '#21CF44',
+    fontSize: 15,
+    fontWeight: 'bold',
   },
 });
 

@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
     iconStyleHome: {
         width: 150, 
-        height: 150, 
+        height: 70, 
         resizeMode: 'contain',  
     },
     iconStyleSetting: {

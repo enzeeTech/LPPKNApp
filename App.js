@@ -3,14 +3,15 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, Platform
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import LocationInfoScreen from './app/screens/locationInfoScreen/index';
-import HomeScreen from './app/screens/homeScreen/index';
-import LocationScreen from './app/screens/locationInfoScreen/index';
+import testScreen from './app/screens/homeScreen/infoPages/HubungiKami';
+import HomeScreen from './app/screens/homeScreen/HomeStack';
 import ChatScreen from './app/screens/chatScreen/index';
 import SupportScreen from './app/screens/supportScreen/index';
 import FeedbackScreen from './app/screens/feedbackScreen/index';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -115,7 +116,7 @@ export default function App() {
         >
           {/* Define Tab.Screen components for each screen */}
           <Tab.Screen name="HomeScreen" component={HomeScreen} />
-          <Tab.Screen name="LocationInfoScreen" component={LocationScreen} />
+          <Tab.Screen name="LocationInfoScreen" component={LocationInfoScreen} />
           <Tab.Screen
             name="ChatScreen"
             component={ChatScreen}

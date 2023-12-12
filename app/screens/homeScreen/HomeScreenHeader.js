@@ -2,15 +2,31 @@ import React, { useState } from 'react';
 import { Image, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, View, Text, Platform, StatusBar, Dimensions } from 'react-native';
 import DropdownMenu from './DropDownMenu';
 import SettingsScreen from './SettingsMenu';
+import { useNavigation } from '@react-navigation/native';
+
 
 function Header() {
+    const navigation = useNavigation();
+
     const [isMenuVisible, setMenuVisible] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
 
     const handleMenuItemSelect = (item) => {
         console.log(`${item} selected`);
         setMenuVisible(false); // Closes the menu after selection
+    
+        // Navigate based on the item selected
+        if (item === 'Tentang Kami') {
+            console.log(`${item} selected`); 
+        } else if (item === 'Hubungi Kami') {
+            navigation.navigate('Hubungikami'); 
+        }
     };
+
+    // const handleMenuItemSelect = (item) => {
+    //     console.log(`${item} selected`);
+    //     setMenuVisible(false); // Closes the menu after selection
+    // };
 
         // Open the settings overlay
     const openSettings = () => {

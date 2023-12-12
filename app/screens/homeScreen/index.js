@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { ScrollView } from 'react-native';
 import Header from './HomeScreenHeader';
 import ServiceIcon from './ServiceIcon';
@@ -86,12 +86,40 @@ const HomeScreen = () => {
       ))}
     </View>
   );
+  
+  // SEARCH BAR FUNCTIONS AND DECLARATIONS
+  // State to store the visibility of the search bar
+  const [searchVisible, setSearchVisible] = useState(false);
+
+  // Function to toggle the visibility of the search bar
+  const toggleSearch = () => {
+    setSearchVisible(!searchVisible);
+  };
+
+  // Function to hide the search bar
+  const hideSearch = () => {
+    setSearchVisible(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Header />
+        <Header toggleSearch={toggleSearch} />
       </View>
+      {searchVisible && (
+        <TouchableWithoutFeedback onPress={hideSearch}>
+          <View style={styles.searchOverlay} />
+        </TouchableWithoutFeedback>
+      )}
+      {searchVisible && (
+        <View style={styles.searchBarContainer}>
+          <TextInput
+            style={styles.searchBar}
+            placeholder="Type here to search"
+            autoFocus={true}
+          />
+        </View>
+      )}
       <ScrollView style={{marginTop: -9}} showsVerticalScrollIndicator={false}>
         {/* SLIDING NEWS SECTION */}
         <View style={styles.slidingNewsContainer}>

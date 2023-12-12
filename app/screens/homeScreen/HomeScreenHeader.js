@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Image, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, View, Text, Platform, StatusBar, Dimensions } from 'react-native';
+import { Image, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, View, TextInput, Platform, StatusBar, Dimensions } from 'react-native';
 import DropdownMenu from './DropDownMenu';
 import SettingsScreen from './SettingsMenu';
 import { useNavigation } from '@react-navigation/native';
 
 
-function Header() {
+function Header({toggleSearch}) {
     const navigation = useNavigation();
 
     const [isMenuVisible, setMenuVisible] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
 
+    // Logo button pressed handler
     const handleMenuItemSelect = (item) => {
-        console.log(`${item} selected`);
         setMenuVisible(false); // Closes the menu after selection
     
         // Navigate based on the item selected
@@ -23,12 +23,7 @@ function Header() {
         }
     };
 
-    // const handleMenuItemSelect = (item) => {
-    //     console.log(`${item} selected`);
-    //     setMenuVisible(false); // Closes the menu after selection
-    // };
-
-        // Open the settings overlay
+    // Open the settings overlay
     const openSettings = () => {
         setShowSettings(true);
     };
@@ -42,7 +37,7 @@ function Header() {
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
                 {/* SEARCH BUTTON */}
-                <TouchableOpacity onPress={() => console.log('Search Button Pressed!')}>
+                <TouchableOpacity onPress={toggleSearch}>
                     <Image 
                         source={require('../../assets/searchIconHome.png')}
                         style = {styles.iconStyleSearch}
@@ -122,6 +117,16 @@ const styles = StyleSheet.create({
         marginRight: 5,
         resizeMode: 'contain',
         backgroundColor: 'transparent',
+    },
+    searchBarMainContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#9448DA',
+        // borderRadius: 10,
+        width: '100%',
+        height: 40,
+        alignSelf: 'center',
+        marginTop: 107,
     },
 });
 

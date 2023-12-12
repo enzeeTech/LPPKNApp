@@ -94,16 +94,26 @@ const Hubungikami = ({ navigation }) => {
                   style={{
                     flex: 1,
                     flexDirection: "row",
-                    justifyContent: "space-between",
+                    justifyContent: "center",
                     alignItems: "center",
                     marginBottom: Platform.OS === "ios" ? "30%" : "40%",
                   }}
                 >
-                  <Image source={require("../../../assets/facebook.png")} style={{marginRight:15}} />
-                  <Image source={require("../../../assets/youtube.jpg")} style={{marginRight:15}} />
-                  <Image source={require("../../../assets/x.jpg")} style={{marginRight:15}} />
-                  <Image source={require("../../../assets/instagram.jpg")} style={{marginRight:15}} />
-                  <Image source={require("../../../assets/web.jpg")} style={{marginRight:15}} />
+                  <TouchableOpacity onPress={() => console.log('Facebook Button Pressed!')}style={{width: 40, height: 40, marginRight: 15, marginLeft: 10}} >
+                    <Image source={require("../../../assets/facebook.png")} style={{resizeMode: "contain"}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => console.log('YouTube Button Pressed!')} style={{width: 45, height: 45, marginRight: 15, marginTop:15}} >
+                    <Image source={require("../../../assets/youtube.jpg")} style={{resizeMode: "cover"}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => console.log('X Button Pressed!')} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
+                    <Image source={require("../../../assets/x.jpg")} style={{resizeMode: "contain"}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => console.log('Instagram Button Pressed!')} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
+                    <Image source={require("../../../assets/instagram.jpg")} style={{resizeMode: "contain"}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => console.log('Web Button Pressed!')} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
+                    <Image source={require("../../../assets/web.jpg")} style={{resizeMode: "contain"}}/>
+                  </TouchableOpacity>
                 </View>
               </View>
             </ImageBackground>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, TouchableOpacity, Dimensions } from 'react-native';
 import Header from './BulletinInfoHeader';
@@ -24,12 +24,10 @@ const BulletinInfoMain = () => {
             <View style={styles.headerContainer}>
                 <Header/>
             </View>
-            <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: -13}}>
-                <ImageBackground
-                    source={require('../../assets/beritaInfoImage.png')}
-                    style={styles.image}
-                    resizeMode="cover"
-                ></ImageBackground>
+            <ScrollView 
+                showsVerticalScrollIndicator={false} 
+                style={{marginTop: -13}}
+            >
                 <View style={[styles.infoContainer, infoContainerStyle]}>
                         <InfoSection/>
                 </View>
@@ -55,13 +53,10 @@ const styles = StyleSheet.create({
         width: '100%',
         height: screenHeight * 0.3,
         // marginTop: 0,
-
     },
     infoContainer: {
-        backgroundColor: '#FFF', 
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        marginTop: '-5%',
+        flex:1,
+        
     },
 });
 

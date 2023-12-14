@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'ios' ? 14 : 15,
         fontWeight: '600',
         textAlign: 'justify',
-        marginBottom: 70,
+        marginBottom: Platform.OS === 'ios' ? 70 : 100,
         width: '90%',
     },
     loadMoreItemContainer: {

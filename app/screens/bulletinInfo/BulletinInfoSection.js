@@ -18,7 +18,6 @@ const sliderImages = [
   ];
 
 const InfoSection = () => {
-    const [expanded, setExpanded] = useState(false);
     const [activeSlide, setActiveSlide] = useState(0);
 
     // Listen to slide event for the pagination animation

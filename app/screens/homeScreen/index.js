@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { ScrollView } from 'react-native';
 import Header from './HomeScreenHeader';
-import ServiceIcon from './customTiles/ServiceIcon';
+import ServiceIcon from '../common/ServiceIcon';
 import NewsItem from './customTiles/NewsItem';
 import PosterItem from './customTiles/PosterItem';
 
@@ -152,7 +152,6 @@ const HomeScreen = () => {
       <ScrollView style={{marginTop: -9}} showsVerticalScrollIndicator={false}>
         {/* SLIDING NEWS SECTION */}
         <View style={styles.slidingNewsContainer}>
-          {/* <Text style={{textAlign: 'center', paddingTop: 110, fontWeight: 'bold'}}>Sliding news here</Text> */}
           <Image source={require('../../assets/newsTileDummy.png')} 
           style={{width: Platform.OS === 'ios' ? 400 : 450, height: 230, resizeMode: 'stretch'}}
           />

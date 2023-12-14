@@ -1,20 +1,67 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions, FlatList } from 'react-native';
+import Header from './HeaderSupportScreen';
+import ServiceIcon from '../common/ServiceIcon';
+
+const screenHeight = Dimensions.get('window').height;
+
+// Array of icons and labels for each row of icons
+const iconsData = [
+  { iconSource: require('../../assets/subfertiliti.png'), label: 'Subfertiliti' },
+  { iconSource: require('../../assets/perancangKeluarga.png'), label: 'Perancang Keluarga' },
+  { iconSource: require('../../assets/hpvdna.png'), label: 'HPV DNA' },
+  { iconSource: require('../../assets/subsidiMamogram.png'), label: 'Subsidi Mamogram' },
+  { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
+  { iconSource: require('../../assets/smartstart.png'), label: 'SMARTSTART 2.0' },
+  { iconSource: require('../../assets/smartBelanja.png'), label: 'SMARTBelanja' },
+  { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTeen' },
+  { iconSource: require('../../assets/saringanKesejahteraan.png'), label: 'Saringan Kesejahteraan' },
+  { iconSource: require('../../assets/PEKA.png'), label: 'PEKA' },
+  { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan & Data Mentah' },
+  { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'KASIH Keibubapaan Digital' },
+  { iconSource: require('../../assets/mamaCare.png'), label: 'MamaCare' },
+  { iconSource: require('../../assets/keibubapaanDatukNenek.png'), label: 'Keibubapaan Datuk Nenek' },
+  { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
+  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
+];
 
 function SupportScreen() {
+
+  // Helper function to render each service icon
+  const renderServiceIcon = ({ item }) => (
+    <ServiceIcon iconSource={item.iconSource} label={item.label} />
+  );
+
   return (
-    <View style={styles.container}>
-      <Text>This is the Support Screen</Text>
-      {/* You can add any placeholder content here */}
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <View style={styles.content}>
+          <FlatList
+            data={iconsData}
+            renderItem={renderServiceIcon}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={4}
+            contentContainerStyle={styles.content}
+            scrollEnabled={false}
+          />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor:'#9448DA',
+  },
+  content: {
+    alignContent: 'center',
+    paddingLeft: 4.5,
+    paddingTop: 25,
+    height: screenHeight,
+    width: '100%',
+    backgroundColor: '#fff',
+    marginTop: -13,
   },
 });
 

@@ -4,6 +4,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './index';
 import HubungikamiScreen from './infoPages/HubungiKami'; 
+import TetangKamiScreen from './infoPages/TetangKami';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ const HomeStack = () => {
     >
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Hubungikami" component={HubungikamiScreen} />
+      <Stack.Screen name="Tetangkami" component={TetangKamiScreen} />
     </Stack.Navigator>
   );
 };

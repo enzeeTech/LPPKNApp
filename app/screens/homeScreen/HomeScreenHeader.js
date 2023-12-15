@@ -17,7 +17,7 @@ function Header({toggleSearch}) {
     
         // Navigate based on the item selected
         if (item === 'Tentang Kami') {
-            console.log(`${item} selected`); 
+            navigation.navigate('Tetangkami');
         } else if (item === 'Hubungi Kami') {
             navigation.navigate('Hubungikami'); 
         }

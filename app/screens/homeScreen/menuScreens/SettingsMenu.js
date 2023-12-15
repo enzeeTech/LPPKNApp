@@ -26,7 +26,7 @@ const SettingsScreen = ({ onClose }) => {
 
   return (
       <TouchableOpacity
-        activeOpacity={1} // Keep the settings box non-opaque
+        activeOpacity={1} // Keeps the settings box non-opaque
         style={styles.settingsOverlay}
         onPress={onClose} 
       >

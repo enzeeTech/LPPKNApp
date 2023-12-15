@@ -58,11 +58,11 @@ const styles = StyleSheet.create({
   },
   textContainerRight: {
     alignItems: 'flex-end',
-    paddingRight: 35, // Adjust the padding to move the text away from the toggle
+    paddingRight: 35, 
   },
   textContainerLeft: {
     alignItems: 'flex-start',
-    paddingLeft: 35, // Adjust the padding to move the text away from the toggle
+    paddingLeft: 35, 
   },
   textOff: {
     color: '#FFFFFF',

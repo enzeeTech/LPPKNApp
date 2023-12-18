@@ -3,7 +3,6 @@ import React from 'react';
 import {
   View,
   Text,
-  Dimensions,
   Image,
   TouchableOpacity,
   Alert,
@@ -58,7 +57,7 @@ const StageOne = ({ onNext}) => {
     const [formData, setFormData] = useState({
         // Initialize the form fields for the general case and each specific case
         // General fields that are always present
-        generalField1: '',
+        nama_staf_bertugas: '',
         generalField2: '',
         // Specific fields for each dropdown option
         talian_telefonField1: '',
@@ -76,7 +75,9 @@ const StageOne = ({ onNext}) => {
     ];
 
     const handleNextStage = () => {
+        console.log(formData);
         onNext(formData); // Pass the form data to the parent component
+        
       };
     
     const handleChange = (name, value) => {
@@ -148,6 +149,7 @@ const StageOne = ({ onNext}) => {
                         style={styles.dropdown}
                         containerStyle={styles.dropdownContainer}
                         selectedTextStyle={styles.selectedText}
+                        activeColor="#EED4FF"
                         data={jenisAduanOptions}
                         labelField="label"
                         valueField="value"
@@ -227,10 +229,10 @@ const StageOne = ({ onNext}) => {
                 </View>
 
                 <View style={styles.seterusyaButtonContainer}>
-                        <TouchableOpacity onclick={handleNextStage} style={styles.seterusyaButton}>
+                        <TouchableOpacity onPress={handleNextStage} style={styles.seterusyaButton}>
                             <View>
                                 <Text style={styles.seterusyaButtonText}>
-                                Seterusya
+                                Seterusnya
                                 </Text>
                             </View>
                         </TouchableOpacity>

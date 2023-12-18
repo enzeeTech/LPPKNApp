@@ -21,12 +21,18 @@ const AduanForm = () => {
     setCurrentStage(currentStage + 1); // Move to the next stage
   };
 
+  const handleBack = () => {
+    if (currentStage > 1){
+      setCurrentStage(currentStage - 1); // Move to the previous stage
+    }
+  };
+
   const renderStage = () => {
     switch (currentStage) {
       case 1:
         return <StageOne onNext={handleNext} formData={formData} />;
       case 2:
-        return <StageTwo onNext={handleNext} formData={formData} />;
+        return <StageTwo onNext={handleNext} onBack={handleBack} formData={formData} />;
       case 3:
         return <StageThree onSubmit={handleSubmit} formData={formData} />;
       default:

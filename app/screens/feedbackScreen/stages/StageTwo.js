@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity,Linking } from 'react-native';
 
-function StageTwo({ onNext, formData }) {
+function StageTwo({ onNext, onBack, formData }) {
 
   const openAppStore = () => {
     // Replace 'your-app-id' with the actual app ID or package name from the app store.
@@ -20,6 +20,13 @@ function StageTwo({ onNext, formData }) {
         style={{ marginTop: 10, height: 40, width: 150, borderRadius: 15, backgroundColor: '#9448DA', alignItems: 'center', justifyContent: 'center'   }}
       >
           <Text style={{color: 'white'}}>Download App</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={onBack}
+        style={{ marginTop: 10, height: 40, width: 150, borderRadius: 15, backgroundColor: '#9448DA', alignItems: 'center', justifyContent: 'center'   }}
+      >
+          <Text style={{color: 'white'}}>Go back</Text>
       </TouchableOpacity>
     </View>
   );

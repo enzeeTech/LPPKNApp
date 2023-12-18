@@ -57,8 +57,8 @@ const KakitanganForm = ({ onDataChange, initialData }) => {
         <View style={styles.inputContainer}>
             <Text style={styles.titleStyle}>Nama Staf Bertugas</Text>
             <TextInput
-                value={data.nama_staf}
-                onChangeText={(text) => handleChange('nama_staf', text)}
+                value={data.nama_staf_bertugas}
+                onChangeText={(text) => handleChange('nama_staf_bertugas', text)}
                 placeholder=" Masukkan nama staf"
                 style={styles.inputField}
                 placeholderTextColor={"#A1A1A1"}

@@ -20,25 +20,105 @@ import KakitanganForm from "../questionComponents/Kakitangan";
 import KondisiForm from "../questionComponents/Kondisi";
 import LainLainForm from "../questionComponents/LainLain";
 
-const pickDocument = async () => {
+const StageOne = ({ onNext}) => {
+
+  // State maangement for file upload
+  const [documents, setDocuments] = useState([]);
+
+  // Local state to manage dropdown selection
+  const [selectedItem, setSelectedItem] = useState('');
+
+  // State to keep track of the uploaded file's details
+  const [fileDetails, setFileDetails] = useState(null);
+
+  const [formData, setFormData] = useState({
+      // Initialize the form fields for the general case and each specific case
+      // General fields that are always present
+      nama_staf_bertugas: '',
+      generalField2: '',
+      // Specific fields for each dropdown option
+      talian_telefonField1: '',
+      portal_rhsField1: '',
+      // ... more specific fields
+    });
+
+  const jenisAduanOptions = [
+      {label: 'Talian Telefon', value: 'talian_telefon'},
+      {label: 'Portal RHS', value: 'portal_rhs'},
+      {label: 'Maklumat Tidak Tepat', value: 'maklumat_tidak_tepat'},
+      {label: 'Kakitangan', value: 'kakitangan'},
+      {label: 'Kondisi persekitaran pejabat LPPKN/Klinik Nur Sejahtera/Pusat Keluarga', value: 'kondisi'},
+      {label: 'Lain-lain', value: 'lain_lain'},
+  ];
+
+  const handleNextStage = () => {
+      console.log(formData);
+      onNext(formData); // Pass the form data to the parent component
+      
+    };
+  
+  const handleChange = (name, value) => {
+    setFormData(prevFormData => ({
+        ...prevFormData,
+        [name]: value,
+    }));
+  };
+
+  const handleDataChange = (newData) => {
+      setFormData(newData);
+    };
+  
+
+  // Function to dynamically render additional fields based on "Jenis Aduan" selection
+  const renderConditionalFields = () => {
+      switch (selectedItem) {
+      case 'talian_telefon':
+          return <TalianTelefonForm onDataChange={handleDataChange} initialData={formData} />;
+      case 'portal_rhs':
+          return <PortalForm onDataChange={handleDataChange} initialData={formData} />;
+      case 'maklumat_tidak_tepat':
+          return <MaklumatTidakTepatForm onDataChange={handleDataChange} initialData={formData} />;
+      case 'kakitangan':
+          return <KakitanganForm onDataChange={handleDataChange} initialData={formData} />;
+      case 'kondisi':
+          return <KondisiForm onDataChange={handleDataChange} initialData={formData} />;
+      case 'lain_lain':
+          return <LainLainForm onDataChange={handleDataChange} initialData={formData} />;
+      default:
+          return <GeneralForm onDataChange={handleDataChange} initialData={formData} />;
+      }
+  };
+
+  // Function to handle file upload
+  const pickDocument = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: "*/*",
         copyToCacheDirectory: true,
+        multiple: documents.length < 3 // Allow multiple selection only if less than 3 docs are already uploaded
       });
-  
+
       if (!result.canceled && result.assets) {
-        const pickedFile = result.assets[0]; // Get the first picked file
-        setFileDetails({
-          name: pickedFile.name,
-          size: pickedFile.size,
-          uri: pickedFile.uri,
-          mimeType: pickedFile.mimeType,
-        });
-        Alert.alert(
-          "File Uploaded",
-          `File Name: ${pickedFile.name}\nFile Size: ${pickedFile.size} bytes`
-        );
+        let newDocuments = [...documents];
+        let totalSize = newDocuments.reduce((sum, doc) => sum + doc.size, 0);
+        for (const asset of result.assets) {
+          totalSize += asset.size;
+          if (totalSize <= 4 * 1024 * 1024) { // Check if total size is within 4MB
+            newDocuments.push({
+              name: asset.name,
+              size: asset.size,
+              uri: asset.uri,
+              mimeType: asset.mimeType,
+            });
+          } else {
+            Alert.alert("Error", "Total file size cannot exceed 4MB.");
+            break;
+          }
+        }
+        setDocuments(newDocuments);
+
+        // Log the details of the uploaded files
+        console.log("Uploaded Files:", newDocuments);
       }
     } catch (error) {
       console.error(error);
@@ -46,202 +126,150 @@ const pickDocument = async () => {
     }
   };
 
-const StageOne = ({ onNext}) => {
+  // Function to handle file deletion
+  const deleteDocument = (uri) => {
+    setDocuments(documents.filter(doc => doc.uri !== uri));
+  };
 
-    // Local state to manage dropdown selection
-    const [selectedItem, setSelectedItem] = useState('');
-
-    // State to keep track of the uploaded file's details
-    const [fileDetails, setFileDetails] = useState(null);
-
-    const [formData, setFormData] = useState({
-        // Initialize the form fields for the general case and each specific case
-        // General fields that are always present
-        nama_staf_bertugas: '',
-        generalField2: '',
-        // Specific fields for each dropdown option
-        talian_telefonField1: '',
-        portal_rhsField1: '',
-        // ... more specific fields
-      });
-
-    const jenisAduanOptions = [
-        {label: 'Talian Telefon', value: 'talian_telefon'},
-        {label: 'Portal RHS', value: 'portal_rhs'},
-        {label: 'Maklumat Tidak Tepat', value: 'maklumat_tidak_tepat'},
-        {label: 'Kakitangan', value: 'kakitangan'},
-        {label: 'Kondisi persekitaran pejabat LPPKN/Klinik Nur Sejahtera/Pusat Keluarga', value: 'kondisi'},
-        {label: 'Lain-lain', value: 'lain_lain'},
-    ];
-
-    const handleNextStage = () => {
-        console.log(formData);
-        onNext(formData); // Pass the form data to the parent component
+  // Function to render the list of uploaded files
+  const renderDocumentList = () => {
+    return documents.map((doc, index) => (
+      <View key={index} style={styles.documentItem}>
+        <TouchableOpacity onPress={() => deleteDocument(doc.uri)}>
+          <Image style={{height: 20, width: 20, resizeMode: 'contain'}} source={require("../../../assets/deleteButton.png")} />  
+        </TouchableOpacity>
+        <Text style={styles.documentTitle}>{doc.name}</Text>
         
-      };
-    
-    const handleChange = (name, value) => {
-    setFormData(prevFormData => ({
-        ...prevFormData,
-        [name]: value,
-    }));
-    };
-
-    const handleDataChange = (newData) => {
-        setFormData(newData);
-      };
-    
-
-    // Function to dynamically render additional fields based on "Jenis Aduan" selection
-    const renderConditionalFields = () => {
-        switch (selectedItem) {
-        case 'talian_telefon':
-            return <TalianTelefonForm onDataChange={handleDataChange} initialData={formData} />;
-        case 'portal_rhs':
-            return <PortalForm onDataChange={handleDataChange} initialData={formData} />;
-        case 'maklumat_tidak_tepat':
-            return <MaklumatTidakTepatForm onDataChange={handleDataChange} initialData={formData} />;
-        case 'kakitangan':
-            return <KakitanganForm onDataChange={handleDataChange} initialData={formData} />;
-        case 'kondisi':
-            return <KondisiForm onDataChange={handleDataChange} initialData={formData} />;
-        case 'lain_lain':
-            return <LainLainForm onDataChange={handleDataChange} initialData={formData} />;
-        default:
-            return <GeneralForm onDataChange={handleDataChange} initialData={formData} />;
-        }
-    };
+      </View>
+    ));
+  };
 
 
-    return(
-        <View style={styles.parentContainer}>
-            <View style={styles.pageTitle}>
-                <Text style={styles.pageTitleStyle}>Maklumat Aduan</Text>
-            </View>
-            <View style={styles.langkahContainer}>
-                <View style={styles.langkahElements}>
-                <Image
-                    source={require("../../../assets/langkah1.png")}
-                />
-                <Text style={styles.langkahTitleOn}>Langkah 1</Text>
-                <Text style={styles.langkahTextOn}>Maklumat Aduan</Text>
-                </View>
-                <View style={styles.langkahElements}>
-                <Image
-                    source={require("../../../assets/langkah2.png")}
-                />
-                <Text style={styles.langkahTitle}>Langkah 2</Text>
-                <Text style={styles.langkahText}>Maklumat Pengadu</Text>
-                </View>
-                <View style={styles.langkahElements}>
-                <Image
-                    source={require("../../../assets/langkah3.png")}
-                />
-                <Text style={styles.langkahTitle}>Langkah 3</Text>
-                <Text style={styles.langkahText}>Hantar & Selesai</Text>
-                </View>
-            </View>
-            <View style={styles.formContainer}>
-                {/* Dropdown for Jenis Aduan */}
-                <View style={styles.inputContainer}>
-                    <Text style={styles.titleStyle}>Jenis Aduan*</Text>
-                    <Dropdown
-                        style={styles.dropdown}
-                        containerStyle={styles.dropdownContainer}
-                        selectedTextStyle={styles.selectedText}
-                        activeColor="#EED4FF"
-                        data={jenisAduanOptions}
-                        labelField="label"
-                        valueField="value"
-                        value={selectedItem}
-                        onChange={(item) => {
-                        setSelectedItem(item.value);
-                        }}
-                        placeholder=" *Nyatakan aduan anda"
-                        placeholderStyle={styles.placeholderStyle}
-                        renderItem={(item) => (
-                        <View style={styles.item}>
-                            <Text style={styles.itemText}>{item.label}</Text>
-                        </View>
-                        )}
-                    />
-                </View>
-                {/* Render conditional fields */}
-                {renderConditionalFields()} 
-                <View style={{
-                    flexDirection: 'row', 
-                    justifyContent: 'space-between', 
-                    marginTop: '5%', 
-                    marginBottom: '10%',
-                    marginLeft: '1%',
-                    }}
-                >
-                    <TouchableOpacity onPress={pickDocument}>
-                        <View style={styles.buttonContainer}>
-                            <View>
-                                <Image
-                                source={require("../../../assets/uploadIcon.png")}
-                                style={styles.buttonImage}
-                                />
-                            </View>
-                            <View>
-                                <Text style={styles.buttonText}>Pilih dokumen</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+  return(
+      <View style={styles.parentContainer}>
+          <View style={styles.pageTitle}>
+              <Text style={styles.pageTitleStyle}>Maklumat Aduan</Text>
+          </View>
+          <View style={styles.langkahContainer}>
+              <View style={styles.langkahElements}>
+              <Image
+                  source={require("../../../assets/langkah1.png")}
+              />
+              <Text style={styles.langkahTitleOn}>Langkah 1</Text>
+              <Text style={styles.langkahTextOn}>Maklumat Aduan</Text>
+              </View>
+              <View style={styles.langkahElements}>
+              <Image
+                  source={require("../../../assets/langkah2.png")}
+              />
+              <Text style={styles.langkahTitle}>Langkah 2</Text>
+              <Text style={styles.langkahText}>Maklumat Pengadu</Text>
+              </View>
+              <View style={styles.langkahElements}>
+              <Image
+                  source={require("../../../assets/langkah3.png")}
+              />
+              <Text style={styles.langkahTitle}>Langkah 3</Text>
+              <Text style={styles.langkahText}>Hantar & Selesai</Text>
+              </View>
+          </View>
+          <View style={styles.formContainer}>
+              {/* Dropdown for Jenis Aduan */}
+              <View style={styles.inputContainer}>
+                  <Text style={styles.titleStyle}>Jenis Aduan*</Text>
+                  <Dropdown
+                      style={styles.dropdown}
+                      containerStyle={styles.dropdownContainer}
+                      selectedTextStyle={styles.selectedText}
+                      activeColor="#EED4FF"
+                      data={jenisAduanOptions}
+                      labelField="label"
+                      valueField="value"
+                      value={selectedItem}
+                      onChange={(item) => {
+                      setSelectedItem(item.value);
+                      }}
+                      placeholder=" *Nyatakan aduan anda"
+                      placeholderStyle={styles.placeholderStyle}
+                      renderItem={(item) => (
+                      <View style={styles.item}>
+                          <Text style={styles.itemText}>{item.label}</Text>
+                      </View>
+                      )}
+                  />
+              </View>
+              {/* Render conditional fields */}
+              {renderConditionalFields()} 
+              <View style={{
+                  flexDirection: 'row', 
+                  justifyContent: 'space-between', 
+                  marginTop: '5%', 
+                  marginBottom: '6%',
+                  marginLeft: '1%',
+                  }}
+              >
+                  <TouchableOpacity onPress={pickDocument} disabled={documents.length >= 3}>
+                      <View style={styles.buttonContainer}>
+                          <View>
+                              <Image
+                              source={require("../../../assets/uploadIcon.png")}
+                              style={styles.buttonImage}
+                              />
+                          </View>
+                          <View>
+                              <Text style={styles.buttonText}>Pilih dokumen</Text>
+                          </View>
+                      </View>
+                  </TouchableOpacity>
 
-                    <View style={styles.infoText}>
-                        <View>
-                            <Text
-                                style={{
-                                color: "#6D6D6D",
-                                fontSize: 14,
-                                fontWeight: "600",
-                                }}
-                                >
-                                Dokumen Sokongan
-                            </Text>
-                        </View>
-                        <View>
-                            <Text
-                                style={{
-                                color: "#6D6D6D",
-                                fontSize: 11,
-                                fontStyle: "italic",
-                                fontWeight: "400",
-                                }}
-                            >
-                                Maksimum 4MB setiap dokumen. Maksimum jumlah 3 dokumen.
-                            </Text>
-                        </View>
-                        {fileDetails && (
-                            <View style={styles.fileDetailsContainer}>
-                            <Text style={styles.fileDetailsText}>Uploaded File:</Text>
-                            <Text style={styles.fileDetailsText}>
-                                {fileDetails.name}
-                            </Text>
-                            <Text style={styles.fileDetailsText}>
-                                {fileDetails.size}
-                            </Text>
-                            </View>
-                        )}
-                    </View>
-                </View>
+                  <View style={styles.infoText}>
+                      <View>
+                          <Text
+                              style={{
+                              color: "#6D6D6D",
+                              fontSize: 14,
+                              fontWeight: "600",
+                              }}
+                              >
+                              Dokumen Sokongan
+                          </Text>
+                      </View>
+                      <View>
+                          <Text
+                              style={{
+                              color: "#6D6D6D",
+                              fontSize: 11,
+                              fontStyle: "italic",
+                              fontWeight: "400",
+                              }}
+                          >
+                              Maksimum 4MB setiap dokumen. Maksimum jumlah 3 dokumen.
+                          </Text>
+                      </View> 
+                  </View>
+              </View>
 
-                <View style={styles.seterusyaButtonContainer}>
-                        <TouchableOpacity onPress={handleNextStage} style={styles.seterusyaButton}>
-                            <View>
-                                <Text style={styles.seterusyaButtonText}>
-                                Seterusnya
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+              {/* Render the list of uploaded files */}
+              <View style={{alignItems: 'center', marginLeft: '5%', marginBottom: '10%'}}>
+                <View style={styles.fileDetailsContainer}>
+                    {renderDocumentList()}
                 </View>
-                
-            </View>
-        </View>
-        
-    );
+              </View>
+
+              <View style={styles.seterusyaButtonContainer}>
+                      <TouchableOpacity onPress={handleNextStage} style={styles.seterusyaButton}>
+                          <View>
+                              <Text style={styles.seterusyaButtonText}>
+                              Seterusnya
+                              </Text>
+                          </View>
+                      </TouchableOpacity>
+              </View>
+              
+          </View>
+      </View>
+      
+  );
 };
 
 export default StageOne;
@@ -399,10 +427,6 @@ const styles = StyleSheet.create({
       fontWeight: "700",
       // lineHeight: "normal",
     },
-    fileDetailsContainer: {
-      //marginLeft: 25,
-      //marginTop: 20,
-    },
     fileDetailsText: {
       fontSize: 16,
     },
@@ -468,6 +492,27 @@ const styles = StyleSheet.create({
       fontSize: 12,
       fontWeight: '600',
       color: '#6D6D6D',
+    },
+    documentItem: {
+      flexDirection: 'row',
+      // justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: 'white', // A light purple background or any other color that matches your app theme
+      // borderColor: '#9448DA',
+      // borderWidth: 1,
+      borderRadius: 10,
+      marginVertical: 5,
+      // padding: 10,
+    },
+    fileDetailsContainer: {
+      width: '45%',
+      height: 'auto',
+    },
+    documentTitle: {
+      marginLeft: 10,
+      fontSize: 14,
+      fontWeight: '700',
+      color: '#777777',
     },
   
   });

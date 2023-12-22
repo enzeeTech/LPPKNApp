@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const TalianTelefonForm = ({ onDataChange, initialData }) => {
   const [data, setData] = useState(initialData);
@@ -45,23 +45,33 @@ const TalianTelefonForm = ({ onDataChange, initialData }) => {
         <View style={styles.containerRow}>
             <View style={styles.smallContainer}>
                 <Text style={styles.titleStyle}>Tarikh Kejadian*</Text>
-                <TextInput
-                    value={data.tarikh_kejadian}
-                    onChangeText={(text) => handleChange('tarikh_kejadian', text)}
-                    placeholder=" Pilih tarikh"
-                    style={styles.inputField}
-                    placeholderTextColor={"#A1A1A1"}
-                />  
+                <View style={styles.inputField}>
+                    <TextInput
+                        value={data.tarikh_kejadian}
+                        onChangeText={(text) => handleChange('tarikh_kejadian', text)}
+                        placeholder=" Pilih tarikh"
+                        // style={styles.inputField}
+                        placeholderTextColor={"#A1A1A1"}
+                    /> 
+                    <TouchableOpacity onPress={() => {}}>
+                        <Image source={require('../../../assets/book.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 
+                    </TouchableOpacity>
+                </View>
             </View>
             <View style={styles.smallContainer}>
                 <Text style={styles.titleStyle}>Masa Kejadian*</Text>
-                <TextInput
-                    value={data.masa_kejadian}
-                    onChangeText={(text) => handleChange('masa_kejadian', text)}
-                    placeholder=" Pilih masa"
-                    style={styles.inputField}
-                    placeholderTextColor={"#A1A1A1"}
-                />  
+                <View style={styles.inputField}>
+                    <TextInput
+                        value={data.masa_kejadian}
+                        onChangeText={(text) => handleChange('masa_kejadian', text)}
+                        placeholder=" Pilih masa"
+                        // style={styles.inputField}
+                        placeholderTextColor={"#A1A1A1"}
+                    />  
+                    <TouchableOpacity onPress={() => {}}>
+                        <Image source={require('../../../assets/time.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
         <View style={styles.inputContainer}>

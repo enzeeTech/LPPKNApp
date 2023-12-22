@@ -56,13 +56,6 @@ const StageOne = ({ onNext}) => {
       onNext(formData); // Pass the form data to the parent component
       
     };
-  
-  const handleChange = (name, value) => {
-    setFormData(prevFormData => ({
-        ...prevFormData,
-        [name]: value,
-    }));
-  };
 
   const handleDataChange = (newData) => {
       setFormData(newData);

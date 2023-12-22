@@ -12,6 +12,20 @@ const Calendar = ({ value, onDateChange, placeholder, placeholderTextColor }) =>
   const handleDateChange = (date) => {
     onDateChange(date.format('DD/MM/YYYY')); 
     setCalendarVisible(false);
+    setPopoverVisible(false);
+  };
+
+  // Function to parse the date string and return a Date object, if the date string is empty, 
+  // return today's date
+  const parseDate = (dateStr) => {
+    if (dateStr) {
+      const parts = dateStr.split('/');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; // month is 0-based in JavaScript Date
+      const year = parseInt(parts[2], 10);
+      return new Date(year, month, day);
+    }
+    return new Date(); 
   };
 
   return (
@@ -21,7 +35,7 @@ const Calendar = ({ value, onDateChange, placeholder, placeholderTextColor }) =>
         value={value}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}
-        style={{color: "black"}}
+        style={{color: "black", marginRight: '-4%', marginLeft: '5%', fontSize: 13}}
         editable={false} 
       />
       <TouchableOpacity onPress={() => setPopoverVisible(true)}>
@@ -36,7 +50,9 @@ const Calendar = ({ value, onDateChange, placeholder, placeholderTextColor }) =>
         popoverStyle={{ backgroundColor: '#FFFFFF', borderRadius: 15, paddingTop: 15, paddingLeft:5, paddingRight:5, paddingBottom:10 }}
       >
         <CalendarPicker 
-            onDateChange={handleDateChange} 
+            initialDate={parseDate(value)} 
+            selectedStartDate={parseDate(value)} 
+            onDateChange={handleDateChange}
             selectedDayColor='#E7C3FF'
             height={400}
             width={380}
@@ -56,17 +72,17 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 48,
         borderWidth: 1,
-        borderColor: "#A1A1A1", // Border color when there's text input
+        borderColor: "#A1A1A1", 
         padding: "1.3%",
         fontSize: 14,
         fontWeight: "400",
-        color: "black", // Text color when there's text input
+        color: "black", 
     },
     image: {
-        marginLeft: "49%", 
-        marginTop: 10, 
-        width: 20, 
-        height: 20, 
+        marginLeft: "45%", 
+        marginTop: 9, 
+        width: 23, 
+        height: 23, 
         resizeMode: "contain"
     },
 });

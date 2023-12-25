@@ -1,22 +1,33 @@
 // Custom TimePicker component
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Image, StyleSheet, Modal, Button, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TimePicker = ({ onTimeChange, placeholder, placeholderTextColor }) => {
     const [isPickerVisible, setPickerVisible] = useState(false);
     const [time, setTime] = useState(new Date());
+    const [displayTime, setDisplayTime] = useState('');
 
     const handleTimeChange = (event, selectedTime) => {
         const currentTime = selectedTime || time;
         setTime(currentTime);
+        setDisplayTime(formatTime(currentTime));
         if (Platform.OS !== 'ios') {
             setPickerVisible(false); // For Android, hide picker after selection
         }
         onTimeChange(currentTime); // Propagate changes up to the parent component
     };
 
+
+
+    
+
     const formatTime = (date) => {
+        // Return empty string if date is null
+        if (!date) {
+            return '';
+        }
+
         let hours = date.getHours();
         let minutes = date.getMinutes();
         const ampm = hours >= 12 ? 'PM' : 'AM';
@@ -26,7 +37,6 @@ const TimePicker = ({ onTimeChange, placeholder, placeholderTextColor }) => {
         return `${hours}:${minutes} ${ampm}`;
     };
 
-    const displayTime = formatTime(time);
 
     return (
         <View style={styles.container}>
@@ -45,7 +55,8 @@ const TimePicker = ({ onTimeChange, placeholder, placeholderTextColor }) => {
                     animationType="slide"
                     transparent={true}
                     visible={isPickerVisible}
-                    onRequestClose={() => setPickerVisible(false)}>
+                    onRequestClose={() => setPickerVisible(false)}
+                >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <DateTimePicker

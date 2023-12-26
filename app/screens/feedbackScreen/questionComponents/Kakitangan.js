@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import styles from './QuestionsLayout';
+import styles from './layouts/QuestionsLayout';
 import CalendarPicker from '../../common/Calendar';
 
 const KakitanganForm = ({ onDataChange, initialData }) => {

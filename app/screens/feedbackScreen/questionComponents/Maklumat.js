@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import styles from './layouts/QuestionsLayout';
 import CalendarPicker from '../../common/Calendar';
+import StateSelector from '../../common/StateDropDownList';
 
 const MaklumatTidakTepatForm = ({ onDataChange, initialData }) => {
 
@@ -9,16 +10,17 @@ const MaklumatTidakTepatForm = ({ onDataChange, initialData }) => {
         onDataChange({ ...initialData, [name]: value }); // Propagate changes up to the stage one component
     };
 
+    const handleStateChange = (name, value) => {
+        onDataChange({ ...initialData, [name]: value });
+      }
+
   return (
     <View style={styles.container}>
         <View style={styles.inputContainer}>
             <Text style={styles.titleStyle}>Negeri*</Text>
-            <TextInput
-                value={initialData.negeri}
-                onChangeText={(text) => handleChange('negeri', text)}
-                placeholder=" Masukkan negeri di sini"
-                style={styles.inputField}
-                placeholderTextColor={"#A1A1A1"}
+            <StateSelector
+                selectedValue={initialData.negeri}
+                onValueChange={(item) => handleStateChange('negeri', item.value)}
             />
         </View>
         <View style={styles.inputContainer}>

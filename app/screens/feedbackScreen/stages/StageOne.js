@@ -47,9 +47,11 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
 
   const handleFormTypeChange = (item) => {
     if (formData.jenis_aduan === ''){
-      setFormData({ ...formData, jenis_aduan: item.value });
+      setFormData({ ...formData, jenis_aduan: item.value, documents: [] });
+      setDocuments([]);
     }
     else {
+      setDocuments([]);
       setFormData({ ...formData, jenis_aduan: item.value });
       setFormData({
         jenis_aduan: item.value,
@@ -68,6 +70,10 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
         nama_penuh_pasangan: '',
         no_kad_pasangan: '',
       });
+    }
+
+    const handleStateChange = (negeri) => {
+      setFormData({ ...formData, negeri: negeri });
     }
     
   };

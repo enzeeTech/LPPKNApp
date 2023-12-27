@@ -24,7 +24,7 @@ const KakitanganForm = ({ onDataChange, initialData }) => {
             />
         </View>
         <View style={styles.inputContainer}>
-            <Text style={styles.titleStyle}>Lokasi/Cawangan Klinik Nur Sejahtera*</Text>
+            <Text style={styles.titleStyle}>Lokasi/Cawangan*</Text>
             <TextInput
                 value={initialData.lokasi}
                 onChangeText={(text) => handleChange('lokasi', text)}
@@ -60,7 +60,7 @@ const KakitanganForm = ({ onDataChange, initialData }) => {
             </View>
         </View>
         <View style={styles.inputContainer}>
-            <Text style={styles.titleStyle}>Nama Staf Bertugas</Text>
+            <Text style={styles.titleStyle}>Nama Staf Bertugas*</Text>
             <TextInput
                 value={initialData.nama_staff_bertugas}
                 onChangeText={(text) => handleChange('nama_staff_bertugas', text)}

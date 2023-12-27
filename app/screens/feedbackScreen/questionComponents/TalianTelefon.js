@@ -31,7 +31,7 @@ const TalianTelefonForm = ({ onDataChange, initialData }) => {
                 />
             </View>
             <View style={styles.inputContainer}>
-                <Text style={styles.titleStyle}>Lokasi/Cawangan Klinik Nur Sejahtera*</Text>
+                <Text style={styles.titleStyle}>Lokasi/Cawangan*</Text>
                 <TextInput
                     value={initialData.lokasi}
                     onChangeText={(text) => handleChange('lokasi', text)}

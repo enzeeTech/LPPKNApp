@@ -1,0 +1,143 @@
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+    parentContainer: {
+        flex: 1,
+        background: "#fff",
+        width: "90%",
+        marginLeft: "1.5%",
+        marginTop: "15%",
+    },
+    pageTitle: {
+        background: "#fff",
+        justifyContent: "center",
+        marginLeft: "2.5%",
+        marginTop: "5%",
+    },
+    pageTitleStyle: {
+        color: "#9448DA",
+        fontSize: 20,
+        fontStyle: "normal",
+        fontWeight: "700",
+    },
+    langkahContainerImages: {
+        display: "flex",
+        width: "100%",
+        justifyContent: "space-between",
+        alignItems: "center",
+        margin: "5%",
+        flexDirection: "row",
+        flexShrink: 0,
+    },
+    container: {
+        flex: 1,
+        width: '100%',
+        marginLeft: "2.5%",
+    },
+    containerRow: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginBottom: '-3%',
+    },
+    inputContainer: {
+        width: "100%",
+        marginTop: "3%",
+        marginBottom: "3%",
+    },
+    smallContainer: {
+        width: "80%",
+        marginTop: "3%",
+        marginBottom: "3%",
+    },
+    titleStyle: {
+        color: "#5C2D86",
+        fontSize: 14,
+        fontStyle: "normal",
+        fontWeight: "700",
+    },
+    inputField: {
+        flexDirection: "row",
+        borderRadius: 8,
+        borderColor: "#ADB5BD",
+        width: "100%",
+        height: 48,
+        borderWidth: 1,
+        borderColor: "#A1A1A1", // Border color when there's text input
+        padding: "1.3%",
+        fontSize: 14,
+        fontWeight: "400",
+        color: "black", // Text color when there's text input
+    },
+    radioText: {
+        color: "#777",
+        fontSize: 14,
+        fontStyle: "normal",
+        fontWeight: "600",
+    },
+    radioContainer: {
+        flex: 1,
+        width: "100%",
+        alignContent: "center",
+        marginTop: "3%",
+    },
+
+    btnContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+        width: "90%",
+        marginLeft: "5%",
+        alignContent: "center",
+    },
+    btn2Container: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+        width: "90%",
+        marginLeft: "5%",
+        marginBottom: Platform.OS === "ios" ? "50%" : "60%",
+        alignContent: "center",
+    },
+    button1Style: {
+        alignItems: "center",
+        height: 45,
+        width: "90%",
+        justifyContent: "center",
+        alignContent: "center",
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#973BD9",
+    },
+    button2Style: {
+        marginTop: "2%",
+        alignItems: "center",
+        height: 45,
+        width: "90%",
+        justifyContent: "center",
+        alignContent: "center",
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#9448DA",
+        backgroundColor: "#9448DA",
+    },
+    button1Text: {
+        alignItems: "center",
+        color: "#9448DA",
+        textAlign: "center",
+        fontSize: 16,
+        fontStyle: "normal",
+        fontWeight: "700",
+    },
+    button2Text: {
+        alignItems: "center",
+        color: "#FFF",
+        textAlign: "center",
+        fontSize: 16,
+        fontStyle: "normal",
+        fontWeight: "700",
+    },
+});
+
+export default styles;

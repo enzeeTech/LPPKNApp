@@ -5,8 +5,6 @@ import CalendarPicker from '../../common/Calendar';
 
 const TalianTelefonForm = ({ onDataChange, initialData }) => {
 
-    const [tarikhKejadian, setTarikhKejadian] = useState('');
-
     const handleChange = (name, value) => {
         onDataChange({ ...initialData, [name]: value }); // Propagate changes up to the stage one component
     };
@@ -36,8 +34,8 @@ const TalianTelefonForm = ({ onDataChange, initialData }) => {
             <View style={styles.inputContainer}>
                 <Text style={styles.titleStyle}>No.Tel Yang Gagal Dihubungi*</Text>
                 <TextInput
-                    value={initialData.no_tel}
-                    onChangeText={(text) => handleChange('no_tel', text)}
+                    value={initialData.no_tel_yang_gagal_dihubungi}
+                    onChangeText={(text) => handleChange('no_tel_yang_gagal_dihubungi', text)}
                     placeholder=" Masukkan no.tel di sini"
                     style={styles.inputField}
                     placeholderTextColor={"#A1A1A1"}
@@ -71,8 +69,8 @@ const TalianTelefonForm = ({ onDataChange, initialData }) => {
             <View style={styles.inputContainer}>
                 <Text style={styles.titleStyle}>Nama Staf Bertugas</Text>
                 <TextInput
-                    value={initialData.nama_staff}
-                    onChangeText={(text) => handleChange('nama_staff', text)}
+                    value={initialData.nama_staff_bertugas}
+                    onChangeText={(text) => handleChange('nama_staff_bertugas', text)}
                     placeholder=" Masukkan nama staf"
                     style={styles.inputField}
                     placeholderTextColor={"#A1A1A1"}

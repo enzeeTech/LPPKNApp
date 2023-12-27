@@ -13,6 +13,8 @@ import StageThree from "./stages/StageThree";
 
 const AduanForm = () => {
   const [currentStage, setCurrentStage] = useState(1); // Track the current stage
+
+  // Data for stage 1
   const [stage1Data, setStage1Data] = useState({
     // General fields that are always present
     jenis_aduan: '',
@@ -24,13 +26,21 @@ const AduanForm = () => {
     // Specific fields for Talian Telefon
     negeri: '',
     lokasi: '',
-    no_tel: '',
-    nama_staff: '',
+    no_tel_yang_gagal_dihubungi: '',
+    nama_staff_bertugas: '',
     // Specific fields for Portal RHS
-    nama_penuh: '',
-    no_kad: '',
+    nama_penuh_pasangan: '',
+    no_kad_pasangan: '',
   }); 
-  const [stage2Data, setStage2Data] = useState({}); // Data for stage 2
+
+  // Data for stage 2
+  const [stage2Data, setStage2Data] = useState({
+    nama_penuh: '',
+    no_kad_pengenalan: '',
+    no_telefon: '',
+    e_mel: '',
+    jantina: '',
+  }); 
 
   const handleNext = (newData, stage) => {
     // Update formData based on the stage
@@ -55,7 +65,8 @@ const AduanForm = () => {
       case 2:
         return <StageTwo onNext={(data) => handleNext(data, 2)} onBack={handleBack} formData={stage2Data} />;
       case 3:
-        return <StageThree onSubmit={handleSubmit} formData={{ ...stage1Data, ...stage2Data }} />;
+        // return <StageThree onSubmit={handleSubmit} formData={{ ...stage1Data, ...stage2Data }} />;
+        return <StageThree formData={{ ...stage1Data, ...stage2Data }} />;
       default:
         return null;
     }
@@ -64,7 +75,7 @@ const AduanForm = () => {
   return (
     <SafeAreaView style={{backgroundColor: '#9448DA'}}>
       <Header/>
-      <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: '-7%'}}showsVerticalScrollIndicator={false}>
+      <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: '-10%'}}showsVerticalScrollIndicator={false}>
         {/* Render the current stage */}
         {renderStage()}
       </ScrollView>

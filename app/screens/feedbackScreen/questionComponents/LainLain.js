@@ -4,14 +4,10 @@ import styles from './layouts/QuestionsLayout';
 import CalendarPicker from '../../common/Calendar';
 
 const LainLainForm = ({ onDataChange, initialData }) => {
-  const [data, setData] = useState(initialData);
-  const [tarikhKejadian, setTarikhKejadian] = useState('');
 
-  const handleChange = (name, value) => {
-    const updatedData = { ...data, [name]: value };
-    setData(updatedData);
-    onDataChange(updatedData); // Propagate changes up to the parent component
-  };
+    const handleChange = (name, value) => {
+        onDataChange({ ...initialData, [name]: value }); // Propagate changes up to the stage one component
+    };
 
   return (
     <View style={styles.container}>
@@ -19,8 +15,8 @@ const LainLainForm = ({ onDataChange, initialData }) => {
             <View style={styles.smallContainer}>
                 <Text style={styles.titleStyle}>Tarikh Kejadian*</Text>
                 <CalendarPicker
-                    value={tarikhKejadian}
-                    onDateChange={setTarikhKejadian}
+                    value={initialData.tarikh_kejadian}
+                    onDateChange={(text) => handleChange('tarikh_kejadian', text)}
                     placeholder=" Pilih tarikh"
                     placeholderTextColor={"#A1A1A1"}
                 />
@@ -29,7 +25,7 @@ const LainLainForm = ({ onDataChange, initialData }) => {
                 <Text style={styles.titleStyle}>Masa Kejadian*</Text>
                 <View style={styles.inputField}>
                     <TextInput
-                        value={data.masa_kejadian}
+                        value={initialData.masa_kejadian}
                         onChangeText={(text) => handleChange('masa_kejadian', text)}
                         placeholder=" Pilih masa"
                         // style={styles.inputField}
@@ -44,8 +40,8 @@ const LainLainForm = ({ onDataChange, initialData }) => {
         <View style={styles.inputContainer}>
             <Text style={styles.titleStyle}>Nama Staf Bertugas</Text>
             <TextInput
-                value={data.nama_staf_bertugas}
-                onChangeText={(text) => handleChange('nama_staf_bertugas', text)}
+                value={initialData.nama_staff_bertugas}
+                onChangeText={(text) => handleChange('nama_staff_bertugas', text)}
                 placeholder=" Masukkan nama staf"
                 style={styles.inputField}
                 placeholderTextColor={"#A1A1A1"}
@@ -54,7 +50,7 @@ const LainLainForm = ({ onDataChange, initialData }) => {
         <View style={styles.inputContainer}>
             <Text style={styles.titleStyle}>Tajuk Aduan*</Text>
             <TextInput
-                value={data.tajuk_aduan}
+                value={initialData.tajuk_aduan}
                 onChangeText={(text) => handleChange('tajuk_aduan', text)}
                 placeholder=" Nyatakan tajuk aduan anda"
                 style={styles.inputField}
@@ -64,7 +60,7 @@ const LainLainForm = ({ onDataChange, initialData }) => {
         <View style={styles.inputContainer}>
             <Text style={styles.titleStyle}>Butiran Lanjut</Text>
             <TextInput
-                value={data.butiran_lanjut}
+                value={initialData.butiran_lanjut}
                 onChangeText={(text) => handleChange('butiran_lanjut', text)}
                 placeholder=" Nyatakan butiran lanjut mengenai aduan anda"
                 style={styles.inputField}

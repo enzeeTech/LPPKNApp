@@ -6,8 +6,6 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  StyleSheet,
-  Platform,
 } from "react-native";
 
 import * as DocumentPicker from "expo-document-picker";
@@ -28,12 +26,7 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
   // State maangement for file upload
   const [documents, setDocuments] = useState([]);
 
-  // Local state to manage dropdown selection
-  const [selectedItem, setSelectedItem] = useState('');
-
-  // State to keep track of the uploaded file's details
-  const [fileDetails, setFileDetails] = useState(null);
-
+  // Dropdown options for Jenis Aduan
   const jenisAduanOptions = [
       {label: 'Talian Telefon', value: 'talian_telefon'},
       {label: 'Portal RHS', value: 'portal_rhs'},
@@ -44,8 +37,8 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
   ];
 
   const handleNextStage = () => {
-      console.log(formData);
-      onNext(formData); // Pass the form data to the parent component
+      // console.log(formData); // Testing: Print the form data
+      onNext(formData); // Pass the form data to the index.js
     };
 
   const handleDataChange = (newData) => {
@@ -53,13 +46,11 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
     };
 
   const handleFormTypeChange = (item) => {
-    console.log(item.value);
     if (formData.jenis_aduan === ''){
-      setSelectedItem(item.value);
       setFormData({ ...formData, jenis_aduan: item.value });
     }
     else {
-      setSelectedItem(item.value);
+      setFormData({ ...formData, jenis_aduan: item.value });
       setFormData({
         jenis_aduan: item.value,
         // Reset other fields to their initial state
@@ -74,8 +65,8 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
         no_tel: '',
         nama_staff: '',
         // Specific fields for Portal RHS
-        nama_penuh: '',
-        no_kad: '',
+        nama_penuh_pasangan: '',
+        no_kad_pasangan: '',
       });
     }
     
@@ -163,29 +154,20 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
           <View style={styles.pageTitle}>
               <Text style={styles.pageTitleStyle}>Maklumat Aduan</Text>
           </View>
-          <View style={styles.langkahContainer}>
-              <View style={styles.langkahElements}>
-              <Image
-                  source={require("../../../assets/langkah1.png")}
-              />
-              <Text style={styles.langkahTitleOn}>Langkah 1</Text>
-              <Text style={styles.langkahTextOn}>Maklumat Aduan</Text>
-              </View>
-              <View style={styles.langkahElements}>
-              <Image
-                  source={require("../../../assets/langkah2.png")}
-              />
-              <Text style={styles.langkahTitle}>Langkah 2</Text>
-              <Text style={styles.langkahText}>Maklumat Pengadu</Text>
-              </View>
-              <View style={styles.langkahElements}>
-              <Image
-                  source={require("../../../assets/langkah3.png")}
-              />
-              <Text style={styles.langkahTitle}>Langkah 3</Text>
-              <Text style={styles.langkahText}>Hantar & Selesai</Text>
-              </View>
-          </View>
+          <View style={styles.langkahContainerImages}>
+            <Image
+              source={require("../../../assets/langkah1Active.png")}
+              style={{width: 80, height: 80, resizeMode: 'contain'}}
+            />
+            <Image
+              source={require("../../../assets/langkah2.png")}
+              style={{width: 90, height: 90, resizeMode: 'contain'}}
+            />
+            <Image
+              source={require("../../../assets/langkah3.png")}
+              style={{width: 90, height: 90, resizeMode: 'contain'}}
+            />
+          </View> 
           <View style={styles.formContainer}>
               {/* Dropdown for Jenis Aduan */}
               <View style={styles.inputContainer}>

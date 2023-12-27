@@ -22,14 +22,17 @@ const styles = StyleSheet.create({
       fontWeight: "700",
       lineHeight: 20,
     },
-    langkahContainer: {
+    langkahContainerImages: {
       display: "flex",
       width: "100%",
       justifyContent: "space-between",
-      margin: "5%",
+      alignItems: "center",
+      marginBottom: "5%",
+      marginLeft: "5%",
+      marginRight: "5%",
       flexDirection: "row",
       flexShrink: 0,
-    },
+  },
   
     langkahElements: {
       resizeMode: "contain",

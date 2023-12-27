@@ -99,118 +99,79 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
   };
 
   // Function to handle file upload
-  // const pickDocument = async () => {
-  //   try {
-  //     const result = await DocumentPicker.getDocumentAsync({
-  //       type: "*/*",
-  //       copyToCacheDirectory: true,
-  //       multiple: documents.length < 3 // Allow multiple selection only if less than 3 docs are already uploaded
-  //     });
+const pickDocument = async () => {
+  try {
+    // Check if the user has already uploaded 3 documents
+    if (documents.length >= 3) {
+      Alert.alert("Error", "You cannot upload more than 3 documents.");
+      return;
+    }
 
-  //     if (!result.canceled && result.uri) {
-  //       let newDocuments = [...documents];
-  //       let totalSize = newDocuments.reduce((sum, doc) => sum + doc.size, 0);
-  //       for (const asset of result.assets) {
-  //         totalSize += asset.size;
-  //         if (totalSize <= 4 * 1024 * 1024) { // Check if total size is within 4MB
-  //           newDocuments.push({
-  //             name: asset.name,
-  //             size: asset.size,
-  //             uri: asset.uri,
-  //             mimeType: asset.mimeType,
-  //           });
-  //         } else {
-  //           Alert.alert("Error", "Total file size cannot exceed 4MB.");
-  //           break;
-  //         }
-  //       }
-  //       setDocuments(newDocuments);
-  //       // formData.documents = newDocuments;
+    // Invoke the Document Picker
+    const result = await DocumentPicker.getDocumentAsync({
+      type: "*/*",
+      copyToCacheDirectory: true,
+      multiple: true
+    });
 
-  //       // Log the details of the uploaded files
-  //       console.log("Uploaded Files:", newDocuments);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     Alert.alert("Error", "An error occurred while picking the document.");
-  //   }
-  // };
+    // Check if the picker was not canceled
+    if (!result.cancelled) {
+      let newDocuments = [...documents];
 
-  const pickDocument = async () => {
-    try {
-      // Check if the user has already uploaded 3 documents
-      if (documents.length >= 3) {
-        Alert.alert("Error", "You cannot upload more than 3 documents.");
-        return;
-      }
-  
-      // Invoke the Document Picker
-      const result = await DocumentPicker.getDocumentAsync({
-        type: "*/*",
-        copyToCacheDirectory: true,
-        multiple: true
-      });
-  
-      // Check if the picker was not canceled
-      if (!result.cancelled) {
-        let newDocuments = [...documents];
-        let totalSize = newDocuments.reduce((sum, doc) => sum + doc.size, 0);
-  
-        // Check if result contains multiple files
-        if (result.assets) {
-          for (const asset of result.assets) {
-            // Check if adding this file exceeds the 3 document limit
-            if (newDocuments.length >= 3) {
-              Alert.alert("Error", "You cannot upload more than 3 documents.");
-              break;
-            }
-  
-            totalSize += asset.size;
-            // Check if total size is within 4MB
-            if (totalSize <= 4 * 1024 * 1024) {
-              newDocuments.push({
-                name: asset.name,
-                size: asset.size,
-                uri: asset.uri,
-                mimeType: asset.mimeType,
-              });
-            } else {
-              // If the total size exceeds 4MB, show an error and stop adding more files
-              Alert.alert("Error", "Total file size cannot exceed 4MB.");
-              break;
-            }
+      // Check if result contains multiple files
+      if (result.assets) {
+        for (const asset of result.assets) {
+          // Check if adding this file exceeds the 3 document limit
+          if (newDocuments.length >= 3) {
+            Alert.alert("Error", "You cannot upload more than 3 documents.");
+            break;
           }
-        } else if (result.uri) {
-          // Handling single file selection
-          const asset = {
-            name: result.name,
-            size: result.size,
-            uri: result.uri,
-            mimeType: result.mimeType,
-          };
-  
-          totalSize += asset.size;
-          if (totalSize <= 4 * 1024 * 1024) {
-            newDocuments.push(asset);
+
+          // Check if individual file size is within 4MB
+          if (asset.size <= 4 * 1024 * 1024) {
+            newDocuments.push({
+              name: asset.name,
+              size: asset.size,
+              uri: asset.uri,
+              mimeType: asset.mimeType,
+            });
           } else {
-            Alert.alert("Error", "Total file size cannot exceed 4MB.");
+            // If the individual file size exceeds 4MB, show an error for that file
+            Alert.alert("Error", `The file ${asset.name} exceeds the 4MB size limit.`);
           }
         }
-  
-        // Update the documents state
-        setDocuments(newDocuments);
+      } else if (result.uri) {
+        // Handling single file selection
+        const asset = {
+          name: result.name,
+          size: result.size,
+          uri: result.uri,
+          mimeType: result.mimeType,
+        };
 
-        // Update the formData state
-        setFormData({ ...formData, documents: newDocuments });
-  
-        // Log the details of the uploaded files
-        console.log("Uploaded Files:", newDocuments);
+        // Check if individual file size is within 4MB
+        if (asset.size <= 4 * 1024 * 1024) {
+          newDocuments.push(asset);
+        } else {
+          Alert.alert("Error", `The file ${asset.name} exceeds the 4MB size limit.`);
+        }
       }
-    } catch (error) {
-      console.error(error);
-      Alert.alert("Error", "An error occurred while picking the document.");
+
+      // Update the documents state
+      setDocuments(newDocuments);
+
+      // Update the formData state
+      setFormData({ ...formData, documents: newDocuments });
+
+      // Log the details of the uploaded files
+      console.log("Uploaded Files:", newDocuments);
     }
-  };
+  } catch (error) {
+    console.error(error);
+    Alert.alert("Error", "An error occurred while picking the document.");
+  }
+};
+
 
   // Function to handle file deletion
   const deleteDocument = (uri) => {

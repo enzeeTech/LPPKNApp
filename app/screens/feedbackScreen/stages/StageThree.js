@@ -6,6 +6,13 @@ function StageThree({formData }) {
   printFormData = () => {
     // Print form data to console in a pretty mannar
     for (var key in formData) {
+      if(key == 'documents'){
+        console.log(key + ": ");
+        for(var i = 0; i < formData[key].length; i++){
+          console.log(formData[key][i]);
+        }
+        continue;
+      }
       console.log(key + ": " + formData[key]);
     }
 

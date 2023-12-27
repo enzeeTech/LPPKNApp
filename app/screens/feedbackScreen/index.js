@@ -22,7 +22,7 @@ const AduanForm = () => {
     masa_kejadian: '',
     tajuk_aduan: '',
     butiran_lanjut: '',
-    // documents: [],
+    documents: [],
     // Specific fields for Talian Telefon
     negeri: '',
     lokasi: '',

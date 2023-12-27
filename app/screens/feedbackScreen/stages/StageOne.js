@@ -93,34 +93,110 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
   };
 
   // Function to handle file upload
+  // const pickDocument = async () => {
+  //   try {
+  //     const result = await DocumentPicker.getDocumentAsync({
+  //       type: "*/*",
+  //       copyToCacheDirectory: true,
+  //       multiple: documents.length < 3 // Allow multiple selection only if less than 3 docs are already uploaded
+  //     });
+
+  //     if (!result.canceled && result.uri) {
+  //       let newDocuments = [...documents];
+  //       let totalSize = newDocuments.reduce((sum, doc) => sum + doc.size, 0);
+  //       for (const asset of result.assets) {
+  //         totalSize += asset.size;
+  //         if (totalSize <= 4 * 1024 * 1024) { // Check if total size is within 4MB
+  //           newDocuments.push({
+  //             name: asset.name,
+  //             size: asset.size,
+  //             uri: asset.uri,
+  //             mimeType: asset.mimeType,
+  //           });
+  //         } else {
+  //           Alert.alert("Error", "Total file size cannot exceed 4MB.");
+  //           break;
+  //         }
+  //       }
+  //       setDocuments(newDocuments);
+  //       // formData.documents = newDocuments;
+
+  //       // Log the details of the uploaded files
+  //       console.log("Uploaded Files:", newDocuments);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     Alert.alert("Error", "An error occurred while picking the document.");
+  //   }
+  // };
+
   const pickDocument = async () => {
     try {
+      // Check if the user has already uploaded 3 documents
+      if (documents.length >= 3) {
+        Alert.alert("Error", "You cannot upload more than 3 documents.");
+        return;
+      }
+  
+      // Invoke the Document Picker
       const result = await DocumentPicker.getDocumentAsync({
         type: "*/*",
         copyToCacheDirectory: true,
-        multiple: documents.length < 3 // Allow multiple selection only if less than 3 docs are already uploaded
+        multiple: true
       });
-
-      if (!result.canceled && result.assets) {
+  
+      // Check if the picker was not canceled
+      if (!result.cancelled) {
         let newDocuments = [...documents];
         let totalSize = newDocuments.reduce((sum, doc) => sum + doc.size, 0);
-        for (const asset of result.assets) {
+  
+        // Check if result contains multiple files
+        if (result.assets) {
+          for (const asset of result.assets) {
+            // Check if adding this file exceeds the 3 document limit
+            if (newDocuments.length >= 3) {
+              Alert.alert("Error", "You cannot upload more than 3 documents.");
+              break;
+            }
+  
+            totalSize += asset.size;
+            // Check if total size is within 4MB
+            if (totalSize <= 4 * 1024 * 1024) {
+              newDocuments.push({
+                name: asset.name,
+                size: asset.size,
+                uri: asset.uri,
+                mimeType: asset.mimeType,
+              });
+            } else {
+              // If the total size exceeds 4MB, show an error and stop adding more files
+              Alert.alert("Error", "Total file size cannot exceed 4MB.");
+              break;
+            }
+          }
+        } else if (result.uri) {
+          // Handling single file selection
+          const asset = {
+            name: result.name,
+            size: result.size,
+            uri: result.uri,
+            mimeType: result.mimeType,
+          };
+  
           totalSize += asset.size;
-          if (totalSize <= 4 * 1024 * 1024) { // Check if total size is within 4MB
-            newDocuments.push({
-              name: asset.name,
-              size: asset.size,
-              uri: asset.uri,
-              mimeType: asset.mimeType,
-            });
+          if (totalSize <= 4 * 1024 * 1024) {
+            newDocuments.push(asset);
           } else {
             Alert.alert("Error", "Total file size cannot exceed 4MB.");
-            break;
           }
         }
+  
+        // Update the documents state
         setDocuments(newDocuments);
-        // formData.documents = newDocuments;
 
+        // Update the formData state
+        setFormData({ ...formData, documents: newDocuments });
+  
         // Log the details of the uploaded files
         console.log("Uploaded Files:", newDocuments);
       }
@@ -133,11 +209,12 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
   // Function to handle file deletion
   const deleteDocument = (uri) => {
     setDocuments(documents.filter(doc => doc.uri !== uri));
+    setFormData({ ...formData, documents: documents.filter(doc => doc.uri !== uri) });
   };
 
   // Function to render the list of uploaded files
   const renderDocumentList = () => {
-    return documents.map((doc, index) => (
+    return formData.documents.map((doc, index) => (
       <View key={index} style={styles.documentItem}>
         <TouchableOpacity onPress={() => deleteDocument(doc.uri)}>
           <Image style={{height: 20, width: 20, resizeMode: 'contain'}} source={require("../../../assets/deleteButton.png")} />  

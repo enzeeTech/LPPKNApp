@@ -27,6 +27,7 @@
     "react-native-date-picker": "^4.3.5",
     "react-native-element-dropdown": "^2.10.1",
     "react-native-gesture-handler": "~2.9.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-popover-view": "^5.1.8",
     "react-native-radio-buttons-group": "^3.0.5",
     "react-native-reanimated": "~2.14.4",

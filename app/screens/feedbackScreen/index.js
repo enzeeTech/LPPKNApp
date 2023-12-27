@@ -3,8 +3,11 @@ import React from 'react';
 import {
   ScrollView,
   SafeAreaView,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Platform,
 } from "react-native";
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Header from "./FeedbackHeader";
 import StageOne from "./stages/StageOne";
 import StageTwo from "./stages/StageTwo";
@@ -12,6 +15,9 @@ import StageThree from "./stages/StageThree";
 
 
 const AduanForm = () => {
+
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 70 : 0;
+  
   const [currentStage, setCurrentStage] = useState(1); // Track the current stage
 
   // Data for stage 1
@@ -72,15 +78,60 @@ const AduanForm = () => {
     }
   };
   
+  // return (
+    // <KeyboardAvoidingView
+    //   behavior={Platform.OS === "ios" ? "padding" : "height"}
+    //   style={styles.flexContainer}
+    //   keyboardVerticalOffset={keyboardVerticalOffset}
+    // >
+    //   <SafeAreaView style={{backgroundColor: '#9448DA'}}>
+    //     <Header/>
+    //       <ScrollView 
+    //         style={{
+    //           backgroundColor: '#FFFFFF', 
+    //           marginTop: '-10%', 
+    //           marginBottom: Platform.OS === "android" ? "20%" : 0,
+    //         }}
+    //         contentContainerStyle={styles.contentContainer}
+    //         showsVerticalScrollIndicator={false}
+    //         keyboardShouldPersistTaps="handled"
+    //       >
+    //         {/* Render the current stage */}
+    //         {renderStage()}
+    //       </ScrollView>
+    //     </SafeAreaView>
+    // </KeyboardAvoidingView>
+  // );
   return (
-    <SafeAreaView style={{backgroundColor: '#9448DA'}}>
-      <Header/>
-      <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: '-10%'}}showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={{ backgroundColor: '#9448DA' }}>
+      <Header />
+      <KeyboardAwareScrollView 
+        style={{ backgroundColor: '#FFFFFF', marginTop: '-10%' }}
+        showsVerticalScrollIndicator={false}
+        extraScrollHeight={Platform.OS === "android" ? 70 : 20} // Optional, adjust the amount of scrolling when the keyboard is visible
+        extraHeight={Platform.OS === "android" ? 170 : 80}
+        enableOnAndroid={true} // Optional, but useful for Android
+        keyboardShouldPersistTaps='handled'
+      >
         {/* Render the current stage */}
         {renderStage()}
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
 
 export default AduanForm;
+
+const styles = StyleSheet.create({
+  flexContainer: {
+    flex: 1,
+    backgroundColor: '#9448DA' // Assuming this is your desired background color
+  },
+  scrollView: {
+    backgroundColor: '#FFFFFF' // Set the background color for your form
+  },
+  contentContainer: {
+    flexGrow: 1, // Ensures that the ScrollView can expand to fit content
+    paddingBottom: 20, // Add some padding at the bottom to ensure last input is visible
+  }
+});

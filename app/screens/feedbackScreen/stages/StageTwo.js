@@ -6,8 +6,6 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import RadioGroup from "react-native-radio-buttons-group";
-// import RadioButton from "react-native-radio-buttons-group";
 
 import styles from "./layouts/StageTwoLayout";
 
@@ -17,8 +15,6 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
   const [formData, setFormData] = useState(secondStageFormData);
 
   const handleNext = () => {
-    // console.log("submit button pressed");
-    // console.log(formData); // Testing: Print stage 2 data to console
     onNext(formData); // Pass the form data to the index.js component
   };
 

@@ -37,7 +37,6 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
   ];
 
   const handleNextStage = () => {
-      // console.log(formData); // Testing: Print the form data
       onNext(formData); // Pass the form data to the index.js
     };
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import React from 'react';
 import {
   ScrollView,
@@ -8,6 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useFocusEffect } from '@react-navigation/native';
 import Header from "./FeedbackHeader";
 import StageOne from "./stages/StageOne";
 import StageTwo from "./stages/StageTwo";
@@ -15,10 +16,10 @@ import StageThree from "./stages/StageThree";
 
 
 const AduanForm = () => {
-
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 70 : 0;
-  
   const [currentStage, setCurrentStage] = useState(1); // Track the current stage
+
+  // scrollview ref
+  const scrollViewRef = useRef(null);
 
   // Data for stage 1
   const [stage1Data, setStage1Data] = useState({
@@ -56,11 +57,14 @@ const AduanForm = () => {
       setStage2Data(newData);
     }
     setCurrentStage(currentStage + 1); // Move to the next stage
+    scrollViewRef.current?.scrollToPosition(0, 0, true);
   };
 
-  const handleBack = () => {
+  const handleBack = (newData) => {
     if (currentStage > 1){
+      setStage2Data(newData);
       setCurrentStage(currentStage - 1); // Move to the previous stage
+      scrollViewRef.current?.scrollToPosition(0, 0, true);
     }
   };
 
@@ -77,31 +81,41 @@ const AduanForm = () => {
         return null;
     }
   };
-  
-  // return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === "ios" ? "padding" : "height"}
-    //   style={styles.flexContainer}
-    //   keyboardVerticalOffset={keyboardVerticalOffset}
-    // >
-    //   <SafeAreaView style={{backgroundColor: '#9448DA'}}>
-    //     <Header/>
-    //       <ScrollView 
-    //         style={{
-    //           backgroundColor: '#FFFFFF', 
-    //           marginTop: '-10%', 
-    //           marginBottom: Platform.OS === "android" ? "20%" : 0,
-    //         }}
-    //         contentContainerStyle={styles.contentContainer}
-    //         showsVerticalScrollIndicator={false}
-    //         keyboardShouldPersistTaps="handled"
-    //       >
-    //         {/* Render the current stage */}
-    //         {renderStage()}
-    //       </ScrollView>
-    //     </SafeAreaView>
-    // </KeyboardAvoidingView>
-  // );
+
+  // Function to reset the form to its initial state
+  const resetForm = useCallback(() => {
+    setCurrentStage(1);
+    setStage1Data({
+      // General fields that are always present
+      jenis_aduan: '',
+      tarikh_kejadian: '',
+      masa_kejadian: '',
+      tajuk_aduan: '',
+      butiran_lanjut: '',
+      documents: [],
+      // Specific fields for Talian Telefon
+      negeri: '',
+      lokasi: '',
+      no_tel_yang_gagal_dihubungi: '',
+      nama_staff_bertugas: '',
+      // Specific fields for Portal RHS
+      nama_penuh_pasangan: '',
+      no_kad_pasangan: '',
+    });
+    setStage2Data({
+      nama_penuh: '',
+      no_kad_pengenalan: '',
+      no_telefon: '',
+      e_mel: '',
+      jantina: '',
+    });
+    // Scroll to the top of the form
+    scrollViewRef.current?.scrollToPosition(0, 0, true);
+  }, []);
+
+  // Reset the form state when the tab comes into focus
+  useFocusEffect(resetForm);
+
   return (
     <SafeAreaView style={{ backgroundColor: '#9448DA' }}>
       <Header />
@@ -112,6 +126,7 @@ const AduanForm = () => {
         extraHeight={Platform.OS === "android" ? 170 : 80}
         enableOnAndroid={true} // Optional, but useful for Android
         keyboardShouldPersistTaps='handled'
+        ref={scrollViewRef}
       >
         {/* Render the current stage */}
         {renderStage()}
@@ -121,17 +136,3 @@ const AduanForm = () => {
 };
 
 export default AduanForm;
-
-const styles = StyleSheet.create({
-  flexContainer: {
-    flex: 1,
-    backgroundColor: '#9448DA' // Assuming this is your desired background color
-  },
-  scrollView: {
-    backgroundColor: '#FFFFFF' // Set the background color for your form
-  },
-  contentContainer: {
-    flexGrow: 1, // Ensures that the ScrollView can expand to fit content
-    paddingBottom: 20, // Add some padding at the bottom to ensure last input is visible
-  }
-});

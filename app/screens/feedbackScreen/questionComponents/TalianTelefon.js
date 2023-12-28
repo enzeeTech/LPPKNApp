@@ -18,13 +18,6 @@ const TalianTelefonForm = ({ onDataChange, initialData }) => {
         <View style={styles.container}>
             <View style={styles.inputContainer}>
                 <Text style={styles.titleStyle}>Negeri*</Text>
-                {/* <TextInput
-                    value={initialData.negeri}
-                    onChangeText={(text) => handleChange('negeri', text)}
-                    placeholder=" Masukkan negeri di sini"
-                    style={styles.inputField}
-                    placeholderTextColor={"#A1A1A1"}
-                /> */}
                 <StateSelector
                     selectedValue={initialData.negeri}
                     onValueChange={(item) => handleStateChange('negeri', item.value)}

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,18 +8,24 @@ import {
 } from "react-native";
 
 import styles from "./layouts/StageTwoLayout";
+import RadioButton from "../../common/RadioButton";
 
 
 function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
 
   const [formData, setFormData] = useState(secondStageFormData);
 
+  // Update the local formData when secondStageFormData changes
+  useEffect(() => {
+    setFormData(secondStageFormData);
+  }, [secondStageFormData]);
+
   const handleNext = () => {
     onNext(formData); // Pass the form data to the index.js component
   };
 
   const handleBack = () => {
-    onBack();
+    onBack(formData);
   };
 
   const handleChange = (name, value) => {
@@ -69,17 +75,13 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.titleStyle}>No.Telefon</Text>
-          <View style={styles.containerRow}>
-            <View style={styles.smallContainer}>
-              <TextInput
-                value={formData.no_telefon}
-                onChangeText={(text) => handleChange('no_telefon', text)}
-                placeholder=" Masukkan no.tel anda"
-                style={styles.inputField}
-                placeholderTextColor={"#A1A1A1"}
-              />
-            </View>
-          </View>
+            <TextInput
+              value={formData.no_telefon}
+              onChangeText={(text) => handleChange('no_telefon', text)}
+              placeholder=" Masukkan no.tel anda"
+              style={styles.inputField}
+              placeholderTextColor={"#A1A1A1"}
+            />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.titleStyle}>E-mel</Text>
@@ -93,6 +95,20 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.titleStyle}>Jantina</Text>
+          <View style={styles.formContainer}>
+            <RadioButton
+              label="Lelaki"
+              value="lelaki"
+              selected={formData.jantina === 'lelaki'}
+              onPress={() => handleChange('jantina', 'lelaki')}
+            />
+            <RadioButton
+              label="Perempuan"
+              value="perempuan"
+              selected={formData.jantina === 'perempuan'}
+              onPress={() => handleChange('jantina', 'perempuan')}
+            />
+          </View>
     
         </View>
 

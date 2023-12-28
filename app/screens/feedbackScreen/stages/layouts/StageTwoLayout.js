@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
         fontWeight: "700",
     },
     inputField: {
+        marginTop: "2%",
         flexDirection: "row",
         borderRadius: 8,
         borderColor: "#ADB5BD",
@@ -137,6 +138,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontStyle: "normal",
         fontWeight: "700",
+    },
+    formContainer: {
+        marginTop: "3%",
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: "10%",
     },
 });
 

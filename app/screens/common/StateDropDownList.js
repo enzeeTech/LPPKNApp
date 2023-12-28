@@ -36,7 +36,7 @@ const StateDropDownList = ({ selectedValue, onValueChange}) => {
         valueField="value"
         value={selectedValue}
         onChange={onValueChange}
-        placeholder=" Pilih negeri"
+        placeholder=" Masukkan negeri di sini"
         placeholderStyle={style.placeholderStyle}
         renderItem={(item) => (
           <View style={style.item}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from 'react';
 import {
   View,
@@ -22,6 +22,11 @@ import LainLainForm from "../questionComponents/LainLain";
 const StageOne = ({ onNext, formData : initialFormData}) => {
 
   const [formData, setFormData] = useState(initialFormData);
+
+  // Update the local formData when initialFormData changes
+  useEffect(() => {
+    setFormData(initialFormData);
+  }, [initialFormData]);
 
   // State maangement for file upload
   const [documents, setDocuments] = useState([]);

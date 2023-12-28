@@ -1,10 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import React from 'react';
 import {
-  ScrollView,
   SafeAreaView,
-  KeyboardAvoidingView,
-  StyleSheet,
   Platform,
 } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -122,9 +119,9 @@ const AduanForm = () => {
       <KeyboardAwareScrollView 
         style={{ backgroundColor: '#FFFFFF', marginTop: '-10%' }}
         showsVerticalScrollIndicator={false}
-        extraScrollHeight={Platform.OS === "android" ? 70 : 20} // Optional, adjust the amount of scrolling when the keyboard is visible
-        extraHeight={Platform.OS === "android" ? 170 : 80}
-        enableOnAndroid={true} // Optional, but useful for Android
+        extraScrollHeight={Platform.OS === "android" ? 70 : 20} 
+        extraHeight={Platform.OS === "android" ? 170 : 90}
+        enableOnAndroid={true} 
         keyboardShouldPersistTaps='handled'
         ref={scrollViewRef}
       >

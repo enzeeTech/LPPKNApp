@@ -145,6 +145,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: "10%",
     },
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginTop: 4,
+      },
 });
 
 export default styles;

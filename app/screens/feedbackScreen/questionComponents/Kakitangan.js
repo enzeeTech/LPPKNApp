@@ -10,17 +10,13 @@ const KakitanganForm = ({ onDataChange, initialData }) => {
         onDataChange({ ...initialData, [name]: value }); // Propagate changes up to the stage one component
     };
 
-    const handleStateChange = (name, value) => {
-        onDataChange({ ...initialData, [name]: value });
-      }
-
   return (
     <View style={styles.container}>
         <View style={styles.inputContainer}>
             <Text style={styles.titleStyle}>Negeri*</Text>
             <StateSelector
                 selectedValue={initialData.negeri}
-                onValueChange={(item) => handleStateChange('negeri', item.value)}
+                onValueChange={(item) => handleChange('negeri', item.value)}
             />
         </View>
         <View style={styles.inputContainer}>

@@ -30,15 +30,26 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
       case 'no_kad_pengenalan':
         const numbersOnly = value.replace(/[^\d]/g, '');
         if (!value) {
-          return 'No. kad pengenalan diperlukan'; // Check if the field is empty
+          return 'No. kad pengenalan diperlukan';
         } else if (numbersOnly.length !== 12) {
-          return 'No. kad pengenalan harus 12 angka'; // Check if the length is exactly 12 digits
+          return 'No. kad pengenalan harus 12 angka'; 
         } else {
-          return ''; // No error
+          return ''; 
         }
       case 'no_telefon':
-        return value ? '' : 'No. telefon diperlukan';
+        const cleanedNumber = value.replace(/[^\d]/g, '');
+        if (!value) {
+          return 'No. telefon diperlukan';
+        } else if (cleanedNumber.length < 10) {
+          return 'No. telefon harus sekurang-kurangnya 9 angka';
+        } else if (cleanedNumber.length > 11) {
+          return 'No. telefon tidak boleh melebihi 10 angka';
+        } else {
+          return '';
+        }
       case 'e_mel':
+        // only show error if the field is not empty
+        if (!value) return '';
         return /\S+@\S+\.\S+/.test(value) ? '' : 'E-mel tidak sah';
       default:
         return '';
@@ -74,9 +85,13 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
     onBack(formData);
   };
 
+  // Handle changes to the form fields
+  // Persist the changes to the local formData
+  // Validate the field and update the errors state
   const handleChange = (name, value) => {
     let formattedValue = value;
-  
+    
+    // Format the IC number
     if (name === 'no_kad_pengenalan') {
       // Remove any non-numeric characters
       const numbersOnly = value.replace(/[^\d]/g, '');
@@ -88,6 +103,17 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
         formattedValue = `${numbersOnly.slice(0, 6)}-${numbersOnly.slice(6)}`;
       } else {
         formattedValue = `${numbersOnly.slice(0, 6)}-${numbersOnly.slice(6, 8)}-${numbersOnly.slice(8)}`;
+      }
+    } 
+    // Validate the phone number
+    else if (name === 'no_telefon') {
+      let cleanedNumber = value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+
+      // Add dash after the second digit
+      if (cleanedNumber.length > 3) {
+        formattedValue = `${cleanedNumber.slice(0, 3)}-${cleanedNumber.slice(3)}`;
+      } else {
+        formattedValue = cleanedNumber;
       }
     }
   
@@ -118,7 +144,7 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
       {/* Form data begins here */}
       <View style={styles.container}>
         <View style={styles.inputContainer}>
-          <Text style={styles.titleStyle}>Nama Penuh</Text>
+          <Text style={styles.titleStyle}>Nama Penuh*</Text>
           <TextInput
               value={formData.nama_penuh}
               onChangeText={(text) => handleChange('nama_penuh', text)}
@@ -129,7 +155,7 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
           {errors.nama_penuh && <Text style={styles.errorText}>{errors.nama_penuh}</Text>}
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.titleStyle}>No.Kad Pengenalan</Text>
+          <Text style={styles.titleStyle}>No.Kad Pengenalan*</Text>
           <TextInput
               value={formData.no_kad_pengenalan}
               onChangeText={(text) => handleChange('no_kad_pengenalan', text)}
@@ -141,7 +167,7 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
           {errors.no_kad_pengenalan && <Text style={styles.errorText}>{errors.no_kad_pengenalan}</Text>}
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.titleStyle}>No.Telefon</Text>
+          <Text style={styles.titleStyle}>No.Telefon*</Text>
             <TextInput
               value={formData.no_telefon}
               onChangeText={(text) => handleChange('no_telefon', text)}

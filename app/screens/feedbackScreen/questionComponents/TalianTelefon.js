@@ -10,17 +10,13 @@ const TalianTelefonForm = ({ onDataChange, initialData }) => {
         onDataChange({ ...initialData, [name]: value }); // Propagate changes up to the stage one component
     };
 
-    const handleStateChange = (name, value) => {
-        onDataChange({ ...initialData, [name]: value });
-      }
-
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
                 <Text style={styles.titleStyle}>Negeri*</Text>
                 <StateSelector
                     selectedValue={initialData.negeri}
-                    onValueChange={(item) => handleStateChange('negeri', item.value)}
+                    onValueChange={(item) => handleChange('negeri', item.value)}
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -65,6 +61,7 @@ const TalianTelefonForm = ({ onDataChange, initialData }) => {
                         <TouchableOpacity onPress={() => {}}>
                             <Image source={require('../../../assets/time.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 
                         </TouchableOpacity>
+                        {/* Time Picker Modal */}
                     </View>
                 </View>
             </View>
@@ -98,8 +95,6 @@ const TalianTelefonForm = ({ onDataChange, initialData }) => {
                     placeholderTextColor={"#A1A1A1"}
                 />
             </View>
-            
-        
         </View>
     );
 };

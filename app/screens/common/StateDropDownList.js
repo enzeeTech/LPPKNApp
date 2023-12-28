@@ -38,6 +38,7 @@ const StateDropDownList = ({ selectedValue, onValueChange}) => {
         onChange={onValueChange}
         placeholder=" Masukkan negeri di sini"
         placeholderStyle={style.placeholderStyle}
+        autoScroll={false}
         renderItem={(item) => (
           <View style={style.item}>
             <Text style={style.itemText}>{item.label}</Text>

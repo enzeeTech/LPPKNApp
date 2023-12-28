@@ -5,11 +5,8 @@ const RadioButton = ({ label, value, onPress, selected }) => {
     return (
         <View style={styles.radioButtonContainer}>
             <TouchableOpacity style={styles.radioButtonTouchable} onPress={() => onPress(value)}>
-            <View style={[
-                styles.radioButton,
-                { borderColor: selected ? '#9E9E9E' : '#9E9E9E' },
-            ]}>
-                {selected && <View style={styles.radioButtonSelected} />}
+            <View style={[styles.radioButton]}>
+              {selected && <View style={styles.radioButtonSelected} />}
             </View>
             </TouchableOpacity>
             <Text style={styles.label}>{label}</Text>
@@ -34,6 +31,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       marginRight: 10,
+      borderColor: '#9E9E9E',
     },
     radioButtonTouchable: {
         justifyContent: 'center',

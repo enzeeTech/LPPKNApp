@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import styles from './layouts/QuestionsLayout';
-import CalendarPicker from '../../common/Calendar';
 
 const GeneralForm = ({ onDataChange, initialData }) => {
   const [data, setData] = useState(initialData);
-  const [tarikhKejadian, setTarikhKejadian] = useState('');
 
   const handleChange = (name, value) => {
     const updatedData = { ...data, [name]: value };
@@ -35,6 +33,7 @@ const GeneralForm = ({ onDataChange, initialData }) => {
                         onChangeText={(text) => handleChange('masa_kejadian', text)}
                         placeholder=" Pilih masa"
                         placeholderTextColor={"#A1A1A1"}
+                        editable={false}
                     />  
                     <View>
                         <Image source={require('../../../assets/book.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 
@@ -50,6 +49,7 @@ const GeneralForm = ({ onDataChange, initialData }) => {
                         onChangeText={(text) => handleChange('masa_kejadian', text)}
                         placeholder=" Pilih masa"
                         placeholderTextColor={"#A1A1A1"}
+                        editable={false}
                     />  
                     <View>
                         <Image source={require('../../../assets/time.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 

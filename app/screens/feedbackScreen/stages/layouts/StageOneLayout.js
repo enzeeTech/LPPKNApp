@@ -243,6 +243,11 @@ const styles = StyleSheet.create({
       fontWeight: '700',
       color: '#777777',
     },
+    errorText: {
+      color: 'red',
+      fontSize: 12,
+      marginTop: 4,
+    },
   
   });
 

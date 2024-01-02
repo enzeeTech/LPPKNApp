@@ -10,18 +10,17 @@ import {
 import styles from "./layouts/StageTwoLayout";
 import RadioButton from "../../common/RadioButton";
 
-
 function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
-
-  const [formData, setFormData] = useState(secondStageFormData);
-
-  // Update the local formData when secondStageFormData changes
-  useEffect(() => {
-    setFormData(secondStageFormData);
-  }, [secondStageFormData]);
-
+  
   // DATA VALIDATION
   const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState(secondStageFormData);
+
+  // Update the formData state whenever the secondStageFormData prop changes
+  useEffect(() => {
+    setFormData(secondStageFormData);
+    setErrors({});
+  }, [secondStageFormData]);
 
   const validateField = (name, value) => {
     switch(name) {
@@ -77,7 +76,7 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
     if (isValid) {
       onNext(formData); // Proceed to next stage if the form is valid
     } else {
-      console.log('Validation failed');
+      console.log('Validation failed for stage two');
     }
   };
 

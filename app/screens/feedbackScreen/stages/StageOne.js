@@ -8,7 +8,6 @@ import {
   Alert,
 } from "react-native";
 
-import * as DocumentPicker from "expo-document-picker";
 import {Dropdown} from 'react-native-element-dropdown';
 import styles from './layouts/StageOneLayout';
 import GeneralForm from "../questionComponents/General";
@@ -18,14 +17,18 @@ import MaklumatTidakTepatForm from "../questionComponents/Maklumat";
 import KakitanganForm from "../questionComponents/Kakitangan";
 import KondisiForm from "../questionComponents/Kondisi";
 import LainLainForm from "../questionComponents/LainLain";
+import { pickDocument } from "../../common/DocumentPickerSevice";
 
 const StageOne = ({ onNext, formData : initialFormData}) => {
 
+  // DATA VALIDATION
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(initialFormData);
 
   // Update the local formData when initialFormData changes
   useEffect(() => {
     setFormData(initialFormData);
+    setErrors({});
   }, [initialFormData]);
 
   // State maangement for file upload
@@ -42,14 +45,24 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
   ];
 
   const handleNextStage = () => {
-      onNext(formData); // Pass the form data to the index.js
-    };
+    if (!validateJenisAduan()) {
+        console.log("Validation failed for jennis aduan.");
+        return;
+    }
+
+    // Proceed with the next steps if validation passes
+    onNext(formData);
+};
 
   const handleDataChange = (newData) => {
       setFormData(newData);
     };
 
   const handleFormTypeChange = (item) => {
+
+    // Clear the error message for Jenis Aduan
+    clearJenisAduanError();
+
     if (formData.jenis_aduan === ''){
       setFormData({ ...formData, jenis_aduan: item.value, documents: [] });
       setDocuments([]);
@@ -75,11 +88,6 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
         no_kad_pasangan: '',
       });
     }
-
-    const handleStateChange = (negeri) => {
-      setFormData({ ...formData, negeri: negeri });
-    }
-    
   };
 
   // Function to dynamically render additional fields based on "Jenis Aduan" selection
@@ -102,80 +110,86 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
       }
   };
 
+// // Function to handle file upload
+// const pickDocument = async () => {
+//   try {
+//     // Check if the user has already uploaded 3 documents
+//     if (documents.length >= 3) {
+//       Alert.alert("Error", "You cannot upload more than 3 documents.");
+//       return;
+//     }
+
+//     // Invoke the Document Picker
+//     const result = await DocumentPicker.getDocumentAsync({
+//       type: "*/*",
+//       copyToCacheDirectory: true,
+//       multiple: true
+//     });
+
+//     // Check if the picker was not canceled
+//     if (!result.cancelled) {
+//       let newDocuments = [...documents];
+
+//       // Check if result contains multiple files
+//       if (result.assets) {
+//         for (const asset of result.assets) {
+//           // Check if adding this file exceeds the 3 document limit
+//           if (newDocuments.length >= 3) {
+//             Alert.alert("Error", "You cannot upload more than 3 documents.");
+//             break;
+//           }
+
+//           // Check if individual file size is within 4MB
+//           if (asset.size <= 4 * 1024 * 1024) {
+//             newDocuments.push({
+//               name: asset.name,
+//               size: asset.size,
+//               uri: asset.uri,
+//               mimeType: asset.mimeType,
+//             });
+//           } else {
+//             // If the individual file size exceeds 4MB, show an error for that file
+//             Alert.alert("Error", `The file ${asset.name} exceeds the 4MB size limit.`);
+//           }
+//         }
+//       } else if (result.uri) {
+//         // Handling single file selection
+//         const asset = {
+//           name: result.name,
+//           size: result.size,
+//           uri: result.uri,
+//           mimeType: result.mimeType,
+//         };
+
+//         // Check if individual file size is within 4MB
+//         if (asset.size <= 4 * 1024 * 1024) {
+//           newDocuments.push(asset);
+//         } else {
+//           Alert.alert("Error", `The file ${asset.name} exceeds the 4MB size limit.`);
+//         }
+//       }
+
+//       // Update the documents state
+//       setDocuments(newDocuments);
+
+//       // Update the formData state
+//       setFormData({ ...formData, documents: newDocuments });
+
+//       // Log the details of the uploaded files
+//       console.log("Uploaded Files:", newDocuments);
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     Alert.alert("Error", "An error occurred while picking the document.");
+//   }
+// };
+
   // Function to handle file upload
-const pickDocument = async () => {
-  try {
-    // Check if the user has already uploaded 3 documents
-    if (documents.length >= 3) {
-      Alert.alert("Error", "You cannot upload more than 3 documents.");
-      return;
-    }
-
-    // Invoke the Document Picker
-    const result = await DocumentPicker.getDocumentAsync({
-      type: "*/*",
-      copyToCacheDirectory: true,
-      multiple: true
+  const handleDocumentPick = async () => {
+    await pickDocument(documents, setDocuments, (newDocs) => {
+      setFormData({ ...formData, documents: newDocs });
     });
-
-    // Check if the picker was not canceled
-    if (!result.cancelled) {
-      let newDocuments = [...documents];
-
-      // Check if result contains multiple files
-      if (result.assets) {
-        for (const asset of result.assets) {
-          // Check if adding this file exceeds the 3 document limit
-          if (newDocuments.length >= 3) {
-            Alert.alert("Error", "You cannot upload more than 3 documents.");
-            break;
-          }
-
-          // Check if individual file size is within 4MB
-          if (asset.size <= 4 * 1024 * 1024) {
-            newDocuments.push({
-              name: asset.name,
-              size: asset.size,
-              uri: asset.uri,
-              mimeType: asset.mimeType,
-            });
-          } else {
-            // If the individual file size exceeds 4MB, show an error for that file
-            Alert.alert("Error", `The file ${asset.name} exceeds the 4MB size limit.`);
-          }
-        }
-      } else if (result.uri) {
-        // Handling single file selection
-        const asset = {
-          name: result.name,
-          size: result.size,
-          uri: result.uri,
-          mimeType: result.mimeType,
-        };
-
-        // Check if individual file size is within 4MB
-        if (asset.size <= 4 * 1024 * 1024) {
-          newDocuments.push(asset);
-        } else {
-          Alert.alert("Error", `The file ${asset.name} exceeds the 4MB size limit.`);
-        }
-      }
-
-      // Update the documents state
-      setDocuments(newDocuments);
-
-      // Update the formData state
-      setFormData({ ...formData, documents: newDocuments });
-
-      // Log the details of the uploaded files
-      console.log("Uploaded Files:", newDocuments);
-    }
-  } catch (error) {
-    console.error(error);
-    Alert.alert("Error", "An error occurred while picking the document.");
-  }
-};
-
+  };
 
   // Function to handle file deletion
   const deleteDocument = (uri) => {
@@ -196,6 +210,31 @@ const pickDocument = async () => {
     ));
   };
 
+  // Styling to add error messages to text fields
+  const dropdownStyle = (fieldName) => ({
+    ...styles.dropdown,
+    borderColor: errors[fieldName] ? 'red' : '#A1A1A1',
+  });
+
+  // Function to validate the form data
+  const validateJenisAduan = () => {
+    let newErrors = {};
+    if (!formData.jenis_aduan.trim()) {
+        newErrors.jenis_aduan = "Jenis aduan diperlukan";
+        setErrors(newErrors);
+        return false;
+    }
+
+    setErrors({}); // Clear errors if validation passes
+    return true;
+  };
+
+  // Function to clear the error message for Jenis Aduan
+  const clearJenisAduanError = () => {
+    if (errors.jenis_aduan) {
+        setErrors(prevErrors => ({ ...prevErrors, jenis_aduan: null }));
+    }
+  };
 
   return(
       <View style={styles.parentContainer}>
@@ -221,7 +260,7 @@ const pickDocument = async () => {
               <View style={styles.inputContainer}>
                   <Text style={styles.titleStyle}>Jenis Aduan*</Text>
                   <Dropdown
-                      style={styles.dropdown}
+                      style={dropdownStyle('jenis_aduan')}
                       containerStyle={styles.dropdownContainer}
                       selectedTextStyle={styles.selectedText}
                       activeColor="#EED4FF"
@@ -238,6 +277,7 @@ const pickDocument = async () => {
                       </View>
                       )}
                   />
+                  {errors.jenis_aduan && <Text style={styles.errorText}>{errors.jenis_aduan}</Text>}
               </View>
               {/* Render conditional fields */}
               {renderConditionalFields()} 
@@ -249,7 +289,7 @@ const pickDocument = async () => {
                   marginLeft: '1%',
                   }}
               >
-                  <TouchableOpacity onPress={pickDocument} disabled={documents.length >= 3}>
+                  <TouchableOpacity onPress={handleDocumentPick} disabled={documents.length >= 3}>
                       <View style={styles.buttonContainer}>
                           <View>
                               <Image

@@ -109,15 +109,15 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
       case 'talian_telefon':
           return <TalianTelefonForm onDataChange={handleDataChange} initialData={formData} ref={talianTelefonRef}/>;
       case 'portal_rhs':
-          return <PortalForm onDataChange={handleDataChange} initialData={formData} />;
+          return <PortalForm onDataChange={handleDataChange} initialData={formData} ref={portalRef} />;
       case 'maklumat_tidak_tepat':
-          return <MaklumatTidakTepatForm onDataChange={handleDataChange} initialData={formData} />;
+          return <MaklumatTidakTepatForm onDataChange={handleDataChange} initialData={formData} ref={maklumatTidakTepatRef}/>;
       case 'kakitangan':
-          return <KakitanganForm onDataChange={handleDataChange} initialData={formData} />;
+          return <KakitanganForm onDataChange={handleDataChange} initialData={formData} ref={kakitanganRef}/>;
       case 'kondisi':
-          return <KondisiForm onDataChange={handleDataChange} initialData={formData} />;
+          return <KondisiForm onDataChange={handleDataChange} initialData={formData} ref={kondisiRef} />;
       case 'lain_lain':
-          return <LainLainForm onDataChange={handleDataChange} initialData={formData} />;
+          return <LainLainForm onDataChange={handleDataChange} initialData={formData} ref={lainLainRef}/>;
       default:
           return <GeneralForm onDataChange={handleDataChange} initialData={formData} />;
       }
@@ -181,7 +181,21 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
         case 'talian_telefon':
           console.log(talianTelefonRef.current.validateFields());
             return talianTelefonRef.current.validateFields();
-        // Other cases...
+        case 'portal_rhs':
+          console.log(portalRef.current.validateFields());
+            return portalRef.current.validateFields();
+        case 'maklumat_tidak_tepat':
+          console.log(maklumatTidakTepatRef.current.validateFields());
+            return maklumatTidakTepatRef.current.validateFields();
+        case 'kakitangan':
+          console.log(kakitanganRef.current.validateFields());
+            return kakitanganRef.current.validateFields();
+        case 'kondisi':
+          console.log(kondisiRef.current.validateFields());
+            return kondisiRef.current.validateFields();
+        case 'lain_lain':
+          console.log(lainLainRef.current.validateFields());
+            return lainLainRef.current.validateFields();
     }
   };
 
@@ -212,6 +226,7 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
                       style={dropdownStyle('jenis_aduan')}
                       containerStyle={styles.dropdownContainer}
                       selectedTextStyle={styles.selectedText}
+                      dropdownPosition="bottom"
                       activeColor="#EED4FF"
                       data={jenisAduanOptions}
                       labelField="label"

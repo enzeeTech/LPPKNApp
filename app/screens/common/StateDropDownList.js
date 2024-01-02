@@ -28,6 +28,7 @@ const StateDropDownList = ({ selectedValue, onValueChange, setStyle: dropdownSty
   return (
       <Dropdown
         style={dropdownStyle}
+        dropdownPosition="bottom"
         containerStyle={style.dropdownContainer}
         selectedTextStyle={style.selectedText}
         activeColor="#EED4FF"

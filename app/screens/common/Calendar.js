@@ -1,6 +1,6 @@
 // CustomDatePicker.js
 import React, { useState, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import Popover from 'react-native-popover-view';
 
@@ -14,6 +14,14 @@ const Calendar = ({ value, onDateChange, placeholder, placeholderTextColor, cale
     setCalendarVisible(false);
     setPopoverVisible(false);
   };
+
+  const arrowStyle = {
+    width: 13,
+    height: 13,
+    resizeMode: 'contain',
+    marginBottom: Platform.OS === 'android' ? -5 : 0, // Adjust for Android
+  };
+
 
   // Function to parse the date string and return a Date object, if the date string is empty, 
   // return today's date
@@ -54,8 +62,12 @@ const Calendar = ({ value, onDateChange, placeholder, placeholderTextColor, cale
             selectedStartDate={parseDate(value)} 
             onDateChange={handleDateChange}
             selectedDayColor='#E7C3FF'
-            height={400}
+            height={450}
             width={380}
+            monthTitleStyle={{color: '#9448DA', fontSize: 17, fontWeight: '800', marginLeft: -5}}
+            yearTitleStyle={{color: '#9448DA', fontSize: 17, fontWeight: '800'}}
+            previousComponent={<Image source={require("../../assets/leftArrow.png")} style={arrowStyle} />}
+            nextComponent={<Image source={require("../../assets/rightArrow.png")} style={arrowStyle} />}
         />
       </Popover>
     </View>
@@ -76,6 +88,23 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         color: "black", 
     },
+    modalView: {
+      marginTop: 22,
+      backgroundColor: 'white',
+      borderRadius: 20,
+      padding: 35,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+          width: 0,
+          height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+      width: '100%',
+      height: '100%'
+  },
     image: {
         marginLeft: -25, 
         marginTop: 11, 

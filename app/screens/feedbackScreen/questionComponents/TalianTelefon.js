@@ -12,20 +12,27 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
     const [errors, setErrors] = useState({}); 
 
     const handleChange = (name, value) => {
-        let newValue = value;
-
-        // If the field is 'no_tel_yang_gagal_dihubungi', format the phone number
         if (name === 'no_tel_yang_gagal_dihubungi') {
-            let cleanedNumber = value.replace(/[^\d]/g, ''); // Remove non-numeric characters
-
-            // Insert dash after the third digit
-            if (cleanedNumber.length > 3) {
-                newValue = `${cleanedNumber.slice(0, 3)}-${cleanedNumber.slice(3)}`;
+            // Check if the value is not empty or null
+            if (value && value.length > 0) {
+                console.log("value: " + value);
+                let cleanedNumber = value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+    
+                // Automatically add a dash after the third digit if more than three digits are entered
+                if (cleanedNumber.length > 3) {
+                    cleanedNumber = `${cleanedNumber.slice(0, 3)}-${cleanedNumber.slice(3)}`;
+                }
+    
+                // Update the state with the new formatted value
+                onDataChange({ ...initialData, [name]: cleanedNumber });
+            } else {
+                // If the value is empty or null, update the state accordingly
+                onDataChange({ ...initialData, [name]: value });
             }
+        } else {
+            // For all other fields, just propagate the changes up
+            onDataChange({ ...initialData, [name]: value });
         }
-
-        // Update the state with the new value, which may be formatted
-        onDataChange({ ...initialData, [name]: newValue });
     };
 
     // Styles for the input fields
@@ -43,49 +50,47 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
         ...styles.dropdown,
         borderColor: errors[fieldName] ? 'red' : '#A1A1A1',
       });
-
-    // Data Validation
+    
     const validateFields = () => {
         let isValid = true;
         let newErrors = {};
-        const cleanedNumber = initialData.no_tel_yang_gagal_dihubungi.replace(/[^\d]/g, '');
-        console.log("cleanedNumber: " + cleanedNumber);
 
         // Validate negeri
         if (!initialData.negeri || !initialData.negeri.trim()) {
             newErrors.negeri = "Negeri diperlukan";
-            console.log("Negeri diperlukan false");
             isValid = false;
         }
 
         // Validate lokasi
         if (!initialData.lokasi || !initialData.lokasi.trim()) {
             newErrors.lokasi = "Lokasi diperlukan";
-            console.log("Lokasi diperlukan false");
             isValid = false;
         }
-
+        
         // Validate no_tel_yang_gagal_dihubungi
-        if (!initialData.no_tel_yang_gagal_dihubungi || !initialData.no_tel_yang_gagal_dihubungi.trim()) {
+        if (!initialData.no_tel_yang_gagal_dihubungi) {
             newErrors.no_tel_yang_gagal_dihubungi = "No. telefon diperlukan";
-            console.log("No. telefon diperlukan false");
             isValid = false;
         }
-        else if(cleanedNumber < 9){
-            newErrors.no_tel_yang_gagal_dihubungi = "No. telefon harus sekurang-kurangnya 9 angka";
-            console.log("No. telefon harus sekurang-kurangnya 9 angka");
-            isValid = false;
+        else if (initialData.no_tel_yang_gagal_dihubungi) {
+            const cleanedNumber = initialData.no_tel_yang_gagal_dihubungi.replace(/[^\d]/g, '');
+
+            // Check if the number is less than 10 digits
+            if (cleanedNumber.length < 10) {
+                newErrors.no_tel_yang_gagal_dihubungi = "No. telefon harus sekurang-kurangnya 10 angka";
+                isValid = false;
+            }
+            // Check if the number is more than 11 digits
+            else if (cleanedNumber.length > 11) {
+                newErrors.no_tel_yang_gagal_dihubungi = "No. telefon tidak boleh melebihi 11 angka";
+                isValid = false;
+            }
         }
-        else if(cleanedNumber > 11){
-            newErrors.no_tel_yang_gagal_dihubungi = "No. telefon tidak boleh melebihi 10 angka";
-            console.log("No. telefon tidak boleh melebihi 10 angka");
-            isValid = false;
-        }
+        
 
         // Validate tarikh_kejadian
         if (!initialData.tarikh_kejadian || !initialData.tarikh_kejadian.trim()) {
             newErrors.tarikh_kejadian = "Tarikh diperlukan";
-            console.log("Tarikh diperlukan false");
             isValid = false;
         }
 
@@ -99,7 +104,6 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
         // Validate tajuk_aduan
         if (!initialData.tajuk_aduan || !initialData.tajuk_aduan.trim()) {
             newErrors.tajuk_aduan = "Tajuk diperlukan";
-            console.log("Tajuk diperlukan false");
             isValid = false;
         }
 
@@ -162,6 +166,7 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
                             onChangeText={(text) => handleChange('masa_kejadian', text)}
                             placeholder=" Pilih masa"
                             placeholderTextColor={"#A1A1A1"}
+                            editable={false}
                         />  
                         <TouchableOpacity onPress={() => {}}>
                             <Image source={require('../../../assets/time.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 

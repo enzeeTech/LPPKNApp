@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     },
     selectedText: {
       // Style for the selected item text
-      fontSize: 12,
+      fontSize: 13,
       fontWeight: '600',
       color: '#6D6D6D',
     },
@@ -218,8 +218,8 @@ const styles = StyleSheet.create({
     },
     itemText: {
       // Style for the text of each item
-      fontSize: 12,
-      fontWeight: '600',
+      fontSize: 13,
+      fontWeight: '500',
       color: '#6D6D6D',
     },
     documentItem: {

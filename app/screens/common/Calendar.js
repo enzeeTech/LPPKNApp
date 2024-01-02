@@ -4,7 +4,7 @@ import { View, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-nati
 import CalendarPicker from 'react-native-calendar-picker';
 import Popover from 'react-native-popover-view';
 
-const Calendar = ({ value, onDateChange, placeholder, placeholderTextColor }) => {
+const Calendar = ({ value, onDateChange, placeholder, placeholderTextColor, calendarInputStyle }) => {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [isPopoverVisible, setPopoverVisible] = useState(false);
   const inputFieldRef = useRef(null);
@@ -35,7 +35,7 @@ const Calendar = ({ value, onDateChange, placeholder, placeholderTextColor }) =>
         value={value}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}
-        style={{color: "black", marginRight: '-4%', marginLeft: '5%', fontSize: 13}}
+        style={calendarInputStyle}
         editable={false} 
       />
       <TouchableOpacity onPress={() => setPopoverVisible(true)}>
@@ -71,16 +71,14 @@ const styles = StyleSheet.create({
         borderColor: "#ADB5BD",
         width: "100%",
         height: 48,
-        borderWidth: 1,
-        borderColor: "#A1A1A1", 
-        padding: "1.3%",
+        // padding: "1.3%",
         fontSize: 14,
         fontWeight: "400",
         color: "black", 
     },
     image: {
-        marginLeft: "45%", 
-        marginTop: 9, 
+        marginLeft: -25, 
+        marginTop: 11, 
         width: 23, 
         height: 23, 
         resizeMode: "contain"

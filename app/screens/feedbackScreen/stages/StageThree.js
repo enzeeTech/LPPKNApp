@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity,Linking } from 'react-native';
 function StageThree({formData }) {
 
   printFormData = () => {
-    // Print form data to console in a pretty mannar
+    // Print form data to console in a pretty manner
     for (var key in formData) {
       if(key == 'documents'){
         console.log(key + ": ");

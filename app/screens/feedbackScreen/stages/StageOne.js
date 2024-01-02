@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import React from 'react';
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 
 import {Dropdown} from 'react-native-element-dropdown';
@@ -50,6 +49,11 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
         return;
     }
 
+    if (!validateCurrentStage()) {
+      console.log("Validation failed for stage one.");
+      return;
+  }
+
     // Proceed with the next steps if validation passes
     onNext(formData);
 };
@@ -87,14 +91,23 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
         nama_penuh_pasangan: '',
         no_kad_pasangan: '',
       });
+      // Clear the error message for Jenis Aduan
+      clearJenisAduanError();
     }
   };
 
+  // Create reference to the each form component
+  const talianTelefonRef = useRef();
+  const portalRef = useRef();
+  const maklumatTidakTepatRef = useRef();
+  const kakitanganRef = useRef();
+  const kondisiRef = useRef();
+  const lainLainRef = useRef();
   // Function to dynamically render additional fields based on "Jenis Aduan" selection
   const renderConditionalFields = () => {
       switch (formData.jenis_aduan) {
       case 'talian_telefon':
-          return <TalianTelefonForm onDataChange={handleDataChange} initialData={formData} />;
+          return <TalianTelefonForm onDataChange={handleDataChange} initialData={formData} ref={talianTelefonRef}/>;
       case 'portal_rhs':
           return <PortalForm onDataChange={handleDataChange} initialData={formData} />;
       case 'maklumat_tidak_tepat':
@@ -109,80 +122,6 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
           return <GeneralForm onDataChange={handleDataChange} initialData={formData} />;
       }
   };
-
-// // Function to handle file upload
-// const pickDocument = async () => {
-//   try {
-//     // Check if the user has already uploaded 3 documents
-//     if (documents.length >= 3) {
-//       Alert.alert("Error", "You cannot upload more than 3 documents.");
-//       return;
-//     }
-
-//     // Invoke the Document Picker
-//     const result = await DocumentPicker.getDocumentAsync({
-//       type: "*/*",
-//       copyToCacheDirectory: true,
-//       multiple: true
-//     });
-
-//     // Check if the picker was not canceled
-//     if (!result.cancelled) {
-//       let newDocuments = [...documents];
-
-//       // Check if result contains multiple files
-//       if (result.assets) {
-//         for (const asset of result.assets) {
-//           // Check if adding this file exceeds the 3 document limit
-//           if (newDocuments.length >= 3) {
-//             Alert.alert("Error", "You cannot upload more than 3 documents.");
-//             break;
-//           }
-
-//           // Check if individual file size is within 4MB
-//           if (asset.size <= 4 * 1024 * 1024) {
-//             newDocuments.push({
-//               name: asset.name,
-//               size: asset.size,
-//               uri: asset.uri,
-//               mimeType: asset.mimeType,
-//             });
-//           } else {
-//             // If the individual file size exceeds 4MB, show an error for that file
-//             Alert.alert("Error", `The file ${asset.name} exceeds the 4MB size limit.`);
-//           }
-//         }
-//       } else if (result.uri) {
-//         // Handling single file selection
-//         const asset = {
-//           name: result.name,
-//           size: result.size,
-//           uri: result.uri,
-//           mimeType: result.mimeType,
-//         };
-
-//         // Check if individual file size is within 4MB
-//         if (asset.size <= 4 * 1024 * 1024) {
-//           newDocuments.push(asset);
-//         } else {
-//           Alert.alert("Error", `The file ${asset.name} exceeds the 4MB size limit.`);
-//         }
-//       }
-
-//       // Update the documents state
-//       setDocuments(newDocuments);
-
-//       // Update the formData state
-//       setFormData({ ...formData, documents: newDocuments });
-
-//       // Log the details of the uploaded files
-//       console.log("Uploaded Files:", newDocuments);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     Alert.alert("Error", "An error occurred while picking the document.");
-//   }
-// };
 
   // Function to handle file upload
   const handleDocumentPick = async () => {
@@ -233,6 +172,16 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
   const clearJenisAduanError = () => {
     if (errors.jenis_aduan) {
         setErrors(prevErrors => ({ ...prevErrors, jenis_aduan: null }));
+    }
+  };
+
+  // Function to validate the current stage
+  const validateCurrentStage = () => {
+    switch (formData.jenis_aduan) {
+        case 'talian_telefon':
+          console.log(talianTelefonRef.current.validateFields());
+            return talianTelefonRef.current.validateFields();
+        // Other cases...
     }
   };
 
@@ -341,7 +290,7 @@ const StageOne = ({ onNext, formData : initialFormData}) => {
                       <TouchableOpacity onPress={handleNextStage} style={styles.seterusyaButton}>
                           <View>
                               <Text style={styles.seterusyaButtonText}>
-                              Seterusnya
+                                Seterusnya
                               </Text>
                           </View>
                       </TouchableOpacity>

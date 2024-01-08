@@ -10,6 +10,50 @@ const PortalForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
 
     const [errors, setErrors] = useState({}); 
 
+    const validateFieldDynamic = (name, value) => {
+        let newErrors = {...errors};
+
+        switch (name) {
+            case 'nama_penuh_pasangan':
+                if (!value.trim()) {
+                    newErrors[name] = "Lokasi diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+            case 'no_kad_pasangan':
+                if (!value) {
+                    newErrors[name] = "No.kad diperlukan";
+                } else {
+                    const numbersOnly = value.replace(/[^\d]/g, '');
+                    if (numbersOnly.length !== 12) {
+                        newErrors[name] = "No.kad harus tepat 12 angka";
+                    } else {
+                        delete newErrors[name];
+                    }
+                }
+                break;
+
+            case 'tarikh_kejadian':
+                if (!value.trim()) {
+                    newErrors[name] = "Tarikh diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+
+            case 'tajuk_aduan':
+                if (!value.trim()) {
+                    newErrors[name] = "Tajuk diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+        }
+
+        setErrors(newErrors);
+    };
+
     const handleChange = (name, value) => {
         let formattedValue = value;
 
@@ -26,8 +70,10 @@ const PortalForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
             }
 
             onDataChange({ ...initialData, [name]: formattedValue });
+            validateFieldDynamic(name, value);
         } else {
             onDataChange({ ...initialData, [name]: value });
+            validateFieldDynamic(name, value);
         }
     };
 

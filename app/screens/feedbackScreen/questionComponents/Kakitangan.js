@@ -11,8 +11,57 @@ const KakitanganForm = React.forwardRef(({ onDataChange, initialData }, ref) => 
 
     const [errors, setErrors] = useState({}); 
 
+    const validateFieldDynamic = (name, value) => {
+        let newErrors = {...errors};
+
+        switch (name) {
+            case 'negeri':
+                if (!value.trim()) {
+                    newErrors[name] = "Negeri diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+
+            case 'lokasi':
+                if (!value.trim()) {
+                    newErrors[name] = "Lokasi diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+
+            case 'tarikh_kejadian':
+                if (!value.trim()) {
+                    newErrors[name] = "Tarikh diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+
+            case 'nama_staff_bertugas':
+                if (!value.trim()) {
+                    newErrors[name] = "Nama staf diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+
+            case 'tajuk_aduan':
+                if (!value.trim()) {
+                    newErrors[name] = "Tajuk diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+        }
+
+        setErrors(newErrors);
+    };
+
     const handleChange = (name, value) => {
         onDataChange({ ...initialData, [name]: value });
+        validateFieldDynamic(name, value);
     };
 
     // Styles for the input fields

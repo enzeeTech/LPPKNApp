@@ -11,31 +11,7 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
 
     const [errors, setErrors] = useState({}); 
 
-    // const handleChange = (name, value) => {
-    //     if (name === 'no_tel_yang_gagal_dihubungi') {
-    //         // Check if the value is not empty or null
-    //         if (value && value.length > 0) {
-    //             console.log("value: " + value);
-    //             let cleanedNumber = value.replace(/[^\d]/g, ''); // Remove non-numeric characters
-    
-    //             // Automatically add a dash after the third digit if more than three digits are entered
-    //             if (cleanedNumber.length > 3) {
-    //                 cleanedNumber = `${cleanedNumber.slice(0, 3)}-${cleanedNumber.slice(3)}`;
-    //             }
-    
-    //             // Update the state with the new formatted value
-    //             onDataChange({ ...initialData, [name]: cleanedNumber });
-    //         } else {
-    //             // If the value is empty or null, update the state accordingly
-    //             onDataChange({ ...initialData, [name]: value });
-    //         }
-    //     } else {
-    //         // For all other fields, just propagate the changes up
-    //         onDataChange({ ...initialData, [name]: value });
-    //     }
-    // };
-
-    const validateField = (name, value) => {
+    const validateFieldDynamic = (name, value) => {
         let newErrors = {...errors};
 
         switch (name) {
@@ -85,8 +61,6 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
                     delete newErrors[name];
                 }
                 break;
-
-            // Include additional cases for other fields as needed
         }
 
         setErrors(newErrors);
@@ -106,15 +80,15 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
     
                 // Update the state with the new formatted value
                 onDataChange({ ...initialData, [name]: cleanedNumber });
-                validateField(name, value);
+                validateFieldDynamic(name, value);
             } else {
                 // If the value is empty or null, update the state accordingly
                 onDataChange({ ...initialData, [name]: value });
-                validateField(name, value);
+                validateFieldDynamic(name, value);
             }
         } else {
             onDataChange({ ...initialData, [name]: value });
-            validateField(name, value); // Perform validation
+            validateFieldDynamic(name, value); // Perform validation
         }
     };
 

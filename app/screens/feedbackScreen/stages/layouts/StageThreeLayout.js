@@ -45,11 +45,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     imageStyle: {
-        backgroundColor: "yellow",
+        width: 300, 
+        height: 250, 
+        alignSelf: 'center', 
+        resizeMode: 'contain',
+    },
+    imageStyleIos: {
+        marginTop: 15,
+        marginBottom: 15,
         width: 200, 
         height: 200, 
         alignSelf: 'center', 
-        marginTop: '5%',
         resizeMode: 'contain',
     },
     subTextStyle:{

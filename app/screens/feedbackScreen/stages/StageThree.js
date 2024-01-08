@@ -53,12 +53,21 @@ function StageThree({formData}) {
         <View style={styles.textContainer}>
           <Text style={styles.mainTextStyle}>Aduan anda telah berjaya dihantar! Sila semak emel untuk mendapatkan nombor rujukan kepada aduan anda. </Text>
         </View>
-        <LottieView
-          source={require("../../../assets/Json/mailAnimation.json")} 
-          autoPlay
-          loop
-          style={styles.imageStyle}
-        />
+        {Platform.OS === 'android' ? (
+        // Show Lottie animation for Android
+          <LottieView
+            source={require("../../../assets/Json/mailAnimation.json")} 
+            autoPlay
+            loop
+            style={styles.imageStyle}
+            />
+        ) : (
+        // Show Image for iOS
+          <Image
+            source={require("../../../assets/formSuccess.png")}
+            style={styles.imageStyleIos}
+          />
+        )}
         <View style={styles.subTextContainer}>
           <Text style={styles.subTextStyle}>Aduan anda akan dibalas selewat-lewatnya 3(tiga) hari waktu bekerja. Manakala aduan yang memerlukan siasatan lanjut akan dibalas selewat-lewatnya 7(tujuh) hari bekerja.</Text>
         </View>

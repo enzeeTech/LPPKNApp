@@ -109,6 +109,37 @@ const styles = StyleSheet.create({
         fontStyle: "normal",
         fontWeight: "700",
     },
+    errorTextStyle: {
+        color: "#7931A8",
+        fontSize: 29,
+        fontWeight: "bold",
+        textAlign: 'center',
+    },
+    bodyContainerError: {
+        marginTop: '40%',
+        width: '100%',
+    },
+    errorButtonStyle: {
+        alignItems: "center",
+        height: 45,
+        width: "80%",
+        marginTop: 50,
+        backgroundColor: "#9448DA",
+        justifyContent: "center",
+        alignContent: "center",
+        alignSelf: "center",
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#973BD9",
+    },
+    errorImageStyle: {
+        marginTop: 30,
+        marginBottom: 15,
+        width: 200, 
+        height: 200, 
+        alignSelf: 'center', 
+        resizeMode: 'contain',
+    },
 });
 
 export default styles;

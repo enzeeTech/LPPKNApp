@@ -10,6 +10,7 @@ import Header from "./FeedbackHeader";
 import StageOne from "./stages/StageOne";
 import StageTwo from "./stages/StageTwo";
 import StageThree from "./stages/StageThree";
+import StageThreeError from "./stages/StageThreeError";
 
 
 const AduanForm = () => {
@@ -74,6 +75,7 @@ const AduanForm = () => {
       case 3:
         // return <StageThree onSubmit={handleSubmit} formData={{ ...stage1Data, ...stage2Data }} />;
         return <StageThree formData={{ ...stage1Data, ...stage2Data }} />;
+        // return <StageThreeError/>;
       default:
         return null;
     }

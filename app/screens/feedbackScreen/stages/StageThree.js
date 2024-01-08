@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import styles from "./layouts/StageThreeLayout";
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,7 @@ function StageThree({formData}) {
 
   const navigation = useNavigation();
   const { width, height } = Dimensions.get('window');
+
 
   // BUTTON PRESS FUNCTIONS
   const handleLinkPress = async () => {
@@ -53,10 +54,10 @@ function StageThree({formData}) {
         <View style={styles.textContainer}>
           <Text style={styles.mainTextStyle}>Aduan anda telah berjaya dihantar! Sila semak emel untuk mendapatkan nombor rujukan kepada aduan anda. </Text>
         </View>
-        {Platform.OS === 'android' ? (
+        {/* {Platform.OS === 'android' ? (
         // Show Lottie animation for Android
           <LottieView
-            source={require("../../../assets/Json/mailAnimation.json")} 
+            source={require("../../../assets/Json/mailAnimation/JSON/data.json")} 
             autoPlay
             loop
             style={styles.imageStyle}
@@ -67,7 +68,13 @@ function StageThree({formData}) {
             source={require("../../../assets/formSuccess.png")}
             style={styles.imageStyleIos}
           />
-        )}
+        )} */}
+        <LottieView
+          source={require("../../../assets/Json/mailAnimation/JSON/data.json")} 
+          autoPlay
+          loop
+          style={styles.imageStyle}
+        />
         <View style={styles.subTextContainer}>
           <Text style={styles.subTextStyle}>Aduan anda akan dibalas selewat-lewatnya 3(tiga) hari waktu bekerja. Manakala aduan yang memerlukan siasatan lanjut akan dibalas selewat-lewatnya 7(tujuh) hari bekerja.</Text>
         </View>

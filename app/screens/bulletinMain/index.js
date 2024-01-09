@@ -141,7 +141,7 @@ function BulletinMain({navigation}) {
               />
           </TouchableOpacity>
         </View>
-        <BulletinDetailsSection items={bulletinItems} onLoadMore={hasMoreItems ? loadMoreItems : null} />
+        <BulletinDetailsSection navigation={navigation} items={bulletinItems} onLoadMore={hasMoreItems ? loadMoreItems : null } />
       </ScrollView>
       <SarinBottomSheet
             isVisible={isBottomSheetVisible}

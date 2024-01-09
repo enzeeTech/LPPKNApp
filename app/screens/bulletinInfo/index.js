@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native';
 // Get the full height of the screen
 const screenHeight = Dimensions.get('window').height;
 
-const BulletinInfoMain = () => {
+const BulletinInfoMain = ({navigation}) => {
     const insets = useSafeAreaInsets();
     const bottomNavBarHeight = insets.bottom;
 
@@ -19,10 +19,14 @@ const BulletinInfoMain = () => {
         paddingBottom: bottomNavBarHeight, 
     };
 
+    const handleBackPress = () => {
+        navigation.goBack();
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
-                <Header/>
+                <Header onBackPress={handleBackPress} />
             </View>
             <ScrollView 
                 showsVerticalScrollIndicator={false} 

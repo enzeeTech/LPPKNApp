@@ -4,9 +4,9 @@ import { View, Text, Image, StyleSheet, Platform, TouchableOpacity, Pressable } 
 
 const CustomBulletinTile = ({ onPress, image, title, date }) => {
 
-    const handleTilePress = () => {
-        console.log('Tile Item Pressed!');
-    };
+    // const handleTilePress = () => {
+    //     navigation.navigate('BulletingInfo');
+    // };
 
     const handleShareButtonPress = () => {
         console.log('Share Button Pressed!');
@@ -18,7 +18,7 @@ const CustomBulletinTile = ({ onPress, image, title, date }) => {
             styles.tileContainer,
             { opacity: pressed ? 0.80 : 1 } 
         ]}
-        onPress={handleTilePress}
+        onPress={onPress}
         >
             <View style={styles.imageContainer}>
                 <Image source={image} style={styles.image} />

@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Platform} from 'react-
 import CustomBulletinTile from './BulletinCustomTile';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const BulletinDetailsSection = ({ items, onLoadMore }) => {
+const BulletinDetailsSection = ({ navigation, items, onLoadMore }) => {
 
     const handlePress = () => {
-        console.log('Tile Pressed!');
+        navigation.navigate('BulletingInfo');
     };
 
     return (
@@ -17,7 +17,7 @@ const BulletinDetailsSection = ({ items, onLoadMore }) => {
                 return (
                     <View key={item.id}>
                         <CustomBulletinTile
-                        onPress={() => handlePress(item)}
+                        onPress={handlePress}
                         image={item.image}
                         title={item.title}
                         date={item.date}

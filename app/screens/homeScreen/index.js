@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { ScrollView } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import Header from './HomeScreenHeader';
 import ServiceIcon from '../common/ServiceIcon';
 import NewsItem from './customTiles/NewsItem';
@@ -46,7 +47,7 @@ const posterData = [
   { title: 'Sambutan Ulangtahun LPPKN ke-57',  date:'15 Jun 2023', imageSource: require('../../assets/poster4.png')},
 ];
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   // Function to render each row of icons
   const renderRow = (slicedIconsRow) => (
     <View style={styles.rowContainer}>
@@ -85,6 +86,8 @@ const HomeScreen = () => {
       ))}
     </View>
   );
+
+
   
   //////// SEARCH BAR FUNCTIONS AND DECLARATIONS ////////
 
@@ -113,6 +116,12 @@ const HomeScreen = () => {
   const updateSearchQuery = (query) => {
     setSearchQuery(query);
   }
+
+  //////// LIHAT SEMUA NAVIGATION ////////
+
+  const onBulletinLihatSemuaPress = () => {
+    navigation.navigate('BulletinHome');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -170,7 +179,7 @@ const HomeScreen = () => {
         <View style={styles.beritaContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.sectionText}>Berita LPPKN</Text>
-            <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => console.log('Lihat Semua Button Pressed!')}>
+            <TouchableOpacity style={{flexDirection: 'row'}} onPress={onBulletinLihatSemuaPress}>
               <Text style={styles.sectionSubText}>Lihat Semua</Text>
               <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrow}/>
             </TouchableOpacity>

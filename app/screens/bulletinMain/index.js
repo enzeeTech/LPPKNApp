@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native';
 import BulletinDetailsSection from './BulletinDetailsSection';
 import SarinBottomSheet from './SarinBottomSheet';
 
-function BulletinMain() {
+function BulletinMain({navigation}) {
 
   const dummyData = [
     {
@@ -99,12 +99,7 @@ function BulletinMain() {
   };
 
   const handleBackPress = () => {
-    if (isKeyboardVisible) {
-      // setSearchQuery(''); // Clear the search query 
-      Keyboard.dismiss(); // Dismiss the keyboard
-    } else {
-      console.log('back button pressed to go to home screen');
-    }
+      navigation.goBack();
   };
 
   {/*Definitions for bottom sheet visibility*/}

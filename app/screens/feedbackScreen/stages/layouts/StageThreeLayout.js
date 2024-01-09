@@ -45,10 +45,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     imageStyle: {
+        marginTop: 5,
+        marginBottom: 5,
         width: 300, 
-        height: 250, 
+        height: 230, 
         alignSelf: 'center', 
         resizeMode: 'contain',
+        // backgroundColor: 'yellow',
     },
     imageStyleIos: {
         marginTop: 15,
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
     },
     button1Style: {
         alignItems: "center",
-        marginTop: "10%",
+        marginTop: "8%",
         height: 45,
         width: "80%",
         justifyContent: "center",

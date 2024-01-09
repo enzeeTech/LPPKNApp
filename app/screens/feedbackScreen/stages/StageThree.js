@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import styles from "./layouts/StageThreeLayout";
 import { useNavigation } from '@react-navigation/native';
@@ -9,11 +9,22 @@ function StageThree({formData}) {
 
   const navigation = useNavigation();
   const { width, height } = Dimensions.get('window');
+  const animationRef = useRef(null);
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setInitialized(true);
+    }, 200); // small timeout to trigger re-render
+  }, []);
+
+  // Print form data to console in neat format
+  console.log(JSON.stringify(formData, null, 2));
 
 
   // BUTTON PRESS FUNCTIONS
   const handleLinkPress = async () => {
-    const url = 'https://example.com';
+    const url = '';
     // Check if the link is supported
     const supported = await Linking.canOpenURL(url);
   
@@ -54,7 +65,7 @@ function StageThree({formData}) {
         <View style={styles.textContainer}>
           <Text style={styles.mainTextStyle}>Aduan anda telah berjaya dihantar! Sila semak emel untuk mendapatkan nombor rujukan kepada aduan anda. </Text>
         </View>
-        {/* {Platform.OS === 'android' ? (
+        {Platform.OS === 'android' ? (
         // Show Lottie animation for Android
           <LottieView
             source={require("../../../assets/Json/mailAnimation/JSON/data.json")} 
@@ -63,18 +74,16 @@ function StageThree({formData}) {
             style={styles.imageStyle}
             />
         ) : (
-        // Show Image for iOS
-          <Image
-            source={require("../../../assets/formSuccess.png")}
-            style={styles.imageStyleIos}
+        // Show Lottie animation for iOS
+          <LottieView
+            ref={animationRef}
+            source={require("../../../assets/Json/mailAnimation/JSON/data.json")} 
+            autoPlay
+            loop
+            style={[styles.imageStyle, initialized ? {height: 230} : {}]}
           />
-        )} */}
-        <LottieView
-          source={require("../../../assets/Json/mailAnimation/JSON/data.json")} 
-          autoPlay
-          loop
-          style={styles.imageStyle}
-        />
+        )}
+        
         <View style={styles.subTextContainer}>
           <Text style={styles.subTextStyle}>Aduan anda akan dibalas selewat-lewatnya 3(tiga) hari waktu bekerja. Manakala aduan yang memerlukan siasatan lanjut akan dibalas selewat-lewatnya 7(tujuh) hari bekerja.</Text>
         </View>

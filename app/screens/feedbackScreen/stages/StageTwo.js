@@ -22,51 +22,48 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
     setErrors({});
   }, [secondStageFormData]);
 
-  const validateField = (name, value) => {
-    switch(name) {
+  const validateFieldDynamic = (name, value) => {
+    switch (name) {
       case 'nama_penuh':
-        return value ? '' : 'Nama penuh diperlukan';
+        return value.trim() ? '' : 'Nama penuh diperlukan';
       case 'no_kad_pengenalan':
-        const numbersOnly = value.replace(/[^\d]/g, '');
-        if (!value) {
+        const icNumbersOnly = value.replace(/[^\d]/g, '');
+        if (!value.trim()) {
           return 'No. kad pengenalan diperlukan';
-        } else if (numbersOnly.length !== 12) {
-          return 'No. kad pengenalan harus 12 angka'; 
+        } else if (icNumbersOnly.length !== 12) {
+          return 'No. kad pengenalan harus 12 angka';
         } else {
-          return ''; 
+          return '';
         }
       case 'no_telefon':
-        const cleanedNumber = value.replace(/[^\d]/g, '');
-        if (!value) {
+        const phoneCleanedNumber = value.replace(/[^\d]/g, '');
+        if (!value.trim()) {
           return 'No. telefon diperlukan';
-        } else if (cleanedNumber.length < 10) {
+        } else if (phoneCleanedNumber.length < 10) {
           return 'No. telefon harus sekurang-kurangnya 9 angka';
-        } else if (cleanedNumber.length > 11) {
+        } else if (phoneCleanedNumber.length > 11) {
           return 'No. telefon tidak boleh melebihi 10 angka';
         } else {
           return '';
         }
       case 'e_mel':
-        // only show error if the field is not empty
-        if (!value) return '';
-        return /\S+@\S+\.\S+/.test(value) ? '' : 'E-mel tidak sah';
+        return value.trim() && !/\S+@\S+\.\S+/.test(value) ? 'E-mel tidak sah' : '';
       default:
         return '';
     }
   };
-
+  
   const inputStyle = (fieldName) => ({
     ...styles.inputField,
     borderColor: errors[fieldName] ? 'red' : '#A1A1A1',
   });
-
 
   const handleNext = () => {
     const newErrors = {};
     let isValid = true;
   
     Object.keys(formData).forEach(key => {
-      const error = validateField(key, formData[key]);
+      const error = validateFieldDynamic(key, formData[key]);
       newErrors[key] = error;
       if (error) isValid = false;
     });
@@ -117,7 +114,10 @@ function StageTwo({ onNext, formData : secondStageFormData, onBack}) {
     }
   
     setFormData({ ...formData, [name]: formattedValue });
-    validateField(name, formattedValue);
+
+    // Validate the field in real-time and update errors
+    const fieldError = validateFieldDynamic(name, formattedValue);
+    setErrors({ ...errors, [name]: fieldError });
   };
 
 

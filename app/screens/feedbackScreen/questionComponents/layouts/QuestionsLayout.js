@@ -67,7 +67,36 @@ const styles = StyleSheet.create({
         padding: "1.3%",
         fontSize: 14,
         fontWeight: "400",
-    }
+    },
+    errorInput: {
+        borderColor: 'red',
+        borderWidth: 1, // or your desired borderWidth
+        // only border color and border width, do not change other styles like padding or margin
+    },
+    imageStyle: {
+        width: 23,
+        height: 23,
+        marginRight: 10,
+        resizeMode: "contain",
+    },
+    textInputStyle: {
+        color: "black", // Text color when there's text input
+        fontSize: 14,
+        fontWeight: "400",
+        marginLeft: "5%",
+        flex: 1,
+    },
+    inputFieldTime: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between', // This spreads out the children
+        height: 47,
+        borderWidth: 1,
+        borderColor: "#A1A1A1",
+        borderRadius: 8,
+        padding: "1.3%",
+        marginTop: "1%",
+    },
 });
 
 export default styles;

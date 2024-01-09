@@ -2,6 +2,7 @@ import React, { useState, useImperativeHandle } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import styles from './layouts/QuestionsLayout';
 import CalendarPicker from '../../common/Calendar';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const PortalForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
     useImperativeHandle(ref, () => ({
@@ -9,6 +10,27 @@ const PortalForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
     }));
 
     const [errors, setErrors] = useState({}); 
+    const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+    const showTimePicker = () => {
+        setTimePickerVisibility(true);
+    };
+
+    const hideTimePicker = () => {
+        setTimePickerVisibility(false);
+    };
+
+    const handleConfirm = (time) => {
+        const hours = time.getHours();
+        const minutes = time.getMinutes();
+
+        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+        console.log("Selected Time: ", formattedTime); // Debugging
+        handleChange('masa_kejadian', formattedTime)
+        hideTimePicker();
+    };
+
 
     const validateFieldDynamic = (name, value) => {
         let newErrors = {...errors};
@@ -37,6 +59,14 @@ const PortalForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
             case 'tarikh_kejadian':
                 if (!value.trim()) {
                     newErrors[name] = "Tarikh diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
+            
+            case 'masa_kejadian':
+                if (!value.trim()) {
+                    newErrors[name] = "Masa diperlukan";
                 } else {
                     delete newErrors[name];
                 }
@@ -71,7 +101,13 @@ const PortalForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
 
             onDataChange({ ...initialData, [name]: formattedValue });
             validateFieldDynamic(name, value);
-        } else {
+        }else if (name === 'masa_kejadian') {
+            console.log("Handle Change - Field: ", name, "Value: ", value); // Debugging
+
+            onDataChange({ ...initialData, [name]: value });
+            validateFieldDynamic(name, value); // Perform validation
+            
+        }else {
             onDataChange({ ...initialData, [name]: value });
             validateFieldDynamic(name, value);
         }
@@ -118,12 +154,12 @@ const PortalForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
             isValid = false;
         }
 
-        // // Validate masa kejadian
-        // if (!initialData.masa_kejadian || !initialData.masa_kejadian.trim()) {
-        //     newErrors.masa_kejadian = "Masa diperlukan";
-        //     console.log("Masa diperlukan false");
-        //     isValid = false;
-        // }
+        // Validate masa kejadian
+        if (!initialData.masa_kejadian || !initialData.masa_kejadian.trim()) {
+            newErrors.masa_kejadian = "Masa diperlukan";
+            console.log("Masa diperlukan false");
+            isValid = false;
+        }
 
         // Validate tajuk aduan
         if (!initialData.tajuk_aduan || !initialData.tajuk_aduan.trim()) {
@@ -175,19 +211,29 @@ const PortalForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
             </View>
             <View style={styles.smallContainer}>
                 <Text style={styles.titleStyle}>Masa Kejadian*</Text>
-                <View style={styles.inputField}>
+                <View style={[styles.inputFieldTime, errors.masa_kejadian ? styles.errorInput : {}]}>
                     <TextInput
                         value={initialData.masa_kejadian}
                         onChangeText={(text) => handleChange('masa_kejadian', text)}
                         placeholder=" Pilih masa"
-                        // style={styles.inputField}
                         placeholderTextColor={"#A1A1A1"}
-                        editable={false}
-                    />  
-                    <TouchableOpacity onPress={() => {}}>
-                        <Image source={require('../../../assets/time.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 
+                        style={styles.textInputStyle} // Apply text input style
+                        editable={false} // Make it non-editable as it's set via the picker
+                    />
+                    <TouchableOpacity onPress={showTimePicker}>
+                        <Image 
+                            source={require('../../../assets/time.png')} 
+                            style={styles.imageStyle}
+                        />
                     </TouchableOpacity>
+                    <DateTimePickerModal
+                        isVisible={isTimePickerVisible}
+                        mode="time"
+                        onConfirm={handleConfirm}
+                        onCancel={hideTimePicker}
+                    />
                 </View>
+                {errors.masa_kejadian && <Text style={styles.errorText}>{errors.masa_kejadian}</Text>}
             </View>
         </View>
         <View style={styles.inputContainer}>

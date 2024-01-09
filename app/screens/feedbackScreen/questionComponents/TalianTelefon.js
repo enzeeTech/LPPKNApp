@@ -253,16 +253,20 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
                 </View>
                 <View style={styles.smallContainer}>
                     <Text style={styles.titleStyle}>Masa Kejadian*</Text>
-                    <View style={styles.inputField}>
+                    <View style={[styles.inputFieldTime, errors.masa_kejadian ? styles.errorInput : {}]}>
                         <TextInput
                             value={initialData.masa_kejadian}
                             onChangeText={(text) => handleChange('masa_kejadian', text)}
                             placeholder=" Pilih masa"
                             placeholderTextColor={"#A1A1A1"}
-                            editable={false}
-                        />  
+                            style={styles.textInputStyle} // Apply text input style
+                            editable={false} // Make it non-editable as it's set via the picker
+                        />
                         <TouchableOpacity onPress={showTimePicker}>
-                            <Image source={require('../../../assets/time.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 
+                            <Image 
+                                source={require('../../../assets/time.png')} 
+                                style={styles.imageStyle}
+                            />
                         </TouchableOpacity>
                         <DateTimePickerModal
                             isVisible={isTimePickerVisible}
@@ -270,8 +274,8 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
                             onConfirm={handleConfirm}
                             onCancel={hideTimePicker}
                         />
-                        {/* Time Picker Modal */}
                     </View>
+                    {errors.masa_kejadian && <Text style={styles.errorText}>{errors.masa_kejadian}</Text>}
                 </View>
             </View>
             <View style={styles.inputContainer}>

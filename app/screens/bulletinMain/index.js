@@ -126,6 +126,7 @@ function BulletinMain({navigation}) {
                 <TextInput 
                   style={styles.searchText}
                   placeholder="Masukkan carian"
+                  placeholderTextColor="#A6A6A6"
                   value={searchQuery}
                   onChangeText={handleSearch}
                 >

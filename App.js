@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
+import { useColorScheme } from 'react-native';
 import HomeScreen from './app/screens/homeScreen/index';
 import LocationScreen from './app/screens/locationScreen/index';
 import ChatScreen from './app/screens/chatScreen/index';
@@ -21,6 +22,8 @@ const tabBarOptions = {
 };
 
 export default function App() {
+  const scheme = useColorScheme();
+
   // Load the custom font
   const [loaded] = useFonts({
     'Roboto-Regular': require('./app/assets/fonts/Roboto-Regular.ttf'),
@@ -69,7 +72,7 @@ export default function App() {
     <GestureHandlerRootView style={{flex:1}}>
       <SafeAreaProvider style={{flex:1}}>
         {/* Set status bar colour to dark */}
-        <StatusBar barStyle="dark-content" /> 
+        <StatusBar style="dark" /> 
         <NavigationContainer>
           <Tab.Navigator
             initialRouteName="HomeScreen"

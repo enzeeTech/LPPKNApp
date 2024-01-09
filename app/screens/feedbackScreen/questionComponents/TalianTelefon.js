@@ -259,8 +259,8 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
                             onChangeText={(text) => handleChange('masa_kejadian', text)}
                             placeholder=" Pilih masa"
                             placeholderTextColor={"#A1A1A1"}
-                            style={styles.textInputStyle} // Apply text input style
-                            editable={false} // Make it non-editable as it's set via the picker
+                            style={styles.textInputStyle} 
+                            editable={false} 
                         />
                         <TouchableOpacity onPress={showTimePicker}>
                             <Image 

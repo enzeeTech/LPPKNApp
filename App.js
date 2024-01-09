@@ -4,18 +4,14 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import LocationInfoScreen from './app/screens/locationInfoScreen/index';
 import HomeScreen from './app/screens/homeScreen/index';
-import LocationScreen from './app/screens/locationScreen/index';
-// import LocationInfoScreen from './app/screens/locationInfoScreen/index';
+import LocationScreen from './app/screens/locationInfoScreen/index';
 import ChatScreen from './app/screens/chatScreen/index';
 import SupportScreen from './app/screens/supportScreen/index';
 import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import BulletinMain from './app/screens/bulletinMain/index';
-import BulletinInfoScreen from './app/screens/bulletinInfo/index';
-
-// import CustomTile from './app/screens/bulletinMain/BulletinCustomTile';
 
 const Tab = createBottomTabNavigator();
 
@@ -70,6 +66,8 @@ export default function App() {
 
   return (
     <SafeAreaProvider style={{flex:1}}>
+      {/* Set status bar colour to dark */}
+      <StatusBar barStyle="dark-content" /> 
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName="HomeScreen"
@@ -120,7 +118,7 @@ export default function App() {
         >
           {/* Tab screens */}
           <Tab.Screen name="HomeScreen" component={HomeScreen} />
-          <Tab.Screen name="LocationScreen" component={LocationScreen} />
+          <Tab.Screen name="LocationInfoScreen" component={LocationInfoScreen} />
           <Tab.Screen
             name="ChatScreen"
             component={ChatScreen}
@@ -150,11 +148,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     height: Platform.OS === 'ios' ? 75 : 60,
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
     shadowColor: '#000',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.20,
-    shadowRadius: 8,
-    elevation: 3, // for Android shadow
+    shadowOffset: { height: -1, width: 0 },
   },
   tabIcon: {
     width: 40,
@@ -175,9 +172,9 @@ const styles = StyleSheet.create({
   },
   shadow: {
     shadowColor: '#000',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.7,
-    shadowRadius: 1,
-    elevation: 10,
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: -1 },
+    elevation: 10, // for Android shadow
   },
 });

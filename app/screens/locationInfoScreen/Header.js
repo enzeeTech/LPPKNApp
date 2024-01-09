@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: '#F5F5F5',
-        fontWeight: '600',
+        fontWeight: '700',
         fontSize: 20,
         fontFamily: 'Roboto-Regular',
         flex: 1, 

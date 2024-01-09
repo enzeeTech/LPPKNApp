@@ -1,11 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
 import { useFonts } from 'expo-font';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import LocationInfoScreen from './app/screens/locationInfoScreen/index';
 import HomeScreen from './app/screens/homeScreen/index';
-import LocationScreen from './app/screens/locationInfoScreen/index';
+import LocationScreen from './app/screens/locationScreen/index';
+// import LocationInfoScreen from './app/screens/locationInfoScreen/index';
 import ChatScreen from './app/screens/chatScreen/index';
 import SupportScreen from './app/screens/supportScreen/index';
 import FeedbackScreen from './app/screens/feedbackScreen/index';
@@ -14,7 +15,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
-
 const tabBarOptions = {
   showLabel: false 
 };
@@ -22,11 +22,11 @@ const tabBarOptions = {
 export default function App() {
   // Load the custom font
   const [loaded] = useFonts({
-    'roboto-regular': require('./app/assets/fonts/Roboto-Regular.ttf'), 
+    'Roboto-Regular': require('./app/assets/fonts/Roboto-Regular.ttf'),
   });
 
   if (!loaded) {
-    // Font is not loaded yet
+    // Font is not loaded yet, you can return a loading indicator or null
     return null;
   }
 
@@ -35,7 +35,8 @@ export default function App() {
     const navigation = useNavigation();
 
     return (
-      <TouchableOpacity
+      <GestureHandlerRootView style={{flex: 1}}>
+        <TouchableOpacity
         style={{
           top: -21,
           top: Platform.OS === 'ios' ? -17 : -25,
@@ -44,14 +45,16 @@ export default function App() {
           ...styles.shadow
         }}
         onPress={() => navigation.navigate('ChatScreen')}
-      >
-        <View style={styles.customButton}>
-          <Image
-            source={require('./app/assets/tanyaKasihIcon.png')}
-            style={styles.customIcon}
-          />
-        </View>
-      </TouchableOpacity>
+        >
+          <View style={styles.customButton}>
+            <Image
+              source={require('./app/assets/tanyaKasihIcon.png')}
+              style={styles.customIcon}
+            />
+          </View>
+        </TouchableOpacity> 
+      </GestureHandlerRootView>
+      
     );
   }
 
@@ -75,7 +78,7 @@ export default function App() {
                 iconSource = focused
                   ? require('./app/assets/UtamaActive.png')
                   : require('./app/assets/utamaIcon.png');
-              } else if (route.name === 'LocationInfoScreen') {
+              } else if (route.name === 'LocationScreen') {
                 iconSource = focused
                   ? require('./app/assets/LokasiActive.png')
                   : require('./app/assets/lokasiIcon.png');
@@ -111,9 +114,9 @@ export default function App() {
             tabBarStyle: styles.tabBar,
           })}
         >
-          {/* Define Tab.Screen components for each screen */}
+          {/* Tab screens */}
           <Tab.Screen name="HomeScreen" component={HomeScreen} />
-          <Tab.Screen name="LocationInfoScreen" component={LocationScreen} />
+          <Tab.Screen name="LocationScreen" component={LocationScreen} />
           <Tab.Screen
             name="ChatScreen"
             component={ChatScreen}
@@ -143,10 +146,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     height: Platform.OS === 'ios' ? 75 : 60,
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
     shadowColor: '#000',
-    shadowOffset: { height: '10%', width: 0 },
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.20,
+    shadowRadius: 8,
+    elevation: 3, // for Android shadow
   },
   tabIcon: {
     width: 40,
@@ -167,9 +171,9 @@ const styles = StyleSheet.create({
   },
   shadow: {
     shadowColor: '#000',
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 10, // for Android shadow
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.7,
+    shadowRadius: 1,
+    elevation: 10,
   },
 });

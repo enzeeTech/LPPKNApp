@@ -1,3 +1,5 @@
+{/* Custom Bottom Navigation Bar, no longer in use as the tab bar is created and routed in app.js */ }
+
 import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation, useNavigationState } from '@react-navigation/native';

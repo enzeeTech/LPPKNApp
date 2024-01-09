@@ -75,7 +75,7 @@ const AduanForm = () => {
       case 3:
         // return <StageThree onSubmit={handleSubmit} formData={{ ...stage1Data, ...stage2Data }} />;
         return <StageThree formData={{ ...stage1Data, ...stage2Data }} />;
-        // return <StageThreeError/>;
+        // return <StageThreeError/>; // Testing error screen
       default:
         return null;
     }

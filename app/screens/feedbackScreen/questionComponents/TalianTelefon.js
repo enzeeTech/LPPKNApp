@@ -3,6 +3,7 @@ import { View, TextInput, Text, StyleSheet, TouchableOpacity, Image } from 'reac
 import styles from './layouts/QuestionsLayout';
 import CalendarPicker from '../../common/Calendar';
 import StateSelector from '../../common/StateDropDownList';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) => {
     useImperativeHandle(ref, () => ({
@@ -10,6 +11,26 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
     }));
 
     const [errors, setErrors] = useState({}); 
+    const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+    const showTimePicker = () => {
+        setTimePickerVisibility(true);
+    };
+
+    const hideTimePicker = () => {
+        setTimePickerVisibility(false);
+    };
+
+    const handleConfirm = (time) => {
+        const hours = time.getHours();
+        const minutes = time.getMinutes();
+
+        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+        console.log("Selected Time: ", formattedTime); // Debugging
+        handleChange('masa_kejadian', formattedTime)
+        hideTimePicker();
+    };
 
     const validateFieldDynamic = (name, value) => {
         let newErrors = {...errors};
@@ -53,6 +74,14 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
                     delete newErrors[name];
                 }
                 break;
+            
+            case 'masa_kejadian':
+                if (!value.trim()) {
+                    newErrors[name] = "Masa diperlukan";
+                } else {
+                    delete newErrors[name];
+                }
+                break;
 
             case 'tajuk_aduan':
                 if (!value.trim()) {
@@ -86,7 +115,14 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
                 onDataChange({ ...initialData, [name]: value });
                 validateFieldDynamic(name, value);
             }
-        } else {
+        } else if (name === 'masa_kejadian') {
+            console.log("Handle Change - Field: ", name, "Value: ", value); // Debugging
+
+            onDataChange({ ...initialData, [name]: value });
+            validateFieldDynamic(name, value); // Perform validation
+            
+        }
+        else {
             onDataChange({ ...initialData, [name]: value });
             validateFieldDynamic(name, value); // Perform validation
         }
@@ -151,12 +187,12 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
             isValid = false;
         }
 
-        // // Validate masa_kejadian
-        // if (!initialData.masa_kejadian || !initialData.masa_kejadian.trim()) {
-        //     newErrors.masa_kejadian = "Masa diperlukan";
-        //     console.log("Masa diperlukan false");
-        //     isValid = false;
-        // }
+        // Validate masa_kejadian
+        if (!initialData.masa_kejadian || !initialData.masa_kejadian.trim()) {
+            newErrors.masa_kejadian = "Masa diperlukan";
+            console.log("Masa diperlukan false");
+            isValid = false;
+        }
 
         // Validate tajuk_aduan
         if (!initialData.tajuk_aduan || !initialData.tajuk_aduan.trim()) {
@@ -225,9 +261,15 @@ const TalianTelefonForm = React.forwardRef(({ onDataChange, initialData }, ref) 
                             placeholderTextColor={"#A1A1A1"}
                             editable={false}
                         />  
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={showTimePicker}>
                             <Image source={require('../../../assets/time.png')} style={{marginLeft: "49%", marginTop: 10, width: 20, height: 20, resizeMode: "contain"}}/> 
                         </TouchableOpacity>
+                        <DateTimePickerModal
+                            isVisible={isTimePickerVisible}
+                            mode="time"
+                            onConfirm={handleConfirm}
+                            onCancel={hideTimePicker}
+                        />
                         {/* Time Picker Modal */}
                     </View>
                 </View>

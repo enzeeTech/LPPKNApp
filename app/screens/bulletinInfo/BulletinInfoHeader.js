@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 
-function Header() {
+const BulletingInfoHeader = () => {
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
@@ -11,7 +11,7 @@ function Header() {
                         style = {styles.iconStyleBack}
                     />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>Lokasi Premis LPPKN</Text>
+                <Text style={styles.headerText}>Berita LPPKN</Text>
                 <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                     <Image 
                         source={require('../../assets/settingsIcon.png')}
@@ -34,27 +34,33 @@ const styles = StyleSheet.create({
         height: 68, 
         flexDirection: 'row',
         alignItems: 'center', 
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         paddingHorizontal: 15, 
     },
     headerText: {
         color: '#F5F5F5',
         fontWeight: '700',
         fontSize: 20,
-        flex: 1, 
-        textAlign: 'center', 
+        width: '40%',
+        // textAlign: 'center',
+        marginRight: '40%', 
+        marginLeft: '2%',
+        marginTop: 2,
+
     },
     iconStyleBack: {
         width: 25, 
         height: 25, 
+        marginTop: 2,
         resizeMode: 'contain',
     },
     iconStyleSetting: {
         width: 25, 
         height: 25, 
+        marginTop: 2,
         resizeMode: 'contain',
         backgroundColor: 'transparent',
     },
 });
 
-export default Header;
+export default BulletingInfoHeader;

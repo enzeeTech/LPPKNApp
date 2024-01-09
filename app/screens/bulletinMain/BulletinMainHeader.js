@@ -1,17 +1,17 @@
 import React from 'react';
 import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 
-function Header() {
+const BulletinMainHeader = ({onBackPress}) => {
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={() => console.log('Back Button Pressed!')}>
+                <TouchableOpacity onPress={onBackPress}>
                     <Image 
                         source={require('../../assets/backArrowKey.png')}
                         style = {styles.iconStyleBack}
                     />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>Lokasi Premis LPPKN</Text>
+                <Text style={styles.headerText}>Utama</Text>
                 <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                     <Image 
                         source={require('../../assets/settingsIcon.png')}
@@ -34,15 +34,17 @@ const styles = StyleSheet.create({
         height: 68, 
         flexDirection: 'row',
         alignItems: 'center', 
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         paddingHorizontal: 15, 
     },
     headerText: {
         color: '#F5F5F5',
         fontWeight: '700',
         fontSize: 20,
-        flex: 1, 
-        textAlign: 'center', 
+        width: '20%',
+        textAlign: 'center',
+        marginRight: '50%' 
+
     },
     iconStyleBack: {
         width: 25, 
@@ -57,4 +59,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Header;
+export default BulletinMainHeader;

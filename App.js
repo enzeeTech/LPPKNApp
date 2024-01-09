@@ -13,7 +13,6 @@ import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import BulletinMain from './app/screens/bulletinMain/index';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import BulletinInfoScreen from './app/screens/bulletinInfo/index';
 
 // import CustomTile from './app/screens/bulletinMain/BulletinCustomTile';

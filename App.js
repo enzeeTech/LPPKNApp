@@ -6,7 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
-import HomeScreen from './app/screens/homeScreen/index';
+import LottieView from 'lottie-react-native';
+import { Dimensions } from 'react-native';
+import React, { useState,  } from 'react';
 import LocationScreen from './app/screens/locationScreen/index';
 import ChatScreen from './app/screens/chatScreen/index';
 import SupportScreen from './app/screens/supportScreen/index';
@@ -21,7 +23,22 @@ const tabBarOptions = {
   showLabel: false 
 };
 
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 export default function App() {
+
+  // Animation Splash Screen
+  const [animationDone, setAnimationDone] = useState(false);
+
+  const handleAnimationComplete = () => {
+    // Pause for 2 seconds after the animation completes
+    setTimeout(() => {
+      setAnimationDone(true);
+    }, 2000); // 2 seconds
+  };
+
+
   const scheme = useColorScheme();
 
   // Load the custom font
@@ -32,6 +49,21 @@ export default function App() {
   if (!loaded) {
     // Font is not loaded yet, you can return a loading indicator or null
     return null;
+  }
+
+  if (!animationDone) {
+    return (
+      <View style={styles.splashContainer}>
+        <LottieView 
+          source={require('./app/assets/Json/splashScreen.json')} 
+          autoPlay 
+          speed={2}
+          loop={false} 
+          onAnimationFinish={handleAnimationComplete}
+          style={{width: screenWidth, height: screenHeight*1.09, resizeMode: "contain"}}
+        />
+      </View>
+    );
   }
 
   function CustomTabBarButton({ onPress }) {
@@ -141,6 +173,13 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  splashContainer: { 
+    flex: 1, 
+    width: '100%',
+    alignContent: 'center', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

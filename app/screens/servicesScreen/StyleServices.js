@@ -46,16 +46,29 @@ const styles = StyleSheet.create({
         marginRight: 15,
         color: '#777777',
     },
-    imageSliderTextContainer:{
+    subTextOneContainer:{
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        // marginTop: 15,
     },  
-    imageSliderText:{
+    subTextTwoContainer:{
+        width: '70%',
+        marginLeft: '15%',
+        marginRight: '15%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // alignContent: 'center',
+    }, 
+    subTextOne:{
         fontSize: 20,
         fontWeight: '800',
         color: '#5C2D86',
+    },
+    subTextTwo:{
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#777777',
+        textAlign: 'center',
     },
     carouselContainer:{
         // width: '100%',
@@ -63,7 +76,12 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         // alignItems: 'center',
         marginTop: 15,
-        marginBottom: 15,
+        marginBottom: 40,
+    },
+    dropdownContainer:{
+        width: '100%',
+        marginTop: 20,
+        marginBottom: 40,
     },
 });
 

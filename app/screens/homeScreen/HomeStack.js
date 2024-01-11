@@ -7,7 +7,7 @@ import HubungikamiScreen from './infoPages/HubungiKami';
 import TetangKamiScreen from './infoPages/TetangKami';
 import BulletinHome from '../bulletinMain/index';
 import BulletingInfo from '../bulletinInfo/index';
-import PerancangKeluarga from '../servicesScreen/services/PerancangKeluarga';
+import PerancangKeluarga from '../servicesScreen/services/perancangKeluarga/PerancangKeluarga';
 
 const Stack = createNativeStackNavigator();
 

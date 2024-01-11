@@ -12,7 +12,7 @@ function Header({onBackPress}) {
                     />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Perkhidmatan</Text>
-                <TouchableOpacity onPress={onBackPress}>
+                <TouchableOpacity onPress={()=>{console.log("Settings Button Pressed")}}>
                     <Image 
                         source={require('../../../assets/settingsIcon.png')}
                         style = {styles.iconStyleSetting}

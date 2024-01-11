@@ -9,17 +9,12 @@ const padding = 10; // Padding on each side of the icon
 const iconContainerWidth = (screenWidth / iconsPerRow) - (padding * 2.4); 
 const iconSize = iconContainerWidth / 2; 
 
-const ServiceIcon = ({ iconSource, label }) => {
-
-     // Function to handle press event
-    const handlePress = () => {
-        console.log(`${label} button pressed!`);
-    };
+const ServiceIcon = ({ iconSource, label, onPress }) => {
 
     return (
         <TouchableOpacity 
             style={styles.iconWrapper} 
-            onPress={handlePress}
+            onPress={onPress}
             activeOpacity={Platform.OS === 'ios' ? 0.2 : 0.75}
         >
         <View style={styles.iconCircle}>

@@ -55,10 +55,22 @@ const HomeScreen = ({navigation}) => {
         <ServiceIcon 
           key={`icon-${index}`} 
           iconSource={icon.iconSource} 
-          label={icon.label} />
+          label={icon.label}
+          onPress={()=> navigateToService(icon.label)}/>
       ))}
     </View>
   );
+
+  // Navigate to the selected service screen
+  const navigateToService = (serviceLabel) => {
+    switch (serviceLabel) {
+      case 'Perancang Keluarga':
+        navigation.navigate('PerancangKeluarga');
+        break;
+      default:
+        break;
+    }
+  }
 
   // Function to render each news row
   const renderNewsRow = (slicedNewsRow) => (

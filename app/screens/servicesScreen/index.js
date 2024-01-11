@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Dimensions, FlatList } from 'react-native';
-import Header from './HeaderSupportScreen';
+import Header from './ServicesHeaderMain';
 import ServiceIcon from '../common/ServiceIcon';
 
 const screenHeight = Dimensions.get('window').height;
@@ -25,16 +25,37 @@ const iconsData = [
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
 ];
 
-function SupportScreen() {
+function ServicesScreen({navigation}) {
 
   // Helper function to render each service icon
   const renderServiceIcon = ({ item }) => (
-    <ServiceIcon iconSource={item.iconSource} label={item.label} />
+    <ServiceIcon 
+      iconSource={item.iconSource} 
+      label={item.label} 
+      onPress={() => navigateToService(item.label)}
+    />
   );
+
+  // Handle back press navigation
+  const handleBackPress = () => {
+    navigation.goBack();
+  }
+
+  // Navigate to the selected service screen
+  const navigateToService = (serviceLabel) => {
+    switch (serviceLabel) {
+      case 'Perancang Keluarga':
+        navigation.navigate('PerancangKeluarga');
+        break;
+      default:
+        break;
+    }
+  }
+
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
+      <Header onBackPress={handleBackPress} />
       <View style={styles.content}>
           <FlatList
             data={iconsData}
@@ -65,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SupportScreen;
+export default ServicesScreen;

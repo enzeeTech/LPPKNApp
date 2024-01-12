@@ -6,7 +6,7 @@ const DropdownItemBullet = ({ title, items }) => {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <Text style={styles.title}>{title}</Text>
-                <View style={{marginBottom: 10}}>
+                <View style={{marginBttom: 0}}>
                     {items.map((item, index) => (
                         <View key={index} style={styles.itemRow}>
                             <Text style={styles.bullet}>{'\u2022'}</Text>
@@ -22,13 +22,14 @@ const DropdownItemBullet = ({ title, items }) => {
 
 const styles = StyleSheet.create({
     container: {
+        height: 91,
         width: '100%',
         borderTopWidth: 0.25,
         borderColor: '#000000',
     },
     innerContainer: {
         width: '90%',
-        height: 83,
+        height: 89,
         marginLeft: '5%',
     },
     title: {

@@ -72,6 +72,14 @@ const PerancangKeluarga = ({navigation}) => {
         ]
     };
 
+    // Data for galeri
+    const galeriData = [
+        { id: 1, image: require('../../../../assets/galeriPlaceholder.png') },
+        { id: 2, image: require('../../../../assets/galeriPlaceholder.png') },
+        { id: 3, image: require('../../../../assets/galeriPlaceholder.png') },
+        { id: 4, image: require('../../../../assets/galeriPlaceholder.png') },
+    ];
+
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();
@@ -144,6 +152,25 @@ const PerancangKeluarga = ({navigation}) => {
                     </View>
                     <View style={styles.subTextTwoContainer}>
                         <Text style={styles.subTextTwo}>Hubungi Klinik Nur Sejahtera LPPKN untuk temujanji anda.</Text>
+                    </View>
+                    {/* Gallery Section */}
+                    <View style={styles.subTextOneContainer}>
+                        <Text style={styles.subTextOne}>Galeri</Text>
+                    </View>
+                    <View style={styles.galleryParentContainer}>
+                        <ScrollView 
+                            horizontal={true} 
+                            showsHorizontalScrollIndicator={false} 
+                            style={styles.galleryScrollStyle}
+                        >
+                            <View style={styles.galeriContainer}>
+                                {galeriData.map((item, index) => (
+                                    <View key={index} style={styles.galeriItemContainer}>
+                                        <Image source={item.image} style={styles.galeriImage}/>
+                                    </View>
+                                ))}
+                            </View>
+                        </ScrollView>
                     </View>
                     {/* View created to add padding */}
                     <View style={{marginTop: 35, height: 200, backgroundColor: '#FFF'}}></View>

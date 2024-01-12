@@ -28,7 +28,7 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
 
     // calculating the height of the dropdown
     const ITEM_HEIGHT = 49;
-    const BULLET_ITEM_HEIGHT = 80;
+    const BULLET_ITEM_HEIGHT = 87;
 
     // Adjust the height calculation if using different item heights
     const height = isBulletType ? data.length * BULLET_ITEM_HEIGHT : data.length * ITEM_HEIGHT;
@@ -36,7 +36,7 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
     // interpolating the height of the dropdown
     const heightInterpolation = animationController.interpolate({
         inputRange: [0, 1],
-        outputRange: [0, height+30]     
+        outputRange: [0, height+15]     
     });
 
     return (
@@ -144,13 +144,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         marginLeft: '5%',
-        //Add shadow
-        shadowColor: '#9648DC',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 10,
-        elevation: 3,
-        marginTop: -15,
+        marginTop: -10,
         zIndex: -1,
     },
     item: {

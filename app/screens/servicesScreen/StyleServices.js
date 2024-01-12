@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
         marginRight: '15%',
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 40,
         // alignContent: 'center',
     }, 
     subTextOne:{
@@ -82,6 +83,37 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 20,
         marginBottom: 40,
+    },
+    galleryParentContainer:{
+        width: '100%',
+        height: 250,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 40,
+        marginTop: 10,
+    },
+    galleryScrollStyle:{
+        width: '100%',
+        height: 250,
+    },
+    galeriContainer:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingRight: 10,
+    },
+    galeriItemContainer:{
+        width: 280,
+        height: 230,
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 14,
+        overflow: 'hidden',
+    },
+    galeriImage:{
+        width: "100%",
+        height: "100%",
+        resizeMode: 'cover',
     },
 });
 

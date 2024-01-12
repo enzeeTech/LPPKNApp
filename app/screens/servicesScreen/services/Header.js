@@ -1,14 +1,20 @@
 import React from 'react';
 import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 
-function Header() {
+function Header({onBackPress}) {
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
-                <Text style={styles.headerText}>Perkhidmatan</Text>
-                <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+                <TouchableOpacity onPress={onBackPress}>
                     <Image 
-                        source={require('../../assets/settingsIcon.png')}
+                        source={require('../../../assets/backArrowKey.png')}
+                        style = {styles.iconStyleBack}
+                    />
+                </TouchableOpacity>
+                <Text style={styles.headerText}>Perkhidmatan</Text>
+                <TouchableOpacity onPress={()=>{console.log("Settings Button Pressed")}}>
+                    <Image 
+                        source={require('../../../assets/settingsIcon.png')}
                         style = {styles.iconStyleSetting}
                     />
                 </TouchableOpacity>
@@ -29,7 +35,7 @@ const styles = StyleSheet.create({
         height: 68, 
         flexDirection: 'row',
         alignItems: 'center', 
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         paddingHorizontal: 15, 
     },
     headerText: {
@@ -37,13 +43,20 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 20,
         width: '40%',
-        textAlign: 'center', 
+        textAlign: 'center',
+        marginRight: '40%',
+        marginLeft: '5%', 
     },
     iconStyleSetting: {
         width: 25, 
         height: 25, 
         resizeMode: 'contain',
         backgroundColor: 'transparent',
+    },
+    iconStyleBack: {
+        width: 25, 
+        height: 25, 
+        resizeMode: 'contain',
     },
 });
 

@@ -11,7 +11,7 @@ import { Dimensions } from 'react-native';
 import React, { useState,  } from 'react';
 import LocationScreen from './app/screens/locationScreen/index';
 import ChatScreen from './app/screens/chatScreen/index';
-import SupportScreen from './app/screens/supportScreen/index';
+import ServicesStack from './app/screens/servicesScreen/ServicesStack';
 import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -121,7 +121,7 @@ export default function App() {
                   iconSource = focused
                     ? require('./app/assets/LokasiActive.png')
                     : require('./app/assets/lokasiIcon.png');
-                } else if (route.name === 'SupportScreen') {
+                } else if (route.name === 'ServicesScreen') {
                   iconSource = focused
                     ? require('./app/assets/PerkhidmatanActive.png')
                     : require('./app/assets/perkhidmatanIcon.png');
@@ -163,7 +163,7 @@ export default function App() {
                 tabBarButton: () => <CustomTabBarButton />,
               }}
             />
-            <Tab.Screen name="SupportScreen" component={SupportScreen} />
+            <Tab.Screen name="ServicesScreen" component={ServicesStack} />
             <Tab.Screen name="FeedbackScreen" component={FeedbackScreen} />
           </Tab.Navigator>
         </NavigationContainer>

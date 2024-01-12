@@ -1,11 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, ScrollView, Touchable, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, Linking, TouchableOpacity, Platform } from 'react-native';
 
 const Hubungikami = ({ navigation }) => {
 
   const handleBackPress = () => {
     navigation.goBack();
   };
+
+  // Linking URL to touch buttons
+  const handleFacebookPress = () => {
+    Linking.openURL('https://www.facebook.com/lppkn');
+  };
+  const handletwitterPress = () => {
+    Linking.openURL('https://twitter.com/LPPKN');
+  };
+  const handleYouTubePress = () => {
+    Linking.openURL('https://www.youtube.com/@lppknhq');
+  };
+  const handleInstagramPress = () => {
+    Linking.openURL('https://www.instagram.com/lppkn');
+  };
+  const handleWebPress = () => {
+    Linking.openURL('https://www.lppkn.gov.my/lppkngateway/frontend/web/index.php?r=portal%2Findex');
+  };
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#9448DA" }}>
@@ -99,19 +117,19 @@ const Hubungikami = ({ navigation }) => {
                     marginBottom: Platform.OS === "ios" ? "30%" : "40%",
                   }}
                 >
-                  <TouchableOpacity onPress={() => console.log('Facebook Button Pressed!')}style={{width: 40, height: 40, marginRight: 15, marginLeft: 10}} >
+                  <TouchableOpacity onPress={handleFacebookPress}style={{width: 40, height: 40, marginRight: 15, marginLeft: 10}} >
                     <Image source={require("../../../assets/facebook.png")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => console.log('YouTube Button Pressed!')} style={{width: 45, height: 45, marginRight: 15, marginTop:15}} >
+                  <TouchableOpacity onPress={handleYouTubePress} style={{width: 45, height: 45, marginRight: 15, marginTop:15}} >
                     <Image source={require("../../../assets/youtube.jpg")} style={{resizeMode: "cover"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => console.log('X Button Pressed!')} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
+                  <TouchableOpacity onPress={handletwitterPress} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
                     <Image source={require("../../../assets/x.jpg")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => console.log('Instagram Button Pressed!')} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
+                  <TouchableOpacity onPress={handleInstagramPress} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
                     <Image source={require("../../../assets/instagram.jpg")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => console.log('Web Button Pressed!')} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
+                  <TouchableOpacity onPress={handleWebPress} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
                     <Image source={require("../../../assets/web.jpg")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
                 </View>

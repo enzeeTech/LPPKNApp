@@ -34,40 +34,8 @@ const ItemCarousel = () => {
         </View>
     );
 
-    const goToNextSlide = () => {
-        const nextIndex = currentIndex + 1;
-        if (nextIndex < data.length) {
-            flatListRef.current.scrollToIndex({ index: nextIndex });
-            setCurrentIndex(nextIndex); // For debugging
-        }
-    };
-
-    const goToPreviousSlide = () => {
-        const prevIndex = currentIndex - 1;
-        if (prevIndex >= 0) {
-            flatListRef.current.scrollToIndex({ index: prevIndex });
-            setCurrentIndex(prevIndex); // For debugging
-        }
-    };
-
-    // Ensures that the arrow button have an assecible touch area
-    const arrowButtonStyle = {
-        position: 'absolute',
-        zIndex: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%', 
-        width: 50, 
-    };
-
     return (
         <View style={styles.container}>
-            {currentIndex > 0 && (
-                <TouchableOpacity style={[arrowButtonStyle, { left: 0 }]} onPress={goToPreviousSlide}>
-                    <Image source={require('../../../../assets/arrowLeft.png')} style={styles.arrow} />
-                </TouchableOpacity>
-            )}
-          
             <FlatList
                 ref={flatListRef}
                 data={data}
@@ -86,12 +54,6 @@ const ItemCarousel = () => {
                     index,
                 })}
             />
-    
-            {currentIndex < data.length - 1 && (
-                <TouchableOpacity style={[arrowButtonStyle, { right: 0 }]} onPress={goToNextSlide}>
-                    <Image source={require('../../../../assets/arrowRight.png')} style={styles.arrow} />
-                </TouchableOpacity>
-            )}
         </View>
     );
 };

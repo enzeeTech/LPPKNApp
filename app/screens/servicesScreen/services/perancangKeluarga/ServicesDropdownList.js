@@ -3,9 +3,14 @@ import { View, Text, Animated, StyleSheet, TouchableWithoutFeedback, TouchableOp
 import DropdownItem from './DropdownItem';
 import DropdownItemBullet from './DropdownItemBullet';
 
-const Dropdown = ({ data, headerTitle, imageSource, type }) => {
+const Dropdown = ({ data, headerTitle, imageSource, activeImageSource, type }) => {
     const [expanded, setExpanded] = useState(false);
     const animationController = useRef(new Animated.Value(0)).current;
+
+    // Choose the arrow image based on the expanded state
+    const arrowImageSource = expanded 
+    ? require('../../../../assets/pullUpArrow.png') // Image when dropdown is expanded
+    : require('../../../../assets/dropdownArrow.png'); // Image when dropdown is collapsed
 
     // Determine the type of dropdown
     const isBulletType = type === 'bullet';
@@ -48,7 +53,7 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
                             <Image source={imageSource} style={styles.headerImage}/>
                             <Text style={styles.headerText}>{headerTitle}</Text>
                         </View>
-                        <Image source={require('../../../../assets/dropdownArrow.png')} style={styles.dropdownImage}/>
+                        <Image source={arrowImageSource} style={styles.dropdownImage}/>
                     </View>
                 </TouchableWithoutFeedback>
             </View>

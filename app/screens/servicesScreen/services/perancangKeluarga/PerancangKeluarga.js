@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, Dimensions } from 'react-native';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Header from '../Header';
 import styles from '../../StyleServices';
-import ItemCarousel from './ItemCarousel';
 import DropdownMenu from './ServicesDropdownList';
 
 const PerancangKeluarga = ({navigation}) => {
@@ -80,6 +79,23 @@ const PerancangKeluarga = ({navigation}) => {
         { image: require('../../../../assets/galeriPlaceholder.png') },
     ];
 
+    // Data for image slider
+    const data = [
+        {
+          image: require('../../../../assets/carouselItem1.png'),
+          // text: 'Menjarakkan kehamilan supaya tidak terlalu rapat.',
+          text: 'Menjarakkan kehamilan',
+        },
+        {
+          image: require('../../../../assets/perancangKeluargaBackground.png'),
+          text: 'Merancang masa yang sesuai untuk mempunyai anak supaya tidak terlalu awal atau tidak terlalu lewat.',
+        },
+        {
+          image: require('../../../../assets/carouselItem1.png'),
+          text: 'Mencegah kehamilan untuk ibu yang mempunyai masalah kesihatan.',
+        },
+      ];
+
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();
@@ -106,12 +122,31 @@ const PerancangKeluarga = ({navigation}) => {
                         'Selain itu, perancang keluarga dapat mengelakkan kehamilan tidak dirancang serta kehamilan berisiko.'}
                         </Text>
                     </View>
-                    {/* Image Carousel */}
+                    {/* Image Slider */}
                     <View style={styles.subTextOneContainer}>
                         <Text style={styles.subTextOne}>Tujuan Lain Merancang Kehamilan</Text>
                     </View>
                     <View style={styles.carouselContainer}>
-                        <ItemCarousel />
+                        {/* <ItemCarousel /> */}
+                        <View style={styles.sliderContainer}>
+                            <ScrollView 
+                                horizontal={true} 
+                                showsHorizontalScrollIndicator={false} 
+                                style={styles.scrollViewStyle}    
+                            > 
+                                {/*Render items from data*/}
+                                {data.map((item, index) => (
+                                    <View key={index} style={styles.slide}>
+                                        <View style={styles.imageView}>
+                                            <Image source={item.image} style={styles.image} />
+                                        </View>
+                                        <View style={styles.textContainer}>
+                                            <Text style={styles.text}>{item.text}</Text>
+                                        </View>
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
                     </View>
                     <View style={styles.subTextOneContainer}>
                         <Text style={styles.subTextOne}>Kaedah Perancang Keluarga</Text>
@@ -150,9 +185,6 @@ const PerancangKeluarga = ({navigation}) => {
                             imageSource={require('../../../../assets/condomIcon.png')}
                             type={kondomData.type}/>
                     </View>
-                    <View style={styles.subTextTwoContainer}>
-                        <Text style={styles.subTextTwo}>Hubungi Klinik Nur Sejahtera LPPKN untuk temujanji anda.</Text>
-                    </View>
                     {/* Gallery Section */}
                     <View style={styles.subTextOneContainer}>
                         <Text style={styles.subTextOne}>Galeri</Text>
@@ -172,8 +204,20 @@ const PerancangKeluarga = ({navigation}) => {
                             </View>
                         </ScrollView>
                     </View>
+                    <View style={styles.subTextTwoContainer}>
+                        <Text style={styles.subTextTwo}>Hubungi Klinik Nur Sejahtera LPPKN untuk temujanji anda.</Text>
+                    </View>
+                    {/* Buttons section */}
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.buttonViewOne}>
+                            <Text style={styles.buttonTextOne}>Lokasi Klinik Nur Sejahtera</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonViewTwo}>
+                            <Text style={styles.buttonTextTwo}>Hubungi Klinik Nur Sejahtera</Text>
+                        </TouchableOpacity>
+                    </View>
                     {/* View created to add padding */}
-                    <View style={{marginTop: 35, height: 200, backgroundColor: '#FFF'}}></View>
+                    <View style={{height: 100, backgroundColor: '#FFF'}}></View>
                 </View>
             </ScrollView>
         </SafeAreaView>

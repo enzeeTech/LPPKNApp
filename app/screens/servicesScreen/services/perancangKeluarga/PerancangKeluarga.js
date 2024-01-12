@@ -74,10 +74,10 @@ const PerancangKeluarga = ({navigation}) => {
 
     // Data for galeri
     const galeriData = [
-        { id: 1, image: require('../../../../assets/galeriPlaceholder.png') },
-        { id: 2, image: require('../../../../assets/galeriPlaceholder.png') },
-        { id: 3, image: require('../../../../assets/galeriPlaceholder.png') },
-        { id: 4, image: require('../../../../assets/galeriPlaceholder.png') },
+        { image: require('../../../../assets/galeriPlaceholder.png') },
+        { image: require('../../../../assets/galeriPlaceholder.png') },
+        { image: require('../../../../assets/galeriPlaceholder.png') },
+        { image: require('../../../../assets/galeriPlaceholder.png') },
     ];
 
     // Handle back press navigation

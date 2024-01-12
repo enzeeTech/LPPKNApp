@@ -20,6 +20,9 @@ const Hubungikami = ({ navigation }) => {
   const handleInstagramPress = () => {
     Linking.openURL('https://www.instagram.com/lppkn');
   };
+  const tiktokPress = () => {
+    Linking.openURL('https://www.tiktok.com/@lppkn0');
+  };
   const handleWebPress = () => {
     Linking.openURL('https://www.lppkn.gov.my/lppkngateway/frontend/web/index.php?r=portal%2Findex');
   };
@@ -117,7 +120,7 @@ const Hubungikami = ({ navigation }) => {
                     marginBottom: Platform.OS === "ios" ? "30%" : "40%",
                   }}
                 >
-                  <TouchableOpacity onPress={handleFacebookPress}style={{width: 40, height: 40, marginRight: 15, marginLeft: 10}} >
+                  <TouchableOpacity onPress={handleFacebookPress}style={{width: 40, height: 40, marginRight: 15, marginLeft: 20}} >
                     <Image source={require("../../../assets/facebook.png")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={handleYouTubePress} style={{width: 45, height: 45, marginRight: 15, marginTop:15}} >
@@ -129,7 +132,10 @@ const Hubungikami = ({ navigation }) => {
                   <TouchableOpacity onPress={handleInstagramPress} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
                     <Image source={require("../../../assets/instagram.jpg")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={handleWebPress} style={{width: 40, height: 40, marginRight: 15, marginTop:5}} >
+                  <TouchableOpacity onPress={tiktokPress} style={{width: 40, height: 40, marginRight: 7, marginTop:5}} >
+                    <Image source={require("../../../assets/tiktok.png")} style={{resizeMode: "contain"}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleWebPress} style={{width: 40, height: 40, marginRight: 15, marginTop:6}} >
                     <Image source={require("../../../assets/web.jpg")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
                 </View>

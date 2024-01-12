@@ -17,14 +17,12 @@ const iconsData = [
   { iconSource: require('../../assets/subsidiMamogram.png'), label: 'Subsidi Mamogram' },
   { iconSource: require('../../assets/saringanKesejahteraan.png'), label: 'Saringan Kesejahteraan' },
   { iconSource: require('../../assets/PEKA.png'), label: 'PEKA' },
-  { iconSource: require('../../assets/mamaCare.png'), label: 'MamaCare' },
   { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan' },
-  { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
   { iconSource: require('../../assets/smartstart.png'), label: 'SMARTSTART 2.0' },
   { iconSource: require('../../assets/smartBelanja.png'), label: 'SMARTBelanja' },
   { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTeen' },
   { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'Keibubapaan Digital' },
-  { iconSource: require('../../assets/keibubapaanDatukNenek.png'), label: 'Keibubapaan Datuk Nenek' },
+  { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
 ];
@@ -182,8 +180,8 @@ const HomeScreen = ({navigation}) => {
           <Text style={styles.sectionText}>Perkhidmatan</Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.gridContainer}>
-              {renderRow(iconsData.slice(0, 8))}
-              {renderRow(iconsData.slice(8, 16))}
+              {renderRow(iconsData.slice(0, 7))}
+              {renderRow(iconsData.slice(7, 14))}
             </View>
           </ScrollView>
         </View>
@@ -292,7 +290,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'column',
     flexWrap: 'wrap',
-    width: Platform.OS === 'ios' ? screenWidth * 1.95 : screenWidth * 1.88, 
+    width: Platform.OS === 'ios' ? screenWidth * 1.70 : screenWidth * 1.70, 
     marginLeft: 3,
   },
   beritaGridContainer: {

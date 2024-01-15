@@ -23,17 +23,19 @@ const DropdownItemBulletWithPrice = ({ title, items, isFirstItem }) => {
 
 const styles = StyleSheet.create({
     container: {
-        height: 91,
         width: '100%',
         borderTopWidth: 0.25,
         borderColor: '#000000',
+        // backgroundColor: 'red',
     },
     firstItem: {
         borderTopWidth: 0,
+        marginTop: -10,
     },
     innerContainer: {
         width: '90%',
-        height: 89,
+        paddingTop: 10,
+        paddingBottom: 10,
         marginLeft: '5%',
     },
     title: {

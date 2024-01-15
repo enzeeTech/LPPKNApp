@@ -37,7 +37,7 @@ const PerancangKeluarga = ({navigation}) => {
             items: [
 
               { label: 'Termasuk caj pemasangan', price: 'RM110.00' },
-              { label: 'Caj pengeluaran ADR', price: 'RM20.00' }
+              { label: 'Caj pengeluaran ADR', price: 'RM20.00' },
             ],
           },
           {

@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Animated, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Image } from 'react-native';
-import DropdownItem from './DropdownItem';
-import DropdownItemBullet from './DropdownItemBullet';
+import DropdownItemWithPrice from '../reusableComponents/dropdownListItems/DropdownItemWithPrice';
+import DropdownItemBulletWithPrice from '../reusableComponents/dropdownListItems/DropdownItemBulletWithPrice';
 
-const Dropdown = ({ data, headerTitle, imageSource, activeImageSource, type }) => {
+const Dropdown = ({ data, headerTitle, imageSource, type }) => {
     const [expanded, setExpanded] = useState(false);
     const animationController = useRef(new Animated.Value(0)).current;
 
@@ -45,7 +45,7 @@ const Dropdown = ({ data, headerTitle, imageSource, activeImageSource, type }) =
     });
 
     return (
-        <View style={{marginTop: 10, marginBottom: 15}}>
+        <View style={{marginBottom: 10}}>
             <View style={buttonStyle}>
                 <TouchableWithoutFeedback onPress={toggleDropdown}>
                     <View style={styles.headerContainer}>
@@ -57,15 +57,16 @@ const Dropdown = ({ data, headerTitle, imageSource, activeImageSource, type }) =
                     </View>
                 </TouchableWithoutFeedback>
             </View>
-            <Animated.View style={[styles.dropdownContainer, { height: heightInterpolation }]}>
+            <Animated.View style={[styles.dropdownContainer, { height: heightInterpolation, opacity: expanded ? 1 : 0, borderTopWidth: 0 }]}>
                 {data.map((item, index) => {
                     // Determine the component to render based on item type
-                    const ComponentToRender = isBulletType ? DropdownItemBullet : DropdownItem;
-                    
+                    const ComponentToRender = isBulletType ? DropdownItemBulletWithPrice : DropdownItemWithPrice;
+
                     return (
                         <ComponentToRender 
                             key={index}
                             {...item} 
+                            isFirstItem={index === 0}
                         />
                     );
                 })}
@@ -147,10 +148,10 @@ const styles = StyleSheet.create({
         borderColor: '#D6BDF4',
         backgroundColor: '#F5F5F5',
         borderWidth: 1,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
         borderRadius: 10,
         marginLeft: '5%',
-        marginTop: -10,
-        zIndex: -1,
     },
     item: {
         width: '100%',

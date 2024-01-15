@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Header from '../Header';
 import styles from '../../StyleServices';
-import DropdownMenu from './ServicesDropdownList';
+import DropdownMenu from '../reusableComponents/ServicesDropdownList';
 
 const PerancangKeluarga = ({navigation}) => {
 
@@ -44,7 +44,7 @@ const PerancangKeluarga = ({navigation}) => {
             title: 'ADR (5 Tahun)',
             items: [
               { label: 'Termasuk caj pemasangan', price: 'RM80.00' },
-              { label: 'Caj pengeluaran ADR', price: 'RM20.00' }
+              { label: 'Caj pengeluaran ADR', price: 'RM20.00' },
             ],
           },
         ],
@@ -58,7 +58,7 @@ const PerancangKeluarga = ({navigation}) => {
             items: [
 
               { label: 'Termasuk caj pemasangan', price: 'RM500.00' },
-              { label: 'Caj pengeluaran implan', price: 'RM100.00' }
+              { label: 'Caj pengeluaran implan', price: 'RM100.00' },
             ],
           },
         ],

@@ -68,6 +68,8 @@ const HomeScreen = ({navigation}) => {
       case 'PEKA':
         navigation.navigate('Peka');
         break;
+      case 'Subsidi Mamogram':
+        navigation.navigate('SubsidiMamogram');
       default:
         break;
     }

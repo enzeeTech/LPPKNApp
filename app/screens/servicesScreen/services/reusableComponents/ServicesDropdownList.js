@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, Text, Animated, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Image } from 'react-native';
 import DropdownItemWithPrice from '../reusableComponents/dropdownListItems/DropdownItemWithPrice';
 import DropdownItemBulletWithPrice from '../reusableComponents/dropdownListItems/DropdownItemBulletWithPrice';
+import DropdownItemBulletNoPrice from '../reusableComponents/dropdownListItems/DropdownItemBulletNoPrice';
 
 const Dropdown = ({ data, headerTitle, imageSource, type }) => {
     const [expanded, setExpanded] = useState(false);
@@ -14,6 +15,7 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
 
     // Determine the type of dropdown
     const isBulletType = type === 'bullet';
+    const componentType = type
 
     // function to toggle the dropdown
     const toggleDropdown = () => {
@@ -34,9 +36,22 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
     // calculating the height of the dropdown
     const ITEM_HEIGHT = 49;
     const BULLET_ITEM_HEIGHT = 87;
+    const BULLET_NO_PRICE_ITEM_HEIGHT = 65;
 
     // Adjust the height calculation if using different item heights
-    const height = isBulletType ? data.length * BULLET_ITEM_HEIGHT : data.length * ITEM_HEIGHT;
+    let height;
+
+    if (componentType === 'bullet') {
+        height = data.length * BULLET_ITEM_HEIGHT;
+    }
+    else if (componentType === 'bulletNoPrice') {
+        height = data.length * BULLET_NO_PRICE_ITEM_HEIGHT;
+    }
+    else {
+        height = data.length * ITEM_HEIGHT;
+    }
+    // const height = isBulletType ? data.length * BULLET_ITEM_HEIGHT : data.length * ITEM_HEIGHT;
+
     
     // interpolating the height of the dropdown
     const heightInterpolation = animationController.interpolate({
@@ -50,7 +65,7 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
                 <TouchableWithoutFeedback onPress={toggleDropdown}>
                     <View style={styles.headerContainer}>
                         <View style={styles.subHeaderContainer}>
-                            <Image source={imageSource} style={styles.headerImage}/>
+                            {imageSource && <Image source={imageSource} style={styles.headerImage}/>}
                             <Text style={styles.headerText}>{headerTitle}</Text>
                         </View>
                         <Image source={arrowImageSource} style={styles.dropdownImage}/>
@@ -60,15 +75,33 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
             <Animated.View style={[styles.dropdownContainer, { height: heightInterpolation, opacity: expanded ? 1 : 0, borderTopWidth: 0 }]}>
                 {data.map((item, index) => {
                     // Determine the component to render based on item type
-                    const ComponentToRender = isBulletType ? DropdownItemBulletWithPrice : DropdownItemWithPrice;
-
-                    return (
-                        <ComponentToRender 
-                            key={index}
-                            {...item} 
-                            isFirstItem={index === 0}
-                        />
-                    );
+                    if (componentType === 'bullet') {
+                        return (
+                            <DropdownItemBulletWithPrice 
+                                key={index}
+                                {...item} 
+                                isFirstItem={index === 0}
+                            />
+                        );
+                    }
+                    else if (componentType === 'bulletNoPrice') {
+                        return (
+                            <DropdownItemBulletNoPrice 
+                                key={index}
+                                {...item} 
+                                isFirstItem={index === 0}
+                            />
+                        );
+                    }
+                    else {
+                        return (
+                            <DropdownItemWithPrice 
+                                key={index}
+                                {...item} 
+                                isFirstItem={index === 0}
+                            />
+                        );
+                    }
                 })}
             </Animated.View>
         </View>

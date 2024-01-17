@@ -1,7 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ServiceMain from './index';
-import PerancangKeluarga from './services/perancangKeluarga/PerancangKeluarga';
+import PerancangKeluarga from './services/PerancangKeluarga';
+import Peka from './services/Peka'
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ const ServicesStack = () => {
     >
       <Stack.Screen name="ServiceMain" component={ServiceMain} />
       <Stack.Screen name="PerancangKeluarga" component={PerancangKeluarga} />
+      <Stack.Screen name="Peka" component={Peka} />
     </Stack.Navigator>
   );
 };

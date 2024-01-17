@@ -7,7 +7,8 @@ import HubungikamiScreen from './infoPages/HubungiKami';
 import TetangKamiScreen from './infoPages/TetangKami';
 import BulletinHome from '../bulletinMain/index';
 import BulletingInfo from '../bulletinInfo/index';
-import PerancangKeluarga from '../servicesScreen/services/perancangKeluarga/PerancangKeluarga';
+import PerancangKeluarga from '../servicesScreen/services/PerancangKeluarga';
+import Peka from '../servicesScreen/services/Peka';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const HomeStack = () => {
       <Stack.Screen name="BulletinHome" component={BulletinHome} />
       <Stack.Screen name="BulletingInfo" component={BulletingInfo} /> 
       <Stack.Screen name="PerancangKeluarga" component={PerancangKeluarga} />
+      <Stack.Screen name="Peka" component={Peka} />
     </Stack.Navigator>
   );
 };

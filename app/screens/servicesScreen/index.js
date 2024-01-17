@@ -45,6 +45,9 @@ function ServicesScreen({navigation}) {
       case 'Perancang Keluarga':
         navigation.navigate('PerancangKeluarga');
         break;
+      case 'PEKA':
+        navigation.navigate('Peka');
+        break;
       default:
         break;
     }

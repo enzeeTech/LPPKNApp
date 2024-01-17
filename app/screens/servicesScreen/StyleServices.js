@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     backgroundContainer: {
         height: 230,
         width: '100%',
+        backgroundColor: '#FFFFFF',
     },
     backgroundImage: {
         height: 230,
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
         justifyContent: 'left',
         alignItems: 'left',
         marginTop: 15,
-        marginBottom: 50,
+        marginBottom: 20,
     },
     introText:{
         fontSize: 14,
@@ -50,6 +51,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 5,
     },  
     subTextTwoContainer:{
         width: '70%',
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         // alignItems: 'center',
         marginTop: 15,
-        marginBottom: 40,
+        marginBottom: 10,
     },
     sliderContainer:{
         marginTop: 10,
@@ -88,16 +90,16 @@ const styles = StyleSheet.create({
     scrollViewStyle:{
         width: '100%',
         height: 280,
+        marginLeft: 10,
     },
     slide:{
         width: 290,
         height: 280,
         marginLeft: 20,
-        marginRight: 20,
     },
     imageView:{
-        width: "100%",
-        height: 200,
+        width: "90%",
+        height: 180,
         borderRadius: 14,
         overflow: 'hidden',
         // Add shadow
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
     },
     textContainer:{
         marginTop: 10,
-        width: '85%',
+        width: '76%',
         marginLeft: '7.5%',
         marginRight: '7.5%',
         justifyContent: 'center',
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingRight: 10,
+        marginLeft: 10,
     },
     galeriItemContainer:{
         width: 280,
@@ -179,7 +182,6 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 40,
     },
     buttonViewOne:{
         alignItems: "center",
@@ -219,6 +221,18 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontStyle: "normal",
         fontWeight: "700",
+    },
+    ticketContainer:{
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 40,
+        // backgroundColor: 'yellow',
+    },
+    ticketImage:{
+        width: 280,
+        height: 100,
+        resizeMode: 'contain',
     },
 });
 

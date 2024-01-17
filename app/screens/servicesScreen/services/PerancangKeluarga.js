@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
-import Header from '../Header';
-import styles from '../../StyleServices';
-import DropdownMenu from '../reusableComponents/ServicesDropdownList';
+import Header from './Header';
+import styles from '../StyleServices';
+import DropdownMenu from './reusableComponents/ServicesDropdownList';
 
 const PerancangKeluarga = ({navigation}) => {
 
@@ -73,25 +73,25 @@ const PerancangKeluarga = ({navigation}) => {
 
     // Data for galeri
     const galeriData = [
-        { image: require('../../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../../assets/galeriPlaceholder.png') },
+        { image: require('../../../assets/galeriPlaceholder.png') },
+        { image: require('../../../assets/galeriPlaceholder.png') },
+        { image: require('../../../assets/galeriPlaceholder.png') },
+        { image: require('../../../assets/galeriPlaceholder.png') },
     ];
 
     // Data for image slider
     const data = [
         {
-          image: require('../../../../assets/carouselItem1.png'),
+          image: require('../../../assets/carouselItem1.png'),
           // text: 'Menjarakkan kehamilan supaya tidak terlalu rapat.',
           text: 'Menjarakkan kehamilan',
         },
         {
-          image: require('../../../../assets/perancangKeluargaBackground.png'),
+          image: require('../../../assets/perancangKeluargaBackground.png'),
           text: 'Merancang masa yang sesuai untuk mempunyai anak supaya tidak terlalu awal atau tidak terlalu lewat.',
         },
         {
-          image: require('../../../../assets/carouselItem1.png'),
+          image: require('../../../assets/carouselItem1.png'),
           text: 'Mencegah kehamilan untuk ibu yang mempunyai masalah kesihatan.',
         },
       ];
@@ -106,7 +106,7 @@ const PerancangKeluarga = ({navigation}) => {
             <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../../assets/perancangKeluargaBackground.png')} 
+                    <Image source={require('../../../assets/perancangKeluargaBackground.png')} 
                     style={styles.backgroundImage}
                     />
                 </View>
@@ -157,32 +157,32 @@ const PerancangKeluarga = ({navigation}) => {
                         <DropdownMenu 
                             data={pilData.items}
                             headerTitle="Pil Perancang Keluarga"
-                            imageSource={require('../../../../assets/medicineIcon.png')}
+                            imageSource={require('../../../assets/medicineIcon.png')}
                             type={pilData.type} />
                         {/* Dropdown Menu for Suntikan Kontraseptif */}
                         <DropdownMenu 
                             data={suntikanData.items}
                             headerTitle="Suntikan Kontraseptif"
-                            imageSource={require('../../../../assets/injectionIcon.png')}
+                            imageSource={require('../../../assets/injectionIcon.png')}
                             type={suntikanData.type}/>
                         {/* Dropdown Menu for Alat Dalam Rahim (ADR) */}
                         <DropdownMenu 
                             data={alatData.items}
                             headerTitle="Alat Dalam Rahim (ADR)"
-                            imageSource={require('../../../../assets/adrIcon.png')}
+                            imageSource={require('../../../assets/adrIcon.png')}
                             type={alatData.type}
                         />
                         {/* Dropdown Menu for Implan */}
                         <DropdownMenu 
                             data={implanData.items}
                             headerTitle="Implan"
-                            imageSource={require('../../../../assets/implanIcon.png')}
+                            imageSource={require('../../../assets/implanIcon.png')}
                             type={implanData.type}/>
                         {/* Dropdown Menu for Kondom */}
                         <DropdownMenu 
                             data={kondomData.items}
                             headerTitle="Kondom"
-                            imageSource={require('../../../../assets/condomIcon.png')}
+                            imageSource={require('../../../assets/condomIcon.png')}
                             type={kondomData.type}/>
                     </View>
                     {/* Gallery Section */}

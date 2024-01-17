@@ -155,7 +155,7 @@ const Peka = ({ navigation }) => {
                         </ScrollView>
                     </View>
                     {/* Buttons section */}
-                    <View style={[styles.buttonContainer]}>
+                    <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>

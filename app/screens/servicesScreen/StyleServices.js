@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 40,
     },
     buttonViewOne:{
         alignItems: "center",

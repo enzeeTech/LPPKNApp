@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     scrollViewStyle:{
         width: '100%',
         height: 280,
+        marginLeft: 10,
     },
     slide:{
         width: 290,
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 40,
-        // marginTop: 10,
+        marginTop: 10,
     },
     galleryScrollStyle:{
         width: '100%',
@@ -153,6 +154,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingRight: 10,
+        marginLeft: 10,
     },
     galeriItemContainer:{
         width: 280,

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
+import DropdownMenu from './reusableComponents/ServicesDropdownList';
 
 const Peka = ({ navigation }) => {
 
@@ -30,7 +31,31 @@ const Peka = ({ navigation }) => {
         { image: require('../../../assets/galeriPlaceholder.png') },
     ];
 
-
+    // Data for dropdown menu
+    const dropdownData = {
+        type: 'bulletNoPrice', 
+        items: [
+          {
+            title: 'Activiti 1',
+            items: [
+              { label: 'Mesti Ambil Tahu'},
+            ],
+          },
+          {
+            title: 'Activiti 2',
+            items: [
+              { label: 'Selamatkah Keluarga Kita' },
+            ],
+          },
+          {
+            title: 'Activiti 3',
+            items: [
+                { label: 'Kotak Beracun' },
+            ],
+          }
+        ],
+    }
+    
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();
@@ -63,13 +88,30 @@ const Peka = ({ navigation }) => {
                         />
                     </View>
                     {/* Dropdown Menu */}
-                    <View style={styles.subTextOneContainer}>
+                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
                         <Text style={styles.subTextOne}>Pengisian Interaktif</Text>
                     </View>
-                    {/* View created to add padding */}
-                    <View style={{height: 300, backgroundColor: 'yellow'}}></View>
+                    <View style={styles.dropdownContainer}>
+                        {/* Dropdown Menu for Perancang Keluarga */}
+                        <DropdownMenu 
+                            data={dropdownData.items}
+                            headerTitle="Panduan Kesedaran Keselamatan Keluarga dan Anak"
+                            type={dropdownData.type} />
+                        <DropdownMenu
+                            data={dropdownData.items}
+                            headerTitle="Panduan Pencegahan"
+                            type={dropdownData.type} />
+                        <DropdownMenu
+                            data={dropdownData.items}
+                            headerTitle="Kemahiran Menyelamat"
+                            type={dropdownData.type} />
+                        <DropdownMenu
+                            data={dropdownData.items}
+                            headerTitle="Keselamatan Siber"
+                            type={dropdownData.type} />
+                    </View>
                     {/* Image plus text carousel */}
-                    <View style={styles.subTextOneContainer}>
+                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
                         <Text style={styles.subTextOne}>Tip PEKA</Text>
                     </View>
                     <View style={styles.carouselContainer}>
@@ -113,7 +155,7 @@ const Peka = ({ navigation }) => {
                         </ScrollView>
                     </View>
                     {/* Buttons section */}
-                    <View style={[styles.buttonContainer, {marginTop: 50}]}>
+                    <View style={[styles.buttonContainer]}>
                         <TouchableOpacity style={styles.buttonViewOne}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>

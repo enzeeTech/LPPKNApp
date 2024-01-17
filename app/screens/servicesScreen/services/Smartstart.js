@@ -62,7 +62,7 @@ const Smartstart = ({ navigation }) => {
                     <View style={styles.bulletContainer}>
                         {bulletPointTextData.map((item, index) => {
                             return (
-                                <View key={index} style={[styles.bulletPointContainer, {borderTopWidth: index == 0 ? 1 : 0}]}>
+                                <View key={index} style={[styles.bulletPointContainer]}>
                                     <View style={styles.textContainer}>
                                         <Text style={styles.bullet}>{'\u2022'}</Text>
                                         <Text style={styles.bulletPointText}>{item}</Text>

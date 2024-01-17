@@ -118,9 +118,10 @@ const styles = StyleSheet.create({
         height: "100%",
         resizeMode: 'cover',
     },
-    textContainer:{
+    carouselTextContainer:{
         marginTop: 10,
-        width: '76%',
+        width: '75%',
+        width: '75%',
         marginLeft: '7.5%',
         marginRight: '7.5%',
         justifyContent: 'center',
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
         width: '100%',
         // marginBottom: 10,
         borderColor: '#DDDDDD',
-        borderBottomWidth: 1,
+        borderTopWidth: 1,
     },
     textContainer:{
         width: '85%',

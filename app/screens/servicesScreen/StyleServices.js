@@ -234,6 +234,33 @@ const styles = StyleSheet.create({
         height: 100,
         resizeMode: 'contain',
     },
+    bulletContainer:{
+        width: '100%',
+        marginBottom: 40,
+    },
+    bulletPointContainer:{
+        width: '100%',
+        // marginBottom: 10,
+        borderColor: '#DDDDDD',
+        borderBottomWidth: 1,
+    },
+    textContainer:{
+        width: '85%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 20,
+        marginTop: 5,
+        marginBottom: 5,
+    },
+    bullet:{
+        fontSize: 14,
+        color: '#777777',
+        marginRight: 10,
+    },
+    bulletPointText:{
+        fontSize: 14,
+        color: '#777777',
+    },
 });
 
 export default styles;

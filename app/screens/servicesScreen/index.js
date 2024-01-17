@@ -48,6 +48,9 @@ function ServicesScreen({navigation}) {
       case 'PEKA':
         navigation.navigate('Peka');
         break;
+      case 'SMARTSTART 2.0':
+        navigation.navigate('Smartstart');
+        break;
       default:
         break;
     }

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ServiceMain from './index';
 import PerancangKeluarga from './services/PerancangKeluarga';
 import Peka from './services/Peka'
+import Smartstart from './services/Smartstart';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ const ServicesStack = () => {
       <Stack.Screen name="ServiceMain" component={ServiceMain} />
       <Stack.Screen name="PerancangKeluarga" component={PerancangKeluarga} />
       <Stack.Screen name="Peka" component={Peka} />
+      <Stack.Screen name="Smartstart" component={Smartstart} />
     </Stack.Navigator>
   );
 };

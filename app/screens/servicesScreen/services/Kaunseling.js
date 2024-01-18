@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal } from 'react-native';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
+import { canOpenURL, openURL } from 'expo-linking';
 
 const Kaunseling = ({navigation}) => {
 
@@ -137,16 +138,16 @@ const Kaunseling = ({navigation}) => {
                         </TouchableOpacity>
                         <View style={styles.popupContent}>
                         <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.buttonViewOne, { marginBottom: 10 }]}>
-                            <Text style={styles.buttonTextOne}>Hubungi Talian Kasih</Text>
+                        <TouchableOpacity style={[styles.buttonViewOne, { marginBottom: 10 }]} onPress={() => openURL('tel:+15999')}>
+                            <Text style={styles.buttonTextOne}>Hubungi Talian KASIH</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonViewOne}>
-                            <Text style={styles.buttonTextOne}>WhatsApp Talian Kasih</Text>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={() => Linking.openURL('https://wa.me/+60192615999')}>
+                            <Text style={styles.buttonTextOne}>WhatsApp Talian KASIH</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonViewTwo}>
+                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
                         <Text style={styles.buttonTextTwo}>Hubungi Ibu Pejabat</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonViewTwo}>
+                    <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
                         <Text style={styles.buttonTextTwo}>Hubungi LPPKN Negeri</Text>
                     </TouchableOpacity>
                 </View>

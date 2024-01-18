@@ -61,6 +61,9 @@ function ServicesScreen({navigation}) {
       case 'Subsidi Mamogram':
         navigation.navigate('SubsidiMamogram');
         break;
+      case 'Kaunseling':
+        navigation.navigate('Kaunseling');
+        break;
       default:
         break;
     }

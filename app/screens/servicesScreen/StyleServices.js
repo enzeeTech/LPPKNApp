@@ -201,6 +201,19 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginTop: -250,
     },
+    KaunselingImageContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 30,
+        marginBottom: 20,
+    },
+    KaunselingImageStyle: {
+        width: 310,
+        height: 100,
+        resizeMode: 'contain',
+        borderRadius: 5,
+        marginHorizontal: 20,
+    },
     carouselTextContainer:{
         marginTop: 10,
         width: '75%',
@@ -298,6 +311,19 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#973BD9",
     },
+    buttonViewThree: {
+        alignItems: "center",
+        height: 45,
+        width: "80%",
+        backgroundColor: "#9448DA",
+        justifyContent: "center",
+        alignContent: "center",
+        alignSelf: "center",
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#973BD9",
+        marginBottom: 10,
+    },
     buttonTextOne:{
         alignItems: "center",
         color: "#FFF",
@@ -350,6 +376,36 @@ const styles = StyleSheet.create({
     bulletPointText:{
         fontSize: 14,
         color: '#777777',
+    },
+    popupContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    popupContent: {
+        marginTop: 50,
+        width: '100%',
+    },
+    whiteBox: {
+        backgroundColor: '#FFF',
+        padding: 20,
+        borderRadius: 10,
+        width: '90%',
+        zIndex: 2,
+        // height: '50%',
+        alignItems: 'center',
+    },
+    closeButton: {
+        position: 'absolute',
+        top: 15,
+        right: '50%',
+        zIndex: 3,
+        transform: [{ translateX: -10 }], 
+    },
+    closeButtonImage: {
+        width: 20, 
+        height: 20, 
     },
 });
 

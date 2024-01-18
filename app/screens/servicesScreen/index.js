@@ -40,6 +40,16 @@ function ServicesScreen({navigation}) {
   }
 
   // Navigate to the selected service screen
+  // const navigateToService = (serviceLabel) => {
+  //   switch (serviceLabel) {
+  //     case 'Perancang Keluarga':
+  //       navigation.navigate('PerancangKeluarga');
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
+
   const navigateToService = (serviceLabel) => {
     switch (serviceLabel) {
       case 'Perancang Keluarga':
@@ -51,10 +61,13 @@ function ServicesScreen({navigation}) {
       case 'SMARTSTART 2.0':
         navigation.navigate('Smartstart');
         break;
+      case 'Subsidi Mamogram':
+        navigation.navigate('SubsidiMamogram');
+        break;
       default:
         break;
     }
-  }
+  }  
 
 
   return (

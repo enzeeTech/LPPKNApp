@@ -71,6 +71,8 @@ const HomeScreen = ({navigation}) => {
       case 'SMARTSTART 2.0':
         navigation.navigate('Smartstart');
         break;
+      case 'Subsidi Mamogram':
+        navigation.navigate('SubsidiMamogram');
       default:
         break;
     }

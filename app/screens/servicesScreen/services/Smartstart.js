@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
+import TabTile from './reusableComponents/PriceTabTile';
 
 const Smartstart = ({ navigation }) => {
 
@@ -24,6 +25,22 @@ const Smartstart = ({ navigation }) => {
      const handleBackPress = () => {
         navigation.goBack();
     }
+
+    // Data for tab tile
+    const data = [
+        { title: 'Sesi 1', subtitle: 'Mengenali Dirimu' },
+        { title: 'Sesi 2', subtitle: 'Meneroka Harapan Kita' },
+        { title: 'Sesi 3', subtitle: 'Menangani Konflik dan Cabaran' },
+        { title: 'Sesi 4', subtitle: 'Ingat! Luahkan Perasaan Anda'},
+        { title: 'Sesi 5', subtitle: 'Membina Kemesraaan Seksual'},
+        { title: 'Sesi 6', subtitle: 'Mengurus Sumber Keluarga'},
+        { title: 'Sesi 7', subtitle: 'Undang-undang Keluarga'}
+      ];
+    
+      const prices = {
+        resident: 'RM20',
+        nonResident: 'RM60', 
+      };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -48,9 +65,9 @@ const Smartstart = ({ navigation }) => {
                         </Text>
                     </View>
                     {/* Info tile with tab */}
-                    <View style={{height: 200, backgroundColor: 'yellow'}}></View>
+                    <TabTile data={data} prices={prices} />
                     {/* Subsection One */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
+                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 40}]}>
                         <Text style={styles.subTextOne}>Objektif</Text>
                     </View>
                     <View style={[styles.introContainer, {marginBottom: 5}]}>
@@ -117,7 +134,7 @@ const Smartstart = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{height: 150, backgroundColor: '#FFF'}}></View>
+                <View style={{height: 110, backgroundColor: '#FFF'}}></View>
             </ScrollView>
         </SafeAreaView>
     );

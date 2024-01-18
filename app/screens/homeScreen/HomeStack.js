@@ -9,6 +9,7 @@ import BulletinHome from '../bulletinMain/index';
 import BulletingInfo from '../bulletinInfo/index';
 import PerancangKeluarga from '../servicesScreen/services/PerancangKeluarga';
 import Peka from '../servicesScreen/services/Peka';
+import Smartstart from '../servicesScreen/services/Smartstart';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const HomeStack = () => {
       <Stack.Screen name="BulletingInfo" component={BulletingInfo} /> 
       <Stack.Screen name="PerancangKeluarga" component={PerancangKeluarga} />
       <Stack.Screen name="Peka" component={Peka} />
+      <Stack.Screen name="Smartstart" component={Smartstart} />
     </Stack.Navigator>
   );
 };

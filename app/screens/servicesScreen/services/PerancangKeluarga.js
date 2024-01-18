@@ -140,7 +140,7 @@ const PerancangKeluarga = ({navigation}) => {
                                         <View style={styles.imageView}>
                                             <Image source={item.image} style={styles.image} />
                                         </View>
-                                        <View style={styles.textContainer}>
+                                        <View style={styles.carouselTextContainer}>
                                             <Text style={styles.text}>{item.text}</Text>
                                         </View>
                                     </View>

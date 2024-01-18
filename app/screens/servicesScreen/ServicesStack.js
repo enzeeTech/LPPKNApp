@@ -6,6 +6,7 @@ import Peka from './services/Peka'
 import Smartstart from './services/Smartstart';
 import SubsidiMamogram from './services/SubsidiMamogram';
 import Kaunseling from './services/Kaunseling';
+import KeluargaKerja from './services/KeluargaKerja';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const ServicesStack = () => {
       <Stack.Screen name="Smartstart" component={Smartstart} />
       <Stack.Screen name="SubsidiMamogram" component={SubsidiMamogram} />
       <Stack.Screen name="Kaunseling" component={Kaunseling} />
+      <Stack.Screen name="KeluargaKerja" component={KeluargaKerja} />
     </Stack.Navigator>
   );
 };

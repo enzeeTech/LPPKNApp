@@ -67,6 +67,9 @@ function ServicesScreen({navigation}) {
       case 'Kaunseling':
         navigation.navigate('Kaunseling');
         break;
+      case 'Keluarga@Kerja':
+        navigation.navigate('KeluargaKerja');
+        break;
       default:
         break;
     }

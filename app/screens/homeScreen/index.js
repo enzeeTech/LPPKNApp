@@ -76,7 +76,12 @@ const HomeScreen = ({navigation}) => {
         break;
       case 'Kaunseling':
           navigation.navigate('Kaunseling');
+          break;
+      case 'Keluarga@Kerja':
+          navigation.navigate('KeluargaKerja');
+          break;
       default:
+        break;
     }
   }
 

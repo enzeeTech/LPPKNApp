@@ -100,7 +100,7 @@ const SubsidiMamogram = ({ navigation }) => {
               </View>
               {item.hasDropdown && (
                 <Image
-                  source={showDropdown[index] ? upArrowImage : downArrowImage}
+                  source={showDropdown[index] ? downArrowImage : upArrowImage}
                   style={{ width: 20, height: 19, marginLeft: 30 }}
                   resizeMode="contain"
                 />

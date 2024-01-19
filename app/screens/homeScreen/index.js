@@ -70,6 +70,24 @@ const HomeScreen = ({navigation}) => {
         break;
       case 'Subsidi Mamogram':
         navigation.navigate('SubsidiMamogram');
+        break;
+      case 'HPV DNA':
+          navigation.navigate('HPVDNA');
+        break;
+      case 'Kaunseling':
+          navigation.navigate('Kaunseling');
+          break;
+      case 'Keluarga@Kerja':
+          navigation.navigate('KeluargaKerja');
+          break;
+      case 'SMARTBelanja':
+          navigation.navigate('SmartBelanja');
+          break;
+      case 'Ilmu Keluarga':
+          navigation.navigate('Ilmukeluarga');
+          break;
+      case 'Subfertiliti':
+          navigation.navigate('Subfertiliti');
       default:
         break;
     }

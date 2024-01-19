@@ -193,7 +193,7 @@ const PerancangKeluarga = ({navigation}) => {
                         <ScrollView 
                             horizontal={true} 
                             showsHorizontalScrollIndicator={false} 
-                            style={styles.galleryScrollStyle}
+                            style={styles.HPVScrollStyle}
                         >
                             <View style={styles.galeriContainer}>
                                 {galeriData.map((item, index) => (

@@ -61,6 +61,24 @@ function ServicesScreen({navigation}) {
       case 'Subsidi Mamogram':
         navigation.navigate('SubsidiMamogram');
         break;
+      case 'Kaunseling':
+        navigation.navigate('Kaunseling');
+        break;
+      case 'Keluarga@Kerja':
+        navigation.navigate('KeluargaKerja');
+        break;
+      case 'SMARTBelanja':
+        navigation.navigate('SmartBelanja');
+        break;
+      case 'Ilmu Keluarga':
+        navigation.navigate('Ilmukeluarga');
+        break;
+      case 'HPV DNA':
+        navigation.navigate('HPVDNA');
+        break;
+      case 'Subfertiliti':
+        navigation.navigate('Subfertiliti');
+        break;
       default:
         break;
     }

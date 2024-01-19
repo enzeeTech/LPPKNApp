@@ -9,6 +9,7 @@ import Kaunseling from './services/Kaunseling';
 import KeluargaKerja from './services/KeluargaKerja';
 import SmartBelanja from './services/SmartBelanja';
 import Ilmukeluarga from './services/Ilmukeluarga';
+import Penyelidikan from './services/Penyelidikan';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ const ServicesStack = () => {
       <Stack.Screen name="KeluargaKerja" component={KeluargaKerja} />
       <Stack.Screen name="SmartBelanja" component={SmartBelanja} />
       <Stack.Screen name="Ilmukeluarga" component={Ilmukeluarga} />
+      <Stack.Screen name="Penyelidikan" component={Penyelidikan} />
     </Stack.Navigator>
   );
 };

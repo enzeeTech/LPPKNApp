@@ -76,6 +76,9 @@ function ServicesScreen({navigation}) {
       case 'Ilmu Keluarga':
         navigation.navigate('Ilmukeluarga');
         break;
+      case 'Penyelidikan & Data Mentah':
+        navigation.navigate('Penyelidikan');
+        break;
       default:
         break;
     }

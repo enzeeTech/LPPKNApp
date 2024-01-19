@@ -83,6 +83,9 @@ const HomeScreen = ({navigation}) => {
       case 'SMARTBelanja':
           navigation.navigate('SmartBelanja');
           break;
+      case 'Ilmu Keluarga':
+          navigation.navigate('Ilmukeluarga');
+          break;
       default:
         break;
     }

@@ -14,6 +14,7 @@ import SubsidiMamogram from '../servicesScreen/services/SubsidiMamogram';
 import Kaunseling from '../servicesScreen/services/Kaunseling';
 import KeluargaKerja from '../servicesScreen/services/KeluargaKerja';
 import SmartBelanja from '../servicesScreen/services/SmartBelanja';
+import Ilmukeluarga from '../servicesScreen/services/Ilmukeluarga';
 
 
 const Stack = createNativeStackNavigator();
@@ -37,6 +38,7 @@ const HomeStack = () => {
       <Stack.Screen name="Kaunseling" component={Kaunseling} />
       <Stack.Screen name="KeluargaKerja" component={KeluargaKerja} />
       <Stack.Screen name="SmartBelanja" component={SmartBelanja} />
+      <Stack.Screen name="Ilmukeluarga" component={Ilmukeluarga} />
     </Stack.Navigator>
   );
 };

@@ -356,14 +356,12 @@ const styles = StyleSheet.create({
     },
     bulletPointContainer:{
         width: '100%',
-        // marginBottom: 10,
         borderColor: '#DDDDDD',
         borderTopWidth: 1,
     },
     textContainer:{
         width: '85%',
         flexDirection: 'row',
-        alignItems: 'center',
         marginLeft: 20,
         marginTop: 5,
         marginBottom: 5,

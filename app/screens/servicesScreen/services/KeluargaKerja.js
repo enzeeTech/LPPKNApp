@@ -50,7 +50,7 @@ const KeluargaKerja = ({ navigation }) => {
             <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/pekaBackground.png')} 
+                    <Image source={require('../../../assets/keluargaKerjaBackground.png')} 
                     style={styles.backgroundImage}
                     />
                 </View>

@@ -94,8 +94,11 @@ const SubsidiMamogram = ({ navigation }) => {
                 marginTop: -5,
               }}
             >
-              <View style={{ flexDirection: 'row', alignItems: 'center', maxWidth: '80%' }}>
-                <Icon name="check" size={15} color="white" style={{ backgroundColor: 'lightgreen', padding: 5, borderRadius: 50, marginRight: 10, marginBottom: 10, marginTop: 10 }} />
+                <View style={{ flexDirection: 'row', alignItems: 'center', maxWidth: '80%' }}>
+                  <Image
+                    source={require('../../../assets/GreenTickIcon.png')} 
+                    style={{ width: 20, height: 20, marginBottom: 10, marginRight: 10, marginTop: 10 }}
+                  />
                 <Text style={styles.subTextThree}>{item.label}</Text>
               </View>
               {item.hasDropdown && (
@@ -109,7 +112,7 @@ const SubsidiMamogram = ({ navigation }) => {
             {item.hasDropdown && showDropdown[index] && renderDropdown(item.dropdownItems)}
           </View>
         ))}
-         <View style={styles.subTextFiveContainer}>
+         <View style={[styles.subTextFiveContainer, { marginTop:5 }]}>
           <Text style={styles.subTextOne}>Carta Alir Ujian Mamogram</Text>
         </View>
         <View style={styles.cartaAlirTextContainer}>

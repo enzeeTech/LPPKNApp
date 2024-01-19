@@ -210,7 +210,35 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginTop: -250,
     },
-    textContainer:{
+    subfertilitiImage: {
+        aspectRatio: 600 / 1500,
+        resizeMode: 'contain',
+        marginTop: -150,
+    },
+    KaunselingImageContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center', // Add this line
+        marginTop: 30,
+        marginBottom: 20,
+    },
+    KaunselingImageStyle: {
+        ...Platform.select({
+            ios: {
+                // iOS styles
+                marginLeft: '6%',
+                resizeMode: 'contain',
+                borderRadius: 5,
+            },
+            android: {
+                // Android styles
+                marginLeft: '1%',
+                resizeMode: 'contain',
+                borderRadius: 5,
+            },
+        }),
+    },
+    carouselTextContainer:{
         marginTop: 10,
         width: '76%',
         marginLeft: '7.5%',
@@ -239,6 +267,10 @@ const styles = StyleSheet.create({
     },
     galleryScrollStyle:{
         width: '100%',
+        height: 250,
+    },
+    HPVScrollStyle:{
+        // width: '100%',
         height: 250,
     },
     galeriContainer:{
@@ -331,6 +363,78 @@ const styles = StyleSheet.create({
         width: 280,
         height: 100,
         resizeMode: 'contain',
+    },
+    bulletContainer:{
+        width: '100%',
+        marginBottom: 40,
+        marginTop: 10,
+    },
+    bulletPointContainer:{
+        width: '100%',
+        borderColor: '#DDDDDD',
+        borderTopWidth: 1,
+        paddingVertical: 5,
+    },
+    subBulletContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-start', // Adjust this according to your needs
+        marginBottom: 5, // Adjust the space between sub-bullets
+      },
+    subBullet: {
+        fontSize: 14,
+        color: '#000',
+        marginRight: 5, // Adjust the space between the sub-bullet and the text
+      },          
+    lastBulletPointContainer: {
+        borderBottomWidth: 1,
+        borderColor: '#DDDDDD',
+        paddingBottom: 10, // Adjust as needed
+      },
+    textContainer:{
+        width: '85%',
+        flexDirection: 'row',
+        marginLeft: 20,
+        marginTop: 5,
+        marginBottom: 5,
+    },
+    bullet:{
+        fontSize: 14,
+        color: '#777777',
+        marginRight: 10,
+    },
+    bulletPointText:{
+        fontSize: 14,
+        color: '#777777',
+    },
+    popupContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    popupContent: {
+        marginTop: 50,
+        width: '100%',
+    },
+    whiteBox: {
+        backgroundColor: '#FFF',
+        padding: 20,
+        borderRadius: 10,
+        width: '90%',
+        zIndex: 2,
+        // height: '50%',
+        alignItems: 'center',
+    },
+    closeButton: {
+        position: 'absolute',
+        top: 15,
+        right: '50%',
+        zIndex: 3,
+        transform: [{ translateX: -10 }], 
+    },
+    closeButtonImage: {
+        width: 20, 
+        height: 20, 
     },
 });
 

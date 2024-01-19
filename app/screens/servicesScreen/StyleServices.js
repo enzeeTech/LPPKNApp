@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
                 marginLeft: '1%',
                 resizeMode: 'contain',
                 borderRadius: 5,
+                
             },
         }),
     },

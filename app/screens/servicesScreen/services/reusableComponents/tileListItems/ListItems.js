@@ -7,7 +7,7 @@ const ListItem = ({ title, subtitle }) => {
     <View style={styles.itemContainer}>
       <View style={styles.contentContainer}>
         <Image source={require('../../../../../assets/greenTick.png')} style = {styles.image} />
-        <View style={{ marginLeft: 10 }}>
+        <View style={{ marginLeft: 10, width: '80%'}}>
             <Text style={styles.headerText}>{title}</Text>
             {subtitle && <Text style={styles.subHeaderText}>{subtitle}</Text>}
         </View>

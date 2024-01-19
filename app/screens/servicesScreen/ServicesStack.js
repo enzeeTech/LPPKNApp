@@ -7,6 +7,7 @@ import Smartstart from './services/Smartstart';
 import SubsidiMamogram from './services/SubsidiMamogram';
 import Kaunseling from './services/Kaunseling';
 import KeluargaKerja from './services/KeluargaKerja';
+import SmartBelanja from './services/SmartBelanja';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const ServicesStack = () => {
       <Stack.Screen name="SubsidiMamogram" component={SubsidiMamogram} />
       <Stack.Screen name="Kaunseling" component={Kaunseling} />
       <Stack.Screen name="KeluargaKerja" component={KeluargaKerja} />
+      <Stack.Screen name="SmartBelanja" component={SmartBelanja} />
     </Stack.Navigator>
   );
 };

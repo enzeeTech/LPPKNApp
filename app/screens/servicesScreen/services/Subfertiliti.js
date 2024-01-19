@@ -236,10 +236,9 @@ const Subfertiliti = ({navigation}) => {
           <Text style={styles.cartaAlirText}>
           </Text>
         </View>
-        <View style={styles.cartaAlirImageContainer}>
+        <View style={styles.SubfertilitiImageStyle}>
           <Image
             source={require('../../../assets/TatacaraMendaftarSubfertiliti.png')} 
-            style={[styles.SubfertilitiImage, { marginTop: -30, marginLeft: 20 }]}
           />
         </View>
 

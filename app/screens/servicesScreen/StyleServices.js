@@ -201,10 +201,23 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginTop: -250,
     },
-    subfertilitiImage: {
-        aspectRatio: 600 / 1500,
-        resizeMode: 'contain',
-        marginTop: -150,
+    SubfertilitiImageStyle: {
+        marginTop: -25,
+        ...Platform.select({
+            ios: {
+                // iOS styles
+                marginLeft: '2.3%',
+                resizeMode: 'contain',
+                borderRadius: 5,
+            },
+            android: {
+                // Android styles
+                marginLeft: '5%',
+                resizeMode: 'contain',
+                borderRadius: 5,
+            },
+        }),
+
     },
     KaunselingImageContainer: {
         alignItems: 'center',
@@ -226,7 +239,6 @@ const styles = StyleSheet.create({
                 marginLeft: '1%',
                 resizeMode: 'contain',
                 borderRadius: 5,
-                
             },
         }),
     },

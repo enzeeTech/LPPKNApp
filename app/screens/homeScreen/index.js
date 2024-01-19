@@ -159,8 +159,8 @@ const HomeScreen = ({navigation}) => {
   contentData = [
     { type: 'video', source: 'https://www.youtube.com/watch?v=LP0Alkq04iM' },
     { type: 'video', source: 'https://www.youtube.com/watch?v=lcXgxQOEuno' },
-    { type: 'image', source: '../../assets/newsTileDummy.png' }, // this source is not working, harded coded for now inside ContentSlider.js
-    { type: 'image', source: '../../assets/newsTileDummy.png' }, // this source is not working, harded coded for now inside ContentSlider.js
+    { type: 'image', source: require('../../assets/smartStartBackground.png') }, // this source is not working, harded coded for now inside ContentSlider.js
+    { type: 'image', source: require('../../assets/smartBelanjaBackground.png') }, // this source is not working, harded coded for now inside ContentSlider.js
   ];
 
   return (

@@ -5,7 +5,7 @@ import { WebView } from 'react-native-webview';
 
 const ContentSlider = ({ contents }) => {
   const [index, setIndex] = useState(0);
-  const [key, setKey] = useState(0); // Add a key state
+  const [key, setKey] = useState(0); 
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -26,7 +26,8 @@ const ContentSlider = ({ contents }) => {
     if (content.type === 'image') {
       return (
         <TouchableWithoutFeedback key={idx}>
-          <Image source={require("../../assets/smartBelanjaBackground.png")} style={{ width: '100%', height: 250, resizeMode: 'stretch' }} />
+          {/* <Image source={require("../../assets/smartBelanjaBackground.png")} style={{ width: '100%', height: 250, resizeMode: 'stretch' }} /> */}
+          <Image source={content.source} style={{ width: '100%', height: 250, resizeMode: 'stretch' }} />
         </TouchableWithoutFeedback>
       );
       } else if (content.type === 'video') {
@@ -58,8 +59,8 @@ const ContentSlider = ({ contents }) => {
     }
 };
 
+  // Open YouTube link
   const openYouTubeLink = (source) => {
-    // Logic to open YouTube links on button press
     Linking.openURL(source);
   };
 

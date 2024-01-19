@@ -39,17 +39,6 @@ function ServicesScreen({navigation}) {
     navigation.goBack();
   }
 
-  // Navigate to the selected service screen
-  // const navigateToService = (serviceLabel) => {
-  //   switch (serviceLabel) {
-  //     case 'Perancang Keluarga':
-  //       navigation.navigate('PerancangKeluarga');
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
   const navigateToService = (serviceLabel) => {
     switch (serviceLabel) {
       case 'Perancang Keluarga':

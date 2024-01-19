@@ -91,6 +91,9 @@ const HomeScreen = ({navigation}) => {
           break;
       case 'Subfertiliti':
           navigation.navigate('Subfertiliti');
+      case 'Penyelidikan':
+          navigation.navigate('Penyelidikan')
+          break;
       default:
         break;
     }

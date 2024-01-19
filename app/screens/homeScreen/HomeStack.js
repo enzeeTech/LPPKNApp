@@ -17,6 +17,7 @@ import SmartBelanja from '../servicesScreen/services/SmartBelanja';
 import Ilmukeluarga from '../servicesScreen/services/Ilmukeluarga';
 import HpvDna from '../servicesScreen/services/HPVDNA';
 import Subfertiliti from '../servicesScreen/services/Subfertiliti';
+import Penyelidikan from '../servicesScreen/services/Penyelidikan';
 
 
 const Stack = createNativeStackNavigator();
@@ -43,6 +44,7 @@ const HomeStack = () => {
       <Stack.Screen name="Ilmukeluarga" component={Ilmukeluarga} />
       <Stack.Screen name="HPVDNA" component={HpvDna} />
       <Stack.Screen name="Subfertiliti" component={Subfertiliti} />
+      <Stack.Screen name='Penyelidikan' component={Penyelidikan} />
     </Stack.Navigator>
   );
 };

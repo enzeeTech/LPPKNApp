@@ -82,6 +82,9 @@ function ServicesScreen({navigation}) {
       case 'Subfertiliti':
         navigation.navigate('Subfertiliti');
         break;
+      case 'Penyelidikan & Data Mentah':
+        navigation.navigate('Penyelidikan');
+        break;
       default:
         break;
     }

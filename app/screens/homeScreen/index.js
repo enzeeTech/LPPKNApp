@@ -6,6 +6,7 @@ import Header from './HomeScreenHeader';
 import ServiceIcon from '../common/ServiceIcon';
 import NewsItem from './customTiles/NewsItem';
 import PosterItem from './customTiles/PosterItem';
+import ContentSlider from './ContentSlider';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -154,6 +155,14 @@ const HomeScreen = ({navigation}) => {
     navigation.navigate('BulletinHome');
   };
 
+  //////// CONTENT SLIDER DATA ////////
+  contentData = [
+    { type: 'video', source: 'https://www.youtube.com/watch?v=LP0Alkq04iM' },
+    { type: 'video', source: 'https://www.youtube.com/watch?v=lcXgxQOEuno' },
+    { type: 'image', source: '../../assets/newsTileDummy.png' }, // this source is not working, harded coded for now inside ContentSlider.js
+    { type: 'image', source: '../../assets/newsTileDummy.png' }, // this source is not working, harded coded for now inside ContentSlider.js
+  ];
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -192,9 +201,10 @@ const HomeScreen = ({navigation}) => {
       <ScrollView style={{marginTop: -9}} showsVerticalScrollIndicator={false}>
         {/* SLIDING NEWS SECTION */}
         <View style={styles.slidingNewsContainer}>
-          <Image source={require('../../assets/newsTileDummy.png')} 
+          {/* <Image source={require('../../assets/newsTileDummy.png')} 
           style={{width: Platform.OS === 'ios' ? 400 : 450, height: 230, resizeMode: 'stretch'}}
-          />
+          /> */}
+          <ContentSlider contents={contentData} />
         </View>
         {/* PERKHIDMATAN SECTION */}
         <View style={styles.perkhidmatanContainer}>
@@ -260,8 +270,9 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   slidingNewsContainer: {
-    height: 230,
+    height: 250,
     marginTop: -13,
+    zIndex: 3,
   },
   perkhidmatanContainer: {
     flexDirection: 'column',

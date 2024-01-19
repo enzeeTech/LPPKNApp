@@ -201,18 +201,34 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginTop: -250,
     },
+    subfertilitiImage: {
+        aspectRatio: 600 / 1500,
+        resizeMode: 'contain',
+        marginTop: -150,
+    },
     KaunselingImageContainer: {
-        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center', // Add this line
         marginTop: 30,
         marginBottom: 20,
     },
     KaunselingImageStyle: {
-        width: 310,
-        height: 100,
-        resizeMode: 'contain',
-        borderRadius: 5,
-        marginHorizontal: 20,
+        ...Platform.select({
+            ios: {
+                // iOS styles
+                marginLeft: '6%',
+                resizeMode: 'contain',
+                borderRadius: 5,
+            },
+            android: {
+                // Android styles
+                marginLeft: '1%',
+                resizeMode: 'contain',
+                borderRadius: 5,
+                
+            },
+        }),
     },
     carouselTextContainer:{
         marginTop: 10,
@@ -244,6 +260,10 @@ const styles = StyleSheet.create({
     },
     galleryScrollStyle:{
         width: '100%',
+        height: 250,
+    },
+    HPVScrollStyle:{
+        // width: '100%',
         height: 250,
     },
     galeriContainer:{
@@ -361,6 +381,21 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         paddingVertical: 5,
     },
+    subBulletContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-start', // Adjust this according to your needs
+        marginBottom: 5, // Adjust the space between sub-bullets
+      },
+    subBullet: {
+        fontSize: 14,
+        color: '#000',
+        marginRight: 5, // Adjust the space between the sub-bullet and the text
+      },          
+    lastBulletPointContainer: {
+        borderBottomWidth: 1,
+        borderColor: '#DDDDDD',
+        paddingBottom: 10, // Adjust as needed
+      },
     textContainer:{
         width: '85%',
         flexDirection: 'row',

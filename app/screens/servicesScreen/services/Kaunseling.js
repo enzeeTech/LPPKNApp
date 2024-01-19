@@ -68,7 +68,7 @@ const Kaunseling = ({navigation}) => {
                           + 'Kemudahan ini boleh diakses di 49 buah Klink Nur Sejahtera di seluruh negara.'}
                         </Text>
                         <View style={styles.KaunselingImageContainer}>
-                            <Image source={require('../../../assets/KaunselingPayment.png')} style={styles.KaunselingImageStyle} />
+                            <Image source={require('../../../assets/KaunselingPayment.png')} style={styles.KaunselingImageStyle} resizeMode="contain" />
                         </View>
                     </View>
                 {/* Image Slider */}

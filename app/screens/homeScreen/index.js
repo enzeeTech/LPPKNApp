@@ -74,6 +74,9 @@ const HomeScreen = ({navigation}) => {
       case 'Subsidi Mamogram':
         navigation.navigate('SubsidiMamogram');
         break;
+      case 'HPV DNA':
+          navigation.navigate('HPVDNA');
+        break;
       case 'Kaunseling':
           navigation.navigate('Kaunseling');
           break;
@@ -86,6 +89,8 @@ const HomeScreen = ({navigation}) => {
       case 'Ilmu Keluarga':
           navigation.navigate('Ilmukeluarga');
           break;
+      case 'Subfertiliti':
+          navigation.navigate('Subfertiliti');
       default:
         break;
     }

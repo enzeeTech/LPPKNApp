@@ -76,6 +76,12 @@ function ServicesScreen({navigation}) {
       case 'Ilmu Keluarga':
         navigation.navigate('Ilmukeluarga');
         break;
+      case 'HPV DNA':
+        navigation.navigate('HPVDNA');
+        break;
+      case 'Subfertiliti':
+        navigation.navigate('Subfertiliti');
+        break;
       default:
         break;
     }

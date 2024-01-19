@@ -353,11 +353,13 @@ const styles = StyleSheet.create({
     bulletContainer:{
         width: '100%',
         marginBottom: 40,
+        marginTop: 10,
     },
     bulletPointContainer:{
         width: '100%',
         borderColor: '#DDDDDD',
         borderTopWidth: 1,
+        paddingVertical: 5,
     },
     textContainer:{
         width: '85%',

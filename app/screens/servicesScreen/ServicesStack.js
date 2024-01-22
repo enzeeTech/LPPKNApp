@@ -13,6 +13,7 @@ import Penyelidikan from './screens/Penyelidikan';
 import HPVDna from './screens/HPVDNA';
 import Subfertiliti from './screens/Subfertiliti';
 import SaringanKesejahteraan from './screens/SaringanKesejahteraan';
+import KafeTeen from './screens/KafeTeen';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ const ServicesStack = () => {
       <Stack.Screen name="HPVDNA" component={HPVDna} />
       <Stack.Screen name="Subfertiliti" component={Subfertiliti} />
       <Stack.Screen name="SaringanKesejahteraan" component={SaringanKesejahteraan} />
+      <Stack.Screen name="KafeTeen" component={KafeTeen} />
     </Stack.Navigator>
   );
 };

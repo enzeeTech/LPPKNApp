@@ -98,6 +98,9 @@ const HomeScreen = ({navigation}) => {
       case 'Saringan Kesejahteraan':
           navigation.navigate('SaringanKesejahteraan');
           break;
+      case 'KafeTeen':
+          navigation.navigate('KafeTeen');
+          break;
       default:
         break;
     }

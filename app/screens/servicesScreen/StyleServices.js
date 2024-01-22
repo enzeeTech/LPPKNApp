@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
         color: '#777777',
     },
     subTextOneContainer:{
-        width: '100%',
+        width: '90%',
+        marginLeft: '5%',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 5,
@@ -425,6 +426,12 @@ const styles = StyleSheet.create({
     bulletPointText:{
         fontSize: 14,
         color: '#777777',
+    },
+    bulletPointTextBold:{
+        marginLeft: 5,
+        fontSize: 14,
+        color: '#777777',
+        fontWeight: 'bold',
     },
     popupContainer: {
         flex: 1,

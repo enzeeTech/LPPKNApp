@@ -77,6 +77,9 @@ function ServicesScreen({navigation}) {
       case 'Saringan Kesejahteraan':
         navigation.navigate('SaringanKesejahteraan');
         break;
+      case 'KafeTEEN':
+        navigation.navigate('KafeTeen');
+        break;
       default:
         break;
     }

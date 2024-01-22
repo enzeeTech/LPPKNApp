@@ -372,15 +372,17 @@ const styles = StyleSheet.create({
     },
     ticketContainer:{
         width: '100%',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
+        flexDirection: 'row',
         marginBottom: 40,
         // backgroundColor: 'yellow',
     },
     ticketImage:{
-        width: 280,
+        width: 200,
         height: 100,
         resizeMode: 'contain',
+        // backgroundColor: 'red',
     },
     bulletContainer:{
         width: '100%',

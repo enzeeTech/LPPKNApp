@@ -1,17 +1,18 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ServiceMain from './index';
-import PerancangKeluarga from './services/PerancangKeluarga';
-import Peka from './services/Peka'
-import Smartstart from './services/Smartstart';
-import SubsidiMamogram from './services/SubsidiMamogram';
-import Kaunseling from './services/Kaunseling';
-import KeluargaKerja from './services/KeluargaKerja';
-import SmartBelanja from './services/SmartBelanja';
-import Ilmukeluarga from './services/Ilmukeluarga';
-import Penyelidikan from './services/Penyelidikan';
-import HPVDna from './services/HPVDNA';
-import Subfertiliti from './services/Subfertiliti';
+import PerancangKeluarga from './screens/PerancangKeluarga';
+import Peka from './screens/Peka'
+import Smartstart from './screens/Smartstart';
+import SubsidiMamogram from './screens/SubsidiMamogram';
+import Kaunseling from './screens/Kaunseling';
+import KeluargaKerja from './screens/KeluargaKerja';
+import SmartBelanja from './screens/SmartBelanja';
+import Ilmukeluarga from './screens/Ilmukeluarga';
+import Penyelidikan from './screens/Penyelidikan';
+import HPVDna from './screens/HPVDNA';
+import Subfertiliti from './screens/Subfertiliti';
+import SaringanKesejahteraan from './screens/SaringanKesejahteraan';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ const ServicesStack = () => {
       <Stack.Screen name="Penyelidikan" component={Penyelidikan} />
       <Stack.Screen name="HPVDNA" component={HPVDna} />
       <Stack.Screen name="Subfertiliti" component={Subfertiliti} />
+      <Stack.Screen name="SaringanKesejahteraan" component={SaringanKesejahteraan} />
     </Stack.Navigator>
   );
 };

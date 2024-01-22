@@ -7,18 +7,18 @@ import HubungikamiScreen from './infoPages/HubungiKami';
 import TetangKamiScreen from './infoPages/TetangKami';
 import BulletinHome from '../bulletinMain/index';
 import BulletingInfo from '../bulletinInfo/index';
-import PerancangKeluarga from '../servicesScreen/services/PerancangKeluarga';
-import Peka from '../servicesScreen/services/Peka';
-import Smartstart from '../servicesScreen/services/Smartstart';
-import SubsidiMamogram from '../servicesScreen/services/SubsidiMamogram';
-import Kaunseling from '../servicesScreen/services/Kaunseling';
-import KeluargaKerja from '../servicesScreen/services/KeluargaKerja';
-import SmartBelanja from '../servicesScreen/services/SmartBelanja';
-import Ilmukeluarga from '../servicesScreen/services/Ilmukeluarga';
-import HPVDNA from '../servicesScreen/services/HPVDNA';
-import Subfertiliti from '../servicesScreen/services/Subfertiliti';
-import Penyelidikan from '../servicesScreen/services/Penyelidikan';
-
+import PerancangKeluarga from '../servicesScreen/screens/PerancangKeluarga';
+import Peka from '../servicesScreen/screens/Peka';
+import Smartstart from '../servicesScreen/screens/Smartstart';
+import SubsidiMamogram from '../servicesScreen/screens/SubsidiMamogram';
+import Kaunseling from '../servicesScreen/screens/Kaunseling';
+import KeluargaKerja from '../servicesScreen/screens/KeluargaKerja';
+import SmartBelanja from '../servicesScreen/screens/SmartBelanja';
+import Ilmukeluarga from '../servicesScreen/screens/Ilmukeluarga';
+import HPVDNA from '../servicesScreen/screens/HPVDNA';
+import Subfertiliti from '../servicesScreen/screens/Subfertiliti';
+import Penyelidikan from '../servicesScreen/screens/Penyelidikan';
+import SaringanKesejahteraan from '../servicesScreen/screens/SaringanKesejahteraan';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +45,7 @@ const HomeStack = () => {
       <Stack.Screen name="Penyelidikan" component={Penyelidikan} />
       <Stack.Screen name="HPVDNA" component={HPVDNA} />
       <Stack.Screen name="Subfertiliti" component={Subfertiliti} />
+      <Stack.Screen name="SaringanKesejahteraan" component={SaringanKesejahteraan} />
     </Stack.Navigator>
   );
 };

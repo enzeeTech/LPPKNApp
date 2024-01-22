@@ -46,6 +46,14 @@ const posterData = [
   { title: 'Sambutan Ulangtahun LPPKN ke-57',  date:'15 Jun 2023', imageSource: require('../../assets/poster4.png')},
 ];
 
+//////// CONTENT SLIDER DATA ////////
+contentData = [
+  { type: 'video', source: require('../../assets/videos/dummyVideo1.mp4') },
+  { type: 'video', source: require('../../assets/videos/dummyVideo2.mp4') },
+  { type: 'image', source: require('../../assets/smartStartBackground.png') }, 
+  { type: 'image', source: require('../../assets/smartBelanjaBackground.png') }, 
+];
+
 const HomeScreen = ({navigation}) => {
   // Function to render each row of icons
   const renderRow = (slicedIconsRow) => (
@@ -154,14 +162,6 @@ const HomeScreen = ({navigation}) => {
   const onBulletinLihatSemuaPress = () => {
     navigation.navigate('BulletinHome');
   };
-
-  //////// CONTENT SLIDER DATA ////////
-  contentData = [
-    { type: 'video', source: 'https://www.youtube.com/watch?v=LP0Alkq04iM' },
-    { type: 'video', source: 'https://www.youtube.com/watch?v=lcXgxQOEuno' },
-    { type: 'image', source: require('../../assets/smartStartBackground.png') }, // this source is not working, harded coded for now inside ContentSlider.js
-    { type: 'image', source: require('../../assets/smartBelanjaBackground.png') }, // this source is not working, harded coded for now inside ContentSlider.js
-  ];
 
   return (
     <SafeAreaView style={styles.container}>

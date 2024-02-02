@@ -10,71 +10,10 @@ import GlobalApi from '../../services/GlobalApi';
 
 function BulletinMain({navigation}) {
 
-  const dummyData = [
-    {
-      id: 1,
-      title: "Forum Hari Penduduk Sedunia 2023",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-    {
-      id: 2,
-      title: "Better Dads Malaysia dan Pertubuhan Ikram Malaysia",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-    {
-      id: 3,
-      title: "Perhimpunan Bulanan (Mac 2023) Sempena Minggu Sejahtera Warga LPPKN",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-    {
-      id: 4,
-      title: "Forum Hari Penduduk Sedunia 2023",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-    {
-      id: 5,
-      title: "Better Dads Malaysia dan Pertubuhan Ikram Malaysia",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'),  
-    },
-    {
-      id: 6,
-      title: "Perhimpunan Bulanan (Mac 2023) Sempena Minggu Sejahtera Warga LPPKN",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'),  
-    },
-    {
-      id: 7,
-      title: "Forum Hari Penduduk Sedunia 2023",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'),  
-    },
-    {
-      id: 8,
-      title: "Better Dads Malaysia dan Pertubuhan Ikram Malaysia",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-  ];
-
   {/*Definitions for load more feature*/}
-  // const [bulletinItems, setBulletinItems] = useState(dummyData.slice(0, 5)); // Initial items
   const [bulletinItems, setBulletinItems] = useState([]); 
   const [allBulletinItems, setAllBulletinItems] = useState([]);
   const [hasMoreItems, setHasMoreItems] = useState(false);
-
-  // const loadMoreItems = () => {
-  //   const nextItems = dummyData.slice(bulletinItems.length, bulletinItems.length + 5);
-  //   setBulletinItems([...bulletinItems, ...nextItems]);
-
-  //   if (bulletinItems.length + nextItems.length >= dummyData.length) {
-  //     setHasMoreItems(false); // No more items to load
-  //   }
-  // };
 
   // Function to format the date correctly
   const formatDate = (dateString) => {
@@ -83,12 +22,11 @@ function BulletinMain({navigation}) {
     const date = new Date(dateString);
     // Format date to local string with specified options
     const formattedDate = date.toLocaleDateString('id-ID', options);
-    
-    // If you want to further customize the format, you can manually construct it.
-    // However, toLocaleDateString should handle most of the formatting based on the locale.
+
     return formattedDate;
   };
 
+  // Calling API to get bulletin posts
   const getBulletinPosts = () => {
     GlobalApi.getBulletinPost()
       .then((response) => {
@@ -192,7 +130,6 @@ function BulletinMain({navigation}) {
           </TouchableOpacity>
         </View>
         <BulletinDetailsSection navigation={navigation} items={bulletinItems} onLoadMore={hasMoreItems ? loadMoreItems : null } />
-        {/* <BulletinDetailsSection navigation={navigation} items={bulletinItems} onLoadMore={hasMoreItems} /> */}
       </ScrollView>
       <SarinBottomSheet
             isVisible={isBottomSheetVisible}

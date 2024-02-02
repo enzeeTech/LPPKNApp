@@ -21,7 +21,7 @@ const CustomBulletinTile = ({ onPress, image, title, date }) => {
         onPress={onPress}
         >
             <View style={styles.imageContainer}>
-                <Image source={image} style={styles.image} />
+                <Image source={{uri:image}} style={styles.image} />
                 <View style={styles.overlayContainer}>
                     <View style={styles.textContainer}>
                         <Text style={styles.titleText} numberOfLines={2}>{title}</Text>

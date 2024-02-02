@@ -6,6 +6,7 @@ import { Platform } from 'react-native';
 import { ScrollView } from 'react-native';
 import BulletinDetailsSection from './BulletinDetailsSection';
 import SarinBottomSheet from './SarinBottomSheet';
+import GlobalApi from '../../services/GlobalApi';
 
 function BulletinMain({navigation}) {
 
@@ -61,15 +62,64 @@ function BulletinMain({navigation}) {
   ];
 
   {/*Definitions for load more feature*/}
-  const [bulletinItems, setBulletinItems] = useState(dummyData.slice(0, 5)); // Initial items
-  const [hasMoreItems, setHasMoreItems] = useState(true);
+  // const [bulletinItems, setBulletinItems] = useState(dummyData.slice(0, 5)); // Initial items
+  const [bulletinItems, setBulletinItems] = useState([]); 
+  const [allBulletinItems, setAllBulletinItems] = useState([]);
+  const [hasMoreItems, setHasMoreItems] = useState(false);
+
+  // const loadMoreItems = () => {
+  //   const nextItems = dummyData.slice(bulletinItems.length, bulletinItems.length + 5);
+  //   setBulletinItems([...bulletinItems, ...nextItems]);
+
+  //   if (bulletinItems.length + nextItems.length >= dummyData.length) {
+  //     setHasMoreItems(false); // No more items to load
+  //   }
+  // };
+
+  // Function to format the date correctly
+  const formatDate = (dateString) => {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    // Create a date object from dateString
+    const date = new Date(dateString);
+    // Format date to local string with specified options
+    const formattedDate = date.toLocaleDateString('id-ID', options);
+    
+    // If you want to further customize the format, you can manually construct it.
+    // However, toLocaleDateString should handle most of the formatting based on the locale.
+    return formattedDate;
+  };
+
+  const getBulletinPosts = () => {
+    GlobalApi.getBulletinPost()
+      .then((response) => {
+        const formattedData = response.data.data.map((item) => ({
+          id: item.id,
+          title: item.attributes.Title,
+          date: formatDate(item.attributes.Date), 
+          image: item.attributes.image.data.attributes.url, 
+        }));
+        setAllBulletinItems(formattedData);
+        setBulletinItems(formattedData.slice(0, 4));
+        // check and set if there are more items to load
+        if (formattedData.length > 4) {
+          setHasMoreItems(true);
+        } else {
+          setHasMoreItems(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getBulletinPosts();
+  }, []);
 
   const loadMoreItems = () => {
-    const nextItems = dummyData.slice(bulletinItems.length, bulletinItems.length + 5);
-    setBulletinItems([...bulletinItems, ...nextItems]);
-
-    if (bulletinItems.length + nextItems.length >= dummyData.length) {
-      setHasMoreItems(false); // No more items to load
+    if (bulletinItems.length <= 5) {
+      setBulletinItems(allBulletinItems);
+      setHasMoreItems(false);
     }
   };
 
@@ -142,6 +192,7 @@ function BulletinMain({navigation}) {
           </TouchableOpacity>
         </View>
         <BulletinDetailsSection navigation={navigation} items={bulletinItems} onLoadMore={hasMoreItems ? loadMoreItems : null } />
+        {/* <BulletinDetailsSection navigation={navigation} items={bulletinItems} onLoadMore={hasMoreItems} /> */}
       </ScrollView>
       <SarinBottomSheet
             isVisible={isBottomSheetVisible}

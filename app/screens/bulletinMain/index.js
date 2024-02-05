@@ -21,7 +21,7 @@ function BulletinMain({navigation}) {
     // Create a date object from dateString
     const date = new Date(dateString);
     // Format date to local string with specified options
-    const formattedDate = date.toLocaleDateString('id-ID', options);
+    const formattedDate = date.toLocaleDateString('ms-MY', options);
 
     return formattedDate;
   };
@@ -34,12 +34,17 @@ function BulletinMain({navigation}) {
           id: item.id,
           title: item.attributes.Title,
           date: formatDate(item.attributes.Date), 
-          image: item.attributes.image.data.attributes.url, 
+          tileImage: item.attributes.TileImage.data.attributes.url, 
+          information: item.attributes.Information,
+          images: item.attributes.PostImages.data.map((image) => ({
+            id: image.id,
+            url: image.attributes.url,
+          })),
         }));
         setAllBulletinItems(formattedData);
-        setBulletinItems(formattedData.slice(0, 4));
+        setBulletinItems(formattedData.slice(0, 6));
         // check and set if there are more items to load
-        if (formattedData.length > 4) {
+        if (formattedData.length > 6) {
           setHasMoreItems(true);
         } else {
           setHasMoreItems(false);
@@ -55,7 +60,7 @@ function BulletinMain({navigation}) {
   }, []);
 
   const loadMoreItems = () => {
-    if (bulletinItems.length <= 5) {
+    if (bulletinItems.length <= 6) {
       setBulletinItems(allBulletinItems);
       setHasMoreItems(false);
     }

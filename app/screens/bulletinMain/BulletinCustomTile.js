@@ -4,10 +4,6 @@ import { View, Text, Image, StyleSheet, Platform, TouchableOpacity, Pressable } 
 
 const CustomBulletinTile = ({ onPress, image, title, date }) => {
 
-    // const handleTilePress = () => {
-    //     navigation.navigate('BulletingInfo');
-    // };
-
     const handleShareButtonPress = () => {
         console.log('Share Button Pressed!');
     };

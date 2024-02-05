@@ -1,18 +1,61 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, TouchableOpacity, Dimensions } from 'react-native';
 import Header from './BulletinInfoHeader';
 import InfoSection from './BulletinInfoSection';
 import { ScrollView } from 'react-native';
+import GlobalApi from '../../services/GlobalApi';
 
 
 // Get the full height of the screen
 const screenHeight = Dimensions.get('window').height;
 
-const BulletinInfoMain = ({navigation}) => {
+const BulletinInfoMain = ({navigation, route}) => {
     const insets = useSafeAreaInsets();
     const bottomNavBarHeight = insets.bottom;
+    const {itemId} = route.params;
+    const [itemDetails, setItemDetails] = useState(null);
+
+    // Function to format the date correctly
+    const formatDate = (dateString) => {
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        // Create a date object from dateString
+        const date = new Date(dateString);
+        // Format date to local string with specified options
+        const formattedDate = date.toLocaleDateString('ms-MY', options);
+
+        return formattedDate;
+    };
+
+    useEffect(() => {
+        console.log('itemId', itemId);
+        const fetchItemDetails = async () => {
+            try {
+                const response = await GlobalApi.getBulletinPostById(itemId);
+                // Assuming the response structure is as expected, directly set the fetched data
+                setItemDetails({
+                    id: response.data.data.id,
+                    title: response.data.data.attributes.Title,
+                    date: formatDate(response.data.data.attributes.Date),
+                    // Assuming images are nested within the response and need mapping
+                    images: response.data.data.attributes.PostImages.data.map(image => ({
+                        id: image.id,
+                        url: image.attributes.url,
+                    })),
+                    information: response.data.data.attributes.Information,
+                });
+            } catch (error) {
+                console.error("Fetching item details failed: ", error);
+                // Optionally, handle the error state here, e.g., by setting an error message in state
+            }
+        };
+    
+        if (itemId) {
+            fetchItemDetails();
+        }
+    }, [itemId]);
+
 
     const infoContainerStyle = {
         flex: 1, 
@@ -33,7 +76,12 @@ const BulletinInfoMain = ({navigation}) => {
                 style={{marginTop: -13}}
             >
                 <View style={[styles.infoContainer, infoContainerStyle]}>
-                        <InfoSection/>
+                        <InfoSection
+                            title={itemDetails?.title}
+                            date={itemDetails?.date}
+                            images={itemDetails?.images}
+                            information={itemDetails?.information}
+                        />
                 </View>
             </ScrollView>
         </SafeAreaView>

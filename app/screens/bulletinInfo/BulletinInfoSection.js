@@ -17,7 +17,7 @@ const sliderImages = [
     require('../../assets/testImageBulletin.png'),
   ];
 
-const InfoSection = () => {
+const InfoSection = ({title, date, images, information}) => {
     const [activeSlide, setActiveSlide] = useState(0);
 
     // Listen to slide event for the pagination animation
@@ -39,17 +39,17 @@ const InfoSection = () => {
                 scrollEventThrottle={16}
                 style={styles.scrollViewStyle} 
             >
-                {sliderImages.map((image, index) => (
-                <Image
-                    key={index}
-                    source={image}
-                    style={styles.image}
-                />
+                {images?.map((image, index) => (
+                    <Image
+                        key={index}
+                        source={{uri: image.url}}
+                        style={styles.image}
+                    />
                 ))}
             </ScrollView>
             <View style={styles.innerContainer}>
                 <View style={styles.paginationWrapper}>
-                        {sliderImages.map((_, index) => (
+                        {images?.map((_, index) => (
                             <View
                                 key={index}
                                 style={[
@@ -61,13 +61,13 @@ const InfoSection = () => {
                 </View>
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>
-                        SAMBUTAN HARI WANITA ANTARABANGSA DI DEWAN PERDANA FELDA
+                        {title}
                     </Text>
                 </View>
                 <View style={styles.subHeaderContainer}>
                     <Image source={require('../../assets/calendarIcon.png')} style={styles.calendarIcon} />
                     <Text style={styles.subHeaderText}>
-                        9 Mac 2023
+                        {date}
                     </Text>
                     <TouchableOpacity style={styles.shareIcon} onPress={() => console.log('Share Button Pressed!')}>
                         <Image source={require('../../assets/shareIcon.png')} style={styles.shareIcon} />
@@ -77,9 +77,7 @@ const InfoSection = () => {
                     <Text style={styles.body}>
                     {/*Old code, adds gradient effect*/}
                     {/* <Text style={styles.body} numberOfLines={expanded ? null : Platform.OS === 'ios' ? 8 : 12}> */} {/*Old code, had gradient effect*/}
-                        {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vel turpis sed risus sollicitudin cursus. Nam a congue nibh. Etiam ullamcorper, sem in sollicitudin imperdiet, odio nisi cursus erat, pellentesque interdum lorem ipsum sit amet urna. Fusce sit amet nibh ut nisi auctor dictum. Pellentesque tortor lacus, dignissim id orci ut, cursus dignissim eros. Integer aliquet malesuada leo et maximus. Donec fermentum justo vel leo egestas cursus. Integer iaculis tincidunt velit vitae posuere. Sed fermentum consectetur orci, quis lobortis nisl pretium vitae. Fusce eu accumsan purus. Vivamus et lacinia eros, ac faucibus urna. Nunc eget ante lacus. Cras placerat facilisis malesuada.\n\n' +  
-                        'Nulla facilisi. Etiam iaculis, elit non iaculis sollicitudin, libero erat tincidunt felis, auctor facilisis mi ex nec lectus. Praesent accumsan sem id metus rutrum varius. Quisque porta, justo et pulvinar elementum, ante orci malesuada velit, et viverra massa quam eu mauris. Morbi consequat elit diam, vel gravida mi vestibulum et. Mauris pharetra imperdiet ullamcorper. Praesent auctor enim tellus, id vulputate velit tincidunt sit amet. Integer ut iaculis est, eu blandit libero. Aliquam ultrices urna at lacinia mollis. Ut faucibus elementum dui et tempus.\n\n' +'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vel turpis sed risus sollicitudin cursus. Nam a congue nibh. Etiam ullamcorper, sem in sollicitudin imperdiet, odio nisi cursus erat, pellentesque interdum lorem ipsum sit amet urna. Fusce sit amet nibh ut nisi auctor dictum. Pellentesque tortor lacus, dignissim id orci ut, cursus dignissim eros. Integer aliquet malesuada leo et maximus. Donec fermentum justo vel leo egestas cursus. Integer iaculis tincidunt velit vitae posuere. Sed fermentum consectetur orci, quis lobortis nisl pretium vitae. Fusce eu accumsan purus. Vivamus et lacinia eros, ac faucibus urna. Nunc eget ante lacus. Cras placerat facilisis malesuada. \n\n' + 
-                        'Nulla facilisi. Etiam iaculis, elit non iaculis sollicitudin, libero erat tincidunt felis, auctor facilisis mi ex nec lectus. Praesent accumsan sem id metus rutrum varius. Quisque porta, justo et pulvinar elementum, ante orci malesuada velit, et viverra massa quam eu mauris. Morbi consequat elit diam, vel gravida mi vestibulum et. Mauris pharetra imperdiet ullamcorper. Praesent auctor enim tellus, id vulputate velit tincidunt sit amet.Integer ut iaculis est, eu blandit libero. Aliquam ultrices urna at lacinia mollis. Ut faucibus elementum dui et tempus.'}
+                        {information}
                     </Text>
                     
                     {/*Old code, adds gradient effect*/}

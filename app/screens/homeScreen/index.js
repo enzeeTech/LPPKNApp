@@ -6,6 +6,7 @@ import Header from './HomeScreenHeader';
 import ServiceIcon from '../common/ServiceIcon';
 import NewsItem from './customTiles/NewsItem';
 import PosterItem from './customTiles/PosterItem';
+import GlobalApi from '../../services/GlobalApi';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -27,16 +28,6 @@ const iconsData = [
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
 ];
 
-// Array of image, title, and date for news
-const newsData = [
-  { title: 'Sambutan Hari Wanita Antarabangsa di Dewan Perdana FELDA, Kuala Lumpur',  date:'9 Mac 2023', imageSource: require('../../assets/homeDummy1.png')},
-  { title: 'Program Kempen Kesedaran Kanser Reproduktif Wanita(WCaRe) Kuching',  date:'30 Jan 2023', imageSource: require('../../assets/homeDummy2.png')},
-  { title: '850,000 Remaja Sertai Program PPK di Pusat Remaja KafeTEEN',  date:'13 Feb 2023', imageSource: require('../../assets/homeDummy3.png')},
-  { title: 'Sambutan Hari Wanita Antarabangsa di Dewan Perdana FELDA, Kuala Lumpur',  date:'9 Mac 2023', imageSource: require('../../assets/homeDummy1.png')},
-  { title: 'Program Kempen Kesedaran Kanser Reproduktif Wanita(WCaRe) Kuching',  date:'30 Jan 2023', imageSource: require('../../assets/homeDummy2.png')},
-  { title: '850,000 Remaja Sertai Program PPK di Pusat Remaja KafeTEEN',  date:'13 Feb 2023', imageSource: require('../../assets/homeDummy3.png')},
-];
-
 // Array of image, title, and date for poster
 const posterData = [
   { title: 'Pertandingan KASIH Keluarga Challenge',  date:'20 September 2023', imageSource: require('../../assets/poster1.png')},
@@ -46,6 +37,45 @@ const posterData = [
 ];
 
 const HomeScreen = ({navigation}) => {
+  const [bulletinItems, setBulletinItems] = useState([]);
+
+
+  // Function to format the date correctly
+  const formatDate = (dateString) => {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    // Create a date object from dateString
+    const date = new Date(dateString);
+    // Format date to local string with specified options
+    const formattedDate = date.toLocaleDateString('ms-MY', options);
+
+    return formattedDate;
+  };
+
+  // Calling API to get bulletin posts
+  const getBulletinPosts = () => { 
+    GlobalApi.getBulletinPost()
+      .then((response) => {
+        const formattedData = response.data.data.map((item) => ({
+          id: item.id,
+          title: item.attributes.Title,
+          date: formatDate(item.attributes.Date),
+          tileImage: item.attributes.TileImage.data.attributes.url,
+        
+        }));
+        setBulletinItems(formattedData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Load bulletin posts when the screen is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      getBulletinPosts();
+    }, [])
+  );
+
   // Function to render each row of icons
   const renderRow = (slicedIconsRow) => (
     <View style={styles.rowContainer}>
@@ -106,9 +136,11 @@ const HomeScreen = ({navigation}) => {
       {slicedNewsRow.map((news, index) => (
         <NewsItem 
           key={`news-${index}`} 
+          navigation={navigation}
+          id = {news.id}
           title={news.title} 
           date={news.date} 
-          imageSource={news.imageSource} />
+          imageSource={{uri: news.tileImage}} />
       ))}
     </View>
   );
@@ -227,9 +259,9 @@ const HomeScreen = ({navigation}) => {
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.beritaGridContainer}>
                 {/* Render the news rows */}
-                {renderNewsRow(newsData.slice(0, 2))}
-                {renderNewsRow(newsData.slice(2, 4))}
-                {renderNewsRow(newsData.slice(4, 6))}
+                {renderNewsRow(bulletinItems?.slice(0, 2))}
+                {renderNewsRow(bulletinItems?.slice(2, 4))}
+                {renderNewsRow(bulletinItems?.slice(4, 6))}
             </View>
           </ScrollView>
         </View>

@@ -28,8 +28,8 @@ const BulletinInfoMain = ({navigation, route}) => {
         return formattedDate;
     };
 
+    // Fetch item details when itemId changes
     useEffect(() => {
-        console.log('itemId', itemId);
         const fetchItemDetails = async () => {
             try {
                 const response = await GlobalApi.getBulletinPostById(itemId);

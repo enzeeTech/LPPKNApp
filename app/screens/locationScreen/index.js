@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Header from './LocationScreenHeader';
 import StateTable from './StateTable';
 
-function LocationScreen() {
+function LocationScreen({navigation}) {
   
   return (
     <GestureHandlerRootView style={{flex: 1}}>
@@ -18,7 +18,7 @@ function LocationScreen() {
                 contentContainerStyle={styles.contentContainer}
             >
                 <Text style={styles.bodyText}>Pilih Negeri</Text>
-                <StateTable />
+                <StateTable navigation={navigation}/>
             </ScrollView>
         </SafeAreaView>
     </GestureHandlerRootView>

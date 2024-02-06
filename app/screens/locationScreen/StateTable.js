@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import DetailsComponent from './DetailsSection';
 
-function StateTable() {
+function StateTable({navigation}) {
     const numRows = 5;
     const numColumns = 3;
     const nameList = [
-        'Perlis', 'Kedah', 'Pulau Pinang', 'Perak', 'Selangor', 'WP                   Kuala Lumpur',
-        'Negeri  Sembilan', 'Melaka', 'Johor', 'Pahang', 'Terengganu', 'Kelantan', 'Sabah',
+        'Perlis', 'Kedah', 'Pulau Pinang', 'Perak', 'Selangor', 'WP             Kuala Lumpur',
+        'Negeri Sembilan', 'Melaka', 'Johor', 'Pahang', 'Terengganu', 'Kelantan', 'Sabah',
         'WP Labuan', 'Sarawak'
     ];
 
@@ -65,7 +65,7 @@ function StateTable() {
             {/* Render the DetailsComponent only if the activeButtonIndex is not null */}
             <View style={styles.listView}>
                 {activeButtonIndex !== null && (
-                    <DetailsComponent activeState={nameList[activeButtonIndex]} />
+                    <DetailsComponent navigation={navigation} activeState={nameList[activeButtonIndex]} />
                 )}
             </View>
         </View>

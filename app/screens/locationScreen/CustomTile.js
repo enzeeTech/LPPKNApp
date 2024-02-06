@@ -2,22 +2,22 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 import { TouchableOpacity} from 'react-native-gesture-handler';
 
-const CustomTile = ({ onPress }) => {
+const CustomTile = ({ onPress, title, backgroundImage, openTime, closeTime }) => {
   return (
     <TouchableOpacity style={styles.tileContainer} onPress={onPress} delayLongPress={3}>
         <View style={styles.imageContainer}>
-            <Image source={require('../../assets/dummyImage.png')} style={styles.image} />
+            <Image source={{uri: backgroundImage}} style={styles.image} />
         </View>
         <View style={styles.infoParentContainer}>
             <View style={styles.titleContainer}>
-                <Text style={styles.title}>PEJABAT LPPKN SELANGOR</Text>
+                <Text numberOfLines={2} style={styles.title}>{title}</Text>
             </View>
             <View style={styles.detailsContainer}>
                 <Image source={require('../../assets/timeIcon.png')} style={styles.imageIcon} />
                 <View style={styles.textContainer}>
                     <Text style={styles.subHeading}>Waktu Operasi</Text>
                     <Text style={styles.infoText}>Isnin - Jumaat</Text>
-                    <Text style={styles.infoText}>8.00 pagi - 5.30 petang</Text>
+                    <Text style={styles.infoText}>{openTime} pagi - {closeTime} petang</Text>
                 </View>
             </View>
         </View>
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.15,
         shadowRadius: 10, 
+        overflow: 'hidden',
     },
     imageContainer: {
         flex: 1,
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 134,
-        resizeMode: 'stretch',
+        resizeMode: 'cover',
     },
     imageIcon: {
         width: 15,

@@ -9,7 +9,8 @@ import { useColorScheme } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { Dimensions } from 'react-native';
 import React, { useState,  } from 'react';
-import LocationScreen from './app/screens/locationScreen/index';
+// import LocationScreen from './app/screens/locationScreen/index';
+import LocationStack from './app/screens/locationScreen/LocationStack';
 import ChatScreen from './app/screens/chatScreen/index';
 import ServicesStack from './app/screens/servicesScreen/ServicesStack';
 import FeedbackScreen from './app/screens/feedbackScreen/index';
@@ -155,7 +156,7 @@ export default function App() {
           >
             {/* Tab screens */}
             <Tab.Screen name="HomeScreen" component={HomeStack} />
-            <Tab.Screen name="LocationScreen" component={LocationScreen} />
+            <Tab.Screen name="LocationScreen" component={LocationStack} />
             <Tab.Screen
               name="ChatScreen"
               component={ChatScreen}

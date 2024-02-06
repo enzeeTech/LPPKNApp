@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Linking, ScrollView } from 'react-native';
 import styles from "./layouts/StageThreeLayout";
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
@@ -41,7 +41,7 @@ function StageThree({formData}) {
   };
 
   return (
-    <View style={{flex:1, backgroundColor:"#fff", height: height*1.05}}>
+    <ScrollView style={{flex:1, backgroundColor:"#fff", height: height*1.05}}>
       <View style={styles.parentContainer}>
         <View style={styles.pageTitle}>
           <Text style={styles.pageTitleStyle}>Maklumat Aduan</Text>
@@ -89,6 +89,7 @@ function StageThree({formData}) {
         </View>
 
         {/*Buttons*/}
+        <View style={styles.btnContainer}>
           <TouchableOpacity style={styles.button1Style}>
             <View style={{flexDirection: 'row'}}>
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -99,7 +100,9 @@ function StageThree({formData}) {
               <Image source={require("../../../assets/linkIcon.png")} style={{width:20, height:20, resizeMode: 'contain', marginLeft: 10}}/>
             </View>
           </TouchableOpacity>
+        </View>
 
+        <View style={styles.btn2Container}>
           <TouchableOpacity onPress={homeButtonPress} style={styles.button2Style}>
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={styles.button2Text}>
@@ -108,7 +111,8 @@ function StageThree({formData}) {
               </View>
           </TouchableOpacity>
         </View>
-      </View>   
+      </View>
+    </ScrollView>   
   );
 }
 

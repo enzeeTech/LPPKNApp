@@ -20,9 +20,17 @@ const getBulletinPostById = (id) => AxioInstance.get(`/bulletin-posts/${id}?popu
 // Function to get perkhidmatan buttons
 const getPerkhidmatanOptions = () => AxioInstance.get("/perkhidmatan-options?populate=*");
 
+// Function to get lokasi selangor
+const getLokasiSelangor = () => AxioInstance.get("/lokasi-selangors?populate=*");
+
+// Function to get lokasi WP Kuala Lumpur
+const getLokasiWPKL = () => AxioInstance.get("/lokasi-wp-kuala-lumpurs?populate=*");
+
 export default {
     getBulletinPost,
     getBulletinPostById,
     getPerkhidmatanOptions,
+    getLokasiSelangor,
+    getLokasiWPKL,
 }
 

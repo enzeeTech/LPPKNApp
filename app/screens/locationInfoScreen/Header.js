@@ -1,11 +1,17 @@
 import React from 'react';
 import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 
-function Header() {
+function Header({navigation}) {
+
+    // navigate back to the previous screen
+    const handleBackButton = () => {
+        navigation.goBack();
+    };
+
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={() => console.log('Back Button Pressed!')}>
+                <TouchableOpacity onPress={handleBackButton} >
                     <Image 
                         source={require('../../assets/backArrowKey.png')}
                         style = {styles.iconStyleBack}
@@ -29,6 +35,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight-20: 0,
+        zIndex: 5,
     },
     headerContainer: {
         height: 68, 

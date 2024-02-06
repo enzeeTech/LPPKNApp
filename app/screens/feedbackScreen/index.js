@@ -3,6 +3,7 @@ import React from 'react';
 import {
   SafeAreaView,
   Platform,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFocusEffect } from '@react-navigation/native';

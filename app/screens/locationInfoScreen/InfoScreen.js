@@ -2,33 +2,33 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-function InfoScreen() {
+function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}) {
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
                 {/* Title and Building Icon */}
                 <View style={styles.titleContainer}>
-                    <Image source={require('../../assets/buildingIcon.png')} style={styles.iconBuilding} />
-                    <Text style={styles.infoTextTitle}>PEJABAT LPPKN NEGERI PERLIS</Text>
+                    <Image source={{uri: icon}} style={styles.iconBuilding} />
+                    <Text style={styles.infoTextTitle}>{title}</Text>
                 </View>
 
                 {/* Address */}
                 <View style={styles.infoContainerLocation}>
                     <Image source={require('../../assets/locationPinIcon.png')} style={styles.iconLocation} />
                     <View style={styles.textContainerLocation}>
-                        <Text style={styles.infoText}>Tingkat 1, Bangunan Persekutuan Kangar, Persiaran Jubli Emas, 01000 Kangar, Perlis</Text>
+                        <Text style={styles.infoText}>{location}</Text>
                     </View>
                 </View>
 
                 <View style={styles.doubleInfoContainer}>
                     <View style={styles.infoContainer}>
-                        <Image source={require('../../assets/phoneIcon.png')} style={styles.icon} />
-                        <Text style={styles.infoText}>04-9762855</Text>
+                        <Image source={require('../../assets/phoneIcon.png')} style={styles.iconLeft} />
+                        <Text style={styles.infoText}>{phoneNo}</Text>
                     </View>
 
                     <View style={styles.infoContainer}>
-                        <Image source={require('../../assets/faxIcon.png')} style={styles.icon} />
-                        <Text style={styles.infoText}>04-9762855</Text>
+                        <Image source={require('../../assets/faxIcon.png')} style={styles.iconRight} />
+                        <Text style={styles.infoText}>{faxNo}</Text>
                     </View>
                 </View>
 
@@ -37,7 +37,7 @@ function InfoScreen() {
                     <Image source={require('../../assets/timeIcon.png')} style={styles.icon} />
                     <View style={styles.textContainer}>
                         <Text style={styles.infoTextColumn}>Isnin - Jumaat</Text>
-                        <Text style={styles.infoTextColumn}>8.00 pagi - 5.30 petang</Text>
+                        <Text style={styles.infoTextColumn}>{openTime} pagi - {closeTime} petang</Text>
                     </View>
                 </View>
 
@@ -74,26 +74,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 10,
         paddingLeft: Platform.OS === 'ios' ? 5 : 15,
-        maxWidth: '80%',
+        maxWidth: '100%',
+        marginBottom: 10,
     },
     infoContainerLocation: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 17,
-        paddingLeft: Platform.OS === 'ios' ? 5 : 15,
+        paddingLeft: Platform.OS === 'ios' ? 5 : 10,
     },
     infoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         maxWidth: '60%', 
-        paddingLeft: Platform.OS === 'ios' ? 5 : 15,
+        paddingLeft: Platform.OS === 'ios' ? 5 : 10,
     },
     infoContainerTime: {
         flexDirection: 'row',
         alignItems: 'center',
         maxWidth: '60%', 
-        paddingLeft: Platform.OS === 'ios' ? 5 : 15,
+        paddingLeft: Platform.OS === 'ios' ? 5 : 10,
         paddingBottom: Platform.OS === 'ios' ? 5 : 15,
+        marginBottom: 10,
     },
     textContainer: {
         flexDirection: 'column', 
@@ -102,8 +104,9 @@ const styles = StyleSheet.create({
     },
     textContainerLocation: {
         flex: 1,
-        height: 50, 
+        height: 70, 
         paddingTop: 5,
+        justifyContent: 'center',
     },
     doubleInfoContainer: {
         flexDirection: 'row',
@@ -116,6 +119,20 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25, 
         marginRight: 10,
+        marginBottom: 15,
+        resizeMode: 'contain',
+    },
+    iconLeft: {
+        width: 25,
+        height: 25, 
+        marginRight: 10,
+        marginBottom: 15,
+        resizeMode: 'contain',
+    },
+    iconRight: {
+        width: 25,
+        height: 25, 
+        marginLeft: 30,
         marginBottom: 15,
         resizeMode: 'contain',
     },
@@ -134,7 +151,7 @@ const styles = StyleSheet.create({
     infoTextTitle: {
         flex: 1,
         color: '#9448DA',
-        fontSize: 26,
+        fontSize: 24,
         fontWeight: 'bold',
         paddingBottom: 10,
         paddingLeft: 10,
@@ -142,7 +159,7 @@ const styles = StyleSheet.create({
     infoText: {
         color: '#777777',
         fontWeight: '600',
-        fontSize: 15,
+        fontSize: 14,
         lineHeight: 15,
         paddingLeft: 5,
         marginBottom: 12,
@@ -150,7 +167,7 @@ const styles = StyleSheet.create({
     infoTextColumn: {
          color: '#777777',
          fontWeight: '600',
-         fontSize: 15,
+         fontSize: 14,
          lineHeight: 15,
          paddingLeft: 5,
     },

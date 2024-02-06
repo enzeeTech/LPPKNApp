@@ -1,16 +1,18 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
+import { ImageBackground, StyleSheet, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import Header from './Header';
 import InfoScreen from './InfoScreen';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
+
 // Get the full height of the screen
 const screenHeight = Dimensions.get('window').height;
 
-function LocationInfoScreen() {
+function LocationInfoScreen({navigation, route}) {
     const insets = useSafeAreaInsets();
+    const item = route.params;
     const bottomNavBarHeight = insets.bottom;
 
     const infoContainerStyle = {
@@ -21,17 +23,28 @@ function LocationInfoScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
-                <Header />
+                <Header navigation={navigation}/>
             </View>
-            <ImageBackground
-                source={require('../../assets/negiriPerlisBackground.png')}
-                style={styles.image}
-                resizeMode="stretch"
-            >
-            </ImageBackground>
-            <View style={[styles.infoContainer, infoContainerStyle]}>
-                <InfoScreen />
-            </View>
+            <ScrollView showsVerticalScrollIndicator={false}  style={{height: '100%', marginTop: -10}}>
+                <ImageBackground
+                    source={{uri: item.item.background}}
+                    style={styles.image}
+                    resizeMode="stretch"
+                >
+                </ImageBackground>
+                <View style={[styles.infoContainer, infoContainerStyle]}>
+                    <InfoScreen
+                        title={item.item.title}
+                        location={item.item.location}
+                        icon={item.item.icon}
+                        phoneNo={item.item.phoneNo}
+                        faxNo={item.item.faxNo}
+                        openTime={item.item.openTime}
+                        closeTime={item.item.closeTime}
+                    />
+                </View>
+                <View style={{height: 100, backgroundColor: 'white'}}></View>
+            </ScrollView>
         </SafeAreaView>
     );
 }

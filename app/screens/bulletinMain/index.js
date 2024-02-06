@@ -6,70 +6,63 @@ import { Platform } from 'react-native';
 import { ScrollView } from 'react-native';
 import BulletinDetailsSection from './BulletinDetailsSection';
 import SarinBottomSheet from './SarinBottomSheet';
+import GlobalApi from '../../services/GlobalApi';
 
 function BulletinMain({navigation}) {
 
-  const dummyData = [
-    {
-      id: 1,
-      title: "Forum Hari Penduduk Sedunia 2023",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-    {
-      id: 2,
-      title: "Better Dads Malaysia dan Pertubuhan Ikram Malaysia",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-    {
-      id: 3,
-      title: "Perhimpunan Bulanan (Mac 2023) Sempena Minggu Sejahtera Warga LPPKN",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-    {
-      id: 4,
-      title: "Forum Hari Penduduk Sedunia 2023",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-    {
-      id: 5,
-      title: "Better Dads Malaysia dan Pertubuhan Ikram Malaysia",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'),  
-    },
-    {
-      id: 6,
-      title: "Perhimpunan Bulanan (Mac 2023) Sempena Minggu Sejahtera Warga LPPKN",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'),  
-    },
-    {
-      id: 7,
-      title: "Forum Hari Penduduk Sedunia 2023",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'),  
-    },
-    {
-      id: 8,
-      title: "Better Dads Malaysia dan Pertubuhan Ikram Malaysia",
-      date: "16 Ogos 2023",
-      image: require('../../assets/testImageBulletin.png'), 
-    },
-  ];
-
   {/*Definitions for load more feature*/}
-  const [bulletinItems, setBulletinItems] = useState(dummyData.slice(0, 5)); // Initial items
-  const [hasMoreItems, setHasMoreItems] = useState(true);
+  const [bulletinItems, setBulletinItems] = useState([]); 
+  const [allBulletinItems, setAllBulletinItems] = useState([]);
+  const [hasMoreItems, setHasMoreItems] = useState(false);
+
+  // Function to format the date correctly
+  const formatDate = (dateString) => {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    // Create a date object from dateString
+    const date = new Date(dateString);
+    // Format date to local string with specified options
+    const formattedDate = date.toLocaleDateString('ms-MY', options);
+
+    return formattedDate;
+  };
+
+  // Calling API to get bulletin posts
+  const getBulletinPosts = () => {
+    GlobalApi.getBulletinPost()
+      .then((response) => {
+        const formattedData = response.data.data.map((item) => ({
+          id: item.id,
+          title: item.attributes.Title,
+          date: formatDate(item.attributes.Date), 
+          tileImage: item.attributes.TileImage.data.attributes.url, 
+          information: item.attributes.Information,
+          images: item.attributes.PostImages.data.map((image) => ({
+            id: image.id,
+            url: image.attributes.url,
+          })),
+        }));
+        setAllBulletinItems(formattedData);
+        setBulletinItems(formattedData.slice(0, 6));
+        // check and set if there are more items to load
+        if (formattedData.length > 6) {
+          setHasMoreItems(true);
+        } else {
+          setHasMoreItems(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getBulletinPosts();
+  }, []);
 
   const loadMoreItems = () => {
-    const nextItems = dummyData.slice(bulletinItems.length, bulletinItems.length + 5);
-    setBulletinItems([...bulletinItems, ...nextItems]);
-
-    if (bulletinItems.length + nextItems.length >= dummyData.length) {
-      setHasMoreItems(false); // No more items to load
+    if (bulletinItems.length <= 6) {
+      setBulletinItems(allBulletinItems);
+      setHasMoreItems(false);
     }
   };
 

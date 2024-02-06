@@ -5,8 +5,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const BulletinDetailsSection = ({ navigation, items, onLoadMore }) => {
 
-    const handlePress = () => {
-        navigation.navigate('BulletingInfo');
+    const handlePress = (item) => {
+        navigation.navigate('BulletingInfo', {itemId: item.id});
     };
 
     return (
@@ -17,8 +17,8 @@ const BulletinDetailsSection = ({ navigation, items, onLoadMore }) => {
                 return (
                     <View key={item.id}>
                         <CustomBulletinTile
-                        onPress={handlePress}
-                        image={item.image}
+                        onPress={() => handlePress(item)}
+                        image={item.tileImage}
                         title={item.title}
                         date={item.date}
                         />

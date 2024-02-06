@@ -11,9 +11,14 @@ const AxioInstance = axios.create({
     }
 })
 
+// Function to get all bulletin posts
 const getBulletinPost = () => AxioInstance.get("/bulletin-posts?populate=*");
 
+// Function to get bulleting post by id
+const getBulletinPostById = (id) => AxioInstance.get(`/bulletin-posts/${id}?populate=*`);
+
 export default {
-    getBulletinPost
+    getBulletinPost,
+    getBulletinPostById
 }
 

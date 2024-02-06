@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const NewsItem = ({ title, date, imageSource }) => {
+const NewsItem = ({ navigation, id, title, date, imageSource }) => {
   // Handle press event for the news item
+  // const handlePress = () => {
+  //   console.log(`${title} pressed!`);
+  // };
+
   const handlePress = () => {
-    console.log(`${title} pressed!`);
-  };
+    navigation.navigate('BulletingInfo', {itemId: id});
+};
 
   return (
     <TouchableOpacity style={styles.newsItemContainer} onPress={handlePress}>

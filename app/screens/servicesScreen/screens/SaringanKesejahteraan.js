@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
-import TabTile from './reusableComponents/PriceTabTile';
+import KesejahteraanPriceTile from './reusableComponents/KesejahteraanPriceTile';
 
 const SaringanKesejahteraan = ({ navigation }) => {
 
@@ -27,20 +27,21 @@ const SaringanKesejahteraan = ({ navigation }) => {
         navigation.goBack();
     }
 
-    // // Data for tab tile
-    // const data = [
-    //     { title: 'Pemeriksaan Tekanan Darah'},
-    //     { title: 'Pemeriksaan Indeks Jisim Tubuh'},
-    //     { title: 'Pemeriksaan Darah Kolestrol'},
-    //     { title: 'Pemeriksaan Darah Glukos'},
-    //     { title: 'Saringan Kanser Serviks'},
-    //     { title: 'Pemeriksaan Klinikal Payudara'}
-    //   ];
+    const dataPakej1 = [
+        { title: 'Pemeriksaan Tekanan Darah'},
+        { title: 'Pemeriksaan Indeks Jisim Tubuh'},
+        { title: 'Pemeriksaan Darah Kolestrol'},
+        { title: 'Pemeriksaan Darah Glukos'},
+    ];
     
-    //   const prices = {
-    //     resident: 'RM10',
-    //     nonResident: 'RM25', 
-    //   };
+    const dataPakej2 = [
+        { title: 'Pemeriksaan Tekanan Darah'},
+        { title: 'Pemeriksaan Indeks Jisim Tubuh'},
+        { title: 'Pemeriksaan Darah Kolestrol'},
+        { title: 'Pemeriksaan Darah Glukos'},
+        { title: 'Saringan Kanser Serviks'},
+        { title: 'Pemeriksaan Klinikal Payudara'}
+    ];
 
     return (
         <SafeAreaView style={styles.container}>
@@ -77,10 +78,16 @@ const SaringanKesejahteraan = ({ navigation }) => {
                     <View style={[styles.subTextOneContainer]}>
                         <Text style={styles.subTextOne}>Pakej Yang Disediakan</Text>
                     </View>
-                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
-                    {/* Info tile with tab */}
-                    {/* <TabTile data={data} prices={prices} /> */}
-                    {/* Buttons section */}
+                    <View style={{ width: 300 }}>
+                    <KesejahteraanPriceTile
+                        prices={{
+                            resident: 'RM10',
+                            nonResident: 'RM25',
+                        }}
+                        dataPakej1={dataPakej1} 
+                        dataPakej2={dataPakej2} 
+                    />
+                    </View>
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne}>
                             <Text style={styles.buttonTextOne}>Lokasi Klinik Nur Sejahtera</Text>

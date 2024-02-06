@@ -17,8 +17,12 @@ const getBulletinPost = () => AxioInstance.get("/bulletin-posts?populate=*");
 // Function to get bulleting post by id
 const getBulletinPostById = (id) => AxioInstance.get(`/bulletin-posts/${id}?populate=*`);
 
+// Function to get perkhidmatan buttons
+const getPerkhidmatanOptions = () => AxioInstance.get("/perkhidmatan-options?populate=*");
+
 export default {
     getBulletinPost,
-    getBulletinPostById
+    getBulletinPostById,
+    getPerkhidmatanOptions,
 }
 

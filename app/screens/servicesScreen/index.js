@@ -1,7 +1,9 @@
 import React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, StyleSheet, SafeAreaView, Dimensions, FlatList } from 'react-native';
 import Header from './ServicesHeaderMain';
 import ServiceIcon from '../common/ServiceIcon';
+import GlobalApi from '../../services/GlobalApi';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -24,11 +26,43 @@ const iconsData = [
 ];
 
 function ServicesScreen({navigation}) {
+  const [perkhidmatanOptions, setPerkhidmatanOptions] = React.useState([]);
+
+  // Fetch perkhidmatan options from API
+  const fetchPerkhidmatanOptions = () => {
+    GlobalApi.getPerkhidmatanOptions()
+      .then((response) => {
+        const perkhidmatanOptions = response.data.data.map((item) => ({
+          id: item.id,
+          label: item.attributes.Title,
+          imageSource: item.attributes.Icon.data.attributes.url,
+        }));
+        setPerkhidmatanOptions(perkhidmatanOptions);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // Fetch perkhidmatan options on focus
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchPerkhidmatanOptions();
+    }, [])
+  );
 
   // Helper function to render each service icon
+  // const renderServiceIcon = ({ item }) => (
+  //   <ServiceIcon 
+  //     iconSource={item.iconSource} 
+  //     label={item.label} 
+  //     onPress={() => navigateToService(item.label)}
+  //   />
+  // );
+
   const renderServiceIcon = ({ item }) => (
     <ServiceIcon 
-      iconSource={item.iconSource} 
+      iconSource={{uri: item.imageSource}} 
       label={item.label} 
       onPress={() => navigateToService(item.label)}
     />
@@ -62,7 +96,8 @@ function ServicesScreen({navigation}) {
       case 'SMARTBelanja':
         navigation.navigate('SmartBelanja');
         break;
-      case 'Ilmu Keluarga':
+      case 'IlmuKeluarga':
+        console.log(serviceLabel + ' pressed!)');
         navigation.navigate('Ilmukeluarga');
         break;
       case 'HPV DNA':
@@ -85,7 +120,8 @@ function ServicesScreen({navigation}) {
       <Header onBackPress={handleBackPress} />
       <View style={styles.content}>
           <FlatList
-            data={iconsData}
+            // data={iconsData}
+            data={perkhidmatanOptions}
             renderItem={renderServiceIcon}
             keyExtractor={(item, index) => index.toString()}
             numColumns={4}

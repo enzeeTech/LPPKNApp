@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         marginLeft: '5%',
         height: 200,
         width: '90%',
-        elevation: 4,
+        elevation: 3,
         shadowColor: "#000",
         shadowOffset: {width: 0, height: 1},
         shadowOpacity: 0.25,

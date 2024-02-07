@@ -26,21 +26,14 @@ const CustomTile = ({ onPress, title, backgroundImage, openTime, closeTime }) =>
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1, 
-        backgroundColor: '#9448DA',
-        backgroundColor: 'transparent',
-    },
-    headerContainer: {
-        backgroundColor: 'transparent', 
-        zIndex: 5,
-    },
     tileContainer: {
         backgroundColor: '#FFFF',
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,
         borderBottomLeftRadius: 12,
         borderBottomRightRadius: 12,
+        // borderColor: '#DDDDDD',
+        // borderWidth: 1,
         marginTop: 10,
         marginLeft: '2.5%',
         height: 134,
@@ -49,8 +42,8 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.15,
-        shadowRadius: 10, 
-        overflow: 'hidden',
+        shadowRadius: 4, 
+        // overflow: 'hidden',
     },
     imageContainer: {
         flex: 1,
@@ -60,6 +53,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 134,
         resizeMode: 'cover',
+        borderTopLeftRadius: 12,
+        borderBottomLeftRadius: 12,
     },
     imageIcon: {
         width: 15,

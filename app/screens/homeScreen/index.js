@@ -125,6 +125,12 @@ const HomeScreen = ({navigation}) => {
       case 'Penyelidikan':
           navigation.navigate('Penyelidikan')
           break;
+      case 'Saringan Kesejahteraan':
+          navigation.navigate('SaringanKesejahteraan');
+          break;
+      case 'KafeTeen':
+          navigation.navigate('KafeTeen');
+          break;
       default:
         break;
     }

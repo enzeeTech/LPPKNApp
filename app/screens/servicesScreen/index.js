@@ -109,6 +109,12 @@ function ServicesScreen({navigation}) {
       case 'Penyelidikan & Data Mentah':
         navigation.navigate('Penyelidikan');
         break;
+      case 'Saringan Kesejahteraan':
+        navigation.navigate('SaringanKesejahteraan');
+        break;
+      case 'KafeTEEN':
+        navigation.navigate('KafeTeen');
+        break;
       default:
         break;
     }

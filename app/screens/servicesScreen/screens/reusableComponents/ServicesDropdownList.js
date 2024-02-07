@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Animated, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Image } from 'react-native';
-import DropdownItemWithPrice from '../reusableComponents/dropdownListItems/DropdownItemWithPrice';
-import DropdownItemBulletWithPrice from '../reusableComponents/dropdownListItems/DropdownItemBulletWithPrice';
-import DropdownItemBulletNoPrice from '../reusableComponents/dropdownListItems/DropdownItemBulletNoPrice';
+import DropdownItemWithPrice from './dropdownListItems/DropdownItemWithPrice';
+import DropdownItemBulletWithPrice from './dropdownListItems/DropdownItemBulletWithPrice';
+import DropdownItemBulletNoPrice from './dropdownListItems/DropdownItemBulletNoPrice';
 
 const Dropdown = ({ data, headerTitle, imageSource, type }) => {
     const [expanded, setExpanded] = useState(false);

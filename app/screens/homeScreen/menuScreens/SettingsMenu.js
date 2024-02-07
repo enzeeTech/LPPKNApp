@@ -41,42 +41,21 @@ const SettingsScreen = ({ onClose }) => {
                   <Text style={styles.settingTextMain}>Notifikasi</Text>
                   <Text style={styles.settingTextSub}>Dapatkan notifikasi untuk info terbaharu</Text>
                 </View>
-                {/* <Switch
-                  // backgroundColor="yellow"
-                  activeText={''}
-                  inActiveText={''}
-                  trackColor={{ false: "#D6BDF4", true: "#21CF44" }}
-                  ios_backgroundColor="#D6BDF4"
-                  thumbColor={setIsBmSelected ? '#FFFFFF' : '#FFFFFF'}
-                  onValueChange={toggleNotificationsSwitch}
-                  value={isNotificationsEnabled}
-                /> */}
                 <CustomSwitchNotif
                   isEnabled={isNotificationsEnabled}
                   onToggle={toggleNotificationsSwitch}
                 />
               </View>
-              <View style={styles.settingItemInfoContainer}>
+              {/* <View style={styles.settingItemInfoContainer}>
                 <View style={styles.settingTextContainer}>
                     <Text style={styles.settingTextMain}>Pilih Bahasa</Text>
                     <Text style={styles.settingTextSub}>Pilih bahasa pilihan anda</Text>
                   </View>
-                {/* <Switch
-                  // backgroundColor="yellow"
-                  activeText={'ENG'}
-                  inActiveText={'BM'}
-                  backgroundActive='#FF9432'
-                  backgroundInactive='#5D2E86'
-                  circleSize={30}
-                  thumbColor={setIsBmSelected ? '#FFFFFF' : '#FFFFFF'}
-                  onValueChange={toggleLanguageSwitch}
-                  value={isBmSelected}
-                /> */}
-                <CustomSwitchLanguage
+                {/* <CustomSwitchLanguage
                   isEnabled={isBmSelected}
                   onToggle={toggleLanguageSwitch}
-                />
-              </View>
+                /> */}
+              {/* </View> */}
             </View>
           </View>
         </TouchableWithoutFeedback>

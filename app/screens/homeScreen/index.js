@@ -234,7 +234,7 @@ const HomeScreen = ({navigation}) => {
         {/* SLIDING NEWS SECTION */}
         <View style={styles.slidingNewsContainer}>
           <Image source={require('../../assets/newsTileDummy.png')} 
-          style={{width: Platform.OS === 'ios' ? 400 : 450, height: 230, resizeMode: 'stretch'}}
+          style={{width: 400, height: 230, resizeMode: 'cover'}}
           />
         </View>
         {/* PERKHIDMATAN SECTION */}

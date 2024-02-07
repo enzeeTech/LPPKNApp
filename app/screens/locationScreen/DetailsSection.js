@@ -14,7 +14,7 @@ const DetailsComponent = ({ navigation, activeState }) => {
         navigation.navigate('LocationInfo', { item: item });
     };
 
-    if (activeState == "WP             Kuala Lumpur"){
+    if (activeState == "WP                Kuala Lumpur"){
         activeState = "WP Kuala Lumpur";
     }
 
@@ -73,7 +73,7 @@ const DetailsComponent = ({ navigation, activeState }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Lokasi Premis LPPKN</Text>
-            <Text style={styles.text}>Details for: {activeState}</Text>
+            {/* <Text style={styles.text}>Details for: {activeState}</Text> */}
             {responseData.map((item) => (
                 <CustomTile
                     key={item.id}

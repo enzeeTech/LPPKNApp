@@ -1,8 +1,24 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { openURL } from 'expo-linking';
 
 function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}) {
+
+    // Lihat Peta Button Pressed
+    const onLihatPetaPressed = (address) => {
+        const url = `https://www.google.com/maps?q=${encodeURIComponent(address)}`;
+        openURL(url);
+    };
+
+    // Hubungi Pejabat Button Pressed
+    const onHubungiPejabatPressed = (phoneNumber) => {
+        // Clean up the phone number to remove spaces and hyphens
+        const cleanPhoneNumber = phoneNumber.replace(/[\s-]/g, '');
+        const url = `tel:${cleanPhoneNumber}`;
+        openURL(url);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
@@ -44,12 +60,12 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
                 {/* Buttons */}
                 <View style={styles.buttonContainer}>
                     {/* Button Lihat Peta */}
-                    <TouchableOpacity style={styles.buttonOne} onPress={() => console.log('Lihat Peta Button Pressed!')}>
+                    <TouchableOpacity style={styles.buttonOne} onPress={() => onLihatPetaPressed(location)}>
                         <Text style={styles.buttonTextOne}>Lihat Peta</Text>
                     </TouchableOpacity>
 
                     {/* Button Hubungi Pejabat */}
-                    <TouchableOpacity style={styles.buttonTwo} onPress={() => console.log('Hubungi Pejabat Button Pressed!')}>
+                    <TouchableOpacity style={styles.buttonTwo} onPress={() => onHubungiPejabatPressed(phoneNo)}>
                         <Text style={styles.buttonTextTwo}>Hubungi Pejabat</Text>
                     </TouchableOpacity>
                 </View>

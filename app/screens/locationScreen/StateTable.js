@@ -6,7 +6,7 @@ function StateTable({navigation}) {
     const numRows = 5;
     const numColumns = 3;
     const nameList = [
-        'Perlis', 'Kedah', 'Pulau Pinang', 'Perak', 'Selangor', 'WP             Kuala Lumpur',
+        'Perlis', 'Kedah', 'Pulau Pinang', 'Perak', 'Selangor', 'WP                Kuala Lumpur',
         'Negeri Sembilan', 'Melaka', 'Johor', 'Pahang', 'Terengganu', 'Kelantan', 'Sabah',
         'WP Labuan', 'Sarawak'
     ];

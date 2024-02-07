@@ -5,8 +5,6 @@ import InfoScreen from './InfoScreen';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-
-
 // Get the full height of the screen
 const screenHeight = Dimensions.get('window').height;
 

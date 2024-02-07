@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
         width: screenWidth,
         height: sliderImageHeight,
         resizeMode: 'cover',
+        backgroundColor: 'white',
     },
     paginationWrapper: {
         marginTop: 13,

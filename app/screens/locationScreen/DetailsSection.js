@@ -72,7 +72,7 @@ const DetailsComponent = ({ navigation, activeState }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>Lokasi Premis LPPKN</Text>
+            <Text style={styles.headerText}>Lokasi Perkhidmatan LPPKN</Text>
             {/* <Text style={styles.text}>Details for: {activeState}</Text> */}
             {responseData.map((item) => (
                 <CustomTile

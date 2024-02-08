@@ -14,9 +14,14 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
     // Hubungi Pejabat Button Pressed
     const onHubungiPejabatPressed = (phoneNumber) => {
         // Clean up the phone number to remove spaces and hyphens
-        const cleanPhoneNumber = phoneNumber.replace(/[\s-]/g, '');
+        const cleanPhoneNumber = phoneNo.split(' ')[0];
         const url = `tel:${cleanPhoneNumber}`;
         openURL(url);
+    };
+
+    // Format the phone number to change ext. to samb.
+    const formatPhoneNumber = (phoneNumber) => {
+        return phoneNumber.replace("ext.", "samb.");
     };
 
     return (
@@ -36,16 +41,14 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
                     </View>
                 </View>
 
-                <View style={styles.doubleInfoContainer}>
-                    <View style={styles.infoContainer}>
-                        <Image source={require('../../assets/phoneIcon.png')} style={styles.iconLeft} />
-                        <Text style={styles.infoText}>{phoneNo}</Text>
-                    </View>
+                <View style={styles.infoContainer}>
+                    <Image source={require('../../assets/phoneIcon.png')} style={styles.icon} />
+                    <Text style={styles.infoText}>{formatPhoneNumber(phoneNo)}</Text>
+                </View>
 
-                    <View style={styles.infoContainer}>
-                        <Image source={require('../../assets/faxIcon.png')} style={styles.iconRight} />
-                        <Text style={styles.infoText}>{faxNo}</Text>
-                    </View>
+                <View style={styles.infoContainer}>
+                    <Image source={require('../../assets/faxIcon.png')} style={styles.icon} />
+                    <Text style={styles.infoText}>{faxNo}</Text>
                 </View>
 
                 {/* Operating Hours */}
@@ -61,7 +64,7 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
                 <View style={styles.buttonContainer}>
                     {/* Button Lihat Peta */}
                     <TouchableOpacity style={styles.buttonOne} onPress={() => onLihatPetaPressed(location)}>
-                        <Text style={styles.buttonTextOne}>Lihat Peta</Text>
+                        <Text style={styles.buttonTextOne}>Lihat Lokasi</Text>
                     </TouchableOpacity>
 
                     {/* Button Hubungi Pejabat */}
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         maxWidth: '60%', 
         paddingLeft: Platform.OS === 'ios' ? 5 : 10,
+        marginBottom: 5,
     },
     infoContainerTime: {
         flexDirection: 'row',
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
         maxWidth: '60%', 
         paddingLeft: Platform.OS === 'ios' ? 5 : 10,
         paddingBottom: Platform.OS === 'ios' ? 5 : 15,
-        marginBottom: 10,
+        marginBottom: 1,
     },
     textContainer: {
         flexDirection: 'column', 

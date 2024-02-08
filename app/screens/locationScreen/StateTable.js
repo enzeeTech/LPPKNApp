@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import DetailsComponent from './DetailsSection';
+import * as Location from 'expo-location';
+import { useLocation } from '../../services/LocationProvider';
+import { useFocusEffect } from '@react-navigation/native';
 
 function StateTable({navigation}) {
     const numRows = 5;
@@ -10,13 +13,49 @@ function StateTable({navigation}) {
         'Negeri Sembilan', 'Melaka', 'Johor', 'Pahang', 'Terengganu', 'Kelantan', 'Sabah',
         'WP Labuan', 'Sarawak'
     ];
-
+    const { stateName } = useLocation();
     const [activeButtonIndex, setActiveButtonIndex] = useState(null);
 
     const handleItemPress = (index) => {
         // Toggle the active state or set it to null if it's already active thus deactivating it
         setActiveButtonIndex(activeButtonIndex === index ? null : index);
     };
+
+    // // Retrieve user state and set state variable
+    // useEffect(() => {
+    //     if (stateName) {
+    //         // Enhanced matching logic
+    //         const index = nameList.findIndex(name =>
+    //             name.toLowerCase().includes(stateName.toLowerCase().replace(/\s+/g, ' ').trim())
+    //         );
+    //         if (index !== -1) {
+    //             setActiveButtonIndex(index);
+    //         } else {
+    //             // Handle the case where a match is not found
+    //             console.log(`No match found for state name: ${stateName}`);
+    //         }
+    //     }
+    // }, [stateName]);
+
+    // Function to set the active state based on user's location
+    const setActiveStateFromLocation = useCallback(() => {
+        if (stateName && activeButtonIndex === null) {
+            // Attempt to find and set the active state based on user's location
+            const index = nameList.findIndex(name =>
+                name.toLowerCase().includes(stateName.toLowerCase().replace(/\s+/g, ' ').trim())
+            );
+            if (index !== -1) {
+                setActiveButtonIndex(index);
+            }
+        }
+    }, [stateName, activeButtonIndex]);
+
+    // Effect to set the active state when the Lokasi tab gains focus
+    useFocusEffect(
+        useCallback(() => {
+            setActiveStateFromLocation();
+        }, [setActiveStateFromLocation])
+    );
 
 
     const buttons = [];

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { openURL } from 'expo-linking';
@@ -14,7 +14,7 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
     // Hubungi Pejabat Button Pressed
     const onHubungiPejabatPressed = (phoneNumber) => {
         // Clean up the phone number to remove spaces and hyphens
-        const cleanPhoneNumber = phoneNo.split(' ')[0];
+        const cleanPhoneNumber = phoneNumber.split(' ')[0];
         const url = `tel:${cleanPhoneNumber}`;
         openURL(url);
     };

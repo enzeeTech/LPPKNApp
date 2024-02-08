@@ -17,6 +17,7 @@ import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeStack from './app/screens/homeScreen/HomeStack';
+import { LocationProvider } from './app/services/LocationProvider';
 
 const Tab = createBottomTabNavigator();
 
@@ -102,74 +103,76 @@ export default function App() {
   };
 
   return (
-    <GestureHandlerRootView style={{flex:1}}>
-      <SafeAreaProvider style={{flex:1}}>
-        {/* Set status bar colour to dark */}
-        <StatusBar style="dark" /> 
-        <NavigationContainer>
-          <Tab.Navigator
-            initialRouteName="HomeScreen"
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ focused }) => {
-                // Add logic to determine the icon based on the route and focus state
-                let iconSource;
-                let iconStyle = styles.tabIcon; // default style
-                if (route.name === 'HomeScreen') {
-                  iconSource = focused
-                    ? require('./app/assets/UtamaActive.png')
-                    : require('./app/assets/utamaIcon.png');
-                } else if (route.name === 'LocationScreen') {
-                  iconSource = focused
-                    ? require('./app/assets/LokasiActive.png')
-                    : require('./app/assets/lokasiIcon.png');
-                } else if (route.name === 'ServicesScreen') {
-                  iconSource = focused
-                    ? require('./app/assets/PerkhidmatanActive.png')
-                    : require('./app/assets/perkhidmatanIcon.png');
-                  iconStyle = {...styles.tabIcon, width: 80, height: 80 };
-                } else if (route.name === 'FeedbackScreen') {
-                  iconSource = focused
-                    ? require('./app/assets/AduanActive.png')
-                    : require('./app/assets/aduanIcon.png');
-                }
-                return (
-                  <Image
-                    source={iconSource}
-                    style={iconStyle}
-                    resizeMode="contain"
-                  />
-                );
-              },
-              tabBarButton: (props) => {
-                // Customize the tab bar button for ChatScreen
-                if (route.name === 'ChatScreen') {
-                  return <CustomTabBarButton {...props} />;
-                } else {
-                  // This is the default behavior for other buttons
-                  return <TouchableOpacity {...props} />;
-                }
-              },
-              headerShown: false,
-              tabBarShowLabel: false,
-              tabBarStyle: styles.tabBar,
-            })}
-          >
-            {/* Tab screens */}
-            <Tab.Screen name="HomeScreen" component={HomeStack} />
-            <Tab.Screen name="LocationScreen" component={LocationStack} />
-            <Tab.Screen
-              name="ChatScreen"
-              component={ChatScreen}
-              options={{
-                tabBarButton: () => <CustomTabBarButton />,
-              }}
-            />
-            <Tab.Screen name="ServicesScreen" component={ServicesStack} />
-            <Tab.Screen name="FeedbackScreen" component={FeedbackScreen} />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <LocationProvider>
+      <GestureHandlerRootView style={{flex:1}}>
+        <SafeAreaProvider style={{flex:1}}>
+          {/* Set status bar colour to dark */}
+          <StatusBar style="dark" /> 
+          <NavigationContainer>
+            <Tab.Navigator
+              initialRouteName="HomeScreen"
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused }) => {
+                  // Add logic to determine the icon based on the route and focus state
+                  let iconSource;
+                  let iconStyle = styles.tabIcon; // default style
+                  if (route.name === 'HomeScreen') {
+                    iconSource = focused
+                      ? require('./app/assets/UtamaActive.png')
+                      : require('./app/assets/utamaIcon.png');
+                  } else if (route.name === 'LocationScreen') {
+                    iconSource = focused
+                      ? require('./app/assets/LokasiActive.png')
+                      : require('./app/assets/lokasiIcon.png');
+                  } else if (route.name === 'ServicesScreen') {
+                    iconSource = focused
+                      ? require('./app/assets/PerkhidmatanActive.png')
+                      : require('./app/assets/perkhidmatanIcon.png');
+                    iconStyle = {...styles.tabIcon, width: 80, height: 80 };
+                  } else if (route.name === 'FeedbackScreen') {
+                    iconSource = focused
+                      ? require('./app/assets/AduanActive.png')
+                      : require('./app/assets/aduanIcon.png');
+                  }
+                  return (
+                    <Image
+                      source={iconSource}
+                      style={iconStyle}
+                      resizeMode="contain"
+                    />
+                  );
+                },
+                tabBarButton: (props) => {
+                  // Customize the tab bar button for ChatScreen
+                  if (route.name === 'ChatScreen') {
+                    return <CustomTabBarButton {...props} />;
+                  } else {
+                    // This is the default behavior for other buttons
+                    return <TouchableOpacity {...props} />;
+                  }
+                },
+                headerShown: false,
+                tabBarShowLabel: false,
+                tabBarStyle: styles.tabBar,
+              })}
+            >
+              {/* Tab screens */}
+              <Tab.Screen name="HomeScreen" component={HomeStack} />
+              <Tab.Screen name="LocationScreen" component={LocationStack} />
+              <Tab.Screen
+                name="ChatScreen"
+                component={ChatScreen}
+                options={{
+                  tabBarButton: () => <CustomTabBarButton />,
+                }}
+              />
+              <Tab.Screen name="ServicesScreen" component={ServicesStack} />
+              <Tab.Screen name="FeedbackScreen" component={FeedbackScreen} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </LocationProvider>
   );
 }
 

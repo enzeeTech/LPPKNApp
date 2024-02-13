@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     textContainerLocation: {
         flex: 1,
-        height: 70, 
+        // height: 70, 
         paddingTop: 5,
         justifyContent: 'center',
     },

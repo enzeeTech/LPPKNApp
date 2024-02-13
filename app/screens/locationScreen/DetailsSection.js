@@ -22,14 +22,14 @@ const DetailsComponent = ({ navigation, activeState }) => {
     const formatData = (data) => {
         return data.map((item) => ({
             id: item.id,
-            title: item.attributes.Title,
-            location: item.attributes.Location,
-            phoneNo: item.attributes.PhoneNo,
-            faxNo: item.attributes.FaxNo,
-            openTime: item.attributes.OpenTime,
-            closeTime: item.attributes.CloseTime,
-            icon: item.attributes.Icon.data.attributes.url,
-            background: item.attributes.BackgroundImage.data.attributes.url,
+            title: item.attributes.Title || '-',
+            location: item.attributes.Location || '-',
+            phoneNo: item.attributes.PhoneNo || '-',
+            faxNo: item.attributes.FaxNo || '-',
+            openTime: item.attributes.OpenTime || '-',
+            closeTime: item.attributes.CloseTime || '-',
+            icon: item.attributes.Icon?.data?.attributes?.url,
+            background: item.attributes.BackgroundImage?.data?.attributes?.url,
         }));
     };
 

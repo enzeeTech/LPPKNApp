@@ -2,11 +2,16 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 import { TouchableOpacity} from 'react-native-gesture-handler';
 
+const defaultImage = '../../assets/backgroundLPPKNHQ.png';
+
 const CustomTile = ({ onPress, title, backgroundImage, openTime, closeTime }) => {
+
+    const imageSource = backgroundImage ? {uri: backgroundImage} : require(defaultImage);
+
   return (
     <TouchableOpacity style={styles.tileContainer} onPress={onPress} delayLongPress={3}>
         <View style={styles.imageContainer}>
-            <Image source={{uri: backgroundImage}} style={styles.image} />
+            <Image source={imageSource} style={styles.image} />
         </View>
         <View style={styles.infoParentContainer}>
             <View style={styles.titleContainer}>

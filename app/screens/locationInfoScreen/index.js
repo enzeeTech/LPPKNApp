@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Get the full height of the screen
 const screenHeight = Dimensions.get('window').height;
+const defaultImage = '../../assets/backgroundLPPKNHQ.png';
 
 function LocationInfoScreen({navigation, route}) {
     const insets = useSafeAreaInsets();
@@ -18,6 +19,8 @@ function LocationInfoScreen({navigation, route}) {
         paddingBottom: bottomNavBarHeight, 
     };
 
+    const imageSource = item.item.backgroundImage ? {uri: item.item.backgroundImage} : require(defaultImage);
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
@@ -25,7 +28,7 @@ function LocationInfoScreen({navigation, route}) {
             </View>
             <ScrollView showsVerticalScrollIndicator={false}  style={{height: '100%', marginTop: -10}}>
                 <ImageBackground
-                    source={{uri: item.item.background}}
+                    source={imageSource}
                     style={styles.image}
                     resizeMode="stretch"
                 >

@@ -15,32 +15,38 @@ export const LocationProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        (async () => {
+        const fetchLocation = async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 console.error('Permission to access location was denied');
                 return;
             }
-            let location = await Location.getCurrentPositionAsync({});
+            // Use lower accuracy for faster results
+            let location = await Location.getCurrentPositionAsync({
+                accuracy: Location.Accuracy.Lowest,
+                maximumAge: 1000 * 60 * 5, // Accept cached location if less than 5 minutes old
+            });
+            // Proceed with reverse geocoding to extract the state name
             let reverseGeocode = await Location.reverseGeocodeAsync({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
             });
-
             let stateName = null;
             if (reverseGeocode.length > 0) {
-                stateName = reverseGeocode[0].region;
+                stateName = reverseGeocode[0].region; 
             }
-            
-            console.log('State Name:', stateName);
-            console.log('Location:', location);
-
             setLocationData({
                 location,
                 stateName,
             });
-        })();
+        };
+
+        fetchLocation();
     }, []);
 
-    return <LocationContext.Provider value={locationData}>{children}</LocationContext.Provider>;
+    return (
+        <LocationContext.Provider value={locationData}>
+            {children}
+        </LocationContext.Provider>
+    );
 };

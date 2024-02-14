@@ -19,7 +19,7 @@ function LocationInfoScreen({navigation, route}) {
         paddingBottom: bottomNavBarHeight, 
     };
 
-    const imageSource = item.item.backgroundImage ? {uri: item.item.backgroundImage} : require(defaultImage);
+    const imageSource = item.item.background ? {uri: item.item.background} : require(defaultImage);
 
     return (
         <SafeAreaView style={styles.container}>

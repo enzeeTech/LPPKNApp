@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { openURL } from 'expo-linking';
+import { Alert } from 'react-native';
 
 function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}) {
 
@@ -11,12 +12,44 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
         openURL(url);
     };
 
-    // Hubungi Pejabat Button Pressed
+    // // Hubungi Pejabat Button Pressed
+    // const onHubungiPejabatPressed = (phoneNumber) => {
+    //     // Clean up the phone number to remove spaces and hyphens
+    //     const cleanPhoneNumber = phoneNumber.split(' ')[0];
+    //     const url = `tel:${cleanPhoneNumber}`;
+    //     openURL(url);
+    // };
+
     const onHubungiPejabatPressed = (phoneNumber) => {
-        // Clean up the phone number to remove spaces and hyphens
-        const cleanPhoneNumber = phoneNumber.split(' ')[0];
-        const url = `tel:${cleanPhoneNumber}`;
-        openURL(url);
+        // Split the phone number string into an array of numbers
+        const phoneNumbers = phoneNumber.split(' / ').map(number => {
+            // Remove spaces and hyphens, and ignore extension part for dialing
+            let cleanedNumber = number.split(' ext.')[0].replace(/[\s-]/g, '');
+            return cleanedNumber;
+        });
+
+        console.log(phoneNumbers);
+    
+        // Function to dial a number
+        const dialNumber = (number) => {
+            openURL(`tel:${number}`);
+        };
+    
+        if (phoneNumbers.length === 1) {
+            // Only one number, dial it directly
+            dialNumber(phoneNumbers[0]);
+        } else {
+            // Multiple numbers, let the user choose
+            Alert.alert(
+                'Select Number',
+                'Which number would you like to call?',
+                phoneNumbers.map((number) => ({
+                    text: number,
+                    onPress: () => dialNumber(number),
+                })).concat([{ text: 'Cancel', style: 'cancel' }]), // Add a cancel option
+                { cancelable: true },
+            );
+        }
     };
 
     // Format the phone number to change ext. to samb.

@@ -12,14 +12,6 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
         openURL(url);
     };
 
-    // // Hubungi Pejabat Button Pressed
-    // const onHubungiPejabatPressed = (phoneNumber) => {
-    //     // Clean up the phone number to remove spaces and hyphens
-    //     const cleanPhoneNumber = phoneNumber.split(' ')[0];
-    //     const url = `tel:${cleanPhoneNumber}`;
-    //     openURL(url);
-    // };
-
     const onHubungiPejabatPressed = (phoneNumber) => {
         // Split the phone number string into an array of numbers
         const phoneNumbers = phoneNumber.split(' / ').map(number => {
@@ -46,7 +38,7 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
                 phoneNumbers.map((number) => ({
                     text: number,
                     onPress: () => dialNumber(number),
-                })).concat([{ text: 'Cancel', style: 'cancel' }]), // Add a cancel option
+                })).concat([{ text: 'Cancel', style: 'cancel' }]), 
                 { cancelable: true },
             );
         }

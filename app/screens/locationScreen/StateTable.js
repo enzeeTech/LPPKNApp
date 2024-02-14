@@ -15,40 +15,34 @@ function StateTable({navigation}) {
     ];
     const { stateName } = useLocation();
     const [activeButtonIndex, setActiveButtonIndex] = useState(null);
+    const [userHasSelected, setUserHasSelected] = useState(false);
+
+    console.log('State Name:', stateName);
 
     const handleItemPress = (index) => {
         // Toggle the active state or set it to null if it's already active thus deactivating it
-        setActiveButtonIndex(activeButtonIndex === index ? null : index);
+        setActiveButtonIndex(index);
+        setUserHasSelected(true);
     };
-
-    // // Retrieve user state and set state variable
-    // useEffect(() => {
-    //     if (stateName) {
-    //         // Enhanced matching logic
-    //         const index = nameList.findIndex(name =>
-    //             name.toLowerCase().includes(stateName.toLowerCase().replace(/\s+/g, ' ').trim())
-    //         );
-    //         if (index !== -1) {
-    //             setActiveButtonIndex(index);
-    //         } else {
-    //             // Handle the case where a match is not found
-    //             console.log(`No match found for state name: ${stateName}`);
-    //         }
-    //     }
-    // }, [stateName]);
 
     // Function to set the active state based on user's location
     const setActiveStateFromLocation = useCallback(() => {
-        if (stateName && activeButtonIndex === null) {
-            // Attempt to find and set the active state based on user's location
-            const index = nameList.findIndex(name =>
-                name.toLowerCase().includes(stateName.toLowerCase().replace(/\s+/g, ' ').trim())
+        if (!userHasSelected) { // Only auto-set location if user hasn't selected a state
+            let index = nameList.findIndex(name =>
+                name.toLowerCase().includes(stateName ? stateName.toLowerCase().replace(/\s+/g, ' ').trim() : '')
             );
-            if (index !== -1) {
-                setActiveButtonIndex(index);
+            if (index === -1) {
+                index = nameList.findIndex(name => name.includes("Kuala Lumpur"));
             }
+            setActiveButtonIndex(index);
         }
-    }, [stateName, activeButtonIndex]);
+        // If the user has selected a state, do nothing
+    }, [stateName, userHasSelected]);
+
+    // Effect to set the active state when the component mounts
+    useEffect(() => {
+        setActiveStateFromLocation();
+    }, [setActiveStateFromLocation]);
 
     // Effect to set the active state when the Lokasi tab gains focus
     useFocusEffect(
@@ -56,6 +50,8 @@ function StateTable({navigation}) {
             setActiveStateFromLocation();
         }, [setActiveStateFromLocation])
     );
+
+    console.log('Active State:', activeButtonIndex !== null ? nameList[activeButtonIndex] : "None")
 
 
     const buttons = [];

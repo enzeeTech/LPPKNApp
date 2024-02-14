@@ -30,7 +30,7 @@ function LocationInfoScreen({navigation, route}) {
                 <ImageBackground
                     source={imageSource}
                     style={styles.image}
-                    resizeMode="stretch"
+                    resizeMode="cover"
                 >
                 </ImageBackground>
                 <View style={[styles.infoContainer, infoContainerStyle]}>

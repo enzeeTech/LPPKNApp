@@ -3,6 +3,7 @@ import { ImageBackground, Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text, Dimensions, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
+import { Share } from 'react-native';
 
 
 // Get the full height of the screen
@@ -17,7 +18,7 @@ const sliderImages = [
     require('../../assets/testImageBulletin.png'),
   ];
 
-const InfoSection = ({title, date, images, information}) => {
+const InfoSection = ({title, date, images, information, link}) => {
     const [activeSlide, setActiveSlide] = useState(0);
 
     // Listen to slide event for the pagination animation
@@ -28,6 +29,30 @@ const InfoSection = ({title, date, images, information}) => {
 
         setActiveSlide(roundedIndex);
     };
+
+    // Function to share link to article 
+    const shareArticle = async (url) => {
+        try {
+          const result = await Share.share({
+            message: `Check out this great article! ${url}`,
+            // For iOS, you can also specify a URL directly:
+            url: Platform.OS === 'ios' ? url : undefined,
+            title: 'Share Article' // Title is optional
+          });
+      
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // Shared with activity type of result.activityType
+            } else {
+              // Shared
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // Dismissed
+          }
+        } catch (error) {
+          console.error('Error while sharing the article:', error.message);
+        }
+      };
 
     return (
         <View style={styles.container}>
@@ -69,7 +94,7 @@ const InfoSection = ({title, date, images, information}) => {
                     <Text style={styles.subHeaderText}>
                         {date}
                     </Text>
-                    <TouchableOpacity style={styles.shareIcon} onPress={() => console.log('Share Button Pressed!')}>
+                    <TouchableOpacity style={styles.shareIcon} onPress={() => shareArticle(link)}>
                         <Image source={require('../../assets/shareIcon.png')} style={styles.shareIcon} />
                     </TouchableOpacity>
                 </View>

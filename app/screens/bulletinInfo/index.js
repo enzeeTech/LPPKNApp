@@ -44,6 +44,7 @@ const BulletinInfoMain = ({navigation, route}) => {
                         url: image.attributes.url,
                     })),
                     information: response.data.data.attributes.Information,
+                    link: response.data.data.attributes.NewArticleWebsiteLink,
                 });
             } catch (error) {
                 console.error("Fetching item details failed: ", error);
@@ -81,6 +82,7 @@ const BulletinInfoMain = ({navigation, route}) => {
                             date={itemDetails?.date}
                             images={itemDetails?.images}
                             information={itemDetails?.information}
+                            link={itemDetails?.link}
                         />
                 </View>
             </ScrollView>

@@ -23,9 +23,9 @@ const CustomBulletinTile = ({ onPress, image, title, date }) => {
                         <Text style={styles.titleText} numberOfLines={2}>{title}</Text>
                         <Text style={styles.dateText}>{date}</Text>
                     </View>
-                    <TouchableOpacity style={styles.buttonContainer} onPress={handleShareButtonPress}>
+                    {/* <TouchableOpacity style={styles.buttonContainer} onPress={handleShareButtonPress}>
                         <Image source={require('../../assets/shareIcon.png')} style={styles.imageIcon} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         </Pressable>

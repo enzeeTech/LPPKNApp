@@ -66,6 +66,24 @@ function BulletinMain({navigation}) {
     }
   };
 
+  // Handle search query
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.trim() === '') {
+      // If the search query is empty, reset to initial items
+      setBulletinItems(allBulletinItems.slice(0, 6));
+      setHasMoreItems(allBulletinItems.length > 6);
+  } else {
+      // Filter the allBulletinItems based on the query and update bulletinItems
+      const filteredItems = allBulletinItems.filter(item =>
+          item.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setBulletinItems(filteredItems);
+      // Adjust whether more items can be loaded based on the filtered list
+      setHasMoreItems(false);
+  }
+};
+
   {/*Definitions keyboard detection and dissmissal*/}
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -84,12 +102,6 @@ function BulletinMain({navigation}) {
         keyboardDidHideListener.remove();
     };
   }, []);
-
-  {/*Pressable button functions*/}
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    console.log(`Search query: ${query}`); // Logging the search query
-  };
 
   const handleBackPress = () => {
       navigation.goBack();

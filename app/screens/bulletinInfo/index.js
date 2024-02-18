@@ -44,7 +44,7 @@ const BulletinInfoMain = ({navigation, route}) => {
                         url: image.attributes.url,
                     })),
                     information: response.data.data.attributes.Information,
-                    link: response.data.data.attributes.NewArticleWebsiteLink,
+                    link: response.data.data.attributes.NewsArticleWebsiteLink,
                 });
             } catch (error) {
                 console.error("Fetching item details failed: ", error);

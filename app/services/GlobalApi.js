@@ -26,11 +26,28 @@ const getLokasiSelangor = () => AxioInstance.get("/lokasi-selangors?populate=*")
 // Function to get lokasi WP Kuala Lumpur
 const getLokasiWPKL = () => AxioInstance.get("/lokasi-wp-kuala-lumpurs?populate=*");
 
+// Function to get lokasi Kedah
+const getLokasiKedah = () => AxioInstance.get("/lokasi-kedahs?populate=*");
+
+// Function to get lokasi Perak
+const getLokasiPerak = () => AxioInstance.get("/lokasi-peraks?populate=*");
+
+// Function to get lokasi Perlis
+const getLokasiPerlis = () => AxioInstance.get("/lokasi-perliss?populate=*");
+
+// Function to get lokasi Pulau Pinang
+const getLokasiPulauPinang = () => AxioInstance.get("/lokasi-pulau-pinangs?populate=*");
+
 export default {
     getBulletinPost,
     getBulletinPostById,
     getPerkhidmatanOptions,
     getLokasiSelangor,
     getLokasiWPKL,
+    getLokasiKedah,
+    getLokasiPerak,
+    getLokasiPerlis,
+    getLokasiPulauPinang,
+
 }
 

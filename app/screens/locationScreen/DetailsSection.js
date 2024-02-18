@@ -1,16 +1,21 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native';
 import CustomTile from './CustomTile';
-import GlobalAPI from '../../services/GlobalApi';
+import { 
+    getLokasiDetailsWPKL, 
+    getLokasiDetailsSelangor,
+    getLokasiDetailsKedah,
+    getLokasiDetailsPerak,
+    getLokasiDetailsPerlis,
+    getLokasiDetailsPulauPinang,
+} from '../../services/LokasiService';
 
 
 const DetailsComponent = ({ navigation, activeState }) => {
     const [responseData, setResponseData] = useState([]);
 
     const handlePress = (item) => {
-        console.log('Tile Pressed!');
         navigation.navigate('LocationInfo', { item: item });
     };
 
@@ -18,55 +23,27 @@ const DetailsComponent = ({ navigation, activeState }) => {
         activeState = "WP Kuala Lumpur";
     }
 
-    // Helper function for formatting the data
-    const formatData = (data) => {
-        return data.map((item) => ({
-            id: item.id,
-            title: item.attributes.Title || '-',
-            location: item.attributes.Location || '-',
-            phoneNo: item.attributes.PhoneNo || '-',
-            faxNo: item.attributes.FaxNo || '-',
-            openTime: item.attributes.OpenTime || '-',
-            closeTime: item.attributes.CloseTime || '-',
-            icon: item.attributes.Icon?.data?.attributes?.url,
-            background: item.attributes.BackgroundImage?.data?.attributes?.url,
-        }));
-    };
-
-    // API FUNCTION TO GET THE DETAILS OF THE SELECTED STATE     
-    // WP Kuala Lumpur
-    const getLokasiDetailsWPKL = () => {
-        GlobalAPI.getLokasiWPKL()
-            .then((response) => {
-                const formattedData = formatData(response.data.data);
-                setResponseData(formattedData);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-    // Selangor
-    const getLokasiDetailsSelangor = () => {
-        GlobalAPI.getLokasiSelangor()
-            .then((response) => {
-                const formattedData = formatData(response.data.data);
-                setResponseData(formattedData);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-
     // Call the api to get the details of the selected state
     useEffect(() => {
         if (activeState === "WP Kuala Lumpur") {
-            getLokasiDetailsWPKL();
+            getLokasiDetailsWPKL().then(setResponseData);
         }
         else if (activeState === "Selangor") {
-            getLokasiDetailsSelangor();
+            getLokasiDetailsSelangor().then(setResponseData);
         }
+        else if (activeState === "Kedah") {
+            getLokasiDetailsKedah().then(setResponseData);
+        }
+        else if (activeState === "Perak") {
+            getLokasiDetailsPerak().then(setResponseData);
+        }
+        else if (activeState === "Perlis") {
+            getLokasiDetailsPerlis().then(setResponseData);
+        }
+        else if (activeState === "Pulau Pinang") {
+            getLokasiDetailsPulauPinang().then(setResponseData);
+        }
+        
 
     }, [activeState]);
 

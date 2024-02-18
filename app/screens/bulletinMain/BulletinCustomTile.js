@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Platform, TouchableOpacity, Pressable } from 'react-native';
-// import { TouchableOpacity} from 'react-native-gesture-handler';
 
 const CustomBulletinTile = ({ onPress, image, title, date }) => {
 
-    const handleShareButtonPress = () => {
-        console.log('Share Button Pressed!');
-    };
+    // const handleShareButtonPress = () => {
+    //     console.log('Share Button Pressed!');
+    // };
 
     return (
         <Pressable

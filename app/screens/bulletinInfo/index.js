@@ -33,12 +33,10 @@ const BulletinInfoMain = ({navigation, route}) => {
         const fetchItemDetails = async () => {
             try {
                 const response = await GlobalApi.getBulletinPostById(itemId);
-                // Assuming the response structure is as expected, directly set the fetched data
                 setItemDetails({
                     id: response.data.data.id,
                     title: response.data.data.attributes.Title,
                     date: formatDate(response.data.data.attributes.Date),
-                    // Assuming images are nested within the response and need mapping
                     images: response.data.data.attributes.PostImages.data.map(image => ({
                         id: image.id,
                         url: image.attributes.url,
@@ -48,7 +46,6 @@ const BulletinInfoMain = ({navigation, route}) => {
                 });
             } catch (error) {
                 console.error("Fetching item details failed: ", error);
-                // Optionally, handle the error state here, e.g., by setting an error message in state
             }
         };
     

@@ -17,8 +17,6 @@ function StateTable({navigation}) {
     const [activeButtonIndex, setActiveButtonIndex] = useState(null);
     const [userHasSelected, setUserHasSelected] = useState(false);
 
-    console.log('State Name:', stateName);
-
     const handleItemPress = (index) => {
         // Toggle the active state or set it to null if it's already active thus deactivating it
         setActiveButtonIndex(index);
@@ -50,9 +48,6 @@ function StateTable({navigation}) {
             setActiveStateFromLocation();
         }, [setActiveStateFromLocation])
     );
-
-    console.log('Active State:', activeButtonIndex !== null ? nameList[activeButtonIndex] : "None")
-
 
     const buttons = [];
 

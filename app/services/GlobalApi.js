@@ -12,7 +12,7 @@ const AxioInstance = axios.create({
 })
 
 // Function to get all bulletin posts
-const getBulletinPost = () => AxioInstance.get("/bulletin-posts?populate=*");
+const getBulletinPost = () => AxioInstance.get("/bulletin-posts?populate=*&pagination[start]=0&pagination[limit]=100&sort=Date:desc");
 
 // Function to get bulleting post by id
 const getBulletinPostById = (id) => AxioInstance.get(`/bulletin-posts/${id}?populate=*`);

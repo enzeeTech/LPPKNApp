@@ -11,13 +11,6 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 const sliderImageHeight = screenHeight * 0.3;
 
-// Slider images **ADD IMAGES FROM DATABASE HERE**
-const sliderImages = [
-    require('../../assets/beritaInfoImage.png'),
-    require('../../assets/nextImage.png'),
-    require('../../assets/testImageBulletin.png'),
-  ];
-
 const InfoSection = ({title, date, images, information, link}) => {
     const [activeSlide, setActiveSlide] = useState(0);
 
@@ -100,24 +93,8 @@ const InfoSection = ({title, date, images, information, link}) => {
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.body}>
-                    {/*Old code, adds gradient effect*/}
-                    {/* <Text style={styles.body} numberOfLines={expanded ? null : Platform.OS === 'ios' ? 8 : 12}> */} {/*Old code, had gradient effect*/}
                         {information}
                     </Text>
-                    
-                    {/*Old code, adds gradient effect*/}
-                    {/* {!expanded && (
-                        <LinearGradient
-                            colors={['rgba(255,255,255,0.2)', 'rgba(255,255,255,0.8)', 'rgba(255,255,255,1)']}
-                            style={styles.gradient}
-                            locations={[0, 0.5, 1]}
-                        >
-                            <TouchableOpacity style={styles.loadMoreItemContainer} onPress={() => setExpanded(true)}>
-                                <Image source={require('../../assets/downArrow.png')} style={styles.downArrowIcon} />
-                                <Text style={styles.loadMoreText}>Selanjutnya</Text>
-                            </TouchableOpacity>
-                        </LinearGradient>
-                    )} */}
                 </View>
             </View>
         </View>

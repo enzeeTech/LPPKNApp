@@ -11,9 +11,11 @@ import GlobalApi from '../../services/GlobalApi';
 function BulletinMain({navigation}) {
 
   {/*Definitions for load more feature*/}
+  const ITEMS_PER_PAGE = 10;
   const [bulletinItems, setBulletinItems] = useState([]); 
   const [allBulletinItems, setAllBulletinItems] = useState([]);
   const [hasMoreItems, setHasMoreItems] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Function to format the date correctly
   const formatDate = (dateString) => {
@@ -42,13 +44,8 @@ function BulletinMain({navigation}) {
           })),
         }));
         setAllBulletinItems(formattedData);
-        setBulletinItems(formattedData.slice(0, 6));
-        // check and set if there are more items to load
-        if (formattedData.length > 6) {
-          setHasMoreItems(true);
-        } else {
-          setHasMoreItems(false);
-        }
+        setBulletinItems(formattedData.slice(0, ITEMS_PER_PAGE)); // Loads the first 10 items
+        setHasMoreItems(formattedData.length > ITEMS_PER_PAGE);
       })
       .catch((error) => {
         console.log(error);
@@ -60,10 +57,13 @@ function BulletinMain({navigation}) {
   }, []);
 
   const loadMoreItems = () => {
-    if (bulletinItems.length <= 6) {
-      setBulletinItems(allBulletinItems);
-      setHasMoreItems(false);
-    }
+    const nextPage = currentPage + 1;
+    const newItemsToShow = allBulletinItems.slice(0, ITEMS_PER_PAGE * nextPage);
+    setBulletinItems(newItemsToShow);
+    
+    // Check if there are more items to load after this set
+    setHasMoreItems(newItemsToShow.length < allBulletinItems.length);
+    setCurrentPage(nextPage);
   };
 
   // Handle search query

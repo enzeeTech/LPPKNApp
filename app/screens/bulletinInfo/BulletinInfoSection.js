@@ -24,13 +24,13 @@ const InfoSection = ({title, date, images, information, link}) => {
     };
 
     // Function to share link to article 
-    const shareArticle = async (url) => {
+    const shareArticle = async (shareTitle, url) => {
         try {
           const result = await Share.share({
-            message: `Check out this great article! ${url}`,
+            message: `${shareTitle}\n\n${url}`,
             // For iOS, you can also specify a URL directly:
             url: Platform.OS === 'ios' ? url : undefined,
-            title: 'Share Article' // Title is optional
+            title: 'Share Article' 
           });
       
           if (result.action === Share.sharedAction) {
@@ -87,7 +87,7 @@ const InfoSection = ({title, date, images, information, link}) => {
                     <Text style={styles.subHeaderText}>
                         {date}
                     </Text>
-                    <TouchableOpacity style={styles.shareIcon} onPress={() => shareArticle(link)}>
+                    <TouchableOpacity style={styles.shareIcon} onPress={() => shareArticle(title, link)}>
                         <Image source={require('../../assets/shareIcon.png')} style={styles.shareIcon} />
                     </TouchableOpacity>
                 </View>

@@ -33,7 +33,7 @@ const BulletinDetailsSection = ({ navigation, items, onLoadMore }) => {
                     </View>
                 );
             })}
-            {onLoadMore && (
+            {onLoadMore &&  (
                 <TouchableOpacity style={styles.loadMoreItemContainer} onPress={onLoadMore}>
                 <Image source={require('../../assets/downArrow.png')} style={styles.downArrowIcon} />
                 <Text style={styles.loadMoreText}>Lagi</Text>

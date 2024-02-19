@@ -28,6 +28,23 @@ const iconsData = [
 function ServicesScreen({navigation}) {
   const [perkhidmatanOptions, setPerkhidmatanOptions] = React.useState([]);
 
+  const serviceOrder = [
+    'Subfertiliti',
+    'Perancang Keluarga',
+    'HPV DNA',
+    'Subsidi Mamogram',
+    'Kaunseling',
+    'SMARTSTART 2.0',
+    'SMARTBelanja',
+    'KafeTEEN',
+    'Saringan Kesejahteraan',
+    'PEKA',
+    'Penyelidikan & Data Mentah',
+    'KASIH Keibubapaan Digital',
+    'Keluarga@Kerja',
+    'IlmuKeluarga',
+  ]
+
   // Fetch perkhidmatan options from API
   const fetchPerkhidmatanOptions = () => {
     GlobalApi.getPerkhidmatanOptions()
@@ -37,6 +54,11 @@ function ServicesScreen({navigation}) {
           label: item.attributes.Title,
           imageSource: item.attributes.Icon.data.attributes.url,
         }));
+
+        const sortedOptions = perkhidmatanOptions.sort((a, b) => {
+          return serviceOrder.indexOf(a.label) - serviceOrder.indexOf(b.label);
+        });
+        
         setPerkhidmatanOptions(perkhidmatanOptions);
       })
       .catch((error) => {

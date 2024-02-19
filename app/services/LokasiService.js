@@ -9,8 +9,7 @@ const formatData = (data) => {
         location: item.attributes.Location || '-',
         phoneNo: item.attributes.PhoneNo || '-',
         faxNo: item.attributes.FaxNo || '-',
-        openTime: item.attributes.OpenTime || '-',
-        closeTime: item.attributes.CloseTime || '-',
+        operationTime: item.attributes.OperationTime || '-',
         icon: item.attributes.Icon?.data?.attributes?.url,
         background: item.attributes.BackgroundImage?.data?.attributes?.url,
     }));

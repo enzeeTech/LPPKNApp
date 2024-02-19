@@ -57,8 +57,7 @@ const DetailsComponent = ({ navigation, activeState }) => {
                     onPress={() => handlePress(item)}
                     title={item.title}
                     backgroundImage={item.background}
-                    openTime={item.openTime}
-                    closeTime={item.closeTime}
+                    operationTime={item.operationTime}
                 />
             ))}
         </View>

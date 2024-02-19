@@ -40,8 +40,7 @@ function LocationInfoScreen({navigation, route}) {
                         icon={item.item.icon}
                         phoneNo={item.item.phoneNo}
                         faxNo={item.item.faxNo}
-                        openTime={item.item.openTime}
-                        closeTime={item.item.closeTime}
+                        operationTime={item.item.operationTime}
                     />
                 </View>
                 <View style={{height: 100, backgroundColor: 'white'}}></View>

@@ -4,7 +4,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { openURL } from 'expo-linking';
 import { Alert } from 'react-native';
 
-function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}) {
+function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
 
     // Lihat Peta Button Pressed
     const onLihatPetaPressed = (address) => {
@@ -80,8 +80,8 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, openTime, closeTime}
                 <View style={styles.infoContainerTime}>
                     <Image source={require('../../assets/timeIcon.png')} style={styles.icon} />
                     <View style={styles.textContainer}>
-                        <Text style={styles.infoTextColumn}>Isnin - Jumaat</Text>
-                        <Text style={styles.infoTextColumn}>{openTime} pagi - {closeTime} petang</Text>
+                        {/* <Text style={styles.infoTextColumn}>Isnin - Jumaat</Text> */}
+                        <Text style={styles.infoTextColumn}>{operationTime}</Text>
                     </View>
                 </View>
 

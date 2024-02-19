@@ -4,7 +4,7 @@ import { TouchableOpacity} from 'react-native-gesture-handler';
 
 const defaultImage = '../../assets/backgroundLPPKNHQ.png';
 
-const CustomTile = ({ onPress, title, backgroundImage, openTime, closeTime }) => {
+const CustomTile = ({ onPress, title, backgroundImage, operationTime }) => {
 
     const imageSource = backgroundImage ? {uri: backgroundImage} : require(defaultImage);
 
@@ -21,8 +21,7 @@ const CustomTile = ({ onPress, title, backgroundImage, openTime, closeTime }) =>
                 <Image source={require('../../assets/timeIcon.png')} style={styles.imageIcon} />
                 <View style={styles.textContainer}>
                     <Text style={styles.subHeading}>Waktu Operasi</Text>
-                    <Text style={styles.infoText}>Isnin - Jumaat</Text>
-                    <Text style={styles.infoText}>{openTime} pagi - {closeTime} petang</Text>
+                    <Text style={styles.infoText}>{operationTime}</Text>
                 </View>
             </View>
         </View>
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         marginTop: 10,
         marginLeft: '2.5%',
-        height: 134,
+        height: 150,
         width: '95%',
         elevation: 3,
         shadowColor: "#000",
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: 134,
+        height: 150,
         resizeMode: 'cover',
         borderTopLeftRadius: 12,
         borderBottomLeftRadius: 12,
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     infoParentContainer: {
         flexDirection: 'column',
         width: '65%',
-        height: 134,
+        height: 150,
         marginLeft: '35%',
     },
     infoText: {
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         height: 84,
-        marginTop: '-4%',
+        marginTop: '-7%',
         marginLeft: '2.5%',
     },
     titleTest: {

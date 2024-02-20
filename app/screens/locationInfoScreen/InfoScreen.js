@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     infoContainerTime: {
         flexDirection: 'row',
         alignItems: 'center',
-        maxWidth: '60%', 
+        maxWidth: '70%', 
         paddingLeft: Platform.OS === 'ios' ? 5 : 10,
         paddingBottom: Platform.OS === 'ios' ? 5 : 15,
         marginBottom: 1,
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         paddingTop: '2%',
+        marginTop: 30,
         // paddingBottom: '20%',
         alignItems: 'center',
         // marginBottom: 20,

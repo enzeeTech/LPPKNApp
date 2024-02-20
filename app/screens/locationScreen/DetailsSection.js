@@ -9,6 +9,15 @@ import {
     getLokasiDetailsPerak,
     getLokasiDetailsPerlis,
     getLokasiDetailsPulauPinang,
+    getLokasiDetailsNegeriSembilan,
+    getLokasiDetailsMelaka,
+    getLokasiDetailsJohor,
+    getLokasiDetailsPahang,
+    getLokasiDetailsKelantan,
+    getLokasiDetailsTerengganu,
+    getLokasiDetailsSabah,
+    getLokasiDetailsSarawak,
+    getLokasiDetailsWPLabuan,
 } from '../../services/LokasiService';
 
 
@@ -43,8 +52,33 @@ const DetailsComponent = ({ navigation, activeState }) => {
         else if (activeState === "Pulau Pinang") {
             getLokasiDetailsPulauPinang().then(setResponseData);
         }
-        
-
+        else if (activeState === "Negeri Sembilan") {
+            getLokasiDetailsNegeriSembilan().then(setResponseData);
+        }
+        else if (activeState === "Melaka") {
+            getLokasiDetailsMelaka().then(setResponseData);
+        }
+        else if (activeState === "Johor") {
+            getLokasiDetailsJohor().then(setResponseData);
+        }
+        else if (activeState === "Pahang") {
+            getLokasiDetailsPahang().then(setResponseData);
+        }
+        else if (activeState === "Kelantan") {
+            getLokasiDetailsKelantan().then(setResponseData);
+        }
+        else if (activeState === "Terengganu") {
+            getLokasiDetailsTerengganu().then(setResponseData);
+        }
+        else if (activeState === "Sabah") { 
+            getLokasiDetailsSabah().then(setResponseData);
+        }
+        else if (activeState === "Sarawak") {
+            getLokasiDetailsSarawak().then(setResponseData);
+        }
+        else if (activeState === "WP Labuan") {
+            getLokasiDetailsWPLabuan().then(setResponseData);
+        }
     }, [activeState]);
 
     return (

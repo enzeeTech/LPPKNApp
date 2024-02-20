@@ -56,13 +56,11 @@ const styles = StyleSheet.create({
 
     },
     headerContainer: {
-        backgroundColor: 'transparent', 
+        backgroundColor: '#9448DA', 
         zIndex: 5,
-        shadowOffset: {width: 0, height: 6.7},
-        shadowColor: "#000",
-        shadowOpacity: 0.25,
-        shadowRadius: 4, 
-        elevation: 5,
+        justifyContent: 'center',
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
     },
     imageContainer: {
         width: '100%',

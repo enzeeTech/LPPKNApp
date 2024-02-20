@@ -51,4 +51,61 @@ export const getLokasiDetailsPulauPinang = () => {
         .catch((error) => console.log(error));
 };
 
+export const getLokasiDetailsNegeriSembilan = () => {
+    return GlobalAPI.getLokasiNegeriSembilan()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+export const getLokasiDetailsMelaka = () => {
+    return GlobalAPI.getLokasiMelaka()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+export const getLokasiDetailsJohor = () => {
+    return GlobalAPI.getLokasiJohor()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+export const getLokasiDetailsPahang = () => {
+    return GlobalAPI.getLokasiPahang()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+export const getLokasiDetailsTerengganu = () => {
+    return GlobalAPI.getLokasiTerengganu()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+export const getLokasiDetailsKelantan = () => {
+    return GlobalAPI.getLokasiKelantan()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+export const getLokasiDetailsSarawak = () => {
+    return GlobalAPI.getLokasiSarawak()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+export const getLokasiDetailsSabah = () => {
+    return GlobalAPI.getLokasiSabah()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+export const getLokasiDetailsWPLabuan = () => {
+    return GlobalAPI.getLokasiWPLabuan()
+        .then((response) => formatData(response.data.data))
+        .catch((error) => console.log(error));
+};
+
+
+
+
 

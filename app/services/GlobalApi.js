@@ -38,6 +38,33 @@ const getLokasiPerlis = () => AxioInstance.get("/lokasi-perliss?populate=*");
 // Function to get lokasi Pulau Pinang
 const getLokasiPulauPinang = () => AxioInstance.get("/lokasi-pulau-pinangs?populate=*");
 
+// Function to get lokasi Negeri Sembilan
+const getLokasiNegeriSembilan = () => AxioInstance.get("/lokasi-negeri-sembilans?populate=*");
+
+// Function to get lokasi Melaka
+const getLokasiMelaka = () => AxioInstance.get("/lokasi-melakas?populate=*");
+
+// Function to get lokasi Johor
+const getLokasiJohor = () => AxioInstance.get("/lokasi-johors?populate=*");
+
+// Function to get lokasi Pahang
+const getLokasiPahang = () => AxioInstance.get("/lokasi-pahangs?populate=*");
+
+// Function to get lokasi Terengganu
+const getLokasiTerengganu = () => AxioInstance.get("/lokasi-terengganus?populate=*");
+
+// Function to get lokasi Kelantan
+const getLokasiKelantan = () => AxioInstance.get("/lokasi-kelantans?populate=*");
+
+// Function to get lokasi Sarawak
+const getLokasiSarawak = () => AxioInstance.get("/lokasi-sarawaks?populate=*");
+
+// Function to get lokasi Sabah
+const getLokasiSabah = () => AxioInstance.get("/lokasi-sabahs?populate=*");
+
+// Function to get lokasi WP Labuan
+const getLokasiWPLabuan = () => AxioInstance.get("/lokasi-wp-labuans?populate=*");
+
 export default {
     getBulletinPost,
     getBulletinPostById,
@@ -48,6 +75,15 @@ export default {
     getLokasiPerak,
     getLokasiPerlis,
     getLokasiPulauPinang,
+    getLokasiNegeriSembilan,
+    getLokasiMelaka,
+    getLokasiJohor,
+    getLokasiPahang,
+    getLokasiTerengganu,
+    getLokasiKelantan,
+    getLokasiSarawak,
+    getLokasiSabah,
+    getLokasiWPLabuan
 
 }
 

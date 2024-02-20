@@ -47,7 +47,8 @@
     "react-native-table-component": "^1.2.2",
     "react-native-webview": "^13.6.3",
     "react-native-wheel-picker": "^1.2.0",
-    "expo-location": "~16.1.0"
+    "expo-location": "~16.1.0",
+    "expo-updates": "~0.24.11"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

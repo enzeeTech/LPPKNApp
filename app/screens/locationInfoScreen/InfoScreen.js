@@ -12,6 +12,7 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
         openURL(url);
     };
 
+    // Hubungi Pejabat Button Pressed
     const onHubungiPejabatPressed = (phoneNumber) => {
         // Split the phone number string into an array of numbers
         const phoneNumbers = phoneNumber.split(' / ').map(number => {
@@ -19,14 +20,13 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
             let cleanedNumber = number.split(' ext.')[0].replace(/[\s-]/g, '');
             return cleanedNumber;
         });
-
-        console.log(phoneNumbers);
     
-        // Function to dial a number
+        // Function to dial a single number 
         const dialNumber = (number) => {
             openURL(`tel:${number}`);
         };
-    
+        
+        // If there's only one number, dial it directly. If there are multiple numbers, let the user choose.
         if (phoneNumbers.length === 1) {
             // Only one number, dial it directly
             dialNumber(phoneNumbers[0]);
@@ -43,6 +43,9 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
             );
         }
     };
+
+    // Function to check if phone number is empty or has '-' in it
+    const isPhoneNumberEmpty = (phoneNumber) => phoneNumber === '-';
 
     // Format the phone number to change ext. to samb.
     const formatPhoneNumber = (phoneNumber) => {
@@ -93,7 +96,11 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
                     </TouchableOpacity>
 
                     {/* Button Hubungi Pejabat */}
-                    <TouchableOpacity style={styles.buttonTwo} onPress={() => onHubungiPejabatPressed(phoneNo)}>
+                    <TouchableOpacity 
+                        style={[styles.buttonTwo, isPhoneNumberEmpty(phoneNo) ? styles.buttonDisabled : {}]}
+                        onPress={() => onHubungiPejabatPressed(phoneNo)}
+                        disabled = {isPhoneNumberEmpty(phoneNo)}
+                    >
                         <Text style={styles.buttonTextTwo}>Hubungi Pejabat</Text>
                     </TouchableOpacity>
                 </View>
@@ -244,6 +251,9 @@ const styles = StyleSheet.create({
         width: 300, 
         marginTop: 10,
       },
+    buttonDisabled: {
+        opacity: 0.4,
+    },
     buttonTextOne: {
         color: '#FFFFFF',
         fontWeight: 'bold',

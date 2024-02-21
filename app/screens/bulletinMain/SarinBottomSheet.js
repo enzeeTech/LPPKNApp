@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Platform } from 'react-native';
+import { Alert } from 'react-native';
 
 // Custom handle component
 const CustomHandle = ({ onClose }) => {
@@ -16,7 +17,7 @@ const CustomHandle = ({ onClose }) => {
   };
 
 
-const SarinBottomSheet = ({ isVisible, onClose }) => {
+const SarinBottomSheet = ({ isVisible, onClose, onConfirmSelection }) => {
 
   // Create ref for bottom sheet
   const bottomSheetRef = useRef(null);
@@ -25,11 +26,6 @@ const SarinBottomSheet = ({ isVisible, onClose }) => {
   // Set the snap points for the bottom sheet
   const snapPoints = useMemo(() => [Platform.OS === 'android' ? '80%' : '75%'], []);
 
-  // Callback for when the bottom sheet changes its index
-  const handleSheetChanges = useCallback((index) => {
-      console.log('Bottom sheet index:', index);
-  }, []);
-
   // Function to close the bottom sheet
   const handleClose = () => {
       if (bottomSheetRef.current) {
@@ -37,29 +33,79 @@ const SarinBottomSheet = ({ isVisible, onClose }) => {
       }
   };
   
-  // Functions to create buttons grid
+  // Declarations to create year buttons grid
+  const numYearRows = 1;
+  const numYearColumns = 3;
+  const yearList = ['2024', '2023', '2022'];
+
+  const [activeYearButtonIndex, setActiveYearButtonIndex] = useState(null);
+
+  // Declarations to create month buttons grid
   const numRows = 4;
   const numColumns = 3;
-  const nameList = [
+  const monthList = [
       'Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun',
       'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember'
     ];
 
-  const [activeButtonIndex, setActiveButtonIndex] = useState(null);
+  const [activeMonthButtonIndex, setActiveButtonIndex] = useState(null);
 
-  const handleItemPress = (index) => {
+  const handleYearPress = (index) => {
       // Toggle the active state or set it to null if it's already active thus deactivating it
-      setActiveButtonIndex(activeButtonIndex === index ? null : index);
+      setActiveYearButtonIndex(activeYearButtonIndex === index ? null : index);
+  };
+
+  const handleMonthPress = (index) => {
+      // Toggle the active state or set it to null if it's already active thus deactivating it
+      setActiveButtonIndex(activeMonthButtonIndex === index ? null : index);
   };
   
-  const buttons = [];
+  const yearButtons = [];
+  const monthButtons = [];
 
+  // Create year buttons
+  for (let i = 0; i < numYearRows; i++) {
+      const row = [];
+      for (let j = 0; j < numYearColumns; j++) {
+          const buttonIndex = j + i * numYearColumns;
+          if (buttonIndex < yearList.length) {
+              const isPressed = buttonIndex === activeYearButtonIndex;
+              row.push(
+                  <TouchableOpacity
+                      style={[
+                          styles.button,
+                          isPressed ? styles.buttonActive : styles.buttonInactive,
+                          {marginLeft: 4, marginTop: 4}
+                      ]}
+                      key={buttonIndex}
+                      onPress={() => handleYearPress(buttonIndex)}
+                  >
+                      <Text style={{
+                          color: isPressed ? '#FFFFFF' : '#777777',
+                          fontWeight: isPressed ? 'bold' : '600',
+                          fontSize: Platform.OS === 'ios' ? 14 : 16,
+                          textAlign: 'center',
+                           }}>
+                          {yearList[buttonIndex]}
+                      </Text>
+                  </TouchableOpacity>
+              );
+          }
+      }
+      yearButtons.push(
+          <View style={styles.buttonRow} key={i}>
+              {row}
+          </View>
+      );
+  }
+
+  // Create month buttons
     for (let i = 0; i < numRows; i++) {
         const row = [];
         for (let j = 0; j < numColumns; j++) {
             const buttonIndex = j + i * numColumns;
-            if (buttonIndex < nameList.length) {
-                const isPressed = buttonIndex === activeButtonIndex;
+            if (buttonIndex < monthList.length) {
+                const isPressed = buttonIndex === activeMonthButtonIndex;
                 row.push(
                     <TouchableOpacity
                         style={[
@@ -68,7 +114,7 @@ const SarinBottomSheet = ({ isVisible, onClose }) => {
                             {marginLeft: 4, marginTop: 4}
                         ]}
                         key={buttonIndex}
-                        onPress={() => handleItemPress(buttonIndex)}
+                        onPress={() => handleMonthPress(buttonIndex)}
                     >
                         <Text style={{
                             color: isPressed ? '#FFFFFF' : '#777777',
@@ -76,28 +122,24 @@ const SarinBottomSheet = ({ isVisible, onClose }) => {
                             fontSize: Platform.OS === 'ios' ? 14 : 16,
                             textAlign: 'center',
                              }}>
-                            {nameList[buttonIndex]}
+                            {monthList[buttonIndex]}
                         </Text>
                     </TouchableOpacity>
                 );
             }
         }
-        buttons.push(
+        monthButtons.push(
             <View style={styles.buttonRow} key={i}>
                 {row}
             </View>
         );
     }
 
-    // For testing purposes
-    const activeStateText = activeButtonIndex !== null ? nameList[activeButtonIndex] : "None";
-
   return (
     <BottomSheet
       ref={bottomSheetRef}
       index={isVisible ? 0 : -1} // Show or hide the bottom sheet
       snapPoints={snapPoints}
-      onChange={handleSheetChanges}
       enablePanDownToClose={true}
       onClose={onClose}
       handleComponent={() => <CustomHandle onClose={handleClose} />}
@@ -108,15 +150,18 @@ const SarinBottomSheet = ({ isVisible, onClose }) => {
             <Text style={styles.headerText}>Saring</Text>
           </View>
           <View style={styles.subHeaderContainer}>
+            <Text style={styles.subHeaderText}>Tahun</Text>
+          </View>
+          <View style={styles.buttonGridContainer}>
+            {yearButtons}
+            <View style={styles.buttonGridView}></View>
+          </View>
+          <View style={styles.subHeaderContainer}>
             <Text style={styles.subHeaderText}>Bulan</Text>
           </View>
           <View style={styles.buttonGridContainer}>
-            {buttons}
-            <View style={styles.buttonGridView}>
-                {activeButtonIndex !== null && (
-                    console.log('activeButton', activeStateText)
-                )}                                        
-            </View>
+            {monthButtons}
+            <View style={styles.buttonGridView}></View>
           </View>
           <TouchableOpacity style={{
             alignItems: 'center', 
@@ -124,10 +169,24 @@ const SarinBottomSheet = ({ isVisible, onClose }) => {
             backgroundColor: '#9448DA',
             borderRadius: 10,
             marginLeft: '10%',
-            marginTop: 130,
+            marginTop: '5%',
             height: '8%',
             width: '80%'}}
-            onPress={() => console.log('Cari Button Pressed!')}
+            onPress={() => {
+              let selectedYear = activeYearButtonIndex !== null ? yearList[activeYearButtonIndex] : null;
+              let selectedMonth = activeMonthButtonIndex !== null ? monthList[activeMonthButtonIndex] : null;
+
+              // Check if a month is selected but not a year
+              if (selectedMonth && !selectedYear) {
+                // Display an alert if a month is selected without a year
+                Alert.alert("Selection Required", "Please select a year to filter by month.");
+              } else {
+                  // Proceed with the selection confirmation
+                  onConfirmSelection(selectedYear, selectedMonth);
+                  // Close the bottom sheet
+                  handleClose();
+              }
+            }}
           >
             <Text style={{color: '#FFFFFF', fontSize: 18, fontWeight: '700', textAlign: 'center'}}>Cari</Text>
           </TouchableOpacity>
@@ -179,7 +238,7 @@ const styles = StyleSheet.create({
   subHeaderText: {
     fontSize: 14,
     color: '#777777',
-    marginTop: '7%',
+    marginTop: '5%',
     paddingLeft: '2%',
   },
   buttonGridContainer: {

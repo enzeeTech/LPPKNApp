@@ -1,4 +1,5 @@
 import axios from "axios"
+import { initialWindowMetrics } from "react-native-safe-area-context";
 
 const BASE_URL = "https://onthegocms.onrender.com/api"
 
@@ -13,6 +14,15 @@ const AxioInstance = axios.create({
 
 // Function to get all bulletin posts
 const getBulletinPost = () => AxioInstance.get("/bulletin-posts?populate=*&pagination[start]=0&pagination[limit]=100&sort=Date:desc");
+
+// Function to get all bulleting posts with query input and console log the query
+const getBulletinPostWithQuery = (query) => {
+    path = "/bulletin-posts?populate=*";
+    path += query;
+    console.log(path);
+    return AxioInstance.get(path);
+};
+// const getBulletinPostWithQuery = (query) => AxioInstance.get(`/bulletin-posts?populate=*${query}`);
 
 // Function to get bulleting post by id
 const getBulletinPostById = (id) => AxioInstance.get(`/bulletin-posts/${id}?populate=*`);
@@ -67,6 +77,7 @@ const getLokasiWPLabuan = () => AxioInstance.get("/lokasi-wp-labuans?populate=*"
 
 export default {
     getBulletinPost,
+    getBulletinPostWithQuery,
     getBulletinPostById,
     getPerkhidmatanOptions,
     getLokasiSelangor,

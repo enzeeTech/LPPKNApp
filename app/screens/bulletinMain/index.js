@@ -17,6 +17,12 @@ function BulletinMain({navigation}) {
   const [hasMoreItems, setHasMoreItems] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const monthList = [
+    'Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun',
+    'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember'
+  ];
+
+
   // Function to format the date correctly
   const formatDate = (dateString) => {
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -27,6 +33,7 @@ function BulletinMain({navigation}) {
 
     return formattedDate;
   };
+
 
   // Calling API to get bulletin posts
   const getBulletinPosts = () => {
@@ -52,10 +59,14 @@ function BulletinMain({navigation}) {
       });
   };
 
+
+  // Load the bulletin posts when the screen is loaded
   useEffect(() => {
     getBulletinPosts();
   }, []);
 
+
+  // Function to load more items
   const loadMoreItems = () => {
     const nextPage = currentPage + 1;
     const newItemsToShow = allBulletinItems.slice(0, ITEMS_PER_PAGE * nextPage);
@@ -65,6 +76,7 @@ function BulletinMain({navigation}) {
     setHasMoreItems(newItemsToShow.length < allBulletinItems.length);
     setCurrentPage(nextPage);
   };
+
 
   // Handle search query
   const handleSearch = (query) => {
@@ -84,11 +96,64 @@ function BulletinMain({navigation}) {
   }
 };
 
+
+  // Functions for filtering the bulletin items
+  const fetchFilteredArticles = async (selectedYear, monthIndex) => {
+    let query = '';
+    let startDate = '';
+    let endDate = '';
+
+    if (selectedYear===null && monthIndex===null) {
+      getBulletinPosts();
+      return;
+    }
+
+    if (selectedYear && !monthIndex) {
+       startDate = `${selectedYear}-01-01`;
+       endDate = `${selectedYear}-12-31`;
+
+      query += `&filters[Date][$gte]=${startDate}&filters[Date][$lte]=${endDate}`;
+    }
+    else if (selectedYear && monthIndex) {
+      startDate = `${selectedYear}-${monthIndex}-01`;
+      endDate = new Date(selectedYear, monthIndex, 0).toISOString().split('T')[0];
+
+      query += `&filters[Date][$gte]=${startDate}&filters[Date][$lte]=${endDate}`;
+    }
+
+    try {
+      query += '&sort=Date:asc';
+      const response = await GlobalApi.getBulletinPostWithQuery(query);
+      const formattedData = response.data.data.map((item) => ({
+        id: item.id,
+        title: item.attributes.Title,
+        date: formatDate(item.attributes.Date), 
+        tileImage: item.attributes.TileImage.data.attributes.url, 
+        information: item.attributes.Information,
+        images: item.attributes.PostImages.data.map((image) => ({
+          id: image.id,
+          url: image.attributes.url,
+        })),
+      }));
+
+      setBulletinItems(formattedData);
+      setHasMoreItems(false); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Function to handle the selected year and month, passed from the SarinBottomSheet
+  const handleConfirmSelection = (selectedYear, selectedMonth) => {
+    // Convert the selected month name to a number
+    const monthIndex = selectedMonth ? (monthList.indexOf(selectedMonth) + 1).toString().padStart(2, '0') : null;
+    fetchFilteredArticles(selectedYear, monthIndex);
+  };
+
+
   {/*Definitions keyboard detection and dissmissal*/}
   const [searchQuery, setSearchQuery] = useState('');
-
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
         setKeyboardVisible(true);
@@ -103,12 +168,14 @@ function BulletinMain({navigation}) {
     };
   }, []);
 
+
   const handleBackPress = () => {
       navigation.goBack();
   };
 
-  {/*Definitions for bottom sheet visibility*/}
+
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -151,6 +218,7 @@ function BulletinMain({navigation}) {
       <SarinBottomSheet
             isVisible={isBottomSheetVisible}
             onClose={() => setBottomSheetVisible(false)}
+            onConfirmSelection={handleConfirmSelection}
           />
     </SafeAreaView>
   );

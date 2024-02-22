@@ -34,6 +34,9 @@ export const LocationProvider = ({ children }) => {
             let stateName = null;
             if (reverseGeocode.length > 0) {
                 stateName = reverseGeocode[0].region; 
+                if (stateName === 'Malacca') {
+                    stateName = 'Melaka';
+                }
             }
             setLocationData({
                 location,

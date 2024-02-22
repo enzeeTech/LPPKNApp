@@ -37,14 +37,15 @@ function Header({toggleSearch}) {
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
                 {/* SEARCH BUTTON */}
-                <TouchableOpacity onPress={toggleSearch}>
+                {/* <TouchableOpacity onPress={toggleSearch}>
                     <Image 
                         source={require('../../assets/searchIconHome.png')}
                         style = {styles.iconStyleSearch}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* LOGO BUTTON */}
-                <TouchableWithoutFeedback onPress={() => setMenuVisible(!isMenuVisible)}>
+                {/* <TouchableWithoutFeedback 
+                    onPress={() => setMenuVisible(!isMenuVisible)}>
                     <Image 
                         source={require('../../assets/lppknLogoHome.png')}
                         style = {styles.iconStyleHome}
@@ -54,7 +55,34 @@ function Header({toggleSearch}) {
                     isVisible={isMenuVisible} 
                     onItemSelect={handleMenuItemSelect}
                     onClose={() => setMenuVisible(false)}
-                />
+                /> */}
+                <View style={{
+                    flex: 1, 
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginLeft: 20,
+                    marginTop: -15,
+                    }}
+                >
+                    <TouchableWithoutFeedback onPress={() => setMenuVisible(!isMenuVisible)}>
+                    <Image 
+                        source={require('../../assets/lppknLogoHome.png')}
+                        style = {styles.iconStyleHome}
+                    />
+                    </TouchableWithoutFeedback>
+                    <View style={{marginTop: -15, marginLeft: 10, justifyContent: 'center', width: 15, height: 15}}>
+                        <Image
+                            source={require('../../assets/downArrowButton.png')}
+                            style={{width:15, height:15, resizeMode: 'contain'}}
+                        />
+                    </View>
+                    <DropdownMenu 
+                        isVisible={isMenuVisible} 
+                        onItemSelect={handleMenuItemSelect}
+                        onClose={() => setMenuVisible(false)}
+                    />
+                </View>
                 {/* SETTINGS BUTTON */}
                 <TouchableOpacity onPress={openSettings}>
                     <Image 

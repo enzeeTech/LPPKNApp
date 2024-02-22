@@ -28,17 +28,9 @@ const iconsData = [
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
 ];
 
-// Array of image, title, and date for poster
-const posterData = [
-  { title: 'Pertandingan KASIH Keluarga Challenge',  date:'20 September 2023', imageSource: require('../../assets/poster1.png')},
-  { title: 'Kempen Bulan Perancang Keluarga',  date:'10 September 2023', imageSource: require('../../assets/poster2.png')},
-  { title: 'Kajian Kepuasan Pelanggan Klinik LPPKN 2023',  date:'29 Ogos 2023', imageSource: require('../../assets/poster3.png')},
-  { title: 'Sambutan Ulangtahun LPPKN ke-57',  date:'15 Jun 2023', imageSource: require('../../assets/poster4.png')},
-];
-
 const HomeScreen = ({navigation}) => {
   const [bulletinItems, setBulletinItems] = useState([]);
-
+  const [posterItems, setPosterItems] = useState([]);
 
   // Function to format the date correctly
   const formatDate = (dateString) => {
@@ -53,7 +45,8 @@ const HomeScreen = ({navigation}) => {
 
   // Calling API to get bulletin posts
   const getBulletinPosts = () => { 
-    GlobalApi.getBulletinPost()
+    const query = "&pagination[start]=0&pagination[limit]=6&sort=Date:desc"
+    GlobalApi.getBulletinPostWithQuery(query)
       .then((response) => {
         const formattedData = response.data.data.map((item) => ({
           id: item.id,
@@ -69,10 +62,31 @@ const HomeScreen = ({navigation}) => {
       });
   };
 
-  // Load bulletin posts when the screen is focused
+  // Calling API to get sorotan posts
+  const getSorotanPosts = () => {
+    const query = "&pagination[start]=0&pagination[limit]=4&sort=Date:desc"
+    GlobalApi.getSorotanPostWithQuery(query)
+      .then((response) => {
+        const formattedData = response.data.data.map((item) => ({
+          id: item.id,
+          title: item.attributes.Title,
+          date: formatDate(item.attributes.Date),
+          tileImage: item.attributes.TileImage.data.attributes.url,
+
+        }));
+        setPosterItems(formattedData);
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Load data when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
       getBulletinPosts();
+      getSorotanPosts();
     }, [])
   );
 
@@ -157,9 +171,11 @@ const HomeScreen = ({navigation}) => {
       {posterRow.map((poster, index) => (
         <PosterItem
           key={`poster-${index}`}
+          navigation={navigation}
+          id={poster.id}
           title={poster.title}
           date={poster.date}
-          imageSource={poster.imageSource}
+          imageSource={{uri: poster.tileImage}}
         />
       ))}
     </View>
@@ -199,6 +215,10 @@ const HomeScreen = ({navigation}) => {
 
   const onBulletinLihatSemuaPress = () => {
     navigation.navigate('BulletinHome');
+  };
+
+  const onSorotanLihatSemuaPress = () => {
+    navigation.navigate('SorotanHome');
   };
 
   return (
@@ -275,7 +295,7 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.sorotanContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.sorotanText}>Sorotan</Text>
-            <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => console.log('Lihat Semua Button Pressed!')}>
+            <TouchableOpacity style={{flexDirection: 'row'}} onPress={onSorotanLihatSemuaPress}>
               <Text style={styles.sorotanSubText}>Lihat Semua</Text>
               <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan}/>
             </TouchableOpacity>
@@ -283,7 +303,7 @@ const HomeScreen = ({navigation}) => {
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View>
                 {/* Render the poster row */}
-                {renderPosterRow(posterData)}
+                {renderPosterRow(posterItems)}
             </View>
           </ScrollView>
         </View>

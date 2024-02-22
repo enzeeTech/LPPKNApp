@@ -15,17 +15,30 @@ const AxioInstance = axios.create({
 // Function to get all bulletin posts
 const getBulletinPost = () => AxioInstance.get("/bulletin-posts?populate=*&pagination[start]=0&pagination[limit]=100&sort=Date:desc");
 
-// Function to get all bulleting posts with query input and console log the query
+// Function to get all bulleting posts with query input 
 const getBulletinPostWithQuery = (query) => {
     path = "/bulletin-posts?populate=*";
     path += query;
     console.log(path);
     return AxioInstance.get(path);
 };
-// const getBulletinPostWithQuery = (query) => AxioInstance.get(`/bulletin-posts?populate=*${query}`);
 
 // Function to get bulleting post by id
 const getBulletinPostById = (id) => AxioInstance.get(`/bulletin-posts/${id}?populate=*`);
+
+// Function to get sorotan posts
+const getSorotanPost = () => AxioInstance.get("/sorotan-posts?populate=*&pagination[start]=0&pagination[limit]=100&sort=Date:desc");
+
+// Function to get sorotan post by id
+const getSorotanPostById = (id) => AxioInstance.get(`/sorotan-posts/${id}?populate=*`);
+
+// Function to get sorotan posts with query input
+const getSorotanPostWithQuery = (query) => {
+    path = "/sorotan-posts?populate=*";
+    path += query;
+    console.log(path);
+    return AxioInstance.get(path);
+};
 
 // Function to get perkhidmatan buttons
 const getPerkhidmatanOptions = () => AxioInstance.get("/perkhidmatan-options?populate=*");
@@ -79,6 +92,9 @@ export default {
     getBulletinPost,
     getBulletinPostWithQuery,
     getBulletinPostById,
+    getSorotanPost,
+    getSorotanPostById,
+    getSorotanPostWithQuery,
     getPerkhidmatanOptions,
     getLokasiSelangor,
     getLokasiWPKL,

@@ -9,7 +9,7 @@ const NewsItem = ({ navigation, id, title, date, imageSource }) => {
 
   const handlePress = () => {
     navigation.navigate('BulletingInfo', {itemId: id});
-};
+  };
 
   return (
     <TouchableOpacity style={styles.newsItemContainer} onPress={handlePress}>

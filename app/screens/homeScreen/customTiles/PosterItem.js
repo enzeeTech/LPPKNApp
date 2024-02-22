@@ -3,26 +3,27 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-const PosterItem = ({ title, date, imageSource }) => {
+const PosterItem = ({ navigation, id, title, date, imageSource }) => {
+  
     // Handle press event for the news item
     const handlePress = () => {
-      console.log(`${title} pressed!`);
+      // navigation.navigate('BulletingInfo', {itemId: id});
     };
 
     return (
       <TouchableOpacity style={styles.cardContainer} onPress={handlePress}>
-      <Image source={imageSource} style={styles.cardImage} />
-      <LinearGradient
-        colors={['#9448DA', 'rgba(148,72,218,0.7)', 'transparent']}
-        style={styles.gradient}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0.24 }}
-      >
-        <View style={styles.textContainer}>
-          <Text style={styles.cardSubtitle}>{date}</Text>
-          <Text style={styles.cardTitle} numberOfLines={2}>{title}</Text>
-        </View>
-      </LinearGradient>
+        <Image source={imageSource} style={styles.cardImage} />
+        <LinearGradient
+          colors={['#9448DA', 'rgba(148,72,218,0.7)', 'transparent']}
+          style={styles.gradient}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0.24 }}
+        >
+          <View style={styles.textContainer}>
+            <Text style={styles.cardSubtitle}>{date}</Text>
+            <Text style={styles.cardTitle} numberOfLines={2}>{title}</Text>
+          </View>
+        </LinearGradient>
     </TouchableOpacity>
     );
 };
@@ -37,18 +38,9 @@ const styles = StyleSheet.create({
     width: 190,
     height: 290, 
   },
-  imageContainer: {
-    width: '100%',
-    height: '100%',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   cardImage: {
-    width: '100%',
-    height: '100%',
+    width: 190,
+    height: 290,
     resizeMode: 'cover',
   },
   textContainer: {

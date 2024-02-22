@@ -6,7 +6,7 @@ import HomeScreen from './index';
 import HubungikamiScreen from './infoPages/HubungiKami'; 
 import TetangKamiScreen from './infoPages/TetangKami';
 import BulletinHome from '../bulletinMain/index';
-import BulletingInfo from '../bulletinInfo/index';
+import BulletinInfo from '../bulletinInfo/index';
 import PerancangKeluarga from '../servicesScreen/screens/PerancangKeluarga';
 import Peka from '../servicesScreen/screens/Peka';
 import Smartstart from '../servicesScreen/screens/Smartstart';
@@ -20,6 +20,7 @@ import Subfertiliti from '../servicesScreen/screens/Subfertiliti';
 import Penyelidikan from '../servicesScreen/screens/Penyelidikan';
 import SaringanKesejahteraan from '../servicesScreen/screens/SaringanKesejahteraan';
 import KafeTeen from '../servicesScreen/screens/KafeTeen';
+import SorotanMain from '../sorotanScreen/index';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,7 +35,8 @@ const HomeStack = () => {
       <Stack.Screen name="Hubungikami" component={HubungikamiScreen} />
       <Stack.Screen name="Tetangkami" component={TetangKamiScreen} />
       <Stack.Screen name="BulletinHome" component={BulletinHome} />
-      <Stack.Screen name="BulletingInfo" component={BulletingInfo} /> 
+      <Stack.Screen name="BulletingInfo" component={BulletinInfo} /> 
+      <Stack.Screen name="SorotanHome" component={SorotanMain} />
       <Stack.Screen name="PerancangKeluarga" component={PerancangKeluarga} />
       <Stack.Screen name="Peka" component={Peka} />
       <Stack.Screen name="Smartstart" component={Smartstart} />

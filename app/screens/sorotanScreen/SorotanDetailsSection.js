@@ -5,7 +5,7 @@ import CustomSorotanTile from './SorotanCustomTile';
 const SorotanDetailsSection = ({ navigation, items }) => {
 
     const handlePress = (item) => {
-        // navigation.navigate('BulletingInfo', {itemId: item.id});
+        navigation.navigate('SorotanArticle', {itemId: item.id});
     };
 
     const renderItem = ({ item }) => {

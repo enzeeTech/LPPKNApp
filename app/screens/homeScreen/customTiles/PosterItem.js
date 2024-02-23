@@ -7,7 +7,7 @@ const PosterItem = ({ navigation, id, title, date, imageSource }) => {
   
     // Handle press event for the news item
     const handlePress = () => {
-      // navigation.navigate('BulletingInfo', {itemId: id});
+      navigation.navigate('SorotanArticle', {itemId: id});
     };
 
     return (

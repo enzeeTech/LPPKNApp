@@ -21,6 +21,7 @@ import Penyelidikan from '../servicesScreen/screens/Penyelidikan';
 import SaringanKesejahteraan from '../servicesScreen/screens/SaringanKesejahteraan';
 import KafeTeen from '../servicesScreen/screens/KafeTeen';
 import SorotanMain from '../sorotanScreen/index';
+import SorotanArticle from '../sorotanScreen/sorotanArticleScreen/index';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ const HomeStack = () => {
       <Stack.Screen name="BulletinHome" component={BulletinHome} />
       <Stack.Screen name="BulletingInfo" component={BulletinInfo} /> 
       <Stack.Screen name="SorotanHome" component={SorotanMain} />
+      <Stack.Screen name="SorotanArticle" component={SorotanArticle} />
       <Stack.Screen name="PerancangKeluarga" component={PerancangKeluarga} />
       <Stack.Screen name="Peka" component={Peka} />
       <Stack.Screen name="Smartstart" component={Smartstart} />

@@ -21,7 +21,7 @@
       "package": "com.socio.lppknApp",
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./app/assets/onTheGoIcon.png",
         "backgroundColor": "#ffffff"
       }
     },

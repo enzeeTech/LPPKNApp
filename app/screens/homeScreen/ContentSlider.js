@@ -80,63 +80,91 @@
 
 // export default ContentSlider;
 
-import { StyleSheet, Text, View, FlatList, Image } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, Dimensions } from "react-native";
 import React from "react";
 import { Video, ResizeMode } from 'expo-av';
 
 const ContentSlider = ({contents}) => {
 
+  console.log(contents);
+
+
+  const width = Dimensions.get('window').width;
   // test data
   const carouselData = [
     {
       id: '01',
-      image: require('../../assets/carouselItem1.png'),  
+      image: require('../../assets/backgroundLPPKNHQ.png'),  
     },
     {
       id: '02',
-      image: require('../../assets/carouselItem2.png'),  
+      image: require('../../assets/keluargaKerjaBackground.png'),  
     },
     {
       id: '03',
-      image: require('../../assets/carouselItem3.png'),  
+      image: require('../../assets/subsidiMamogramBackground.png'),  
     },
   ]
 
-  // Display Images and Videos
-  const renderItem = ({item, index}) => { 
-    return (
-      <View>
-        <Image source={item.image} style={{height:250, width: '100%'}} />
-      </View>
-    );
-  };
-  // const renderContent = (content, index) => {
-    // if (content.type === 'image') {
-    //   return (
-    //     <Image source={content.source} style={{ width: '100%', height: 250, resizeMode: 'stretch' }} />
-    //   );
-    // } else if (content.type === 'video') {
-    //   return (
-    //     <Video
-    //       source={content.source} // For local or remote files
-    //       style={{ height: 250, width: '100%' }}
-    //       resizeMode={ResizeMode.CONTAIN}
-    //       shouldPlay // Autoplays the video
-    //       isLooping // Loop the video
-    //       isMuted // Mutes the video
-    //     />
-    //   );
-    // }
+  // // Test function for renderItem
+  // const renderItem = ({item, index}) => { 
+  //   return (
+  //     <View>
+  //       <Image source={item.image} style={{height:250, width: width, resizeMode: "cover"}} />
+  //     </View>
+  //   );
   // };
 
+  // Display Images and Videos
+  const renderContent = ({item, index}) => {
+    if (item.type === 'image') {
+      return (
+        <Image source={item.source} style={{ width: width, height: 250, resizeMode: 'cover' }} />
+      );
+    } else if (item.type === 'video') {
+      return (
+        <Video
+          source={item.source} // For local or remote files
+          style={{ height: 250, width: width }}
+          resizeMode={ResizeMode.COVER}
+          shouldPlay // Autoplays the video
+          isLooping // Loop the video
+          isMuted // Mutes the video
+        />
+      );
+    }
+  };
+
+  // Render Dot Indicators
+  const renderDotIndicators = ()=>{
+    return contents.map((dot, index) => {
+        return (
+          <View
+            style={{
+                height: 8,
+                width: 8,
+                borderRadius: 4,
+                backgroundColor: '#D9D9D9',
+                marginHorizontal: 4,
+                marginBottom: 10,
+            }}
+          />
+        );
+    });
+  }
+
   return (
-    <View>
+    <View style={{height:250, width: width}}>
       <FlatList 
         data = {contents} 
-        renderItem={renderItem}
+        renderItem={renderContent}
         horizontal = {true}
         pagingEnabled = {true}
+        showsHorizontalScrollIndicator = {false}
       />
+      {/* <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        {renderDotIndicators()}
+      </View> */}
     </View>
   );
 }

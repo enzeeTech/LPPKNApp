@@ -48,10 +48,10 @@ const posterData = [
 
 //////// CONTENT SLIDER DATA ////////
 contentData = [
-  { type: 'video', source: require('../../assets/videos/dummyVideo1.mp4') },
-  { type: 'video', source: require('../../assets/videos/dummyVideo2.mp4') },
-  { type: 'image', source: require('../../assets/smartStartBackground.png') }, 
-  { type: 'image', source: require('../../assets/smartBelanjaBackground.png') }, 
+  // { type: 'video', source: require('../../assets/videos/dummyVideo1.mp4') },
+  // { type: 'video', source: require('../../assets/videos/dummyVideo2.mp4') },
+  { id: '03', type: 'image', source: require('../../assets/smartStartBackground.png') }, 
+  { id: '04', type: 'image', source: require('../../assets/smartBelanjaBackground.png') }, 
 ];
 
 const HomeScreen = ({navigation}) => {

@@ -151,19 +151,21 @@ const HomeScreen = ({navigation}) => {
   }
 
   // Function to render each news row
-  const renderNewsRow = (slicedNewsRow) => (
-    <View style={styles.newsRowContainer}>
-      {slicedNewsRow.map((news, index) => (
-        <NewsItem 
-          key={`news-${index}`} 
-          navigation={navigation}
-          id = {news.id}
-          title={news.title} 
-          date={news.date} 
-          imageSource={{uri: news.tileImage}} />
-      ))}
-    </View>
-  );
+  const renderNewsRow = (newsItems) => {
+    // Sort the news items by date in descending order
+    const sortedNewsItems = newsItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+    return sortedNewsItems.map((news, index) => (
+      <NewsItem
+        key={`news-${index}`}
+        navigation={navigation}
+        id={news.id}
+        title={news.title}
+        date={news.date}
+        imageSource={{ uri: news.tileImage }}
+      />
+    ));
+  };
   
   // Function to render each poster row
   const renderPosterRow = (posterRow) => (
@@ -385,6 +387,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flexWrap: 'wrap',
     width: Platform.OS === 'ios' ? screenWidth * 1.65: screenWidth * 1.55, 
+    gap: 20,
   },
   rowContainer: {
     flexDirection: 'row',

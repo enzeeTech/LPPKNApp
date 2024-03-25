@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 180,
-        resizeMode: 'cover',
+        resizeMode: 'stretch',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         // borderBottomLeftRadius: 10,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        height: 88,
+        height: 86,
         backgroundColor: '#FFFFFF',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,

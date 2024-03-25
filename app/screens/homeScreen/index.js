@@ -48,10 +48,10 @@ const posterData = [
 
 //////// CONTENT SLIDER DATA ////////
 contentData = [
-  { type: 'video', source: require('../../assets/videos/dummyVideo1.mp4') },
-  { type: 'video', source: require('../../assets/videos/dummyVideo2.mp4') },
-  { id: '03', type: 'image', source: require('../../assets/smartStartBackground.png') }, 
-  { id: '04', type: 'image', source: require('../../assets/smartBelanjaBackground.png') }, 
+  { type: 'video', source: require('../../assets/videos/dummyVideo1.mp4'), title: 'Title 1', subtitle: 'This is a very long subtitle, to show how it looks like when there is a very long subtitle' },
+  { type: 'video', source: require('../../assets/videos/dummyVideo2.mp4'), title: 'Title 2', subtitle: 'This is a very short subtitle' },
+  { id: '03', type: 'image', source: require('../../assets/smartStartBackground.png'), title: 'Title 3', subtitle: 'This is a very long subtitle, to show how it looks like when there is a very long subtitle'}, 
+  { id: '04', type: 'image', source: require('../../assets/smartBelanjaBackground.png'), title: 'Title 4', subtitle: 'This is a very short subtitle'}, 
 ];
 
 const HomeScreen = ({navigation}) => {

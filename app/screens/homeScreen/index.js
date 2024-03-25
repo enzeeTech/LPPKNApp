@@ -325,6 +325,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     zIndex: 5,
+    shadowColor: "#000",
+    shadowOffset: {width: 0, height: 7},
+    shadowOpacity: 0.25,
+    shadowRadius: 4, 
+    elevation: 5,
   },
   slidingNewsContainer: {
     height: 230,

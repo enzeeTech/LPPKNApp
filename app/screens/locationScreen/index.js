@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
         color: '#777777',
         paddingLeft: '4%',
         fontSize: 12,
-        fontFamily: 'Roboto-Regular',
         paddingTop: '8%',
     },
     contentContainer: {

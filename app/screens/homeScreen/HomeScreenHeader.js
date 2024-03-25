@@ -105,11 +105,6 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight-20: 0,
-        shadowColor: "#000",
-        shadowOffset: {width: 0, height: 7},
-        shadowOpacity: 0.25,
-        shadowRadius: 4, 
-        elevation: 5,
     },
     headerContainer: {
         height: 68, 

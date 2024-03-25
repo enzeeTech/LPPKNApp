@@ -182,37 +182,37 @@ function BulletinMain({navigation}) {
       <View style={styles.headerContainer}>
         <Header onBackPress={handleBackPress} />
       </View>
-      <ScrollView 
-          style={styles.detailsContainer}
-          showsVerticalScrollIndicator={false}
-          // contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.subHeaderContainer}>
-          <View style={styles.searchTab}>
-            <View style={styles.searchIconContainer}>
-              <Image 
-                source={require('../../assets/searchButton.png')}
-                style = {styles.searchIcon}
-              />
-              <View style={styles.seachTextContainer}>
-                <TextInput 
-                  style={styles.searchText}
-                  placeholder="Masukkan carian"
-                  placeholderTextColor="#A6A6A6"
-                  value={searchQuery}
-                  onChangeText={handleSearch}
-                >
-                </TextInput>
-              </View>
+      <View style={styles.subHeaderContainer}>
+        <View style={styles.searchTab}>
+          <View style={styles.searchIconContainer}>
+            <Image 
+              source={require('../../assets/searchButton.png')}
+              style = {styles.searchIcon}
+            />
+            <View style={styles.seachTextContainer}>
+              <TextInput 
+                style={styles.searchText}
+                placeholder="Masukkan carian"
+                placeholderTextColor="#A6A6A6"
+                value={searchQuery}
+                onChangeText={handleSearch}
+              >
+              </TextInput>
             </View>
           </View>
-          <TouchableOpacity style={styles.sarineIconContainer} onPress={() => setBottomSheetVisible(true)}> 
-            <Image
-                source={require('../../assets/sarineButton.png')}
-                style = {styles.sarineIcon}
-              />
-          </TouchableOpacity>
         </View>
+        <TouchableOpacity style={styles.sarineIconContainer} onPress={() => setBottomSheetVisible(true)}> 
+          <Image
+              source={require('../../assets/sarineButton.png')}
+              style = {styles.sarineIcon}
+            />
+        </TouchableOpacity>
+      </View>
+      <ScrollView 
+        style={styles.detailsContainer}
+        showsVerticalScrollIndicator={false}
+        // contentContainerStyle={styles.contentContainer}
+      >
         <BulletinDetailsSection navigation={navigation} items={bulletinItems} onLoadMore={hasMoreItems ? loadMoreItems : null } />
       </ScrollView>
       <SarinBottomSheet
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1, 
     backgroundColor: '#FFFF',
-    marginTop: -13,
+    // marginTop: -13,
   },
 });
 

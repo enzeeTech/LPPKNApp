@@ -41,17 +41,16 @@ const HomeScreen = ({navigation}) => {
     // Format date to local string with specified options
     const formattedDate = date.toLocaleDateString('ms-MY', options);
 
-//////// CONTENT SLIDER DATA ////////
-contentData = [
-  { type: 'video', source: require('../../assets/videos/dummyVideo1.mp4'), title: 'Title 1', subtitle: 'This is a very long subtitle, to show how it looks like when there is a very long subtitle' },
-  { type: 'video', source: require('../../assets/videos/dummyVideo2.mp4'), title: 'Title 2', subtitle: 'This is a very short subtitle' },
-  { id: '03', type: 'image', source: require('../../assets/smartStartBackground.png'), title: 'Title 3', subtitle: 'This is a very long subtitle, to show how it looks like when there is a very long subtitle'}, 
-  { id: '04', type: 'image', source: require('../../assets/smartBelanjaBackground.png'), title: 'Title 4', subtitle: 'This is a very short subtitle'}, 
-];
-
-const HomeScreen = ({navigation}) => {
     return formattedDate;
   };
+
+    //////// CONTENT SLIDER DATA ////////
+  contentData = [
+    { type: 'video', source: require('../../assets/videos/dummyVideo1.mp4'), title: 'Title 1', subtitle: 'This is a very long subtitle, to show how it looks like when there is a very long subtitle' },
+    { type: 'video', source: require('../../assets/videos/dummyVideo2.mp4'), title: 'Title 2', subtitle: 'This is a very short subtitle' },
+    { id: '03', type: 'image', source: require('../../assets/smartStartBackground.png'), title: 'Title 3', subtitle: 'This is a very long subtitle, to show how it looks like when there is a very long subtitle'}, 
+    { id: '04', type: 'image', source: require('../../assets/smartBelanjaBackground.png'), title: 'Title 4', subtitle: 'This is a very short subtitle'}, 
+  ];
 
   // Calling API to get bulletin posts
   const getBulletinPosts = () => { 

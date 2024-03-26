@@ -182,6 +182,7 @@ function BulletinMain({navigation}) {
       <View style={styles.headerContainer}>
         <Header onBackPress={handleBackPress} />
       </View>
+      <View style={{marginTop: -10, height: 15, backgroundColor: '#FFFFFF'}}></View>
       <View style={styles.subHeaderContainer}>
         <View style={styles.searchTab}>
           <View style={styles.searchIconContainer}>
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     height: 60,
     width: '100%',
-    marginTop: '5%',
+    // marginTop: '5%',
   },
   searchTab: {
     width: '75%',

@@ -1,10 +1,12 @@
-import React from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, ScrollView, SafeAreaView, Text, Modal, TouchableOpacity, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
 import DropdownMenu from './reusableComponents/ServicesDropdownList';
 
 const PerancangKeluarga = ({navigation}) => {
+
+    const [showPopup, setShowPopup] = useState(false);
 
     // Data for dropdown menu
     const pilData = {
@@ -97,9 +99,19 @@ const PerancangKeluarga = ({navigation}) => {
       ];
 
     // Handle back press navigation
+
     const handleBackPress = () => {
         navigation.goBack();
     }
+
+    const openPopup = () => {
+        setShowPopup(true);
+    }
+
+    const closePopup = () => {
+        setShowPopup(false);
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Header onBackPress={handleBackPress} />
@@ -212,12 +224,41 @@ const PerancangKeluarga = ({navigation}) => {
                         <TouchableOpacity style={styles.buttonViewOne}>
                             <Text style={styles.buttonTextOne}>Lokasi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonViewTwo}>
+                        <TouchableOpacity style={styles.buttonViewTwo} onPress={openPopup}>
                             <Text style={styles.buttonTextTwo}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
                     {/* View created to add padding */}
                     <View style={{height: 100, backgroundColor: '#FFF'}}></View>
+
+                    {/* Popup/Modal */}
+                <Modal
+                    transparent={true}
+                    animationType="slide"
+                    visible={showPopup}
+                    onRequestClose={closePopup}
+                >
+                    <View style={styles.popupContainer}>
+                        <View style={styles.whiteBox}>
+                        <TouchableOpacity style={styles.closeButton} onPress={closePopup}>
+                            <Image source={require('../../../assets/CloseButton.png')} style={styles.closeButtonImage} />
+                        </TouchableOpacity>
+                        <View style={styles.popupContent}>
+                        <View style={styles.buttonContainer}>
+
+                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
+                        <Text style={styles.buttonTextTwo}>Hubungi Ibu Pejabat</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
+                        <Text style={styles.buttonTextTwo}>Hubungi LPPKN Negeri</Text>
+                    </TouchableOpacity>
+                </View>
+                </View>
+                        </View>
+                    </View>
+                </Modal>
+                 {/* View created to add padding */}
+                 <View style={{height: 100, backgroundColor: '#FFF'}}></View>
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -1,10 +1,12 @@
-import React from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
 import TabTile from './reusableComponents/PriceTabTile';
 
 const KeluargaKerja = ({ navigation }) => {
+
+    const [showPopup, setShowPopup] = useState(false);
 
     // Data for bullet point text
     const bulletPointTextData = [
@@ -26,10 +28,17 @@ const KeluargaKerja = ({ navigation }) => {
     ];
 
     // Handle back press navigation
-     const handleBackPress = () => {
+    const handleBackPress = () => {
         navigation.goBack();
     }
 
+    const openPopup = () => {
+        setShowPopup(true);
+    }
+
+    const closePopup = () => {
+        setShowPopup(false);
+    }
     // Data for tab tile
     const data = [
         { title: 'Sesi 1', subtitle: 'Kenali Fitrah' },
@@ -132,12 +141,41 @@ const KeluargaKerja = ({ navigation }) => {
                     </View>
                     {/* Buttons section */}
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
-                        <TouchableOpacity style={styles.buttonViewOne}>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={openPopup}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{height: 110, backgroundColor: '#FFF'}}></View>
+
+                                    {/* Popup/Modal */}
+                                    <Modal
+                    transparent={true}
+                    animationType="slide"
+                    visible={showPopup}
+                    onRequestClose={closePopup}
+                >
+                    <View style={styles.popupContainer}>
+                        <View style={styles.whiteBox}>
+                        <TouchableOpacity style={styles.closeButton} onPress={closePopup}>
+                            <Image source={require('../../../assets/CloseButton.png')} style={styles.closeButtonImage} />
+                        </TouchableOpacity>
+                        <View style={styles.popupContent}>
+                        <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
+                        <Text style={styles.buttonTextTwo}>Hubungi Ibu Pejabat</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
+                        <Text style={styles.buttonTextTwo}>Hubungi LPPKN Negeri</Text>
+                    </TouchableOpacity>
+                </View>
+                </View>
+                        </View>
+                    </View>
+                </Modal>
+                 {/* View created to add padding */}
+                 <View style={{height: 100, backgroundColor: '#FFF'}}></View>
+
             </ScrollView>
         </SafeAreaView>
     );

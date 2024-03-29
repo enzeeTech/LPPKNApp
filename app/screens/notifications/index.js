@@ -29,7 +29,7 @@ export default function App() {
       console.log(response);
     });
 
-    fetch('https://dd15-202-186-100-117.ngrok-free.app/webhook')
+    fetch('https://notifi.onrender.com/webhook')
       .then(response => response.json())
       .then(data => setNotificationData(data))
       .catch(error => console.error(error));
@@ -72,6 +72,7 @@ async function schedulePushNotification() {
       title: "New Bulletin Post Available!! 📬",
       body: 'Go read it now ;)',
       data: { data: 'goes here' },
+      icon: '../../assets/notification-icon.png',
     },
     trigger: { seconds: 2 },
   });

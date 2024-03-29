@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "782333438268",
+    "project_id": "bulletinposts",
+    "storage_bucket": "bulletinposts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782333438268:android:4538ad0b685e4119ee1639",
+        "android_client_info": {
+          "package_name": "com.socio.lppknApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH9cfVXRcJW0sJkOrLntq3Uk8JaAksFxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

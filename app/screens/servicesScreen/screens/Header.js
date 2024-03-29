@@ -12,12 +12,7 @@ function Header({onBackPress}) {
                     />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Perkhidmatan</Text>
-                <TouchableOpacity onPress={()=>{console.log("Settings Button Pressed")}}>
-                    <Image 
-                        source={require('../../../assets/settingsIcon.png')}
-                        style = {styles.iconStyleSetting}
-                    />
-                </TouchableOpacity>
+
             </View>
         </View>
     );
@@ -36,7 +31,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center', 
         justifyContent: 'space-evenly',
-        paddingHorizontal: 15, 
+        // paddingHorizontal: 15, 
     },
     headerText: {
         color: '#F5F5F5',
@@ -45,7 +40,7 @@ const styles = StyleSheet.create({
         width: '40%',
         textAlign: 'center',
         marginRight: '40%',
-        marginLeft: '5%', 
+        marginLeft: -10, 
     },
     iconStyleSetting: {
         width: 25, 

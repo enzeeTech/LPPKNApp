@@ -10,8 +10,7 @@ function StateTable({navigation}) {
     const numColumns = 3;
     const nameList = [
         'Perlis', 'Kedah', 'Pulau Pinang', 'Perak', 'Selangor', 'WP                Kuala Lumpur',
-        'Negeri Sembilan', 'Melaka', 'Johor', 'Pahang', 'Terengganu', 'Kelantan', 'Sabah',
-        'WP Labuan', 'Sarawak'
+        'Negeri Sembilan', 'Melaka', 'Johor', 'Pahang', 'Terengganu', 'Kelantan', 'Sabah', 'Sarawak'
     ];
     const { stateName } = useLocation();
     const [activeButtonIndex, setActiveButtonIndex] = useState(null);

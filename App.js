@@ -158,8 +158,8 @@ export default function App() {
               })}
             >
               {/* Tab screens */}
-              {/* <Tab.Screen name="HomeScreen" component={HomeStack} /> */}
-              <Tab.Screen name="HomeScreen" component={NotificationsHomeScreen} />
+              <Tab.Screen name="HomeScreen" component={HomeStack} />
+              {/* <Tab.Screen name="HomeScreen" component={NotificationsHomeScreen} /> */}
               <Tab.Screen name="LocationScreen" component={LocationStack} />
               <Tab.Screen
                 name="ChatScreen"

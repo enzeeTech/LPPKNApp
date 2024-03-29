@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        // borderBottomLeftRadius: 10,
-        // borderBottomRightRadius: 10,
     },
     overlayContainer: {
         position: 'absolute',

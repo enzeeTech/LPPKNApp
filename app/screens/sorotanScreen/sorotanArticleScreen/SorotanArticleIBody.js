@@ -91,9 +91,7 @@ const SorotanArticleBody = ({title, date, images, information, link}) => {
                     <Text style={styles.subHeaderText}>
                         {date}
                     </Text>
-                    <TouchableOpacity style={styles.shareIcon} onPress={() => shareArticle(title, link)}>
-                        <Image source={require('../../../assets/shareIcon.png')} style={styles.shareIcon} />
-                    </TouchableOpacity>
+
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.body}>

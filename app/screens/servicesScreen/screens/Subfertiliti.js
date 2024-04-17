@@ -3,6 +3,7 @@ import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, L
 import Header from './Header';
 import styles from '../StyleServices';
 import HPVPriceTile from './reusableComponents/HPVPriceTile';
+import { openURL } from 'expo-linking';
 
 const Subfertiliti = ({navigation}) => {
 
@@ -10,9 +11,6 @@ const Subfertiliti = ({navigation}) => {
         Linking.openURL('https://www.youtube.com/watch?v=pgF9EGGsEw8');
       };
     
-    //   const handleImageClick2 = () => {
-    //     Linking.openURL('your_second_link_here');
-    //   };
 
     const bulletPointTextData1 = [
         'Usia perkahwinan sekurang-kurangnya setahun bagi yang berumur kurang dari 35 tahun; atau',

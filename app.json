@@ -20,6 +20,7 @@
     "android": {
       "package": "com.socio.lppknApp",
       "softwareKeyboardLayoutMode": "pan",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/onTheGoIcon.png",
         "backgroundColor": "#ffffff"

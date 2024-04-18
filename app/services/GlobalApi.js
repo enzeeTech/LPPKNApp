@@ -8,7 +8,7 @@ const API_KEY = "03c346dfd9f0beed0e7f0fdb2229d34f695dfaf938ed0d5aa65d9c1a17a2354
 const AxioInstance = axios.create({
     baseURL: BASE_URL,
     headers: {
-        "Authorization": `Bearer ${API_KEY}`
+        "Authorization": `Bearer ${API_KEY}`,
     }
 })
 
@@ -88,6 +88,16 @@ const getLokasiSabah = () => AxioInstance.get("/lokasi-sabahs?populate=*");
 // Function to get lokasi WP Labuan
 const getLokasiWPLabuan = () => AxioInstance.get("/lokasi-wp-labuans?populate=*");
 
+// Function to submit form data and upload files
+const submitAduanForm = async (formData, files) => {
+    try {
+        const response = await AxioInstance.post("/aduan-forms", formData);
+
+    } catch (error) {
+        console.error("Error uploading form and files:", error);
+    }
+};
+
 export default {
     getBulletinPost,
     getBulletinPostWithQuery,
@@ -110,7 +120,7 @@ export default {
     getLokasiKelantan,
     getLokasiSarawak,
     getLokasiSabah,
-    getLokasiWPLabuan
-
+    getLokasiWPLabuan,
+    submitAduanForm
 }
 

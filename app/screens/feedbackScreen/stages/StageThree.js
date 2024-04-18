@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
 import LottieView from 'lottie-react-native';
 
-function StageThree({formData}) {  
+function StageThree() {  
 
   const navigation = useNavigation();
   const { width, height } = Dimensions.get('window');
@@ -17,9 +17,6 @@ function StageThree({formData}) {
       setInitialized(true);
     }, 200); // small timeout to trigger re-render
   }, []);
-
-  // Print form data to console in neat format
-  console.log(JSON.stringify(formData, null, 2));
 
 
   // BUTTON PRESS FUNCTIONS

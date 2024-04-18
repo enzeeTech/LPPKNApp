@@ -11,8 +11,8 @@ import Header from "./FeedbackHeader";
 import StageOne from "./stages/StageOne";
 import StageTwo from "./stages/StageTwo";
 import StageThree from "./stages/StageThree";
-import StageThreeError from "./stages/StageThreeError"; // Testing error screen
-
+import StageThreeError from "./stages/StageThreeError";
+import GlobalApi from "../../services/GlobalApi";
 
 const AduanForm = () => {
   const [currentStage, setCurrentStage] = useState(1); // Track the current stage
@@ -48,14 +48,47 @@ const AduanForm = () => {
     jantina: '',
   }); 
 
-  const handleNext = (newData, stage) => {
+  const [finalData, setFinalData] = useState({}); // Data to be submitted to the API
+  const [submissionError, setSubmissionError] = useState(false); // Track if there is an error during submission
+
+  const handleNext = async (newData, stage) => {
     // Update formData based on the stage
     if (stage === 1) {
       setStage1Data(newData);
+      setCurrentStage(2); 
     } else if (stage === 2) {
       setStage2Data(newData);
+      const fullFormData = { ...stage1Data, ...newData };
+
+      const formData = new FormData();
+
+      // Ensure 'documents' is defined and is an array before appending files
+      if (Array.isArray(fullFormData.documents)) {
+        fullFormData.documents.forEach(document => {
+            formData.append("files.documents", {
+                uri: document.uri,
+                type: document.mimeType,
+                name: document.name
+            });
+        });
     }
-    setCurrentStage(currentStage + 1); // Move to the next stage
+
+      // Append the rest of the form data as a JSON string under the key 'data'
+      // Exclude documents from JSON string as they are handled separately
+      const dataToSubmit = { ...fullFormData, documents: undefined };
+      formData.append("data", JSON.stringify(dataToSubmit));
+
+      // Call the API to submit the form data
+      try {
+        const response = await GlobalApi.submitAduanForm(formData); // Update API function if needed to handle formData
+        console.log('Form submission response:', response);
+        setCurrentStage(3);
+        setSubmissionError(false);  // Reset or ensure no error is flagged
+      } catch (error) {
+        console.error('Error during form submission:', error);
+        setSubmissionError(true);  // Flag an error to conditionally render the error component
+      }
+    }
     scrollViewRef.current?.scrollToPosition(0, 0, true);
   };
 
@@ -68,15 +101,16 @@ const AduanForm = () => {
   };
 
   const renderStage = () => {
+    if (submissionError) {
+      return <StageThreeError />;
+    }
     switch (currentStage) {
       case 1:
         return <StageOne onNext={(data) => handleNext(data, 1)} formData={stage1Data} />;
       case 2:
         return <StageTwo onNext={(data) => handleNext(data, 2)} onBack={handleBack} formData={stage2Data} />;
       case 3:
-        // return <StageThree onSubmit={handleSubmit} formData={{ ...stage1Data, ...stage2Data }} />;
-        return <StageThree formData={{ ...stage1Data, ...stage2Data }} />;
-        // return <StageThreeError/>; // Testing error screen
+        return <StageThree/>;
       default:
         return null;
     }
@@ -85,6 +119,7 @@ const AduanForm = () => {
   // Function to reset the form to its initial state
   const resetForm = useCallback(() => {
     setCurrentStage(1);
+    setSubmissionError(false);
     setStage1Data({
       // General fields that are always present
       jenis_aduan: '',

@@ -22,6 +22,8 @@ import SaringanKesejahteraan from '../servicesScreen/screens/SaringanKesejahtera
 import KafeTeen from '../servicesScreen/screens/KafeTeen';
 import SorotanMain from '../sorotanScreen/index';
 import SorotanArticle from '../sorotanScreen/sorotanArticleScreen/index';
+import LocationCollection from '../servicesScreen/locationCollection/index';
+import LocationInfoScreen from '../locationInfoScreen/index';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +54,8 @@ const HomeStack = () => {
       <Stack.Screen name="Subfertiliti" component={Subfertiliti} />
       <Stack.Screen name="SaringanKesejahteraan" component={SaringanKesejahteraan} />
       <Stack.Screen name="KafeTeen" component={KafeTeen} />
+      <Stack.Screen name="LocationCollection" component={LocationCollection} />
+      <Stack.Screen name="LocationInfoScreen" component={LocationInfoScreen} />
     </Stack.Navigator>
   );
 };

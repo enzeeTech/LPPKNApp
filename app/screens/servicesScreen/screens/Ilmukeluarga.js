@@ -28,12 +28,17 @@ const Ilmukeluarga = ({ navigation }) => {
         navigation.goBack();
     }
 
-    const openPopup = () => {
-        setShowPopup(true);
-    }
+    // const openPopup = () => {
+    //     setShowPopup(true);
+    // }
 
-    const closePopup = () => {
-        setShowPopup(false);
+    // const closePopup = () => {
+    //     setShowPopup(false);
+    // }
+
+    // Hubungi button navigation
+    const hubungiButton = () => {
+        navigation.navigate('LocationCollection', { query: 'Pejabat' });
     }
 
     // Data for tab tile
@@ -97,15 +102,15 @@ const Ilmukeluarga = ({ navigation }) => {
                     </View>
                     {/* Buttons section */}
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
-                        <TouchableOpacity style={styles.buttonViewOne} onPress={openPopup}>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{height: 110, backgroundColor: '#FFF'}}></View>
 
-                                                    {/* Popup/Modal */}
-                                                    <Modal
+                {/* Popup/Modal */}
+                {/* <Modal
                     transparent={true}
                     animationType="slide"
                     visible={showPopup}
@@ -129,7 +134,7 @@ const Ilmukeluarga = ({ navigation }) => {
                 </View>
                         </View>
                     </View>
-                </Modal>
+                </Modal> */}
                  {/* View created to add padding */}
                  <View style={{height: 100, backgroundColor: '#FFF'}}></View>
 

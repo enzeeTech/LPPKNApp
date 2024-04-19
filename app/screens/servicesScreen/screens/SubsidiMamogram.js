@@ -52,6 +52,11 @@ const SubsidiMamogram = ({ navigation }) => {
     </View>
   );
 
+  // Hubungi button navigation
+  const hubungiButton = () => {
+    navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
+  }
+
   const galeriData = [
     { image: require('../../../assets/galeriPlaceholder.png') },
     { image: require('../../../assets/galeriPlaceholder.png') },
@@ -144,8 +149,8 @@ const SubsidiMamogram = ({ navigation }) => {
                         </ScrollView>
                     </View>
           <View style={styles.subsidiButtonContainer}>
-                <TouchableOpacity style={styles.buttonViewOne}>
-                    <Text style={styles.buttonTextOne}>Lokasi Klinik Nur Sejahtera</Text>
+                <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
+                    <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                 </TouchableOpacity>
           </View>
           {/* View created to add padding */}

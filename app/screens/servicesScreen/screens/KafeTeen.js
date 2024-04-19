@@ -29,6 +29,11 @@ const Ilmukeluarga = ({ navigation }) => {
         navigation.goBack();
     }
 
+    // Hubungi button navigation
+    const hubungiButton = () => {
+        navigation.navigate('LocationCollection', { query: 'KafeTEEN' });
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Header onBackPress={handleBackPress} />
@@ -91,8 +96,8 @@ const Ilmukeluarga = ({ navigation }) => {
                         <TouchableOpacity style={styles.buttonViewOne}>
                             <Text style={styles.buttonTextOne}>Muat Turun Aplikasi</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonViewTwo}>
-                            <Text style={styles.buttonTextTwo}>Lokasi KafeTEEN</Text>
+                        <TouchableOpacity style={styles.buttonViewTwo} onPress={hubungiButton}>
+                            <Text style={styles.buttonTextTwo}>Hubungi KafeTEEN</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

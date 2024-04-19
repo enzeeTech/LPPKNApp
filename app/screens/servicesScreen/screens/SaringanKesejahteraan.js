@@ -27,6 +27,11 @@ const SaringanKesejahteraan = ({ navigation }) => {
         navigation.goBack();
     }
 
+    // Hubungi button navigation
+    const hubungiButton = () => {
+        navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
+    }
+
     const dataPakej1 = [
         { title: 'Pemeriksaan Tekanan Darah'},
         { title: 'Pemeriksaan Indeks Jisim Tubuh'},
@@ -89,8 +94,8 @@ const SaringanKesejahteraan = ({ navigation }) => {
                     />
                     </View>
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
-                        <TouchableOpacity style={styles.buttonViewOne}>
-                            <Text style={styles.buttonTextOne}>Lokasi Klinik Nur Sejahtera</Text>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
+                            <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

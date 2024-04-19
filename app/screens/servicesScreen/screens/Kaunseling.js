@@ -37,14 +37,18 @@ const Kaunseling = ({navigation}) => {
         navigation.goBack();
     }
 
-    const openPopup = () => {
-        setShowPopup(true);
-    }
+    // const openPopup = () => {
+    //     setShowPopup(true);
+    // }
 
-    const closePopup = () => {
-        setShowPopup(false);
-    }
+    // const closePopup = () => {
+    //     setShowPopup(false);
+    // }
 
+    // Hubungi button navigation
+    const hubungiButton = () => {
+        navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -116,16 +120,13 @@ const Kaunseling = ({navigation}) => {
                     </View>
                     {/* Buttons section */}
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewOne}>
-                            <Text style={styles.buttonTextOne}>Lokasi KNS</Text>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
+                            <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonViewTwo} onPress={openPopup}>
-                        <Text style={styles.buttonTextTwo}>Hubungi Kami</Text>
-                    </TouchableOpacity>
-                </View>
+                    </View>
 
                 {/* Popup/Modal */}
-                <Modal
+                {/* <Modal
                     transparent={true}
                     animationType="slide"
                     visible={showPopup}
@@ -154,7 +155,7 @@ const Kaunseling = ({navigation}) => {
                 </View>
                         </View>
                     </View>
-                </Modal>
+                </Modal> */}
                  {/* View created to add padding */}
                  <View style={{height: 100, backgroundColor: '#FFF'}}></View>
                 </View>

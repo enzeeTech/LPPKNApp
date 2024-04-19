@@ -98,6 +98,12 @@ const submitAduanForm = async (formData, files) => {
     }
 };
 
+// Function to search and retrieve location data from the database
+const searchCollection = (query, location) => {
+    path = "/hubungi-collection/search?populate=*&keyword=" + query + "&locationKeyword=" + location;
+    return AxioInstance.get(path);
+}
+
 export default {
     getBulletinPost,
     getBulletinPostWithQuery,
@@ -121,6 +127,7 @@ export default {
     getLokasiSarawak,
     getLokasiSabah,
     getLokasiWPLabuan,
-    submitAduanForm
+    submitAduanForm,
+    searchCollection
 }
 

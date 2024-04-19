@@ -63,7 +63,10 @@ const HpvDna = ({navigation}) => {
         navigation.goBack();
     }
 
-
+    // Hubungi button navigation
+    const hubungiButton = () => {
+        navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -274,8 +277,8 @@ const HpvDna = ({navigation}) => {
                         </ScrollView>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewOne}>
-                            <Text style={styles.buttonTextOne}>Lokasi Klinik Nur Sejahtera</Text>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
+                            <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
 

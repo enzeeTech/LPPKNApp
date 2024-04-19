@@ -11,6 +11,11 @@ const Subfertiliti = ({navigation}) => {
         Linking.openURL('https://www.youtube.com/watch?v=pgF9EGGsEw8');
       };
     
+    // Hubungi button navigation
+    const hubungiButton = () => {
+        navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
+    }
+
 
     const bulletPointTextData1 = [
         'Usia perkahwinan sekurang-kurangnya setahun bagi yang berumur kurang dari 35 tahun; atau',
@@ -260,8 +265,8 @@ const Subfertiliti = ({navigation}) => {
                     </View>
                     
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewOne}>
-                            <Text style={styles.buttonTextOne}>Lokasi Klinik Nur Sejahtera</Text>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
+                            <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
 

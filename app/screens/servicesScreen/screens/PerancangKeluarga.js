@@ -104,13 +104,20 @@ const PerancangKeluarga = ({navigation}) => {
         navigation.goBack();
     }
 
-    const openPopup = () => {
-        setShowPopup(true);
+
+    // Hubungi button navigation
+    const hubungiButton = () => {
+        navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
     }
 
-    const closePopup = () => {
-        setShowPopup(false);
-    }
+    // const openPopup = () => {
+    //     setShowPopup(true);
+    // }
+
+    // const closePopup = () => {
+    //     setShowPopup(false);
+    // }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -221,18 +228,18 @@ const PerancangKeluarga = ({navigation}) => {
                     </View>
                     {/* Buttons section */}
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewOne}>
-                            <Text style={styles.buttonTextOne}>Lokasi Klinik Nur Sejahtera</Text>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
+                            <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonViewTwo} onPress={openPopup}>
+                        {/* <TouchableOpacity style={styles.buttonViewTwo} onPress={openPopup}>
                             <Text style={styles.buttonTextTwo}>Hubungi Klinik Nur Sejahtera</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     {/* View created to add padding */}
                     <View style={{height: 100, backgroundColor: '#FFF'}}></View>
 
                     {/* Popup/Modal */}
-                <Modal
+                {/* <Modal
                     transparent={true}
                     animationType="slide"
                     visible={showPopup}
@@ -256,7 +263,7 @@ const PerancangKeluarga = ({navigation}) => {
                 </View>
                         </View>
                     </View>
-                </Modal>
+                </Modal> */}
                  {/* View created to add padding */}
                  <View style={{height: 100, backgroundColor: '#FFF'}}></View>
                 </View>

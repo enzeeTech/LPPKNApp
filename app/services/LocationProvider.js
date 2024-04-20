@@ -37,6 +37,10 @@ export const LocationProvider = ({ children }) => {
                 if (stateName === 'Malacca') {
                     stateName = 'Melaka';
                 }
+                // if state name includes Kuala Lumpur, change it to Kuala Lumpur
+                if (stateName.includes('Kuala Lumpur')) {
+                    stateName = 'Kuala Lumpur';
+                }
             }
             setLocationData({
                 location,

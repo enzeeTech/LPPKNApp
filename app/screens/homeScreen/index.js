@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -32,6 +32,7 @@ const iconsData = [
 const HomeScreen = ({navigation}) => {
   const [bulletinItems, setBulletinItems] = useState([]);
   const [posterItems, setPosterItems] = useState([]);
+  const [contentData, setContentData] = useState([]);
 
   // Function to format the date correctly
   const formatDate = (dateString) => {
@@ -44,13 +45,33 @@ const HomeScreen = ({navigation}) => {
     return formattedDate;
   };
 
-    //////// CONTENT SLIDER DATA ////////
-  contentData = [
-    { type: 'video', source: require('../../assets/videos/dummyVideo1.mp4'), title: 'Title 1', subtitle: 'This is a very long subtitle, to show how it looks like when there is a very long subtitle' },
-    { type: 'video', source: require('../../assets/videos/dummyVideo2.mp4'), title: 'Title 2', subtitle: 'This is a very short subtitle' },
-    { id: '03', type: 'image', source: require('../../assets/smartStartBackground.png'), title: 'Title 3', subtitle: 'This is a very long subtitle, to show how it looks like when there is a very long subtitle'}, 
-    { id: '04', type: 'image', source: require('../../assets/smartBelanjaBackground.png'), title: 'Title 4', subtitle: 'This is a very short subtitle'}, 
-  ];
+    //////// CONTENT SLIDER ////////
+  
+    useEffect(() => {
+      const fetchContent = async () => {
+        try {
+          const response = await GlobalApi.getHomeSliderContent();
+          if (response.data) {
+            // Assuming 'data' is the field where your content is returned
+            // You might need to adjust the mapping depending on your exact data structure
+            const formattedData = response.data.data.map(item => ({
+              id: item.id,
+              type: item.attributes.Content.data.attributes.mime.includes('video') ? 'video' : 'image',
+              source: { uri: item.attributes.Content.data.attributes.url },
+              title: item.attributes.Title,
+              subtitle: item.attributes.Subtitle
+            }));
+            setContentData(formattedData);
+          }
+        } catch (error) {
+          console.error('Error fetching home slider content:', error);
+        }
+      };
+  
+      fetchContent();
+    }, []);
+
+
 
   // Calling API to get bulletin posts
   const getBulletinPosts = () => { 

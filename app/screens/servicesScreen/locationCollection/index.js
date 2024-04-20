@@ -1,33 +1,63 @@
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useState, useEffect } from 'react';
 import Header from './Header';
 import React from 'react';
 import LocationDetailsList from './LocationDetailsList';
 import { useLocation } from '../../../services/LocationProvider';
+import GlobalApi from '../../../services/GlobalApi';
 
 function LocationCollection({navigation, route}) {
+    const [responseData, setResponseData] = useState([]);
+    let title = '';
 
     const query = route.params.query;
     console.log(query);
 
-    // let title = '';
+    const { stateName } = useLocation();
+    console.log(stateName);
 
-    // if (query === 'Pejabat') {
-    //     title = 'Pejabat LPPKN Negeri';
-    // } else if (query === 'Klinik Nur Sejahtera') {
-    //     title = 'Klinik Nur Sejahtera'; 
-    // } else if (query === 'KafeTEEN') {
-    //     title = 'KafeTEEN';
-    // }
+    // Helper function for formatting the data
+    const formatData = (data) => {
+        if (!data) return [];
+        return data.map((item) => ({
+            id: item.id,
+            title: item.Title || '-',
+            location: item.Location || '-',
+            phoneNo: item.PhoneNo || '-',
+            faxNo: item.FaxNo || '-',
+            operationTime: item.OperationTime || '-',
+            icon: item.Icon?.url,
+            background: item.BackgroundImage?.url,
+        }));
+    };
 
+    // Helper function for formatting the title
+    if (query === 'Pejabat') {
+        title = 'Pejabat LPPKN Negeri';
+    } else if (query === 'Klinik Nur Sejahtera') {
+        title = 'Klinik Nur Sejahtera'; 
+    } else if (query === 'KafeTEEN') {
+        title = 'KafeTEEN';
+    }
+
+    // Call the api to get the location collectiton
+    const getLocationCollection = () => {
+        GlobalApi.searchCollection(encodeURIComponent(query), stateName)
+            .then((response) => setResponseData(formatData(response.data)))
+            .catch((error) => console.log(error));
+    }
     
     // navigate back to the previous screen
     const handleBackButton = () => {
         navigation.goBack();
     };
 
-    const { stateName } = useLocation();
+
+    useEffect(() => {
+        getLocationCollection();
+    }, []);
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
@@ -41,7 +71,7 @@ function LocationCollection({navigation, route}) {
                 contentContainerStyle={styles.contentContainer}
             >
                 {/* <Text style={styles.bodyText}>{title}</Text> */}
-                <LocationDetailsList navigation={navigation} query={query} location={stateName}/>
+                <LocationDetailsList navigation={navigation} data={responseData} title={title}/>
             </ScrollView>
         </SafeAreaView>     
     </GestureHandlerRootView>

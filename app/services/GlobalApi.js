@@ -101,8 +101,12 @@ const submitAduanForm = async (formData, files) => {
 // Function to search and retrieve location data from the database
 const searchCollection = (query, location) => {
     path = "/hubungi-collection/search?populate=*&keyword=" + query + "&locationKeyword=" + location;
+    // console.log(path);
     return AxioInstance.get(path);
 }
+
+// Function to get home screen slider content
+const getHomeSliderContent = () => AxioInstance.get("/home-screen-media-libraries?populate=*");
 
 export default {
     getBulletinPost,
@@ -128,6 +132,7 @@ export default {
     getLokasiSabah,
     getLokasiWPLabuan,
     submitAduanForm,
-    searchCollection
+    searchCollection,
+    getHomeSliderContent
 }
 

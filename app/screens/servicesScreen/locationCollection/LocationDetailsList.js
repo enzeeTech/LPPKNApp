@@ -2,37 +2,10 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import CustomTile from '../../locationScreen/CustomTile';
-import GlobalApi from '../../../services/GlobalApi';
 
-
-const LocationDetailsList = ({navigation, query, location}) => {
-    const [responseData, setResponseData] = useState([]);
-
-    // Helper function for formatting the data
-    const formatData = (data) => {
-        if (!data) return [];
-        return data.map((item) => ({
-            id: item.id,
-            title: item.Title || '-',
-            location: item.Location || '-',
-            phoneNo: item.PhoneNo || '-',
-            faxNo: item.FaxNo || '-',
-            operationTime: item.OperationTime || '-',
-            icon: item.Icon?.url,
-            background: item.BackgroundImage?.url,
-        }));
-    };
-
-    // Call the api to get the location collectiton
-    const getLocationCollection = () => {
-        GlobalApi.searchCollection(encodeURIComponent(query), location)
-            .then((response) => setResponseData(formatData(response.data)))
-            .catch((error) => console.log(error));
-    }
-
-    useEffect(() => {
-        getLocationCollection();
-    }, []);
+const LocationDetailsList = ({navigation, data, title}) => {
+    // let count = 0;
+    console.log(data);
 
     const handlePress = (item) => {
         const parentStack = navigation.getState().routes[0].name;
@@ -44,36 +17,24 @@ const LocationDetailsList = ({navigation, query, location}) => {
         }
     };
 
-    let count = 0;
-
-    const counter = () => {
-        count++;
-        return count;
-    }
-
-    let title = '';
-
-    if (query === 'Pejabat') {
-        title = 'Pejabat LPPKN Negeri';
-    } else if (query === 'Klinik Nur Sejahtera') {
-        title = 'Klinik Nur Sejahtera'; 
-    } else if (query === 'KafeTEEN') {
-        title = 'KafeTEEN';
-    }
+    // const counter = () => {
+    //     count++;
+    //     return count;
+    // }
 
     return (
         <View style={styles.container}>
             <Text style={styles.bodyText}>{title}</Text>
-            {responseData.length === 0 ? (
+            {data.length === 0 ? (
                 <View style={styles.centerContent}>
                     <Image
-                        source={require('../../../assets/locationNotFound.png')} // Update the path as needed
+                        source={require('../../../assets/locationNotFound.png')} 
                         style={styles.image}
                     />
                     <Text style={styles.centerText}>Harap maaf. Tiada {title} berdekatan lokasi anda.</Text>
                 </View>
             ) : (
-                responseData.map((item, index) => (
+                data.map((item, index) => (
                     <CustomTile
                         key={index}
                         onPress={() => handlePress(item)}

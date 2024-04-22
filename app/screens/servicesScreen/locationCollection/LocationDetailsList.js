@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import CustomTile from '../../locationScreen/CustomTile';
 
-const LocationDetailsList = ({navigation, data, title}) => {
+const LocationDetailsList = ({navigation, data, title, loading}) => {
     // let count = 0;
-    console.log(data);
+    // console.log(data);
 
     const handlePress = (item) => {
         const parentStack = navigation.getState().routes[0].name;
@@ -25,7 +25,7 @@ const LocationDetailsList = ({navigation, data, title}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.bodyText}>{title}</Text>
-            {data.length === 0 ? (
+            {!loading && data.length === 0 ? (
                 <View style={styles.centerContent}>
                     <Image
                         source={require('../../../assets/locationNotFound.png')} 

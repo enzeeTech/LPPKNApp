@@ -70,6 +70,8 @@ const AduanForm = () => {
                 type: document.mimeType,
                 name: document.name
             });
+            console.log('type', document.mimeType);
+            console.log('name', document.name);
         });
     }
 

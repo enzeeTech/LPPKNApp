@@ -10,13 +10,14 @@ import GlobalApi from '../../../services/GlobalApi';
 
 function LocationCollection({navigation, route}) {
     const [responseData, setResponseData] = useState([]);
+    const [loading, setLoading] = useState(true);
     let title = '';
 
     const query = route.params.query;
-    console.log(query);
+    // console.log(query);
 
     const { stateName } = useLocation();
-    console.log(stateName);
+    // console.log(stateName);
 
     // Helper function for formatting the data
     const formatData = (data) => {
@@ -45,8 +46,14 @@ function LocationCollection({navigation, route}) {
     // Call the api to get the location collectiton
     const getLocationCollection = () => {
         GlobalApi.searchCollection(encodeURIComponent(query), stateName)
-            .then((response) => setResponseData(formatData(response.data)))
-            .catch((error) => console.log(error));
+            .then((response) => {
+                setResponseData(formatData(response.data));
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
     }
     
     // navigate back to the previous screen
@@ -71,7 +78,7 @@ function LocationCollection({navigation, route}) {
                 contentContainerStyle={styles.contentContainer}
             >
                 {/* <Text style={styles.bodyText}>{title}</Text> */}
-                <LocationDetailsList navigation={navigation} data={responseData} title={title}/>
+                <LocationDetailsList navigation={navigation} data={responseData} title={title} loading={loading}/>
             </ScrollView>
         </SafeAreaView>     
     </GestureHandlerRootView>

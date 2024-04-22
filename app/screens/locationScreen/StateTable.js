@@ -71,6 +71,7 @@ function StateTable({navigation}) {
                             fontWeight: isPressed ? 'bold' : '600',
                             fontSize: Platform.OS === 'ios' ? 14 : 16,
                             textAlign: 'center',
+                            padding: 3,
                              }}>
                             {nameList[buttonIndex]}
                         </Text>

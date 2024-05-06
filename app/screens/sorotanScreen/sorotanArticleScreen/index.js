@@ -71,7 +71,7 @@ const SorotanArticleMain = ({navigation, route}) => {
             </View>
             <ScrollView 
                 showsVerticalScrollIndicator={false} 
-                style={{marginTop: -13}}
+                style={{marginTop: -10}}
             >
                 <View style={[styles.infoContainer, infoContainerStyle]}>
                         <InfoSection
@@ -81,6 +81,8 @@ const SorotanArticleMain = ({navigation, route}) => {
                             information={itemDetails?.information}
                             link={itemDetails?.link}
                         />
+                        {/* Filler to fit to screen */}
+                        <View style={{height: 100, backgroundColor: '#FFFFFF'}}></View>
                 </View>
             </ScrollView>
         </SafeAreaView>

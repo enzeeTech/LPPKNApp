@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Linking, Platform } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
 
 const Ilmukeluarga = ({ navigation }) => {
+
+    const playStoreURL = 'https://play.google.com/store/apps/details?id=com.wasabisnorter.kafeteenDiscover';
+    const appStoreURL = 'TO_BE_ADDED';
 
     // Data for bullet point text
     const bulletPointTextData = [
@@ -32,6 +35,21 @@ const Ilmukeluarga = ({ navigation }) => {
     // Hubungi button navigation
     const hubungiButton = () => {
         navigation.navigate('LocationCollection', { query: 'KafeTEEN' });
+    }
+
+    // KafeTeen App Redirect Button
+    const kafeTeenAppRedirectButton = () => {
+        const url = Platform.OS === 'ios' ? appStoreURL : playStoreURL;
+
+        Linking.canOpenURL(url)
+            .then((supported) => {
+            if (!supported) {
+                console.log('Can\'t handle url: ' + url);
+            } else {
+                return Linking.openURL(url);
+            }
+            })
+            .catch((err) => console.error('An error occurred', err));
     }
 
     return (
@@ -93,7 +111,7 @@ const Ilmukeluarga = ({ navigation }) => {
                     </View>
                     {/* Buttons section */}
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewOne}>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={kafeTeenAppRedirectButton}> 
                             <Text style={styles.buttonTextOne}>Muat Turun Aplikasi</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonViewTwo} onPress={hubungiButton}>

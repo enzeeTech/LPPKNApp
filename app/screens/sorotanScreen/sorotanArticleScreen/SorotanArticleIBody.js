@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         flex: 1,
-        marginTop: '-4%',
+        marginTop: '-7%',
     },
     headerContainer: {
         flexDirection: 'column',    

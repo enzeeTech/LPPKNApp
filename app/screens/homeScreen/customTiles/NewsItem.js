@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'left',
     marginBottom: 10,
-    // marginTop: 10,
+    marginTop: 20,
   },
   dateStyle: {
     color: '#21CF44',

@@ -47,7 +47,7 @@ const Ilmukeluarga = ({ navigation }) => {
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>PUSAT ITERAKTIF REMAJA</Text>
+                        <Text style={styles.headerText}>PUSAT INTERAKTIF REMAJA</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
@@ -57,7 +57,7 @@ const Ilmukeluarga = ({ navigation }) => {
                     </View>
                     {/* Subsection One */}
                     <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20}]}>
-                        <Text style={styles.subTextOne}>KafeeTEEN membantu anda dalam masalah</Text>
+                        <Text style={styles.subTextOne}>KafeTEEN membantu anda dalam masalah</Text>
                     </View>
                     {/* Subsection One Bullet Point Text */}
                     <View style={styles.bulletContainer}>

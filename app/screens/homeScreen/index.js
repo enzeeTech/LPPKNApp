@@ -22,7 +22,7 @@ const iconsData = [
   { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan' },
   { iconSource: require('../../assets/smartstart.png'), label: 'SMARTSTART 2.0' },
   { iconSource: require('../../assets/smartBelanja.png'), label: 'SMARTBelanja' },
-  { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTeen' },
+  { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTEEN' },
   { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'Keibubapaan Digital' },
   { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
@@ -172,7 +172,7 @@ const HomeScreen = ({navigation}) => {
       case 'Saringan Kesejahteraan':
           navigation.navigate('SaringanKesejahteraan');
           break;
-      case 'KafeTeen':
+      case 'KafeTEEN':
           navigation.navigate('KafeTeen');
           break;
       default:
@@ -372,7 +372,6 @@ const styles = StyleSheet.create({
   perkhidmatanContainer: {
     flexDirection: 'column',
     height: 280,
-    marginTop: 25,
   },
   sectionText: {
     textAlign: 'left',

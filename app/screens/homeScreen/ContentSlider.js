@@ -32,13 +32,13 @@ const ContentSlider = ({contents}) => {
   // Display Images and Videos
   const renderContent = ({ item, index }) => {
     return (
-      <View style={{ width: width, height: 250 }}>
+      <View style={{ width: width, height: 230 }}>
         {item.type === 'image' ? (
           <Image source={item.source} style={styles.image} />
         ) : (
           <Video
             source={item.source}
-            style={{ width: width, height: 250 }}
+            style={{ width: width, height: 230 }}
             resizeMode={ResizeMode.COVER}
             shouldPlay
             isLooping
@@ -82,7 +82,7 @@ const ContentSlider = ({contents}) => {
 
 
   return (
-    <View style={{height:250, width: width}}>
+    <View style={{height:230, width: width}}>
       <FlatList 
         data = {contents} 
         ref={flatlistRef}
@@ -103,8 +103,8 @@ const ContentSlider = ({contents}) => {
 const styles = StyleSheet.create({
   image: {
     width: '100%',
-    height: 250,
-    resizeMode: 'cover',
+    height: 230,
+    resizeMode: 'contain',
   },
   gradient: {
     position: 'absolute',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     color: 'white',
-    marginBottom: 20,
+    marginBottom: 15,
     // marginLeft: 5,
   },
 });

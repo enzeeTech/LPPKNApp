@@ -39,25 +39,31 @@ function BulletinMain({navigation}) {
   const getBulletinPosts = () => {
     GlobalApi.getBulletinPost()
       .then((response) => {
-        const formattedData = response.data.data.map((item) => ({
+        const responseData = response.data.data;  
+        if (!responseData) {
+          console.error('No data received from getBulletinPost');
+          return; // Exit the function if data is not available
+        }
+        const formattedData = responseData.map((item) => ({
           id: item.id,
-          title: item.attributes.Title,
-          date: formatDate(item.attributes.Date), 
-          tileImage: item.attributes.TileImage.data.attributes.url, 
-          information: item.attributes.Information,
-          images: item.attributes.PostImages.data.map((image) => ({
+          title: item.attributes?.Title,
+          date: formatDate(item.attributes?.Date), 
+          tileImage: item.attributes?.TileImage?.data?.attributes?.url, 
+          information: item.attributes?.Information,
+          images: item.attributes?.PostImages?.data?.map((image) => ({
             id: image.id,
-            url: image.attributes.url,
-          })),
+            url: image.attributes?.url,
+          })) || [], // Use empty array if data is null
         }));
+        console.log(formattedData);
         setAllBulletinItems(formattedData);
         setBulletinItems(formattedData.slice(0, ITEMS_PER_PAGE)); // Loads the first 10 items
         setHasMoreItems(formattedData.length > ITEMS_PER_PAGE);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
-  };
+};
 
 
   // Load the bulletin posts when the screen is loaded

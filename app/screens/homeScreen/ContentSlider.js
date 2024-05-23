@@ -38,8 +38,8 @@ const ContentSlider = ({contents}) => {
         ) : (
           <Video
             source={item.source}
-            style={{ width: width, height: 230 }}
-            resizeMode={ResizeMode.COVER}
+            style={{ width: width, height: 230,}}
+            resizeMode={ResizeMode.CONTAIN}
             shouldPlay
             isLooping
             isMuted

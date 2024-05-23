@@ -1,15 +1,73 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { openURL } from 'expo-linking';
 import { Alert } from 'react-native';
 
 function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
+    // const [address, setAddress] = useState('Loading address...');
+
+    // useEffect(() => {
+    //     const fetchAddress = async () => {
+    //         const coords = extractCoordinatesFromUrl(location);
+    //         if (coords) {
+    //             const fetchedAddress = await fetchAddressFromOSM(coords.lat, coords.lng);
+    //             setAddress(fetchedAddress); // Update state with the fetched address
+    //         } else {
+    //             console.log('Invalid URL or coordinates not found');
+    //             setAddress('Address not found');
+    //         }
+    //     };
+
+    //     fetchAddress();
+    // }, [location]);
+
+    // // Lat and long extraction
+    // const extractCoordinatesFromUrl = (url) => {
+    //     const queryString = url.split('?')[1]; // Get the part after the question mark
+    //     if (!queryString) {
+    //       return null;
+    //     }
+      
+    //     const params = queryString.split('&'); // Split into key-value pairs
+    //     let coordsParam = params.find(param => param.startsWith('q='));
+    //     if (!coordsParam) {
+    //       return null;
+    //     }
+      
+    //     coordsParam = decodeURIComponent(coordsParam.split('=')[1]);
+    //     const [lat, lng] = coordsParam.split(',').map(Number);
+    //     if (isNaN(lat) || isNaN(lng)) {
+    //       return null;
+    //     }
+      
+    //     return { lat, lng };
+    // };
+
+    // const fetchAddressFromOSM = async (lat, lng) => {
+    //     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+
+    //     try {
+    //         const response = await fetch(url);
+    //         const data = await response.json();
+    //         if (data.address) {
+    //             const { road, city, state, country } = data.address;
+    //             return `${road ? road + ', ' : ''}${city ? city + ', ' : ''}${state ? state + ', ' : ''}${country}`;
+    //         } else {
+    //             console.log('No address found for this location');
+    //             return 'Address not found';
+    //         }
+    //     } catch (error) {
+    //         console.error('Failed to fetch address from OSM', error);
+    //         return 'Failed to fetch address';
+    //     }
+    // };
 
     // Lihat Peta Button Pressed
     const onLihatPetaPressed = (address) => {
         const url = `https://www.google.com/maps?q=${encodeURIComponent(address)}`;
         openURL(url);
+        // openURL(address);
     };
 
     // Hubungi Pejabat Button Pressed
@@ -66,6 +124,7 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
                     <Image source={require('../../assets/locationPinIcon.png')} style={styles.iconLocation} />
                     <View style={styles.textContainerLocation}>
                         <Text style={styles.infoText}>{location}</Text>
+                        {/* <Text style={styles.infoText}>{address}</Text> */}
                     </View>
                 </View>
 

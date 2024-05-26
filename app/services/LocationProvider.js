@@ -46,6 +46,7 @@ export const LocationProvider = ({ children }) => {
                 location,
                 stateName,
             });
+            console.log('Location fetched:', location, stateName);
         };
 
         fetchLocation();

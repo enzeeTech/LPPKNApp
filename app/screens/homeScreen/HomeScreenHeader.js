@@ -104,7 +104,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight-20: 0,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight+15: 0,
+        // paddingTop: 40,
+        
     },
     headerContainer: {
         height: 68, 

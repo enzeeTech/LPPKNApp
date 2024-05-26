@@ -1,21 +1,20 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Platform } from 'react-native';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { Dimensions } from 'react-native';
-import React, { useState,  } from 'react';
+import React, { useState } from 'react';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 // import LocationScreen from './app/screens/locationScreen/index';
 import LocationStack from './app/screens/locationScreen/LocationStack';
 import ChatScreen from './app/screens/chatScreen/index';
 import ServicesStack from './app/screens/servicesScreen/ServicesStack';
 import FeedbackScreen from './app/screens/feedbackScreen/index';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeStack from './app/screens/homeScreen/HomeStack';
 import NotificationsHomeScreen from './app/screens/notifications';
 import { LocationProvider } from './app/services/LocationProvider';
@@ -41,7 +40,6 @@ export default function App() {
     }, 2000); // 2 seconds
   };
 
-
   const scheme = useColorScheme();
 
   // Load the custom font
@@ -56,16 +54,16 @@ export default function App() {
 
   if (!animationDone) {
     return (
-      <View style={styles.splashContainer}>
+      <SafeAreaView style={styles.splashContainer}>
         <LottieView 
           source={require('./app/assets/Json/splashScreen.json')} 
           autoPlay 
           speed={2}
           loop={false} 
           onAnimationFinish={handleAnimationComplete}
-          style={{width: screenWidth, height: screenHeight*1.09, resizeMode: "contain"}}
+          style={styles.lottieView}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 
@@ -182,9 +180,14 @@ const styles = StyleSheet.create({
   splashContainer: { 
     flex: 1, 
     width: '100%',
-    alignContent: 'center', 
+    height: '100%',
     alignItems: 'center', 
     justifyContent: 'center',
+    backgroundColor: '#FFF',
+  },
+  lottieView: {
+    width: '100%',
+    height: '100%',
   },
   container: {
     flex: 1,

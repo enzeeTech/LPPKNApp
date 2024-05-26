@@ -26,69 +26,69 @@ const iconsData = [
 ];
 
 function ServicesScreen({navigation}) {
-  const [perkhidmatanOptions, setPerkhidmatanOptions] = React.useState([]);
+  // const [perkhidmatanOptions, setPerkhidmatanOptions] = React.useState([]);
 
-  const serviceOrder = [
-    'Subfertiliti',
-    'Perancang Keluarga',
-    'HPV DNA',
-    'Subsidi Mamogram',
-    'Kaunseling',
-    'SMARTSTART 2.0',
-    'SMARTBelanja',
-    'KafeTEEN',
-    'Saringan Kesejahteraan',
-    'PEKA',
-    'Penyelidikan & Data Mentah',
-    'KASIH Keibubapaan Digital',
-    'Keluarga@Kerja',
-    'IlmuKeluarga',
-  ]
+  // const serviceOrder = [
+  //   'Subfertiliti',
+  //   'Perancang Keluarga',
+  //   'HPV DNA',
+  //   'Subsidi Mamogram',
+  //   'Kaunseling',
+  //   'SMARTSTART 2.0',
+  //   'SMARTBelanja',
+  //   'KafeTEEN',
+  //   'Saringan Kesejahteraan',
+  //   'PEKA',
+  //   'Penyelidikan & Data Mentah',
+  //   'KASIH Keibubapaan Digital',
+  //   'Keluarga@Kerja',
+  //   'IlmuKeluarga',
+  // ]
 
-  // Fetch perkhidmatan options from API
-  const fetchPerkhidmatanOptions = () => {
-    GlobalApi.getPerkhidmatanOptions()
-      .then((response) => {
-        const perkhidmatanOptions = response.data.data.map((item) => ({
-          id: item.id,
-          label: item.attributes.Title,
-          imageSource: item.attributes.Icon.data.attributes.url,
-        }));
+  // // Fetch perkhidmatan options from API
+  // const fetchPerkhidmatanOptions = () => {
+  //   GlobalApi.getPerkhidmatanOptions()
+  //     .then((response) => {
+  //       const perkhidmatanOptions = response.data.data.map((item) => ({
+  //         id: item.id,
+  //         label: item.attributes.Title,
+  //         imageSource: item.attributes.Icon.data.attributes.url,
+  //       }));
 
-        const sortedOptions = perkhidmatanOptions.sort((a, b) => {
-          return serviceOrder.indexOf(a.label) - serviceOrder.indexOf(b.label);
-        });
+  //       const sortedOptions = perkhidmatanOptions.sort((a, b) => {
+  //         return serviceOrder.indexOf(a.label) - serviceOrder.indexOf(b.label);
+  //       });
         
-        setPerkhidmatanOptions(perkhidmatanOptions);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  //       setPerkhidmatanOptions(perkhidmatanOptions);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
-  // Fetch perkhidmatan options on focus
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchPerkhidmatanOptions();
-    }, [])
-  );
-
-  // Helper function to render each service icon
-  // const renderServiceIcon = ({ item }) => (
-  //   <ServiceIcon 
-  //     iconSource={item.iconSource} 
-  //     label={item.label} 
-  //     onPress={() => navigateToService(item.label)}
-  //   />
+  // // Fetch perkhidmatan options on focus
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     fetchPerkhidmatanOptions();
+  //   }, [])
   // );
 
+  // Helper function to render each service icon
   const renderServiceIcon = ({ item }) => (
     <ServiceIcon 
-      iconSource={{uri: item.imageSource}} 
+      iconSource={item.iconSource} 
       label={item.label} 
       onPress={() => navigateToService(item.label)}
     />
   );
+
+  // const renderServiceIcon = ({ item }) => (
+  //   <ServiceIcon 
+  //     iconSource={{uri: item.imageSource}} 
+  //     label={item.label} 
+  //     onPress={() => navigateToService(item.label)}
+  //   />
+  // );
 
   // Handle back press navigation
   const handleBackPress = () => {
@@ -148,8 +148,8 @@ function ServicesScreen({navigation}) {
       <Header onBackPress={handleBackPress} />
       <View style={styles.content}>
           <FlatList
-            // data={iconsData}
-            data={perkhidmatanOptions}
+            data={iconsData}
+            // data={perkhidmatanOptions}
             renderItem={renderServiceIcon}
             keyExtractor={(item, index) => index.toString()}
             numColumns={4}

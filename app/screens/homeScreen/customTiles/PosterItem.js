@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
@@ -11,7 +11,7 @@ const PosterItem = ({ navigation, id, title, date, imageSource }) => {
     };
 
     return (
-      <TouchableOpacity style={styles.cardContainer} onPress={handlePress}>
+      <Pressable style={({pressed}) => [styles.cardContainer, { opacity: pressed ? 1 : 1 }]} onPress={handlePress}>
         <Image source={imageSource} style={styles.cardImage} />
         <LinearGradient
           colors={['#9448DA', 'rgba(148,72,218,0.7)', 'transparent']}
@@ -24,7 +24,7 @@ const PosterItem = ({ navigation, id, title, date, imageSource }) => {
             <Text style={styles.cardTitle} numberOfLines={2}>{title}</Text>
           </View>
         </LinearGradient>
-    </TouchableOpacity>
+      </Pressable>
     );
 };
 

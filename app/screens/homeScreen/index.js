@@ -26,7 +26,7 @@ const iconsData = [
   { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'Keibubapaan Digital' },
   { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
-  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
+  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
 ];
 
 const HomeScreen = ({navigation}) => {
@@ -160,7 +160,7 @@ const HomeScreen = ({navigation}) => {
       case 'SMARTBelanja':
           navigation.navigate('SmartBelanja');
           break;
-      case 'Ilmu Keluarga':
+      case 'IlmuKeluarga':
           navigation.navigate('Ilmukeluarga');
           break;
       case 'Subfertiliti':
@@ -424,6 +424,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: Platform.OS === 'ios' ? screenWidth * 1.65: screenWidth * 1.55, 
     gap: 20,
+    marginLeft: 5,
   },
   rowContainer: {
     flexDirection: 'row',

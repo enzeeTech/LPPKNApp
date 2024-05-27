@@ -49,9 +49,9 @@ function TetangKami({ navigation }) {
                     alignItems: "center",
                 }}
                 >
-                    <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+                    {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                         <Image source={require("../../../assets/settingsIcon.png")} style={{width:25, height: 25, resizeMode: 'contain', marginTop:5}}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>

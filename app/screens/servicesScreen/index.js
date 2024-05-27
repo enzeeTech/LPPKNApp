@@ -22,7 +22,7 @@ const iconsData = [
   { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan & Data Mentah' },
   { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'KASIH Keibubapaan Digital' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
-  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
+  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
 ];
 
 function ServicesScreen({navigation}) {
@@ -119,7 +119,6 @@ function ServicesScreen({navigation}) {
         navigation.navigate('SmartBelanja');
         break;
       case 'IlmuKeluarga':
-        console.log(serviceLabel + ' pressed!)');
         navigation.navigate('Ilmukeluarga');
         break;
       case 'HPV DNA':

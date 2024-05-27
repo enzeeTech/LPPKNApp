@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, Linking, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, Linking, TouchableOpacity, Platform, TurboModuleRegistry } from 'react-native';
 
 const Hubungikami = ({ navigation }) => {
 
   const handleBackPress = () => {
     navigation.goBack();
+  };
+
+  const handlePhonePress = () => {
+    Linking.openURL('tel:03 2613 7555');
+  };
+
+  const handleEmailPress = () => {
+    Linking.openURL('mailto: penduduk@lppkn.gov.my');
   };
 
   // Linking URL to touch buttons
@@ -72,9 +80,9 @@ const Hubungikami = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+              {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                 <Image source={require("../../../assets/settingsIcon.png")} style={{width:25, height: 25, resizeMode: 'contain', marginTop:5}} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
 
@@ -94,20 +102,26 @@ const Hubungikami = ({ navigation }) => {
                       Kuala Lumpur
                     </Text>
                   </View>
-                  <Image source={require("../../../assets/phoneIconUtama.png")} />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.centeredText}>03-2613 7555</Text>
+                  <TouchableOpacity onPress={handlePhonePress} style={styles.container2}>
+                    <Image source={require("../../../assets/phoneIconUtama.png")}  />
+                    <View style={styles.textContainer2}>
+                      <Text style={styles.centeredText2}>03-2613 7555</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <View style={styles.container2}>
+                    <Image source={require("../../../assets/faxIconUtama.png")}  />
+                    <View style={styles.textContainer2}>
+                      <Text style={styles.centeredText2}>03-2693 7250</Text>
+                    </View>
                   </View>
-                  <Image source={require("../../../assets/faxIconUtama.png")} />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.centeredText}>03-2693 7250</Text>
-                  </View>
-                  <Image source={require("../../../assets/emailIcon.png")} />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.centeredText}>
-                      penduduk@lppkn.gov.my
-                    </Text>
-                  </View>
+                  <TouchableOpacity onPress={handleEmailPress} style={styles.container2}>
+                    <Image source={require("../../../assets/emailIcon.png")}  />
+                    <View style={styles.textContainer2}>
+                      <Text style={styles.centeredText2}>
+                        penduduk@lppkn.gov.my
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.socialmediaContainer}>
@@ -224,6 +238,23 @@ const Hubungikami = ({ navigation }) => {
       flex: 0.2,
       justifyContent: "center",
       alignItems: "center",
+    },
+    container2: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: 10,
+    },
+    textContainer2: {
+      justifyContent: 'center',
+      marginTop: 5,
+    },
+    centeredText2: {
+      color: "#777",
+      textAlign: "center",
+      fontSize: 16,
+      fontStyle: "normal",
+      fontWeight: "500",
     },
   });
 

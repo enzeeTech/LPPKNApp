@@ -25,12 +25,13 @@ function LocationCollection({navigation, route}) {
         return data.map((item) => ({
             id: item.id,
             title: item.Title || '-',
-            location: item.Location || '-',
+            location: item.LocationAddress || '-',
             phoneNo: item.PhoneNo || '-',
             faxNo: item.FaxNo || '-',
             operationTime: item.OperationTime || '-',
             icon: item.Icon?.url,
             background: item.BackgroundImage?.url,
+            locationURL: item.LocationURL || '-',
         }));
     };
 

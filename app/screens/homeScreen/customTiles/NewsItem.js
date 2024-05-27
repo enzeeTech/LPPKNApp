@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 
 const NewsItem = ({ navigation, id, title, date, imageSource }) => {
 
@@ -45,7 +45,7 @@ const NewsItem = ({ navigation, id, title, date, imageSource }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.newsItemContainer} onPress={handlePress}>
+    <Pressable style={({pressed}) => [styles.newsItemContainer, { opacity: pressed ? 1 : 1 }]} onPress={handlePress}>
       <Image source={imageSource} style={styles.imageStyle} />
       <View style={styles.textContainer}>
         {isRecentArticle() && (
@@ -57,7 +57,7 @@ const NewsItem = ({ navigation, id, title, date, imageSource }) => {
         <Text style={styles.titleStyle} numberOfLines={3}>{title}</Text>
         <Text style={styles.dateStyle}>{date}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

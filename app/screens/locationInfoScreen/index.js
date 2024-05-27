@@ -41,6 +41,7 @@ function LocationInfoScreen({navigation, route}) {
                         phoneNo={item.item.phoneNo}
                         faxNo={item.item.faxNo}
                         operationTime={item.item.operationTime}
+                        locationURL={item.item.locationURL}
                     />
                 </View>
                 <View style={{height: 100, backgroundColor: 'white'}}></View>

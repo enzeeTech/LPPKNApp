@@ -12,12 +12,12 @@ const BulletingInfoHeader = ({onBackPress}) => {
                     />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Berita LPPKN</Text>
-                <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+                {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                     <Image 
                         source={require('../../assets/settingsIcon.png')}
                         style = {styles.iconStyleSetting}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     );

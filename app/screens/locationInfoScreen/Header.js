@@ -18,12 +18,12 @@ function Header({navigation}) {
                     />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Lokasi Premis LPPKN</Text>
-                <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+                {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                     <Image 
                         source={require('../../assets/settingsIcon.png')}
                         style = {styles.iconStyleSetting}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     );
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         flex: 1, 
         textAlign: 'center', 
+        marginRight: '25%',
     },
     iconStyleBack: {
         width: 25, 

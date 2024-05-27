@@ -29,7 +29,6 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 export default function App() {
-
   // Animation Splash Screen
   const [animationDone, setAnimationDone] = useState(false);
 
@@ -75,7 +74,6 @@ export default function App() {
       <GestureHandlerRootView style={{flex: 1}}>
         <TouchableOpacity
         style={{
-          top: -21,
           top: Platform.OS === 'ios' ? -17 : -25,
           justifyContent: 'center',
           alignItems: 'center',

@@ -4,7 +4,7 @@ import { TouchableOpacity} from 'react-native-gesture-handler';
 
 const defaultImage = '../../assets/backgroundLPPKNHQ.png';
 
-const CustomTile = ({ onPress, title, backgroundImage, operationTime }) => {
+const CustomTile = ({ onPress, title, backgroundImage, operationTime}) => {
 
     const imageSource = backgroundImage ? {uri: backgroundImage} : require(defaultImage);
 

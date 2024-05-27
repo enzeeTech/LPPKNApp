@@ -6,7 +6,6 @@
     "orientation": "portrait",
     "icon": "./app/assets/appIcon.png",
     "userInterfaceStyle": "automatic",
-    
     "assetBundlePatterns": [
       "**/*"
     ],

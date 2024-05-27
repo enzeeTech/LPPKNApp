@@ -6,12 +6,13 @@ const formatData = (data) => {
     return data.map((item) => ({
         id: item.id,
         title: item.attributes.Title || '-',
-        location: item.attributes.Location || '-',
+        location: item.attributes.LocationAddress || '-',
         phoneNo: item.attributes.PhoneNo || '-',
         faxNo: item.attributes.FaxNo || '-',
         operationTime: item.attributes.OperationTime || '-',
         icon: item.attributes.Icon?.data?.attributes?.url,
         background: item.attributes.BackgroundImage?.data?.attributes?.url,
+        locationURL: item.attributes.LocationURL || '-',
     }));
 };
 

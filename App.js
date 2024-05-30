@@ -55,9 +55,9 @@ export default function App() {
     return (
       <SafeAreaView style={styles.splashContainer}>
         <LottieView 
-          source={require('./app/assets/Json/splashScreen.json')} 
+          source={require('./app/assets/Json/splashScreenWhite.json')} 
           autoPlay 
-          speed={2}
+          speed={1.8}
           loop={false} 
           onAnimationFinish={handleAnimationComplete}
           style={styles.lottieView}

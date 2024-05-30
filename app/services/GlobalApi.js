@@ -19,7 +19,7 @@ const getBulletinPost = () => AxioInstance.get("/bulletin-posts?populate=*&pagin
 const getBulletinPostWithQuery = (query) => {
     path = "/bulletin-posts?populate=*";
     path += query;
-    console.log(path);
+    // console.log(path);
     return AxioInstance.get(path);
 };
 
@@ -36,7 +36,7 @@ const getSorotanPostById = (id) => AxioInstance.get(`/sorotan-posts/${id}?popula
 const getSorotanPostWithQuery = (query) => {
     path = "/sorotan-posts?populate=*";
     path += query;
-    console.log(path);
+    // console.log(path);
     return AxioInstance.get(path);
 };
 

@@ -88,6 +88,9 @@ const getLokasiSabah = () => AxioInstance.get("/lokasi-sabahs?populate=*");
 // Function to get lokasi WP Labuan
 const getLokasiWPLabuan = () => AxioInstance.get("/lokasi-wp-labuans?populate=*");
 
+// Function to fetch all premises data
+const getAllPremises = () => AxioInstance.get("/hubungi-collection/search?fetchAll=true&populate=*");
+
 // Function to submit form data and upload files
 const submitAduanForm = async (formData, files) => {
     try {
@@ -133,6 +136,7 @@ export default {
     getLokasiWPLabuan,
     submitAduanForm,
     searchCollection,
-    getHomeSliderContent
+    getHomeSliderContent,
+    getAllPremises
 }
 

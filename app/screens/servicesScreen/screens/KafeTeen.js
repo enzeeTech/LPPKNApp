@@ -3,6 +3,8 @@ import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Linking,
 import Header from './Header';
 import styles from '../StyleServices';
 import GlobalApi from '../../../services/GlobalApi';
+import GreenTickListItems from './reusableComponents/tileListItems/GreenTickListItems';
+import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
 
 const KafeTEEN = ({ navigation }) => {
     const [responseData, setResponseData] = useState([]);
@@ -26,8 +28,6 @@ const KafeTEEN = ({ navigation }) => {
     
                 setResponseData(responseData);
                 setComponentData(componentData);
-                console.log('componentData:', componentData);
-                console.log('responseData:', responseData);
             } else {
                 console.log('No data found');
             }
@@ -40,24 +40,44 @@ const KafeTEEN = ({ navigation }) => {
         fetchPerkhidmatanKafeTeen();
     }, []);
 
-    // Data for bullet point text
-    const bulletPointTextData = [
-        'Kesihatan perempuan',
-        'Kesihatan lelaki',
-        'Seksualiti',
-        'Merokok/penyalahgunaan dadah',
-        'Perhubungan',
-        'Penjagaan kulit',
-        'Kesihatan mental',
-    ];
+    // Get data for bullet points from componentData
+    const extractBulletPoints = (contentData) => {
+        let title = '';
+        let bulletPoints = [];
+      
+        contentData.forEach(item => {
+          if (item.__component === 'lists.green-tick-list-box') {
+            title = item.Title;
+            bulletPoints = item.BulletPoints.split(',');
+          }
+        });
+      
+        return { title, bulletPoints };
+      };
 
-    // Data for galeri
-    const galeriData = [
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-    ];
+    // Get data for gallery from componentData
+    const extractGalleryData = (contentData) => {
+        let title = '';
+        let images = [];
+      
+        contentData.forEach(item => {
+          if (item.__component === 'gallery.gallery-basic') {
+            title = item.Title;
+            // Assuming images are stored in a field named 'Images' within the item
+            console.log("images",item.Images.data)
+            images = item.Images.data.map(image => ({
+                url: image.attributes.url,
+            }));
+            console.log(images)
+          }
+        });
+      
+        return { title, images };
+    };
+
+    const { title: bulletTitle, bulletPoints } = extractBulletPoints(componentData);
+    const { title: galleryTitle, images } = extractGalleryData(componentData);
+      
 
     // Handle back press navigation
      const handleBackPress = () => {
@@ -105,41 +125,9 @@ const KafeTEEN = ({ navigation }) => {
                         </Text>
                     </View>
                     {/* Subsection One */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20}]}>
-                        <Text style={styles.subTextOne}>KafeTEEN membantu anda dalam masalah</Text>
-                    </View>
-                    {/* Subsection One Bullet Point Text */}
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData.map((item, index) => {
-                            return (
-                                <View key={index} style={[styles.bulletPointContainer]}>
-                                    <View style={[styles.textContainer, {paddingVertical: 5}]}>
-                                        <Image source={require('../../../assets/greenTick.png')} style = {{height:20, width:20}} />
-                                        <Text style={styles.bulletPointTextBold}>{item}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })}
-                    </View>
+                    <GreenTickListItems title={bulletTitle} bulletPoints={bulletPoints} />
                     {/* Galeri */}
-                    <View style={styles.subTextOneContainer}>
-                        <Text style={styles.subTextOne}>Perkhidmatan Yang Ditawarkan</Text>
-                    </View>
-                    <View style={styles.galleryParentContainer}>
-                        <ScrollView 
-                            horizontal={true} 
-                            showsHorizontalScrollIndicator={false} 
-                            style={styles.galleryScrollStyle}
-                        >
-                            <View style={styles.galeriContainer}>
-                                {galeriData.map((item, index) => (
-                                    <View key={index} style={styles.galeriItemContainer}>
-                                        <Image source={item.image} style={styles.galeriImage}/>
-                                    </View>
-                                ))}
-                            </View>
-                        </ScrollView>
-                    </View>
+                    <GalleryBasic title={galleryTitle} images={images} />
                     {/* Buttons section */}
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={kafeTeenAppRedirectButton}> 

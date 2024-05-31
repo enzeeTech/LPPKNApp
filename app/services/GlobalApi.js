@@ -40,9 +40,6 @@ const getSorotanPostWithQuery = (query) => {
     return AxioInstance.get(path);
 };
 
-// Function to get perkhidmatan buttons
-const getPerkhidmatanOptions = () => AxioInstance.get("/perkhidmatan-options?populate=*");
-
 // Function to get lokasi selangor
 const getLokasiSelangor = () => AxioInstance.get("/lokasi-selangors?populate=*");
 
@@ -111,6 +108,10 @@ const searchCollection = (query, location) => {
 // Function to get home screen slider content
 const getHomeSliderContent = () => AxioInstance.get("/home-screen-media-libraries?populate=*");
 
+const getServiceByName = (name) => {
+    return AxioInstance.get(`/perkhidmatans?filters[Title][$eq]=${name}&populate[ServiceImage]=*&populate[Content][populate]=*`);
+  };
+
 export default {
     getBulletinPost,
     getBulletinPostWithQuery,
@@ -118,7 +119,6 @@ export default {
     getSorotanPost,
     getSorotanPostById,
     getSorotanPostWithQuery,
-    getPerkhidmatanOptions,
     getLokasiSelangor,
     getLokasiWPKL,
     getLokasiKedah,
@@ -137,6 +137,7 @@ export default {
     submitAduanForm,
     searchCollection,
     getHomeSliderContent,
-    getAllPremises
+    getAllPremises,
+    getServiceByName
 }
 

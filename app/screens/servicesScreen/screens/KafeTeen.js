@@ -1,12 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Linking, Platform } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
+import GlobalApi from '../../../services/GlobalApi';
 
-const Ilmukeluarga = ({ navigation }) => {
-
+const KafeTEEN = ({ navigation }) => {
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
     const playStoreURL = 'https://play.google.com/store/apps/details?id=com.wasabisnorter.kafeteenDiscover';
     const appStoreURL = 'TO_BE_ADDED';
+
+    const fetchPerkhidmatanKafeTeen = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('KafeTEEN');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
+    
+                const componentData = service.Content;
+                const responseData = {
+                    Title: service.Title,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+    
+                setResponseData(responseData);
+                setComponentData(componentData);
+                console.log('componentData:', componentData);
+                console.log('responseData:', responseData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPerkhidmatanKafeTeen();
+    }, []);
 
     // Data for bullet point text
     const bulletPointTextData = [
@@ -58,19 +90,18 @@ const Ilmukeluarga = ({ navigation }) => {
             <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/kafeTeenBackground.png')} 
+                    <Image source={{ uri: responseData.ServiceImage }} 
                     style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>PUSAT INTERAKTIF REMAJA</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'KafeTEEN merupakan pusat remaja serba moden mesra ditubuhkan oleh Lembaga Penduduk dan Pembangunan '
-                         + 'Keluarga Negara (LPPKN) bagi tujuan membantu remaja berumur 13 hingga 24 tahun melalui alam remaja dengan selesa dan penuh yakin.'}
+                        {responseData.Description}
                         </Text>
                     </View>
                     {/* Subsection One */}
@@ -125,4 +156,4 @@ const Ilmukeluarga = ({ navigation }) => {
     );
 }
 
-export default Ilmukeluarga;
+export default KafeTEEN;

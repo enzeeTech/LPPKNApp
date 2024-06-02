@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   bulletPointTextBold: {
     marginLeft: 5,
-        fontSize: 14,
+        fontSize: 16,
         color: '#777777',
         fontWeight: 'bold',
   }

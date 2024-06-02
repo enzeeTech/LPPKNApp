@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     introText:{
-        fontSize: 14,
+        fontSize: 16,
         marginLeft: 15,
         marginRight: 15,
         color: '#777777',

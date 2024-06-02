@@ -21,7 +21,8 @@ const KafeTEEN = ({ navigation }) => {
     
                 const componentData = service.Content;
                 const responseData = {
-                    Title: service.Title,
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
                     ServiceImage: service.ServiceImage.data.attributes.url,
                     Description: service.Description,
                 };

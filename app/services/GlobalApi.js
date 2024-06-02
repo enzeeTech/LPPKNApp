@@ -109,7 +109,7 @@ const searchCollection = (query, location) => {
 const getHomeSliderContent = () => AxioInstance.get("/home-screen-media-libraries?populate=*");
 
 const getServiceByName = (name) => {
-    return AxioInstance.get(`/perkhidmatans?filters[Title][$eq]=${name}&populate[ServiceImage]=*&populate[Content][populate]=*`);
+    return AxioInstance.get(`/perkhidmatans?filters[ServiceID][$eq]=${name}&populate[ServiceImage]=*&populate[Content][populate]=*`);
   };
 
 export default {

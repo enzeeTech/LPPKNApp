@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import ListItem from './tileListItems/ListItems';
 
-const PriceTabTile = ({data, prices}) => {
-    const [activeTab, setActiveTab] = useState('resident');
-
+const PriceTabTile = ({ data, prices, activeTab, setActiveTab }) => {
     return (
         <View style={styles.tabParentContainer}>
             {/* Tab buttons */}
             <View style={styles.tabButtonContainer}>
                 <TouchableOpacity
                     style={[
-                    styles.tabButton,
-                    activeTab === 'resident' ? styles.buttonActive : styles.buttonInactive
+                        styles.tabButton,
+                        activeTab === 'resident' ? styles.buttonActive : styles.buttonInactive
                     ]}
                     onPress={() => setActiveTab('resident')}
                 >
@@ -22,8 +20,8 @@ const PriceTabTile = ({data, prices}) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[
-                    styles.tabButton,
-                    activeTab === 'nonResident' ? styles.buttonActive : styles.buttonInactive
+                        styles.tabButton,
+                        activeTab === 'nonResident' ? styles.buttonActive : styles.buttonInactive
                     ]}
                     onPress={() => setActiveTab('nonResident')}
                 >
@@ -32,10 +30,10 @@ const PriceTabTile = ({data, prices}) => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.priceText}>{prices[activeTab]}</Text>
+            <Text style={styles.priceText}>RM{prices[activeTab]}</Text>
             <View style={{ marginTop: 10 }}>
                 {data.map((item, index) => (
-                <ListItem key={index} title={item.title} subtitle={item.subtitle} />
+                    <ListItem key={index} title={item.title} subtitle={item.subtitle} />
                 ))}
             </View>
         </View>

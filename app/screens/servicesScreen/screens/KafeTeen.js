@@ -5,6 +5,7 @@ import styles from '../StyleServices';
 import GlobalApi from '../../../services/GlobalApi';
 import GreenTickListItems from './reusableComponents/tileListItems/GreenTickListItems';
 import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
+import { extractGalleryData } from '../../../utilities/GalleryExtract';
 
 const KafeTEEN = ({ navigation }) => {
     const [responseData, setResponseData] = useState([]);
@@ -55,26 +56,7 @@ const KafeTEEN = ({ navigation }) => {
       
         return { title, bulletPoints };
       };
-
-    // Get data for gallery from componentData
-    const extractGalleryData = (contentData) => {
-        let title = '';
-        let images = [];
-      
-        contentData.forEach(item => {
-          if (item.__component === 'gallery.gallery-basic') {
-            title = item.Title;
-            // Assuming images are stored in a field named 'Images' within the item
-            console.log("images",item.Images.data)
-            images = item.Images.data.map(image => ({
-                url: image.attributes.url,
-            }));
-            console.log(images)
-          }
-        });
-      
-        return { title, images };
-    };
+    
 
     const { title: bulletTitle, bulletPoints } = extractBulletPoints(componentData);
     const { title: galleryTitle, images } = extractGalleryData(componentData);

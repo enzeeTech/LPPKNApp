@@ -148,10 +148,11 @@ const KeluargaKerja = ({ navigation }) => {
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={{height: 110, backgroundColor: '#FFF'}}></View>
+                    {/* View created to add padding */}
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
                 </View>
-                <View style={{height: 110, backgroundColor: '#FFF'}}></View>
-                 {/* View created to add padding */}
-                 <View style={{height: 50, backgroundColor: '#FFF'}}></View>
+                
 
             </ScrollView>
         </SafeAreaView>

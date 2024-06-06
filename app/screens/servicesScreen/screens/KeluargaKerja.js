@@ -62,17 +62,6 @@ const KeluargaKerja = ({ navigation }) => {
     // Get gallery data
     const { title: galleryTitle, images } = extractGalleryData(componentData);
 
-    // Data for bullet point text
-    const bulletPointTextData = [
-        'Meningkatkan kesedaran dan pengetahuan kepada ibubapa mengenai pentingnya mengimbangi peranan sebagai pekerja; dan',
-        'Memberi kemahiran serta panduan cara gaya keibubapaan untuk menghadapi cabaran keluarga di setiap kitaran hidup keluarga.',
-    ];
-
-    const bulletPointTextDataTwo = [
-        'Ibubapa/ pasangan yang bekerja',
-        'Ibubapa yang mempunyai anak kecil dan anak remaja.',
-    ];
-
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();

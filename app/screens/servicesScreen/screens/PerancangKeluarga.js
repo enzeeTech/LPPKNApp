@@ -224,7 +224,7 @@ const PerancangKeluarga = ({navigation}) => {
                         </ScrollView>
                     </View>
                     <View style={styles.subTextTwoContainer}>
-                        <Text style={styles.subTextTwo}>Hubungi Klinik Nur Sejahtera LPPKN untuk temujanji anda.</Text>
+                        <Text style={styles.subTextTwo}>Anda boleh melakukan ujian HPV DNA ini di mana-mana Klinik Nur Sejahtera yang berhampiran.</Text>
                     </View>
                     {/* Buttons section */}
                     <View style={styles.buttonContainer}>

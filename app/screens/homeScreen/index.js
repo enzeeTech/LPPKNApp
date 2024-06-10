@@ -327,7 +327,7 @@ const HomeScreen = ({navigation}) => {
         {/* SOROTAN SECTION */}
         <View style={styles.sorotanContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.sorotanText}>Sorotan</Text>
+            <Text style={styles.sorotanText}>Highlights</Text>
             <TouchableOpacity style={{flexDirection: 'row'}} onPress={onSorotanLihatSemuaPress}>
               <Text style={styles.sorotanSubText}>Lihat Semua</Text>
               <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan}/>

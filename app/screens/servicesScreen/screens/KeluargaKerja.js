@@ -43,10 +43,6 @@ const KeluargaKerja = ({ navigation }) => {
         fetchPerkhidmatanKeluarga();
     }, []);
 
-    if (!responseData.ServiceID) {
-        return <Text>Loading...</Text>;
-    }
-
     // Extract prices and items for PriceTabTile component
     const priceTileComponent = componentData.find(component => component.__component === 'tiles.price-tile1');
     const priceData = priceTileComponent ? priceTileComponent.TileData.tile : null;
@@ -70,6 +66,27 @@ const KeluargaKerja = ({ navigation }) => {
     // Hubungi button navigation
     const hubungiButton = () => {
         navigation.navigate('LocationCollection', { query: 'Pejabat' });
+    }
+
+    if (!responseData.ServiceID) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header onBackPress={handleBackPress} />
+                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                    <View style={styles.backgroundContainer}>
+                        <Image source={{uri: 'https://placehold.co/150x150/grey/grey/png'}} style={styles.backgroundImage} />
+                    </View>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerText}>Loading...</Text>
+                        </View>
+                        {/** padding till the end of the screen */}
+                        <View style={{height: 500, backgroundColor: '#FFF'}}></View>
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );    
     }
 
     return (

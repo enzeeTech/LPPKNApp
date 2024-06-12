@@ -1,59 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
-import TabTile from './reusableComponents/PriceTabTile';
+import PriceTabTile from './reusableComponents/PriceTabTile';
+import GlobalApi from '../../../services/GlobalApi';
+import BulletPointList from './reusableComponents/bulletpointLists/BulletPointList';
 
 const SmartBelanja = ({ navigation }) => {
 
-    const [showPopup, setShowPopup] = useState(false);
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
+    const [activeTab, setActiveTab] = useState('resident');
 
-    // Data for bullet point text
-    const bulletPointTextData = [
-        'Memberi kesedaran mengenai peranan dan tanggungjawab setiap anggota terhadap kewangan keluarga.',
-        'Memberi pengetahuan kepada keluarga mengenai kepentingan merancang dan mempraktikkan pengurusan kewangan yang lebih baik.',
-        'Membolehkan keluarga membina pelan kewangan yang lebih berkesan.',
-        'Membantu keluarga mengawal pendapatan yang diperolehi melalui perbelanjaan berhemah.',
-    ];
+    const fetchPerkhidmatanKeluarga = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('SmartBelanja');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
+    
+                const componentData = service.Content;
+                const responseData = {
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+                
+                setResponseData(responseData);
+                setComponentData(componentData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
+    };
 
-    // Data for galeri
-    const galeriData = [
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-    ];
+    useEffect(() => {
+        fetchPerkhidmatanKeluarga();
+    }, []);
+
+    // Extract prices and items for PriceTabTile component
+    const priceTileComponent = componentData.find(component => component.__component === 'tiles.price-tile1');
+    const priceData = priceTileComponent ? priceTileComponent.TileData.tile : null;
+
+    const prices = priceData ? {
+        resident: priceData.price1.value,
+        nonResident: priceData.price2.value
+    } : {};
+
+    const price1Items = priceData ? priceData.price1.items : [];
+    const price2Items = priceData ? priceData.price2.items : [];
 
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();
     }
 
-    // const openPopup = () => {
-    //     setShowPopup(true);
-    // }
-
-    // const closePopup = () => {
-    //     setShowPopup(false);
-    // }
-
     // Hubungi button navigation
     const hubungiButton = () => {
         navigation.navigate('LocationCollection', { query: 'Pejabat' });
     }
 
+    if (!responseData.ServiceID) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header onBackPress={handleBackPress} />
+                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                    <View style={styles.backgroundContainer}>
+                        <Image source={{uri: 'https://placehold.co/150x150/grey/grey/png'}} style={styles.backgroundImage} />
+                    </View>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerText}>Loading...</Text>
+                        </View>
+                        {/** padding till the end of the screen */}
+                        <View style={{height: 500, backgroundColor: '#FFF'}}></View>
 
-    // Data for tab tile
-    const data = [
-        { title: 'Kenali Wang Anda (Pancing Ringgit)'},
-        { title: 'Ceramah Pengurusan Kewangan Keluarga Secara Berhemah'},
-        { title: 'Pemburu Wang (Money Hunter)'},
-      ];
-    
-      const prices = {
-        resident: 'RM20',
-        nonResident: 'RM30', 
-      };
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );    
+    }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -61,59 +91,76 @@ const SmartBelanja = ({ navigation }) => {
             <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/smartBelanjaBackground.png')} 
+                    <Image source={{uri: responseData.ServiceImage}} 
                     style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>SMART BELANJA</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'Membantu ahli keluarga meningkatkan pengetahuan dan kemahiran dalam merancang kewangan dan perbelanjaan dengan bijak.'}
+                        {responseData.Description}
                         </Text>
                     </View>
                     <View style={{height: 20, backgroundColor: '#FFF'}}></View>
                     {/* Info tile with tab */}
-                    <TabTile data={data} prices={prices} />
+                    {priceData && (
+                        <PriceTabTile
+                            data={activeTab === 'resident' ? price1Items : price2Items}
+                            prices={prices}
+                            activeTab={activeTab} 
+                            setActiveTab={setActiveTab} 
+                        />
+                    )}
                     {/* Subsection One */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 40}]}>
-                        <Text style={styles.subTextOne}>Objektif</Text>
-                    </View>
-                    {/* Subsection One Bullet Point Text */}
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData.map((item, index) => {
-                            return (
-                                <View key={index} style={[styles.bulletPointContainer]}>
-                                    <View style={styles.textContainer}>
-                                        <Text style={styles.bullet}>{'\u2022'}</Text>
-                                        <Text style={styles.bulletPointText}>{item}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })}
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'objektif')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
                     {/* Subsection Two */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
-                        <Text style={styles.subTextOne}>Metodologi</Text>
-                    </View>
-                    <View style={[styles.introContainer, {marginBottom: 5}]}>
-                        <Text style={styles.introText}>
-                        {'SMARTBelanja dijalankan secara interaktif meliputi ceramah, main peranan (roleplay) dan perkongsian pengalaman.'}
-                        </Text>
-                    </View>
-                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
+                    {componentData
+                        .filter(component => component.__component === 'subsections.section' && component.SectionTitle === 'Metodologi')
+                        .map(section => (
+                            <View key={section.id}>
+                                <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: -10}]}>
+                                    <Text style={styles.subTextOne}>{section.SectionTitle}</Text>
+                                </View>
+                                <View style={[styles.introContainer, {marginBottom: 5}]}>
+                                    <Text style={styles.introText}>
+                                    {section.Description}
+                                    </Text>
+                                </View>
+                            </View>
+                        ))
+                    }
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
                     {/* Subsection Three */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
-                        <Text style={styles.subTextOne}>Kriteria Kelayakan</Text>
-                    </View>
-                    <View style={[styles.introContainer, {marginBottom: 5}]}>
-                        <Text style={styles.introText}>
-                        {'Terbuka kepada semua, keluarga yang berminat untuk meningkatkan kemahiran pengurusan kewangan keluarga.'}
-                        </Text>
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'subsections.section' && component.SectionTitle === 'Kriteria Kelayakan')
+                        .map(section => (
+                            <View key={section.id}>
+                                <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: -10}]}>
+                                    <Text style={styles.subTextOne}>{section.SectionTitle}</Text>
+                                </View>
+                                <View style={[styles.introContainer, {marginBottom: 5}]}>
+                                    <Text style={styles.introText}>
+                                    {section.Description}
+                                    </Text>
+                                </View>
+                            </View>
+                        ))
+                    }
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
                     {/* Buttons section */}
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
@@ -121,7 +168,7 @@ const SmartBelanja = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{height: 110, backgroundColor: '#FFF'}}></View>
+                <View style={{height: 150, backgroundColor: '#FFF'}}></View>
                 {/* Popup/Modal */}
                 {/* <Modal
                     transparent={true}
@@ -148,8 +195,6 @@ const SmartBelanja = ({ navigation }) => {
                         </View>
                     </View>
                 </Modal> */}
-                 {/* View created to add padding */}
-                 <View style={{height: 100, backgroundColor: '#FFF'}}></View>
             </ScrollView>
         </SafeAreaView>
     );

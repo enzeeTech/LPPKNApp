@@ -173,3 +173,31 @@ const AduanForm = () => {
 };
 
 export default AduanForm;
+
+// https://www.lppkn.gov.my/lppkngateway/frontend/web/index.php?r=portal%2Ffeedback&menu=81&id=Sjc3cXJZQVRIV2kyMG9SMXJlTkJTQT09
+
+// This screen opens a webiew to the URL Above, while keeping in mind of the safe area
+
+// import React from 'react';
+// import { SafeAreaView, View } from 'react-native';
+// import WebView from 'react-native-webview';
+// import Header from './FeedbackHeader';
+
+// const AduanForm = () => {
+//     return (
+//         <SafeAreaView style={{ backgroundColor: '#9448DA' }}>
+//             <Header />
+//             <View style={{backgroundColor: 'purple' }}>
+//                 <WebView
+//                     // source={{ uri: 'https://www.lppkn.gov.my/lppkngateway/frontend/web/index.php?r=portal%2Ffeedback&menu=81&id=Sjc3cXJZQVRIV2kyMG9SMXJlTkJTQT09' }}
+//                     source = {{ uri: 'https://www.google.com' }}
+//                     style={{ flex: 1 }}
+
+//                 />
+//             </View>
+//         </SafeAreaView>
+//     );
+// };
+
+// export default AduanForm;
+

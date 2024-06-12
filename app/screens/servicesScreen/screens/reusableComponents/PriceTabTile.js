@@ -33,7 +33,7 @@ const PriceTabTile = ({ data, prices, activeTab, setActiveTab }) => {
             <Text style={styles.priceText}>RM{prices[activeTab]}</Text>
             <View style={{ marginTop: 10 }}>
                 {data.map((item, index) => (
-                    <ListItem key={index} title={item.title} subtitle={item.subtitle} />
+                    <ListItem key={index} title={item.title} subtitle={item.subtitle ? item.subtitle : null} />
                 ))}
             </View>
         </View>

@@ -42,11 +42,6 @@ const Ilmukeluarga = ({ navigation }) => {
         fetchPerkhidmatanKeluarga();
     }, []);
 
-    if (!responseData.ServiceID) {
-        return <Text>Loading...</Text>;
-    }
-
-
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();
@@ -68,6 +63,27 @@ const Ilmukeluarga = ({ navigation }) => {
 
     const price1Items = priceData ? priceData.price1.items : [];
     const price2Items = priceData ? priceData.price2.items : [];
+
+    if (!responseData.ServiceID) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header onBackPress={handleBackPress} />
+                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                    <View style={styles.backgroundContainer}>
+                        <Image source={{uri: 'https://placehold.co/150x150/grey/grey/png'}} style={styles.backgroundImage} />
+                    </View>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerText}>Loading...</Text>
+                        </View>
+                        {/** padding till the end of the screen */}
+                        <View style={{height: 500, backgroundColor: '#FFF'}}></View>
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );    
+    }
 
     return (
         <SafeAreaView style={styles.container}>

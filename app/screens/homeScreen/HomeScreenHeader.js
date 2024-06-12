@@ -137,10 +137,10 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',  
     },
     iconStyleSetting: {
-        width: 22, 
-        height: 22, 
-        marginRight: 5,
+        width: 25, 
+        height: 25, 
         resizeMode: 'contain',
+        // marginRight: 5,
         backgroundColor: 'transparent',
     },
     searchBarMainContainer: {

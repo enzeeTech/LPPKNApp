@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     iconStyleSetting: {
         width: 25, 
         height: 25, 
+        marginLeft: 11,
         resizeMode: 'contain',
         backgroundColor: 'transparent',
     },

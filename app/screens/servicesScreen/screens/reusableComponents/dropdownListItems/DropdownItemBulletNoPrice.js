@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const DropdownItemBulletWithPrice = ({ title, items, isFirstItem }) => {
+
     return (
         <View style={[styles.container, isFirstItem ? styles.firstItem : null]}>
             <View style={styles.innerContainer}>
@@ -11,7 +12,7 @@ const DropdownItemBulletWithPrice = ({ title, items, isFirstItem }) => {
                     {items.map((item, index) => (
                         <View key={index} style={styles.itemRow}>
                             <Text style={styles.bullet}>{'\u2022'}</Text>
-                            <Text style={styles.itemLabel}>{String(item.label)}</Text>
+                            <Text style={styles.itemLabel}>{String(item)}</Text>
                         </View>
                     ))}
                 </View>

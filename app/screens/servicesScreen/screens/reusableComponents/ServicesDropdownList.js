@@ -4,7 +4,7 @@ import DropdownItemWithPrice from './dropdownListItems/DropdownItemWithPrice';
 import DropdownItemBulletWithPrice from './dropdownListItems/DropdownItemBulletWithPrice';
 import DropdownItemBulletNoPrice from './dropdownListItems/DropdownItemBulletNoPrice';
 
-const Dropdown = ({ data, headerTitle, imageSource, type }) => {
+const Dropdown = ({ items, headerTitle, imageSource, type }) => {
     const [expanded, setExpanded] = useState(false);
     const animationController = useRef(new Animated.Value(0)).current;
 
@@ -15,7 +15,7 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
 
     // Determine the type of dropdown
     const isBulletType = type === 'bullet';
-    const componentType = type
+    const componentType = type;
 
     // function to toggle the dropdown
     const toggleDropdown = () => {
@@ -42,13 +42,13 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
     let height;
 
     if (componentType === 'bullet') {
-        height = data.length * BULLET_ITEM_HEIGHT;
+        height = items.length * BULLET_ITEM_HEIGHT;
     }
     else if (componentType === 'bulletNoPrice') {
-        height = data.length * BULLET_NO_PRICE_ITEM_HEIGHT;
+        height = items.length * BULLET_NO_PRICE_ITEM_HEIGHT;
     }
     else {
-        height = data.length * ITEM_HEIGHT;
+        height = items.length * ITEM_HEIGHT;
     }
     // const height = isBulletType ? data.length * BULLET_ITEM_HEIGHT : data.length * ITEM_HEIGHT;
 
@@ -73,13 +73,16 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
                 </TouchableWithoutFeedback>
             </View>
             <Animated.View style={[styles.dropdownContainer, { height: heightInterpolation, opacity: expanded ? 1 : 0, borderTopWidth: 0 }]}>
-                {data.map((item, index) => {
+                {items.map((item, index) => {
+
+                    console.log(items)
                     // Determine the component to render based on item type
                     if (componentType === 'bullet') {
                         return (
                             <DropdownItemBulletWithPrice 
                                 key={index}
-                                {...item} 
+                                title={item.title}
+                                items={item.items}
                                 isFirstItem={index === 0}
                             />
                         );
@@ -88,7 +91,8 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
                         return (
                             <DropdownItemBulletNoPrice 
                                 key={index}
-                                {...item} 
+                                title={item.title}
+                                items={item.items}
                                 isFirstItem={index === 0}
                             />
                         );
@@ -97,7 +101,8 @@ const Dropdown = ({ data, headerTitle, imageSource, type }) => {
                         return (
                             <DropdownItemWithPrice 
                                 key={index}
-                                {...item} 
+                                title={item.title}
+                                items={item.items}
                                 isFirstItem={index === 0}
                             />
                         );

@@ -2,7 +2,15 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import ListItem from './tileListItems/ListItems';
 
-const PriceTabTile = ({ data, prices, activeTab, setActiveTab }) => {
+const PriceTabTile = ({ data, prices, activeTab, setActiveTab, price1Title, price2Title }) => {
+    // Function to determine if the title needs to be split into multiple lines
+    const renderTitle = (title) => {
+        if (title.length > 12) {
+            return title.split(' ').join('\n');
+        }
+        return title; 
+    };
+
     return (
         <View style={styles.tabParentContainer}>
             {/* Tab buttons */}
@@ -15,7 +23,7 @@ const PriceTabTile = ({ data, prices, activeTab, setActiveTab }) => {
                     onPress={() => setActiveTab('resident')}
                 >
                     <Text style={[styles.tabText, activeTab === 'resident' ? styles.tabTextActive : styles.tabTextInactive]}>
-                        Kakitangan{'\n'}Kerajaan
+                        {renderTitle(price1Title)}
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -26,7 +34,7 @@ const PriceTabTile = ({ data, prices, activeTab, setActiveTab }) => {
                     onPress={() => setActiveTab('nonResident')}
                 >
                     <Text style={[styles.tabText, activeTab === 'nonResident' ? styles.tabTextActive : styles.tabTextInactive]}>
-                        Kakitangan{'\n'}Swasta
+                        {renderTitle(price2Title)}
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -71,10 +79,10 @@ const styles = StyleSheet.create({
     },
     tabButton: {
         flexGrow: 1, 
+        height: 50,
         justifyContent: 'center', 
         alignItems: 'center', 
         borderColor: 'transparent', 
-        // height: 50,
         borderWidth: 1,
         borderLeftWidth: 0, 
         borderRightWidth: 0,
@@ -109,5 +117,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#5D2E86',
     },
-
 });

@@ -9,6 +9,8 @@ const Penyelidikan = ({ navigation }) => {
 
     const [responseData, setResponseData] = useState([]);
     const [componentData, setComponentData] = useState([]);
+    const [linkTitle, setLinkTitle] = useState([]);
+    const [linkURL, setLinkURL] = useState([]);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -23,6 +25,21 @@ const Penyelidikan = ({ navigation }) => {
                     }
                     return null;
                 }).flat().filter(item => item !== null);
+
+                setLinkTitle(service.Content.map(component => {
+                    if (component.__component === 'links.link1') {
+                        return component.Title;
+                    }
+                    return null;
+                }).flat().filter(item => item !== null));
+
+                setLinkURL(service.Content.map(component => {
+                    if (component.__component === 'links.link1') {
+                        return component.URL;
+                    }
+                    return null;
+                }).flat().filter(item => item !== null));
+
 
                 const responseData = {
                     ServiceID: service.ServiceID,
@@ -108,8 +125,11 @@ const Penyelidikan = ({ navigation }) => {
 
                     {/* Button selection */}
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewOne} onPress={() => Linking.openURL('https://www.lppkn.gov.my/lppkngateway/frontend/web/index.php?r=portal/article&menu=81&id=UGMzMjExaGE0STI0cG5ZMXhFTDlNUT09#kajian')}>
-                            <Text style={styles.buttonTextOne}>Layari Portal</Text>
+                        <TouchableOpacity 
+                            style={styles.buttonViewOne}
+                            onPress={() => Linking.openURL(linkURL[0])}  
+                        >
+                            <Text style={styles.buttonTextOne}>{linkTitle}</Text>
                         </TouchableOpacity>
                     </View>
 

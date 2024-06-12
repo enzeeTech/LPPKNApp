@@ -55,6 +55,9 @@ const Smartstart = ({ navigation }) => {
     const price1Items = priceData ? priceData.price1.items : [];
     const price2Items = priceData ? priceData.price2.items : [];
 
+    const price1Title = priceData ? priceData.price1.title : '';
+    const price2Title = priceData ? priceData.price2.title : '';
+
     // Get gallery data
     const { title: galleryTitle, images } = extractGalleryData(componentData);
 
@@ -117,6 +120,8 @@ const Smartstart = ({ navigation }) => {
                             prices={prices}
                             activeTab={activeTab} 
                             setActiveTab={setActiveTab} 
+                            price1Title={price1Title}
+                            price2Title={price2Title}
                         />
                     )}
                     <View style={{height: 20, backgroundColor: '#FFF'}}></View>

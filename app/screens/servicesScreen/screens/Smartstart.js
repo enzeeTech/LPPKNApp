@@ -1,62 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
-import TabTile from './reusableComponents/PriceTabTile';
+import PriceTabTile from './reusableComponents/PriceTabTile';
+import GlobalApi from '../../../services/GlobalApi';
+import { extractGalleryData } from '../../../utilities/GalleryExtract';
+import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
+import BulletPointList from './reusableComponents/bulletpointLists/BulletPointList';
 
 const Smartstart = ({ navigation }) => {
 
-    const [showPopup, setShowPopup] = useState(false);
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
+    const [activeTab, setActiveTab] = useState('resident');
 
-    // Data for bullet point text
-    const bulletPointTextData = [
-        'Memberi ilmu pengetahuan dalam menempuh alam perkahwinan.',
-        'Memberi panduan, petua dan kemahiran ke arah persediaan mental dan pembinaan sikap yang positif.',
-        'Menyelia platform yang selamat kepada pasangan untuk memahami dan mengenali diri.',
-    ];
+    const fetchPerkhidmatanKeluarga = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('SmartStart');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
+    
+                const componentData = service.Content;
+                const responseData = {
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+                
+                setResponseData(responseData);
+                setComponentData(componentData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
+    };
 
-    // Data for galeri
-    const galeriData = [
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-    ];
+    useEffect(() => {
+        fetchPerkhidmatanKeluarga();
+    }, []);
+
+    if (!responseData.ServiceID) {
+        return <Text>Loading...</Text>;
+    }
+
+    // Extract prices and items for PriceTabTile component
+    const priceTileComponent = componentData.find(component => component.__component === 'tiles.price-tile1');
+    const priceData = priceTileComponent ? priceTileComponent.TileData.tile : null;
+
+    const prices = priceData ? {
+        resident: priceData.price1.value,
+        nonResident: priceData.price2.value
+    } : {};
+
+    const price1Items = priceData ? priceData.price1.items : [];
+    const price2Items = priceData ? priceData.price2.items : [];
+
+    // Get gallery data
+    const { title: galleryTitle, images } = extractGalleryData(componentData);
 
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();
     }
 
-    // const openPopup = () => {
-    //     setShowPopup(true);
-    // }
-
-    // const closePopup = () => {
-    //     setShowPopup(false);
-    // }
-
-
     // Hubungi button navigation
     const hubungiButton = () => {
         navigation.navigate('LocationCollection', { query: 'Pejabat' });
     }
-
-    // Data for tab tile
-    const data = [
-        { title: 'Sesi 1', subtitle: 'Mengenali Dirimu' },
-        { title: 'Sesi 2', subtitle: 'Meneroka Harapan Kita' },
-        { title: 'Sesi 3', subtitle: 'Menangani Konflik dan Cabaran' },
-        { title: 'Sesi 4', subtitle: 'Ingat! Luahkan Perasaan Anda'},
-        { title: 'Sesi 5', subtitle: 'Membina Kemesraaan Seksual'},
-        { title: 'Sesi 6', subtitle: 'Mengurus Sumber Keluarga'},
-        { title: 'Sesi 7', subtitle: 'Undang-undang Keluarga'}
-      ];
-    
-      const prices = {
-        resident: 'RM20',
-        nonResident: 'RM60', 
-      };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -64,85 +78,79 @@ const Smartstart = ({ navigation }) => {
             <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/smartStartBackground.png')} 
+                    <Image source={{uri: responseData.ServiceImage}} 
                     style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>SMARTSTART 2.0</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'Memberi pengetahuan dan kemahiran kepada pasangan yang akan berkahwin tentang pelbagai aspek perkahwinan dan'
-                         + ' keibubapaan bagi memberi sokongan psikososial dalam menempuhi alam perkahwinan yang  sejahtera.' +
-                        ' dan penderaan anak-anak.'}
+                        {responseData.Description}
                         </Text>
                     </View>
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
                     {/* Info tile with tab */}
-                    <TabTile data={data} prices={prices} />
+                    {priceData && (
+                        <PriceTabTile
+                            data={activeTab === 'resident' ? price1Items : price2Items}
+                            prices={prices}
+                            activeTab={activeTab} 
+                            setActiveTab={setActiveTab} 
+                        />
+                    )}
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
                     {/* Subsection One */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 40}]}>
-                        <Text style={styles.subTextOne}>Objektif</Text>
-                    </View>
-                    <View style={[styles.introContainer, {marginBottom: 5}]}>
-                        <Text style={styles.introText}>
-                        {'Mengukuhkan perkahwinan dan membina keluarga yang mantap, bahagia dengan:'}
-                        </Text>
-                    </View>
-                    {/* Subsection One Bullet Point Text */}
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData.map((item, index) => {
-                            return (
-                                <View key={index} style={[styles.bulletPointContainer]}>
-                                    <View style={styles.textContainer}>
-                                        <Text style={styles.bullet}>{'\u2022'}</Text>
-                                        <Text style={styles.bulletPointText}>{item}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })}
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'objektif')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
                     {/* Subsection Two */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
-                        <Text style={styles.subTextOne}>Tempoh Kursus</Text>
-                    </View>
-                    <View style={[styles.introContainer, {marginBottom: 5}]}>
-                        <Text style={styles.introText}>
-                        {'Kursus ini dikendalikan selama 2 hari untuk 25 pasangan.'}
-                        </Text>
-                    </View>
-                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
-                    {/* Subsection Three */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
-                        <Text style={styles.subTextOne}>Kumpulan Sasar</Text>
-                    </View>
-                    <View style={[styles.introContainer, {marginBottom: 5}]}>
-                        <Text style={styles.introText}>
-                        {'Pasangan yang akan berkahwin dan pengantin baharu (usia perkahwinan di bawah 25 tahun).'}
-                        </Text>
-                    </View>
-                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
-                    {/* Galeri */}
-                    <View style={styles.subTextOneContainer}>
-                        <Text style={styles.subTextOne}>Galeri</Text>
-                    </View>
-                    <View style={styles.galleryParentContainer}>
-                        <ScrollView 
-                            horizontal={true} 
-                            showsHorizontalScrollIndicator={false} 
-                            style={styles.galleryScrollStyle}
-                        >
-                            <View style={styles.galeriContainer}>
-                                {galeriData.map((item, index) => (
-                                    <View key={index} style={styles.galeriItemContainer}>
-                                        <Image source={item.image} style={styles.galeriImage}/>
-                                    </View>
-                                ))}
+                    {componentData
+                        .filter(component => component.__component === 'subsections.section' && component.SectionTitle === 'Tempoh Kursus')
+                        .map(section => (
+                            <View key={section.id}>
+                                <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: -10}]}>
+                                    <Text style={styles.subTextOne}>{section.SectionTitle}</Text>
+                                </View>
+                                <View style={[styles.introContainer, {marginBottom: 5}]}>
+                                    <Text style={styles.introText}>
+                                    {section.Description}
+                                    </Text>
+                                </View>
                             </View>
-                        </ScrollView>
-                    </View>
+                        ))
+                    }
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
+                    {/* Subsection Three */}
+                    {componentData
+                        .filter(component => component.__component === 'subsections.section' && component.SectionTitle === 'Kumpulan Sasar')
+                        .map(section => (
+                            <View key={section.id}>
+                                <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: -10}]}>
+                                    <Text style={styles.subTextOne}>{section.SectionTitle}</Text>
+                                </View>
+                                <View style={[styles.introContainer, {marginBottom: 5}]}>
+                                    <Text style={styles.introText}>
+                                    {section.Description}
+                                    </Text>
+                                </View>
+                            </View>
+                        ))
+                    }
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
                     {/* Buttons section */}
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
@@ -150,7 +158,7 @@ const Smartstart = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{height: 110, backgroundColor: '#FFF'}}></View>
+                <View style={{height: 150, backgroundColor: '#FFF'}}></View>
 
                 {/* Popup/Modal */}
                 {/* <Modal
@@ -178,8 +186,6 @@ const Smartstart = ({ navigation }) => {
                         </View>
                     </View>
                 </Modal> */}
-                 {/* View created to add padding */}
-                 <View style={{height: 100, backgroundColor: '#FFF'}}></View>
 
             </ScrollView>
         </SafeAreaView>

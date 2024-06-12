@@ -2,12 +2,19 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const BulletPointList = ({ title, bulletPoints }) => {
+const BulletPointList = ({ title, description, bulletPoints }) => {
     return (
         <View>
             <View style={[styles.subTextOneContainer, { alignItems: 'flex-start', marginLeft: 15, marginTop: 40 }]}>
                 <Text style={styles.subTextOne}>{title}</Text>
             </View>
+            {description && (
+                <View style={[styles.introContainer, {marginBottom: 5}]}>
+                    <Text style={styles.introText}>
+                        {description}
+                    </Text>
+                </View>
+            )}
             <View style={styles.bulletContainer}>
                 {bulletPoints.map((item, index) => (
                     <View key={index} style={styles.bulletPointContainer}>
@@ -61,6 +68,19 @@ const styles = StyleSheet.create({
     },
     bulletPointText: {
         fontSize: 14,
+        color: '#777777',
+    },
+    introContainer:{
+        width: '100%',
+        justifyContent: 'left',
+        alignItems: 'left',
+        marginTop: 15,
+        marginBottom: 20,
+    },
+    introText:{
+        fontSize: 14,
+        marginLeft: 15,
+        marginRight: 15,
         color: '#777777',
     },
 });

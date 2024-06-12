@@ -108,6 +108,7 @@ const Ilmukeluarga = ({ navigation }) => {
                                 key={bulletPointComponent.id}
                                 title={bulletPointComponent.BulletPoints.bulletPointList.title}
                                 bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
                             />
                     ))}
                     <View style={{height: 40, backgroundColor: '#FFF'}}></View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions, FlatList } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions, FlatList, Alert } from 'react-native';
 import Header from './ServicesHeaderMain';
 import ServiceIcon from '../common/ServiceIcon';
 import GlobalApi from '../../services/GlobalApi';
@@ -135,6 +135,9 @@ function ServicesScreen({navigation}) {
         break;
       case 'KafeTEEN':
         navigation.navigate('KafeTeen');
+        break;
+      case 'KASIH Keibubapaan Digital':
+        Alert.alert('Coming Soon!');
         break;
       default:
         break;

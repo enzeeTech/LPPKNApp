@@ -42,7 +42,7 @@ const SorotanArticleMain = ({navigation, route}) => {
                         url: image.attributes.url,
                     })),
                     information: response.data.data.attributes.Information,
-                    link: response.data.data.attributes.NewsArticleWebsiteLink,
+                    link: response.data.data.attributes.PosterArticleWebsiteLink,
                 });
             } catch (error) {
                 console.error("Fetching item details failed: ", error);

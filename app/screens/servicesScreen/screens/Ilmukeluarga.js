@@ -1,59 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
 import TabTile from './reusableComponents/PriceTabTile';
+import PriceTabTile from './reusableComponents/PriceTabTile';
+import GlobalApi from '../../../services/GlobalApi';
+import BulletPointList from './reusableComponents/bulletpointLists/BulletPointList';
 
 const Ilmukeluarga = ({ navigation }) => {
 
-    const [showPopup, setShowPopup] = useState(false);
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
+    const [activeTab, setActiveTab] = useState('resident');
 
-    // Data for bullet point text
-    const bulletPointTextData = [
-        'Menyebarkan pendidikan mengenai pembangunan keluarga agar masyarakat dapat menambah maklumat berkaitan kemahiran keibubapaan, persediaan perkahwinan dan pemantapan keluarga serta pembangunan remaja.',
-        'Menggalakkan masyarakat mengamalkan sikap dan amalan positif dalam menguruskan hidup berkeluarga.',
-        'Mempromosikan kemahiran keibubapaan melalui proses pembelajaran.',
-    ];
+    const fetchPerkhidmatanKeluarga = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('IlmuKeluarga');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
+    
+                const componentData = service.Content;
+                const responseData = {
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+                
+                setResponseData(responseData);
+                setComponentData(componentData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
+    };
 
-    // Data for galeri
-    const galeriData = [
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-    ];
+    useEffect(() => {
+        fetchPerkhidmatanKeluarga();
+    }, []);
+
+    if (!responseData.ServiceID) {
+        return <Text>Loading...</Text>;
+    }
+
 
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();
     }
 
-    // const openPopup = () => {
-    //     setShowPopup(true);
-    // }
-
-    // const closePopup = () => {
-    //     setShowPopup(false);
-    // }
-
     // Hubungi button navigation
     const hubungiButton = () => {
         navigation.navigate('LocationCollection', { query: 'Pejabat' });
     }
 
-    // Data for tab tile
-    const data = [
-        { title: 'Bahtera KASIH', subtitle: 'Pasangan Suami Isteri' },
-        { title: 'Belaian KASIH', subtitle: 'Ibu/bapa yang mempunyai anak 12 tahun ke bawah' },
-        { title: 'Mutiara KASIH', subtitle: 'Ibu/bapa yang mempunyai anak remaja' },
-        { title: 'Permata KASIH', subtitle: 'Remaja berumur 12-19 tahun & belia berusia 20-25 tahun'},
-        { title: 'Pancaran KASIH', subtitle: 'Bapa'},
-      ];
-    
-      const prices = {
-        resident: 'RM20',
-        nonResident: 'RM30', 
-      };
+    // Extract prices and items for PriceTabTile component
+    const priceTileComponent = componentData.find(component => component.__component === 'tiles.price-tile1');
+    const priceData = priceTileComponent ? priceTileComponent.TileData.tile : null;
+
+    const prices = priceData ? {
+        resident: priceData.price1.value,
+        nonResident: priceData.price2.value
+    } : {};
+
+    const price1Items = priceData ? priceData.price1.items : [];
+    const price2Items = priceData ? priceData.price2.items : [];
 
     return (
         <SafeAreaView style={styles.container}>
@@ -61,45 +75,42 @@ const Ilmukeluarga = ({ navigation }) => {
             <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/ilmukeluargaBackground.png')} 
+                    <Image source={{uri: responseData.ServiceImage}} 
                     style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>@ILMUKELUARGA LPPKN</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'Menyebarkan pendidikan mengenai pembangunan keluarga agar masyarakat dapat menambah maklumat berkaitan'
-                         + ' kemahiran keibubapaan, persediaan perkahwinan dan pemantapan keluarga serta pembangunan remaja.'}
+                        {responseData.Description}
                         </Text>
                     </View>
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
                     {/* Info tile with tab */}
-                    <TabTile data={data} prices={prices} />
+                    {priceData && (
+                        <PriceTabTile
+                            data={activeTab === 'resident' ? price1Items : price2Items}
+                            prices={prices}
+                            activeTab={activeTab} 
+                            setActiveTab={setActiveTab} 
+                        />
+                    )}
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
                     {/* Subsection One */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 40}]}>
-                        <Text style={styles.subTextOne}>Objektif</Text>
-                    </View>
-                    <View style={[styles.introContainer, {marginBottom: 5}]}>
-                        <Text style={styles.introText}>
-                        {'Mengukuhkan perkahwinan dan membina keluarga yang mantap, bahagia dengan:'}
-                        </Text>
-                    </View>
-                    {/* Subsection One Bullet Point Text */}
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData.map((item, index) => {
-                            return (
-                                <View key={index} style={[styles.bulletPointContainer]}>
-                                    <View style={styles.textContainer}>
-                                        <Text style={styles.bullet}>{'\u2022'}</Text>
-                                        <Text style={styles.bulletPointText}>{item}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })}
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'objektif')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                            />
+                    ))}
+                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
                     {/* Buttons section */}
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>

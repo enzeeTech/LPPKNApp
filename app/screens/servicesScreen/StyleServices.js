@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     introText:{
-        fontSize: 16,
+        fontSize: 14,
         marginLeft: 15,
         marginRight: 15,
         color: '#777777',
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     },
     text:{
         textAlign: 'center',
-        fontSize: 13,
+        fontSize: 14,
         color: '#777777',
         fontWeight: 'bold',
     },

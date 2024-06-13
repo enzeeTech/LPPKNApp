@@ -199,9 +199,8 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     subsidiMamoImage: {
-        aspectRatio: 600 / 1500,
+        height: 480,
         resizeMode: 'contain',
-        marginTop: -250,
     },
     SubfertilitiImageStyle: {
         marginTop: -25,

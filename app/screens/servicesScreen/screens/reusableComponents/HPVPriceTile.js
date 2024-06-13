@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-const HPVPriceTile = ({ prices, imageSource, additionalText, isLastTile, onPress }) => {
+const HPVPriceTile = ({ prices, imageSource, title, isLastTile, onPress }) => {
   const [activeTab, setActiveTab] = useState('resident');
   const [isPressed, setIsPressed] = useState(true);
 
@@ -25,7 +25,7 @@ const HPVPriceTile = ({ prices, imageSource, additionalText, isLastTile, onPress
         </View>
       )}
 
-      <Text style={[styles.headerText, { textAlign: 'center', marginRight: 20 }]}>{additionalText}</Text>
+      <Text style={[styles.headerText, { textAlign: 'center', marginRight: 20 }]}>{title}</Text>
 
       {!isLastTile && (
         <View style={styles.tabButtonContainer}>

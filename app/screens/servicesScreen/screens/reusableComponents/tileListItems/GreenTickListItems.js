@@ -56,10 +56,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   bulletPointTextBold: {
-    marginLeft: 5,
-        fontSize: 16,
-        color: '#777777',
-        fontWeight: 'bold',
+    marginLeft: 10,
+    marginTop: 2,
+    fontSize: 14,
+    color: '#777777',
+    fontWeight: 'bold',
   }
 });
 

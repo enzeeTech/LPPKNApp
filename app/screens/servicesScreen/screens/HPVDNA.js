@@ -104,7 +104,7 @@ const HpvDna = ({navigation}) => {
                             // Add more prices as needed
                         }}
                         imageSource={require('../../../assets/HPVPerkhidmatan1.png')}
-                        additionalText="Pendaftaran Ujian Pap Smear"
+                        title="Pendaftaran Ujian Pap Smear"
                     />
                     </View>
                     <View style={{ width: 300 }}>
@@ -116,7 +116,7 @@ const HpvDna = ({navigation}) => {
                             // Add more prices as needed
                         }}
                         imageSource={require('../../../assets/HPVPerkhidmatan1.png')}
-                        additionalText="Pendaftaran Ujian Pap Smear"
+                        title="Pendaftaran Ujian Pap Smear"
                     />
                     </View>
                     <View style={{ width: 300 }}>
@@ -125,7 +125,7 @@ const HpvDna = ({navigation}) => {
                         resident: 'RM80',
                         }}
                         imageSource={require('../../../assets/HPVPerkhidmatan2.png')}
-                        additionalText="Ujian HPV DNA"
+                        title="Ujian HPV DNA"
                         isLastTile={true}
                     />
                     </View>

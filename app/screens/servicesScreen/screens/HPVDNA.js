@@ -44,11 +44,9 @@ const HpvDna = ({navigation}) => {
                 );
 
                 const bulletPointsData = componentData
-                .filter(component => 
-                    component.__component === 'lists.bullet-point-list' && 
-                    component.id === 11
-                )
-                .map(component => component.BulletPoints.bulletPointList.bulletPoints)[0] || [];
+                    .filter(component => component.__component === 'lists.bullet-point-list')
+                    .map(component => component.BulletPoints.bulletPointList)
+                    .find(list => list.identifier === 'kit-hpv-dna') || {};
 
                 setBulletPointData(bulletPointsData);
 
@@ -227,6 +225,7 @@ const HpvDna = ({navigation}) => {
                         </TouchableOpacity>
                     </View>
                     
+                    <View style={{height: 10, backgroundColor: '#FFF'}}></View>
                     {componentData
                         .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'info-hpv')
                         .map(bulletPointComponent => (
@@ -237,6 +236,37 @@ const HpvDna = ({navigation}) => {
                                 description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
                             />
                     ))}
+                    <View>
+                        <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+                        <View style={[styles.subTextOneContainer, { alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15 }]}>
+                            <Text style={styles.subTextOne}>{bulletPointData.title}</Text>
+                        </View>
+                        <View style={[styles.bulletContainer, {marginTop:0}]}>
+                            {bulletPointData.bulletPoints && bulletPointData.bulletPoints.map((item, index) => (
+                                <View key={index} style={[styles.bulletPointContainer, index === bulletPointData.bulletPoints.length - 1 && styles.lastBulletPointContainer]}>
+                                    <View style={[styles.textContainer, {marginBottom: -5, paddingTop: 5}]}>
+                                        <Text style={[styles.bullet, { marginBottom: 120, marginRight: 13 }]}>{'\u2022'}</Text>
+                                        {typeof item === 'object' && item.mainPoint ? (
+                                            <View>
+                                                <Text style={styles.bulletPointText}>{item.mainPoint}</Text>
+                                                <View style={{ marginLeft: 20,}}>
+                                                    {item.subPoints && item.subPoints.map((subItem, subIndex) => (
+                                                        <View key={subIndex} style={[styles.subBulletContainer, { marginTop: 5 }]}>
+                                                            <Text style={styles.subBullet}>{'\u2022'}</Text>
+                                                            <Text style={[styles.bulletPointText, {fontWeight: 'bold'}]}>{subItem}</Text>
+                                                        </View>
+                                                    ))}
+                                                </View>
+                                            </View>
+                                        ) : (
+                                            <Text style={styles.bulletPointText}>{item}</Text>
+                                        )}
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+                    <View style={{height: 10, backgroundColor: '#FFF', marginTop: -40}}></View>
                     {componentData
                         .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'kriteria-kelayakan2')
                         .map(bulletPointComponent => (
@@ -247,25 +277,7 @@ const HpvDna = ({navigation}) => {
                                 description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
                             />
                     ))}
-                     <View>
-                        <View style={{ height: 50, backgroundColor: '#FFF' }}></View>
-                        <View style={[styles.subTextOneContainer, { alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15 }]}>
-                            <Text style={styles.subTextOne}>{bulletPointData.title}</Text>
-                        </View>
-
-                    </View>
-
-                    {componentData
-                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'kriteria-kelayakan')
-                        .map(bulletPointComponent => (
-                            <BulletPointList
-                                key={bulletPointComponent.id}
-                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
-                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
-                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
-                            />
-                    ))}
-                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
 
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity 

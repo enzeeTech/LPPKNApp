@@ -399,7 +399,6 @@ const styles = StyleSheet.create({
     subBulletContainer: {
         flexDirection: 'row',
         alignItems: 'flex-start', // Adjust this according to your needs
-        marginBottom: 5, // Adjust the space between sub-bullets
       },
     subBullet: {
         fontSize: 14,
@@ -409,7 +408,7 @@ const styles = StyleSheet.create({
     lastBulletPointContainer: {
         borderBottomWidth: 1,
         borderColor: '#DDDDDD',
-        paddingBottom: 10, // Adjust as needed
+        // paddingBottom: 10, // Adjust as needed
       },
     textContainer:{
         width: '85%',

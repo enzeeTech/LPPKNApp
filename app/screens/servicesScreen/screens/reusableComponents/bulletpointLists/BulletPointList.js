@@ -1,4 +1,3 @@
-// BulletPointList.js
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -9,7 +8,7 @@ const BulletPointList = ({ title, description, bulletPoints }) => {
                 <Text style={styles.subTextOne}>{title}</Text>
             </View>
             {description && (
-                <View style={[styles.introContainer, {marginBottom: 5}]}>
+                <View style={[styles.introContainer, { marginBottom: 5 }]}>
                     <Text style={styles.introText}>
                         {description}
                     </Text>
@@ -17,7 +16,13 @@ const BulletPointList = ({ title, description, bulletPoints }) => {
             )}
             <View style={styles.bulletContainer}>
                 {bulletPoints.map((item, index) => (
-                    <View key={index} style={styles.bulletPointContainer}>
+                    <View
+                        key={index}
+                        style={[
+                            styles.bulletPointContainer,
+                            index === bulletPoints.length - 1 ? styles.lastBulletPointContainer : null
+                        ]}
+                    >
                         <View style={styles.textContainer}>
                             <Text style={styles.bullet}>{'\u2022'}</Text>
                             <Text style={styles.bulletPointText}>{item}</Text>
@@ -54,6 +59,9 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         paddingVertical: 5,
     },
+    lastBulletPointContainer: {
+        borderBottomWidth: 1, // Add bottom border for the last item
+    },
     textContainer: {
         width: '85%',
         flexDirection: 'row',
@@ -70,14 +78,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#777777',
     },
-    introContainer:{
+    introContainer: {
         width: '100%',
         justifyContent: 'left',
         alignItems: 'left',
         marginTop: 15,
         marginBottom: 20,
     },
-    introText:{
+    introText: {
         fontSize: 14,
         marginLeft: 15,
         marginRight: 15,

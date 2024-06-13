@@ -15,11 +15,7 @@
     "android": {
       "package": "com.socio.lppknApp",
       "softwareKeyboardLayoutMode": "pan",
-      "googleServicesFile": "./google-services.json",
-      "adaptiveIcon": {
-        "foregroundImage": "./app/assets/appIcon-foreground.png",
-        "backgroundColor": "#ffffff"
-      }
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

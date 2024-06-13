@@ -98,7 +98,8 @@ function ServicesScreen({navigation}) {
   const navigateToService = (serviceLabel) => {
     switch (serviceLabel) {
       case 'Perancang Keluarga':
-        navigation.navigate('PerancangKeluarga');
+        // navigation.navigate('PerancangKeluarga');
+        Alert.alert('Coming Soon!');
         break;
       case 'PEKA':
         navigation.navigate('Peka');
@@ -125,7 +126,8 @@ function ServicesScreen({navigation}) {
         navigation.navigate('HPVDNA');
         break;
       case 'Subfertiliti':
-        navigation.navigate('Subfertiliti');
+        // navigation.navigate('Subfertiliti');
+        Alert.alert('Coming Soon!');
         break;
       case 'Penyelidikan & Data Mentah':
         navigation.navigate('Penyelidikan');

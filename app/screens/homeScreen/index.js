@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback, Alert} from 'react-native';
 import { ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from './HomeScreenHeader';
@@ -137,7 +137,8 @@ const HomeScreen = ({navigation}) => {
   const navigateToService = (serviceLabel) => {
     switch (serviceLabel) {
       case 'Perancang Keluarga':
-        navigation.navigate('PerancangKeluarga');
+        // navigation.navigate('PerancangKeluarga');
+        Alert.alert('Coming Soon!');
         break;
       case 'PEKA':
         navigation.navigate('Peka');
@@ -164,7 +165,8 @@ const HomeScreen = ({navigation}) => {
           navigation.navigate('Ilmukeluarga');
           break;
       case 'Subfertiliti':
-          navigation.navigate('Subfertiliti');
+          // navigation.navigate('Subfertiliti');
+          Alert.alert('Coming Soon!');
           break;
       case 'Penyelidikan':
           navigation.navigate('Penyelidikan')
@@ -174,6 +176,10 @@ const HomeScreen = ({navigation}) => {
           break;
       case 'KafeTEEN':
           navigation.navigate('KafeTeen');
+          break;
+      case 'Keibubapaan Digital':
+          // navigation.navigate('KeibubapaanDigital');
+          Alert.alert('Coming Soon!');
           break;
       default:
         break;

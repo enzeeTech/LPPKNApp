@@ -75,7 +75,7 @@ const Dropdown = ({ items, headerTitle, imageSource, type }) => {
             <Animated.View style={[styles.dropdownContainer, { height: heightInterpolation, opacity: expanded ? 1 : 0, borderTopWidth: 0 }]}>
                 {items.map((item, index) => {
 
-                    console.log(items)
+                    // console.log(items)
                     // Determine the component to render based on item type
                     if (componentType === 'bullet') {
                         return (

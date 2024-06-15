@@ -202,15 +202,26 @@
 // // export default AduanForm;
 
 
-// WebViewScreen.js
-import React from 'react';
+
+import React, { useState, useCallback } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { useFocusEffect } from '@react-navigation/native';
 
 const AduanForm = () => {
+  const [key, setKey] = useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      // Change the key to force remount and reload the URL
+      setKey(prevKey => prevKey + 1);
+    }, [])
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <WebView
+        key={key}
         source={{ uri: 'https://lppkn.sociodev.com.my/lppkngateway/frontend/web/index.php?r=feedback%2Fcreate' }}
         style={{ flex: 1 }}
       />
@@ -225,3 +236,5 @@ const styles = StyleSheet.create({
 });
 
 export default AduanForm;
+
+

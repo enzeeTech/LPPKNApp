@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     bullet: {
-        fontSize: 14,
+        fontSize: 16,
         color: '#777777',
         marginRight: 10,
     },
     bulletPointText: {
-        fontSize: 14,
+        fontSize: 16,
         color: '#777777',
     },
     introContainer: {
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     introText: {
-        fontSize: 14,
+        fontSize: 16,
         marginLeft: 15,
         marginRight: 15,
         color: '#777777',

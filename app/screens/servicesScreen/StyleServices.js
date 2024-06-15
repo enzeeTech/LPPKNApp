@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     introText:{
-        fontSize: 14,
+        fontSize: 16,
         marginLeft: 15,
         marginRight: 15,
         color: '#777777',
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     },
     scrollViewStyle:{
         width: '100%',
-        height: 300,
+        height: 380,
         marginLeft: 10,
     },
     slide:{
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     },
     text:{
         textAlign: 'center',
-        fontSize: 14,
+        fontSize: 16,
         color: '#777777',
         fontWeight: 'bold',
     },
@@ -398,17 +398,17 @@ const styles = StyleSheet.create({
     },
     subBulletContainer: {
         flexDirection: 'row',
-        alignItems: 'flex-start', // Adjust this according to your needs
+        alignItems: 'flex-start', 
       },
     subBullet: {
-        fontSize: 14,
+        fontSize: 16,
         color: '#000',
-        marginRight: 5, // Adjust the space between the sub-bullet and the text
+        marginRight: 5, 
       },          
     lastBulletPointContainer: {
         borderBottomWidth: 1,
         borderColor: '#DDDDDD',
-        // paddingBottom: 10, // Adjust as needed
+        paddingBottom: 15, 
       },
     textContainer:{
         width: '85%',
@@ -418,17 +418,17 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     bullet:{
-        fontSize: 14,
+        fontSize: 16,
         color: '#777777',
         marginRight: 10,
     },
     bulletPointText:{
-        fontSize: 14,
+        fontSize: 16,
         color: '#777777',
     },
     bulletPointTextBold:{
         marginLeft: 5,
-        fontSize: 14,
+        fontSize: 16,
         color: '#777777',
         fontWeight: 'bold',
     },

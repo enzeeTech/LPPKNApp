@@ -15,6 +15,7 @@ const HpvDna = ({navigation}) => {
     const [papSmearData, setPapSmearData] = useState([]);
     const [hpvDnaData, setHpvDnaData] = useState([]);
     const [bulletPointData, setBulletPointData] = useState([]);
+    const [priceTilesData, setPriceTilesData] = useState([]);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -24,6 +25,14 @@ const HpvDna = ({navigation}) => {
                 const service = response.data.data[0].attributes;
     
                 const componentData = service.Content;
+
+                // Extract price tile data
+                const priceTiles = componentData
+                    .filter(component => component.__component === 'tiles.image-price-tile')
+                    .map(component => component.TileData.hpvPriceTiles)
+                    .flat();
+
+                setPriceTilesData(priceTiles);
 
                 setPapSmearData(componentData
                     .filter(component => 
@@ -73,6 +82,12 @@ const HpvDna = ({navigation}) => {
         fetchPerkhidmatanKeluarga();
     }, []);
 
+    // Get price tiles header
+    const priceTilesHeader = componentData.map(component => {
+        if (component.__component === 'tiles.image-price-tile') {
+            return component.TileData.title;
+        }
+    })
 
     // Handle back press navigation
     const handleBackPress = () => {
@@ -115,62 +130,39 @@ const HpvDna = ({navigation}) => {
             <ScrollView style={{ marginTop: -10 }} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/HPVDNABackground.png')}
+                    <Image source={{uri: responseData.ServiceImage}}
                         style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>SARINGAN KANSER REPRODUKTIF</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'Pengesanan awal kanser reproduktif dapat menyelamatkan nyawa anda. LPPKN sentiasa menggalakkan pengesanan'
-                        + ' kanser payudara dan serviks dilakukan melalui ujian dan pemeriksaan berikut:'}
+                        {responseData.Description}
                         </Text>
                     </View>
                     {/* Image Slider */}
                     <View style={styles.subTextOneContainer}>
-                        <Text style={[styles.subTextOne, {marginTop: 10, marginBottom: 20}]}>Bayaran Perkhidmatan</Text>
+                        <Text style={[styles.subTextOne, {marginTop: 10, marginBottom: 20}]}>{priceTilesHeader}</Text>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
-                    {/* Add the PriceTabTile component here */}
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                        
-                        prices={{
-                            resident: 'RM5',
-                            nonResident: 'RM10',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/HPVPerkhidmatan1.png')}
-                        title="Pendaftaran Ujian Pap Smear"
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                    
-                        prices={{
-                            resident: 'RM20',
-                            nonResident: 'RM40',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/HPVPerkhidmatan1.png')}
-                        title="Pendaftaran Ujian Pap Smear"
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                        prices={{
-                        resident: 'RM80',
-                        }}
-                        imageSource={require('../../../assets/HPVPerkhidmatan2.png')}
-                        title="Ujian HPV DNA"
-                        isLastTile={true}
-                    />
-                    </View>
-                    <View style={{ width: 25 }} />
+                        {priceTilesData.map((tile, index) => {
+                            console.log('Image URL:', tile.imageSource); // Add this line to log the image URL
+                            return (
+                                <View key={index} style={{ width: 300 }}>
+                                    <HPVPriceTile
+                                        prices={tile.prices}
+                                        imageSource={tile.imageSource}
+                                        title={tile.title}
+                                        isSingleTile={tile.isSinglePrice}
+                                    />
+                                </View>
+                            );
+                        })}
+                        <View style={{ width: 25 }} />
                     </ScrollView>
 
                     {componentData

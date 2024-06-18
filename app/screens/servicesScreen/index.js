@@ -20,7 +20,7 @@ const iconsData = [
   { iconSource: require('../../assets/saringanKesejahteraan.png'), label: 'Saringan Kesejahteraan' },
   { iconSource: require('../../assets/PEKA.png'), label: 'PEKA' },
   { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan & Data Mentah' },
-  { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'KASIH Keibubapaan Digital' },
+  // { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'KASIH Keibubapaan Digital' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
 ];
@@ -126,8 +126,8 @@ function ServicesScreen({navigation}) {
         navigation.navigate('HPVDNA');
         break;
       case 'Subfertiliti':
-        // navigation.navigate('Subfertiliti');
-        Alert.alert('Coming Soon!');
+        navigation.navigate('Subfertiliti');
+        // Alert.alert('Coming Soon!');
         break;
       case 'Penyelidikan & Data Mentah':
         navigation.navigate('Penyelidikan');

@@ -23,7 +23,7 @@ const iconsData = [
   { iconSource: require('../../assets/smartstart.png'), label: 'SMARTSTART 2.0' },
   { iconSource: require('../../assets/smartBelanja.png'), label: 'SMARTBelanja' },
   { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTEEN' },
-  { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'Keibubapaan Digital' },
+  // { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'Keibubapaan Digital' },
   { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
@@ -165,8 +165,8 @@ const HomeScreen = ({navigation}) => {
           navigation.navigate('Ilmukeluarga');
           break;
       case 'Subfertiliti':
-          // navigation.navigate('Subfertiliti');
-          Alert.alert('Coming Soon!');
+          navigation.navigate('Subfertiliti');
+          // Alert.alert('Coming Soon!');
           break;
       case 'Penyelidikan':
           navigation.navigate('Penyelidikan')
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
   },
   slidingNewsContainer: {
     height: 250,
-    marginTop: -13,
+    marginTop: -6,
     zIndex: 3,
   },
   perkhidmatanContainer: {

@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 230,
-    resizeMode: 'contain',
+    resizeMode: 'conver',
   },
   gradient: {
     position: 'absolute',

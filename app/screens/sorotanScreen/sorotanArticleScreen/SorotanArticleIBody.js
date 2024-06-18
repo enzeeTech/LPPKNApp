@@ -93,7 +93,14 @@ const SorotanArticleBody = ({title, date, images, information, link}) => {
                     </Text>
 
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewTwo} onPress={openLink} >
+                        <TouchableOpacity
+                            style={[
+                                styles.buttonViewTwo,
+                                !link && styles.buttonDisabled 
+                            ]}
+                            onPress={openLink}
+                            disabled={!link} 
+                        >
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={styles.buttonTextTwo}>Maklumat Lanjut</Text>
                                 <Image source={require('../../../assets/linkIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
@@ -256,6 +263,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontStyle: "normal",
         fontWeight: "700",
+    },
+    buttonDisabled: {
+        opacity: 0.4
     },
 });
 

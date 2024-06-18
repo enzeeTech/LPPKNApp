@@ -126,6 +126,7 @@ const SubsidiMamogram = ({ navigation }) => {
           </View>
           {/* Dropdown component */}
           <CriteriaDropdown data={kriteriaData} />
+          {/* Subsection */}
           <View style={[styles.subTextFiveContainer, { marginTop: 50 }]}>
             <Text style={styles.subTextOne}>{sectionTitle}</Text>
           </View>

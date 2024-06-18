@@ -150,7 +150,6 @@ const HpvDna = ({navigation}) => {
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
                         {priceTilesData.map((tile, index) => {
-                            console.log('Image URL:', tile.imageSource); // Add this line to log the image URL
                             return (
                                 <View key={index} style={{ width: 300 }}>
                                     <HPVPriceTile

@@ -1,58 +1,123 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
 import HPVPriceTile from './reusableComponents/HPVPriceTile';
-import { openURL } from 'expo-linking';
+import GlobalApi from '../../../services/GlobalApi';
+import { extractGalleryData } from '../../../utilities/GalleryExtract';
+import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
+import BulletPointList from './reusableComponents/bulletpointLists/BulletPointList';
 
 const Subfertiliti = ({navigation}) => {
 
-    const handleImageClick1 = () => {
-        Linking.openURL('https://www.youtube.com/watch?v=pgF9EGGsEw8');
-      };
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
+    const [priceTilesData, setPriceTilesData] = useState([]);
+    const [buttonData, setButtonData] = useState([]);
+
+    const fetchPerkhidmatanKeluarga = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('Subfertiliti');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
     
+                const componentData = service.Content;
+
+                // Extract price tile data
+                const priceTiles = componentData
+                    .filter(component => component.__component === 'tiles.image-price-tile')
+                    .map(component => component.TileData.hpvPriceTiles)
+                    .flat();
+
+                setPriceTilesData(priceTiles);
+
+                // Extract button data
+                setButtonData(componentData
+                .filter(component => 
+                    component.__component === 'links.link1' && 
+                    component.Title === 'Pengeluaran Caruman KWSP'  
+                )
+                .map(component => [component.Title, component.URL])[0] || []
+                );
+
+                const responseData = {
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+                
+                setResponseData(responseData);
+                setComponentData(componentData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPerkhidmatanKeluarga();
+    }, []);
+
     // Hubungi button navigation
     const hubungiButton = () => {
         navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
     }
-
-
-    const bulletPointTextData1 = [
-        'Usia perkahwinan sekurang-kurangnya setahun bagi yang berumur kurang dari 35 tahun; atau',
-        'Usia perkahwinan sekurang-kurangnya 6 bulan bagi lebih dari 35 tahun.',
-    ];
-
-    const bulletPointTextData2 = [
-        'Kad pengenalan/Pasport Pasangan (suami & isteri)',
-        'Sijil Perkahwinan/Kad Nikah yang diperaku sah oleh Kerajaan Malaysia',
-        'Laporan Perubatan/ Dokumen sokongan daripada Klinik Kerajaan/Swasta (jika ada)'
-    ];
-
-    const bulletPointTextData3 = [
-        'Kami menerima Surat Jaminan daripada MARA dan DBKL sahaja.',
-        'Bagi kakitangan kerajaan yang lain, anda perlu menggunakan kaedah Pay & Claim.',
-        'Tertakluk kepada syarat iaitu tidak pernah mengandung (pernah melahirkan anak, keguguran,'
-        + ' kehamilan luar rahim dan kehamilan morlar adalah tidak layak)',
-    ];
-
-    const bulletPointTextData4 = [
-        'KWSP membolehkan pencarum mengeluarkan wang dari Akaun 2 untuk rawatan subfertiliti seperti IUI, IVF dan ICSI.',
-        'Sila rujuk laman web KWSP pada butang di bawah untuk mendapatkan maklumat dan dokumen sokongan yang diperlukan.',
-    ];
-
-    const galeriData = [
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-    ];
 
     // Handle back press navigation
     const handleBackPress = () => {
         navigation.goBack();
     }
 
+    
+    // Get price tiles header
+    const priceTilesHeader = componentData.map(component => {
+        if (component.__component === 'tiles.image-price-tile') {
+            return component.TileData.title;
+        }
+    })
 
+    // Get gallery data
+    const { title: galleryTitle, images } = extractGalleryData(componentData);
+
+    // Extract Subsection
+    const sectionTitle = (componentData.map(component => {
+        if (component.__component === 'subsections.section-with-image') {
+            return component.Title;
+        }
+    }));
+
+    // Extract Subsection Image URL
+    const sectionImage = componentData
+    .filter(component => component.__component === 'subsections.section-with-image')
+    .map(component => component.Image.data.attributes.url);
+
+    console.log('section image', sectionImage);
+
+
+    if (!responseData.ServiceID) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header onBackPress={handleBackPress} />
+                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                    <View style={styles.backgroundContainer}>
+                        <Image source={{uri: 'https://placehold.co/150x150/grey/grey/png'}} style={styles.backgroundImage} />
+                    </View>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerText}>Loading...</Text>
+                        </View>
+                        {/** padding till the end of the screen */}
+                        <View style={{height: 500, backgroundColor: '#FFF'}}></View>
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );    
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -60,218 +125,137 @@ const Subfertiliti = ({navigation}) => {
             <ScrollView style={{ marginTop: -10 }} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/SubfertilitiBackground.png')}
+                    <Image source={{uri: responseData.ServiceImage}}
                         style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>SUBFERTILITI</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'Zuriat suatu anugerah kepada perkahwinan anda. Kesukaran untuk hamil sering merungsingkan anda'
-                        + ' dan pasangan. Dapatkan segera pemeriksaan dan rawatan subfertiliti di klinik LPPKN sebelum terlambat.'}
+                        {responseData.Description}
                         </Text>
                     </View>
                     {/* Image Slider */}
                     <View style={styles.subTextOneContainer}>
-                        <Text style={[styles.subTextOne, {marginTop: 10, marginBottom: 20}]}>Bayaran Perkhidmatan</Text>
+                        <Text style={[styles.subTextOne, {marginTop: 10, marginBottom: 20}]}>{priceTilesHeader}</Text>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
-                    {/* Add the PriceTabTile component here */}
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                        
-                        prices={{
-                            resident: 'RM160 - RM200',
-                            nonResident: 'RM320 - RM400',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/SubfertilitiPerkhidmatan1.png')}
-                        additionalText="Saringan"
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-
-                        prices={{
-                            resident: 'RM40',
-                            nonResident: 'RM80',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/SubfertilitiPerkhidmatan2.png')}
-                        additionalText="Pendaftaran"
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                    
-                        prices={{
-                            resident: 'RM1,000 - RM1,500',
-                            nonResident: 'RM2,000 - RM3,000',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/SubfertilitiPerkhidmatan3.png')}
-                        additionalText={"Permanian Berhadas\n(IUI)"}
-                        onPress={handleImageClick1}
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                    
-                        prices={{
-                            resident: 'RM10,000 - RM15,000',
-                            nonResident: 'RM20,000 - RM30,000',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/SubfertilitiPerkhidmatan4.png')}
-                        additionalText={"Persenyawaan\nIn-Vitro (IVF)"}
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                    
-                        prices={{
-                            resident: 'RM10,000 - RM15,000',
-                            nonResident: 'RM20,000 - RM30,000',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/SubfertilitiPerkhidmatan5.png')}
-                        additionalText={"Suntikan Sperma\nIntrasitoplasma (ICSI)"}
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                    
-                        prices={{
-                            resident: 'RM300 - RM500',
-                            nonResident: 'RM600 - RM1,000',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/SubfertilitiPerkhidmatan6.png')}
-                        additionalText={"Penyimpanan Krio Beku\n(Embrio & Sperma)"}
-                    />
-                    </View>
-                    <View style={{ width: 25 }} />
+                        {priceTilesData.map((tile, index) => {
+                            return (
+                                <View key={index} style={{ width: 300 }}>
+                                    <HPVPriceTile
+                                        prices={tile.prices}
+                                        imageSource={tile.imageSource}
+                                        title={tile.title}
+                                        isSingleTile={tile.isSinglePrice}
+                                    />
+                                </View>
+                            );
+                        })}
+                        <View style={{ width: 25 }} />
                     </ScrollView>
 
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 60, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Kriteria Kelayakan</Text>
-                    </View>
-                    <View style={[styles.introContainer, {marginBottom: 5}]}>
-                        <Text style={[styles.introText, {fontWeight: 'bold', color: '#A09FA2'}]}>
-                        {'Berkahwin'}
-                        </Text>
-                    </View>
+                    <View style={{height: 10, backgroundColor: '#FFF'}}></View>
+
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'kriteria-kelayakan')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+                    <View style={{height: 10, backgroundColor: '#FFF'}}></View>
                     
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData1.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData1.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'dokumen-diperlukan')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
                     
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Dokumen Diperlukan</Text>
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'surat-jaminan')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+
                     
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData2.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData2.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
                     
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Surat Jaminan</Text>
-                    </View>
-                    
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData3.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData3.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
-                    
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Caruman KWSP</Text>
-                    </View>
-                    
-                    <View style={styles.bulletContainer}>
-                    {bulletPointTextData4.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData4.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'caruman-kwsp')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+
+                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
 
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => Linking.openURL('https://www.kwsp.gov.my/ms/member/withdrawals/partial/health#Rawatan_Kesuburan')}>
+                        <TouchableOpacity 
+                            style={styles.buttonViewTwo}
+                            onPress= {() => {
+                                if (buttonData[1] !== null) {
+                                    Linking.openURL(buttonData[1]);
+                                } else {
+                                    Alert.alert('Link not available');
+                                }
+                            }}
+                        >
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={styles.buttonTextTwo}>Pengeluaran Caruman KWSP</Text>
+                            <Text style={styles.buttonTextTwo}>{buttonData[0]}</Text>
                             <Image source={require('../../../assets/linkIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
 
                             </View>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.subTextFiveContainer}>
-          <Text style={[styles.subTextOne, { marginTop: 40 }]}>Tatacara Mendaftar</Text>
-        </View>
-        <View style={styles.cartaAlirTextContainer}>
-          <Text style={styles.cartaAlirText}>
-          </Text>
-        </View>
-        <View style={styles.SubfertilitiImageStyle}>
-          <Image
-            source={require('../../../assets/TatacaraMendaftarSubfertiliti.png')} 
-          />
-        </View>
+                    <View style={{height: 10, backgroundColor: '#FFF'}}></View>
 
-                    <View style={[styles.subTextOneContainer, { marginTop: 50 }]}>
-                        <Text style={styles.subTextOne}>Galeri</Text>
+                    {/* Subsection */}
+                    <View style={[styles.subTextFiveContainer, { marginTop: 50 }]}>
+                        <Text style={styles.subTextOne}>{sectionTitle}</Text>
                     </View>
-                    <View style={styles.galleryParentContainer}>
-                        <ScrollView 
-                            horizontal={true} 
-                            showsHorizontalScrollIndicator={false} 
-                            style={styles.HPVScrollStyle}
-                        >
-                            <View style={styles.galeriContainer}>
-                                {galeriData.map((item, index) => (
-                                    <View key={index} style={styles.galeriItemContainer}>
-                                        <Image source={item.image} style={styles.galeriImage}/>
-                                    </View>
-                                ))}
-                            </View>
-                        </ScrollView>
+                    <View style={styles.cartaAlirImageContainer}>
+                        <Image
+                        source={{uri: sectionImage[0]}} 
+                        style={styles.subsidiMamoImage}
+                        />
                     </View>
                     
+                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
+
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
 
-      <View style={{height: 100, backgroundColor: '#FFF'}}></View>
-    </View>
+                    <View style={{height: 100, backgroundColor: '#FFF'}}></View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );

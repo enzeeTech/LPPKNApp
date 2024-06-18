@@ -62,6 +62,8 @@ const HomeScreen = ({navigation}) => {
               subtitle: item.attributes.Subtitle
             }));
             setContentData(formattedData);
+            // Testing with empty data
+            // setContentData([]);
           }
         } catch (error) {
           console.error('Error fetching home slider content:', error);
@@ -302,9 +304,13 @@ const HomeScreen = ({navigation}) => {
           {/* <Image source={require('../../assets/newsTileDummy.png')} 
           style={{width: Platform.OS === 'ios' ? 400 : 450, height: 230, resizeMode: 'stretch'}}
           /> */}
-          
-          {/* <ContentSlider contents={contentData} /> */}
-          <ContentSlider contents={[]} />
+          {contentData.length > 0 ?(
+            <ContentSlider contents={contentData} />
+          ) : (
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{ fontSize: 24, fontWeight: '800', color: '#9448DA' }}>Content Loading...</Text>
+            </View>
+          )}
         </View>
         {/* PERKHIDMATAN SECTION */}
         <View style={styles.perkhidmatanContainer}>

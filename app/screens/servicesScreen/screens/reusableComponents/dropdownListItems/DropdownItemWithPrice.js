@@ -5,7 +5,7 @@ const DropdownItemWithPrice = ({ items }) => {
 
     return (
         items.map((item, index) => (
-            console.log(item.text, item.price, item.isFirstItem),
+            // console.log(item.text, item.price, item.isFirstItem),
             <View key={index} style={[styles.item, item.isFirstItem ? styles.firstItem : null]}>
                 <View  style={styles.itemContext}>
                     <Text style={styles.itemText}>{item.name}</Text> 

@@ -78,7 +78,7 @@ const KafeTEEN = ({ navigation }) => {
                 <Header onBackPress={handleBackPress} />
                 <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                     <View style={styles.backgroundContainer}>
-                        <Image source={{uri: 'https://placehold.co/150x150/grey/grey/png'}} style={styles.backgroundImage} />
+                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
                     </View>
                     <View style={styles.contentContainer}>
                         <View style={styles.headerContainer}>

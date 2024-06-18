@@ -13,7 +13,7 @@ const HPVPriceTile = ({ prices, imageSource, title, isSingleTile, onPress }) => 
     onPress && onPress();
   };
 
-  console.log('HPVPriceTile imageSource:', imageSource); // Log the image source URL
+  // console.log('HPVPriceTile imageSource:', imageSource); // Log the image source URL
 
   return (
     <View style={[styles.tabParentContainer, tileStyle]}>

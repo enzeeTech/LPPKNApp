@@ -11,6 +11,8 @@ const PerancangKeluarga = ({navigation}) => {
 
     const [responseData, setResponseData] = useState([]);
     const [componentData, setComponentData] = useState([]);
+    const [dropdownData, setDropdownData] = useState({});
+    const [dropdownHeader, setDropdownHeader] = useState([]);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -20,6 +22,10 @@ const PerancangKeluarga = ({navigation}) => {
                 const service = response.data.data[0].attributes;
     
                 const componentData = service.Content;
+
+                const dropdownComponent = componentData.find(component => component.__component === 'dropdown.dropdown-normal');
+
+                setDropdownData(dropdownComponent ? dropdownComponent.DropdownData : {});
 
                 const responseData = {
                     ServiceID: service.ServiceID,
@@ -118,7 +124,7 @@ const PerancangKeluarga = ({navigation}) => {
                     <View style={{height: 30, backgroundColor: '#FFF'}}></View>
                         
                     {/* Image plus text carousel */}
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
+                    <View style={[styles.subTextOneContainer]}>
                         <Text style={styles.subTextOne}>{galleryDescriptionHeader}</Text>
                     </View>
                     <View style={styles.carouselContainer}>
@@ -149,49 +155,30 @@ const PerancangKeluarga = ({navigation}) => {
                     </View>
                     
                     <View style={{height: 30, backgroundColor: '#FFF'}}></View>
-                    {/* <View style={styles.subTextOneContainer}>
-                        <Text style={styles.subTextOne}>Kaedah Perancang Keluarga</Text>
-                    </View> */}
+                    
+                    {/* Dropdown Menu */}
+                    {Object.keys(dropdownData).map((key, index) => {
+                        const data = dropdownData[key];
+                        if (typeof data === 'object' && data !== null && data.items) {
+                        return (
+                            <DropdownMenu
+                            key={index}
+                            headerTitle={data.title}
+                            items={data.items}
+                            imageSource={{ uri: data.imageSource }}
+                            type={data.type}
+                            />
+                        );
+                        }
+                        return null;
+                    })}
 
-                    {/* <View style={styles.dropdownContainer}>
-
-                        <DropdownMenu 
-                            data={pilData.items}
-                            headerTitle="Pil Perancang Keluarga"
-                            imageSource={require('../../../assets/medicineIcon.png')}
-                            type={pilData.type} />
-
-                        <DropdownMenu 
-                            data={suntikanData.items}
-                            headerTitle="Suntikan Kontraseptif"
-                            imageSource={require('../../../assets/injectionIcon.png')}
-                            type={suntikanData.type}/>
-
-                        <DropdownMenu 
-                            data={alatData.items}
-                            headerTitle="Alat Dalam Rahim (ADR)"
-                            imageSource={require('../../../assets/adrIcon.png')}
-                            type={alatData.type}
-                        />
-
-                        <DropdownMenu 
-                            data={implanData.items}
-                            headerTitle="Implan"
-                            imageSource={require('../../../assets/implanIcon.png')}
-                            type={implanData.type}/>
-
-                        <DropdownMenu 
-                            data={kondomData.items}
-                            headerTitle="Kondom"
-                            imageSource={require('../../../assets/condomIcon.png')}
-                            type={kondomData.type}/>
-                    </View> */}
-
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
 
                     {/* Galeri */}
                     <GalleryBasic title={galleryTitle} images={images} />
 
-                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
                     {/* Subsection Two */}
                     {componentData
                         .filter(component => component.__component === 'subsections.section' && component.SectionTitle === 'SectionTitle')
@@ -203,6 +190,8 @@ const PerancangKeluarga = ({navigation}) => {
                             </View>
                         ))
                     }
+
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
                     
                     {/* Buttons section */}
                     <View style={styles.buttonContainer}>

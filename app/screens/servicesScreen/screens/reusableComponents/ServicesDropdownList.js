@@ -47,7 +47,7 @@ const Dropdown = ({ items, headerTitle, imageSource, type }) => {
     else if (componentType === 'bulletNoPrice') {
         height = items.length * BULLET_NO_PRICE_ITEM_HEIGHT;
     }
-    else {
+    else if (componentType === 'normal'){
         height = items.length * ITEM_HEIGHT;
     }
     // const height = isBulletType ? data.length * BULLET_ITEM_HEIGHT : data.length * ITEM_HEIGHT;
@@ -97,13 +97,11 @@ const Dropdown = ({ items, headerTitle, imageSource, type }) => {
                             />
                         );
                     }
-                    else {
+                    else if (componentType === 'normal'){
                         return (
                             <DropdownItemWithPrice 
                                 key={index}
-                                title={item.title}
-                                items={item.items}
-                                isFirstItem={index === 0}
+                                items={items}
                             />
                         );
                     }

@@ -72,7 +72,6 @@ const HomeScreen = ({navigation}) => {
     }, []);
 
 
-
   // Calling API to get bulletin posts
   const getBulletinPosts = () => { 
     const query = "&pagination[start]=0&pagination[limit]=6&sort=Date:desc"
@@ -86,6 +85,8 @@ const HomeScreen = ({navigation}) => {
         
         }));
         setBulletinItems(formattedData);
+        // Testing with empty data
+        // setBulletinItems([]);
       })
       .catch((error) => {
         console.log(error);
@@ -105,6 +106,8 @@ const HomeScreen = ({navigation}) => {
 
         }));
         setPosterItems(formattedData);
+        // Testing with empty data
+        // setPosterItems([]);
         
       })
       .catch((error) => {
@@ -166,7 +169,6 @@ const HomeScreen = ({navigation}) => {
           break;
       case 'Subfertiliti':
           navigation.navigate('Subfertiliti');
-          // Alert.alert('Coming Soon!');
           break;
       case 'Penyelidikan':
           navigation.navigate('Penyelidikan')
@@ -300,7 +302,9 @@ const HomeScreen = ({navigation}) => {
           {/* <Image source={require('../../assets/newsTileDummy.png')} 
           style={{width: Platform.OS === 'ios' ? 400 : 450, height: 230, resizeMode: 'stretch'}}
           /> */}
-          <ContentSlider contents={contentData} />
+          
+          {/* <ContentSlider contents={contentData} /> */}
+          <ContentSlider contents={[]} />
         </View>
         {/* PERKHIDMATAN SECTION */}
         <View style={styles.perkhidmatanContainer}>
@@ -314,38 +318,51 @@ const HomeScreen = ({navigation}) => {
         </View>
         {/* BERITA LPPKN SECTION */}
         <View style={styles.beritaContainer}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.sectionText}>Berita LPPKN</Text>
-            <TouchableOpacity style={{flexDirection: 'row'}} onPress={onBulletinLihatSemuaPress}>
+            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onBulletinLihatSemuaPress}>
               <Text style={styles.sectionSubText}>Lihat Semua</Text>
-              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrow}/>
+              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrow} />
             </TouchableOpacity>
           </View>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.beritaGridContainer}>
+          {bulletinItems.length > 0 ? (
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              <View style={styles.beritaGridContainer}>
                 {/* Render the news rows */}
-                {renderNewsRow(bulletinItems?.slice(0, 2))}
-                {renderNewsRow(bulletinItems?.slice(2, 4))}
-                {renderNewsRow(bulletinItems?.slice(4, 6))}
+                {renderNewsRow(bulletinItems.slice(0, 2))}
+                {renderNewsRow(bulletinItems.slice(2, 4))}
+                {renderNewsRow(bulletinItems.slice(4, 6))}
+              </View>
+            </ScrollView>
+          ) : (
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{ fontSize: 24, fontWeight: '800', color: '#9448DA' }}>Content Loading...</Text>
             </View>
-          </ScrollView>
+          )}
         </View>
         {/* SOROTAN SECTION */}
-        <View style={styles.sorotanContainer}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.sorotanText}>Highlights</Text>
-            <TouchableOpacity style={{flexDirection: 'row'}} onPress={onSorotanLihatSemuaPress}>
-              <Text style={styles.sorotanSubText}>Lihat Semua</Text>
-              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan}/>
-            </TouchableOpacity>
-          </View>
+        {/* SOROTAN SECTION */}
+      <View style={styles.sorotanContainer}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.sorotanText}>Highlights</Text>
+          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onSorotanLihatSemuaPress}>
+            <Text style={styles.sorotanSubText}>Lihat Semua</Text>
+            <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan} />
+          </TouchableOpacity>
+        </View>
+        {posterItems && posterItems.length > 0 ? (
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View>
-                {/* Render the poster row */}
-                {renderPosterRow(posterItems)}
+              {/* Render the poster row */}
+              {renderPosterRow(posterItems)}
             </View>
           </ScrollView>
-        </View>
+        ) : (
+          <View style={{ height: 230, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ fontSize: 24, fontWeight: '800', color: '#9448DA' }}>Content Loading...</Text>
+          </View>
+        )}
+      </View>
       </ScrollView>
     </SafeAreaView>
   );

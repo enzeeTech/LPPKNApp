@@ -11,6 +11,14 @@ const ContentSlider = ({contents}) => {
   const flatlistRef = useRef();
   const isAutoScrolling = useRef(false);
 
+  if (!contents || contents.length === 0) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontSize: 24, fontWeight: '800', color: '#9448DA' }}>Content Loading...</Text>
+      </View>
+    );
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       isAutoScrolling.current = true; // Indicate that auto-scrolling starts
@@ -80,6 +88,7 @@ const ContentSlider = ({contents}) => {
     setCurrentIndex(index);
   }
 
+  
 
   return (
     <View style={{height:230, width: width}}>
@@ -98,6 +107,9 @@ const ContentSlider = ({contents}) => {
       </View>
     </View>
   );
+
+
+  
 }
 
 const styles = StyleSheet.create({

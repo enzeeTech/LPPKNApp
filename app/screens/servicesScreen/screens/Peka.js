@@ -168,7 +168,12 @@ const Peka = ({ navigation }) => {
                             <ScrollView 
                                 horizontal={true} 
                                 showsHorizontalScrollIndicator={false} 
-                                style={styles.scrollViewStyle}    
+                                style={{
+                                    width: '100%',
+                                    // height: 380,
+                                    paddingBottom: 50,
+                                    marginLeft: 10
+                                }}   
                             > 
                                 {/* Render items from data  */}
                                 {galleryData.map((item, index) => (
@@ -184,6 +189,8 @@ const Peka = ({ navigation }) => {
                             </ScrollView>
                         </View>
                     </View>
+
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
                     {/* Galeri */}
                     <GalleryBasic title={galleryTitle} images={images} />
                     {/* Buttons section */}
@@ -195,32 +202,6 @@ const Peka = ({ navigation }) => {
                     {/* View created to add padding */}
                     <View style={{height: 100, backgroundColor: '#FFF'}}></View>
 
-                    {/* Popup/Modal */}
-                {/* <Modal
-                    transparent={true}
-                    animationType="slide"
-                    visible={showPopup}
-                    onRequestClose={closePopup}
-                >
-                    <View style={styles.popupContainer}>
-                        <View style={styles.whiteBox}>
-                        <TouchableOpacity style={styles.closeButton} onPress={closePopup}>
-                            <Image source={require('../../../assets/CloseButton.png')} style={styles.closeButtonImage} />
-                        </TouchableOpacity>
-                        <View style={styles.popupContent}>
-                        <View style={styles.buttonContainer}>
-
-                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
-                        <Text style={styles.buttonTextTwo}>Hubungi Ibu Pejabat</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
-                        <Text style={styles.buttonTextTwo}>Hubungi LPPKN Negeri</Text>
-                    </TouchableOpacity>
-                </View>
-                </View>
-                        </View>
-                    </View>
-                </Modal> */}
                  {/* View created to add padding */}
                  <View style={{height: 100, backgroundColor: '#FFF'}}></View>
 

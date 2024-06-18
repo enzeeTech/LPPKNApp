@@ -95,7 +95,7 @@ const Subfertiliti = ({navigation}) => {
     .filter(component => component.__component === 'subsections.section-with-image')
     .map(component => component.Image.data.attributes.url);
 
-    console.log('section image', sectionImage);
+    // console.log('section image', sectionImage);
 
 
     if (!responseData.ServiceID) {

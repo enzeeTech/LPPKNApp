@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     carouselTextContainer:{
         marginTop: 10,
         width: '75%',
-        width: '75%',
+        // width: '75%',
         marginLeft: '7.5%',
         marginRight: '7.5%',
         justifyContent: 'center',

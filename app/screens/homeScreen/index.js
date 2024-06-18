@@ -142,8 +142,7 @@ const HomeScreen = ({navigation}) => {
   const navigateToService = (serviceLabel) => {
     switch (serviceLabel) {
       case 'Perancang Keluarga':
-        // navigation.navigate('PerancangKeluarga');
-        Alert.alert('Coming Soon!');
+        navigation.navigate('PerancangKeluarga');
         break;
       case 'PEKA':
         navigation.navigate('Peka');

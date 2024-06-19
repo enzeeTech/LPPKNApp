@@ -26,6 +26,7 @@ const PerancangKeluarga = ({navigation}) => {
                 const dropdownComponent = componentData.find(component => component.__component === 'dropdown.dropdown-normal');
 
                 setDropdownData(dropdownComponent ? dropdownComponent.DropdownData : {});
+                setDropdownHeader(dropdownComponent ? dropdownComponent.DropdownData.title : []);
 
                 const responseData = {
                     ServiceID: service.ServiceID,
@@ -154,6 +155,12 @@ const PerancangKeluarga = ({navigation}) => {
                         </View>
                     </View>
                     
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+
+                    <View style={styles.subTextOneContainer}>
+                        <Text style={styles.subTextOne}>{dropdownHeader}</Text>
+                    </View>
+
                     <View style={{height: 30, backgroundColor: '#FFF'}}></View>
                     
                     {/* Dropdown Menu */}

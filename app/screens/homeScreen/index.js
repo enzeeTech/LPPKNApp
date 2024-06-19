@@ -63,7 +63,7 @@ const HomeScreen = ({navigation}) => {
             }));
             setContentData(formattedData);
             // Testing with empty data
-            // setContentData([]);
+            setContentData([]);
           }
         } catch (error) {
           console.error('Error fetching home slider content:', error);
@@ -88,7 +88,7 @@ const HomeScreen = ({navigation}) => {
         }));
         setBulletinItems(formattedData);
         // Testing with empty data
-        // setBulletinItems([]);
+        setBulletinItems([]);
       })
       .catch((error) => {
         console.log(error);
@@ -109,7 +109,7 @@ const HomeScreen = ({navigation}) => {
         }));
         setPosterItems(formattedData);
         // Testing with empty data
-        // setPosterItems([]);
+        setPosterItems([]);
         
       })
       .catch((error) => {
@@ -306,8 +306,9 @@ const HomeScreen = ({navigation}) => {
           {contentData.length > 0 ?(
             <ContentSlider contents={contentData} />
           ) : (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{ fontSize: 24, fontWeight: '800', color: '#9448DA' }}>Content Loading...</Text>
+            <View style={{flex: 1, justifyContent: 'flex-end' , backgroundColor: '#F3E9FF', marginBottom: 30}}>
+              <View style={{backgroundColor: '#F8F2FF', height: 20, width: '30%', marginBottom: 10, marginLeft: 20}}></View>
+              <View style={{backgroundColor: '#F8F2FF', height: 20, width: '70%', marginBottom: 20, marginLeft: 20}}></View>
             </View>
           )}
         </View>

@@ -84,7 +84,7 @@ const Peka = ({ navigation }) => {
 
 
     // Extract gallery data for the gallery component
-    const { title: galleryTitle, images } = extractGalleryData(componentData);
+    // const { title: galleryTitle, images } = extractGalleryData(componentData);
 
     // Handle back press navigation
     const handleBackPress = () => {
@@ -192,7 +192,7 @@ const Peka = ({ navigation }) => {
 
                     <View style={{height: 30, backgroundColor: '#FFF'}}></View>
                     {/* Galeri */}
-                    <GalleryBasic title={galleryTitle} images={images} />
+                    {/* <GalleryBasic title={galleryTitle} images={images} /> */}
                     {/* Buttons section */}
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
@@ -203,7 +203,7 @@ const Peka = ({ navigation }) => {
                     <View style={{height: 100, backgroundColor: '#FFF'}}></View>
 
                  {/* View created to add padding */}
-                 <View style={{height: 100, backgroundColor: '#FFF'}}></View>
+                 <View style={{height: 50, backgroundColor: '#FFF'}}></View>
 
                 </View>                
             </ScrollView>

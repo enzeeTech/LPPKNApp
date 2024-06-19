@@ -8,6 +8,8 @@ import NewsItem from './customTiles/NewsItem';
 import PosterItem from './customTiles/PosterItem';
 import ContentSlider from './ContentSlider';
 import GlobalApi from '../../services/GlobalApi';
+import LottieView from 'lottie-react-native';
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -222,8 +224,6 @@ const HomeScreen = ({navigation}) => {
     </View>
   );
 
-
-  
   //////// SEARCH BAR FUNCTIONS AND DECLARATIONS ////////
 
   // State to store the visibility of the search bar
@@ -341,8 +341,13 @@ const HomeScreen = ({navigation}) => {
               </View>
             </ScrollView>
           ) : (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{ fontSize: 24, fontWeight: '800', color: '#9448DA' }}>Content Loading...</Text>
+            <View style={{height: 350, justifyContent: 'center', alignItems: 'center' }}>
+              <LottieView
+                source={require('../../assets/Json/loadingAnimation.json')}
+                autoPlay
+                loop
+                style={{ width: 300, height: 300}}
+              />
             </View>
           )}
         </View>
@@ -364,8 +369,13 @@ const HomeScreen = ({navigation}) => {
             </View>
           </ScrollView>
         ) : (
-          <View style={{ height: 230, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 24, fontWeight: '800', color: '#9448DA' }}>Content Loading...</Text>
+          <View style={{height: 350, justifyContent: 'center', alignItems: 'center' }}>
+            <LottieView
+              source={require('../../assets/Json/loadingAnimation.json')}
+              autoPlay
+              loop
+              style={{ width: 300, height: 200}}
+            />
           </View>
         )}
       </View>

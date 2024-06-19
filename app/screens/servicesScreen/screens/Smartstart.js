@@ -180,7 +180,7 @@ const Smartstart = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{height: 150, backgroundColor: '#FFF'}}></View>
+                <View style={{height: 130, backgroundColor: '#FFF'}}></View>
 
                 {/* Popup/Modal */}
                 {/* <Modal

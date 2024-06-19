@@ -143,7 +143,7 @@ const PerancangKeluarga = ({navigation}) => {
                                 {/* Render items from data  */}
                                 {galleryData.map((item, index) => (
                                     <View key={index} style={styles.slide}>
-                                        <View style={styles.imageView}>
+                                        <View style={[styles.imageView, {elevation: 0}]}>
                                             <Image source={{uri: item.url}} style={styles.image} />
                                         </View>
                                         <View style={styles.carouselTextContainer}>
@@ -210,7 +210,7 @@ const PerancangKeluarga = ({navigation}) => {
                     <View style={{height: 100, backgroundColor: '#FFF'}}></View>
 
                  {/* View created to add padding */}
-                 <View style={{height: 100, backgroundColor: '#FFF'}}></View>
+                 <View style={{height: 70, backgroundColor: '#FFF'}}></View>
                 </View>
             </ScrollView>
         </SafeAreaView>

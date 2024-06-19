@@ -178,7 +178,7 @@ const Peka = ({ navigation }) => {
                                 {/* Render items from data  */}
                                 {galleryData.map((item, index) => (
                                     <View key={index} style={styles.slide}>
-                                        <View style={styles.imageView}>
+                                        <View style={[styles.imageView, {elevation: 0}]}>
                                             <Image source={{uri: item.url}} style={styles.image} />
                                         </View>
                                         <View style={styles.carouselTextContainer}>

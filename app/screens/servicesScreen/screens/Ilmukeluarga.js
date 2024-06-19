@@ -169,7 +169,7 @@ const Ilmukeluarga = ({ navigation }) => {
                     </View>
                 </Modal> */}
                  {/* View created to add padding */}
-                 <View style={{height: 100, backgroundColor: '#FFF'}}></View>
+                 <View style={{height: 50, backgroundColor: '#FFF'}}></View>
 
             </ScrollView>
         </SafeAreaView>

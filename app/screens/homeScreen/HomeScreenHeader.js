@@ -61,7 +61,7 @@ function Header({toggleSearch}) {
                     alignItems: 'center',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    marginLeft: 20,
+                    // marginLeft: 20,
                     marginTop: -15,
                     }}
                 >
@@ -84,16 +84,16 @@ function Header({toggleSearch}) {
                     />
                 </View>
                 {/* SETTINGS BUTTON */}
-                <TouchableOpacity onPress={openSettings}>
+                {/* <TouchableOpacity onPress={openSettings}>
                     <Image 
                         source={require('../../assets/settingsIconHome.png')}
                         style = {styles.iconStyleSetting}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* Settings Overlay */}
-                {showSettings && (
+                {/* {showSettings && (
                     <SettingsScreen onClose={closeSettings} />
-                )}
+                )} */}
             </View>
         </View>
     );
@@ -134,7 +134,8 @@ const styles = StyleSheet.create({
     iconStyleHome: {
         width: 150, 
         height: 70, 
-        resizeMode: 'contain',  
+        resizeMode: 'contain',
+        // marginRight: 10,  
     },
     iconStyleSetting: {
         width: 25, 

@@ -7,12 +7,12 @@ function Header() {
             <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>Lokasi</Text>
                 <View style={styles.iconContainer}>
-                    <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+                    {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                         <Image 
                             source={require('../../assets/settingsIcon.png')}
                             style = {styles.iconStyleSetting}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         </View>

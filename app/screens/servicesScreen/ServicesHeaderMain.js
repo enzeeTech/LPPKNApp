@@ -6,12 +6,12 @@ function Header() {
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>Perkhidmatan</Text>
-                <TouchableOpacity onPress={()=>{console.log("settings button pressed")}}>
+                {/* <TouchableOpacity onPress={()=>{console.log("settings button pressed")}}>
                     <Image 
                         source={require('../../assets/settingsIcon.png')}
                         style = {styles.iconStyleSetting}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     );
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         width: '40%',
         textAlign: 'center',
-        marginRight: '50%',
+        marginRight: '55%',
     },
     iconStyleSetting: {
         width: 25, 

@@ -63,7 +63,7 @@ const HomeScreen = ({navigation}) => {
             }));
             setContentData(formattedData);
             // Testing with empty data
-            setContentData([]);
+            // setContentData([]);
           }
         } catch (error) {
           console.error('Error fetching home slider content:', error);
@@ -88,7 +88,7 @@ const HomeScreen = ({navigation}) => {
         }));
         setBulletinItems(formattedData);
         // Testing with empty data
-        setBulletinItems([]);
+        // setBulletinItems([]);
       })
       .catch((error) => {
         console.log(error);
@@ -109,7 +109,7 @@ const HomeScreen = ({navigation}) => {
         }));
         setPosterItems(formattedData);
         // Testing with empty data
-        setPosterItems([]);
+        // setPosterItems([]);
         
       })
       .catch((error) => {

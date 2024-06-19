@@ -7,6 +7,10 @@ const Hubungikami = ({ navigation }) => {
     navigation.goBack();
   };
 
+  const handleLocationPress = () => {
+    Linking.openURL('https://maps.app.goo.gl/RSNrbU3xB9sVpPhL9');
+  };
+
   const handlePhonePress = () => {
     Linking.openURL('tel:03 2613 7555');
   };
@@ -95,13 +99,15 @@ const Hubungikami = ({ navigation }) => {
             >
               <View style={styles.childTwoContent}>
                 <View style={styles.iconsContainer}>
-                  <Image source={require("../../../assets/locationIcon.png")} />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.centeredText}>
-                      No.12B, Bangunan LPPKN, {"\n"}Jalan Raja Laut,{"\n"} 50350
-                      Kuala Lumpur
-                    </Text>
-                  </View>
+                  <TouchableOpacity onPress={handleLocationPress} style={styles.container2}>
+                    <Image source={require("../../../assets/locationIcon.png")} />
+                    <View style={styles.textContainer}>
+                      <Text style={styles.centeredText}>
+                        No.12B, Bangunan LPPKN, {"\n"}Jalan Raja Laut,{"\n"} 50350
+                        Kuala Lumpur
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                   <TouchableOpacity onPress={handlePhonePress} style={styles.container2}>
                     <Image source={require("../../../assets/phoneIconUtama.png")}  />
                     <View style={styles.textContainer2}>

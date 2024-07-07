@@ -64,7 +64,7 @@ const Subfertiliti = ({navigation}) => {
 
     // Hubungi button navigation
     const hubungiButton = () => {
-        navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
+        navigation.navigate('LocationCollection', { query: 'Klinik Subfertiliti' });
     }
 
     // Handle back press navigation
@@ -246,13 +246,14 @@ const Subfertiliti = ({navigation}) => {
                     
                     <View style={{height: 40, backgroundColor: '#FFF'}}></View>
 
-                    {/* Galeri */}
-                    <GalleryBasic title={galleryTitle} images={images} />
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, {marginBottom: 40}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
-                            <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
+                            <Text style={styles.buttonTextOne}>Hubungi Klinik Subfertilti</Text>
                         </TouchableOpacity>
                     </View>
+
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
 
                     <View style={{height: 100, backgroundColor: '#FFF'}}></View>
                 </View>

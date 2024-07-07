@@ -26,6 +26,8 @@ function LocationCollection({navigation, route}) {
         title = 'Klinik Nur Sejahtera'; 
     } else if (query === 'KafeTEEN') {
         title = 'KafeTEEN';
+    } else if (query === 'Klinik Subfertiliti') {
+        title = 'Klinik Subfertiliti';
     }
 
     // Fetch the closest premises

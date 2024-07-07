@@ -131,6 +131,7 @@ const Hubungikami = ({ navigation }) => {
                 </View>
               </View>
               <View style={styles.socialmediaContainer}>
+                <Text style={{color: "#777", textAlign: "center", fontSize: 20, fontStyle: "normal", fontWeight: 'bold', marginBottom: 30}}>Pautan Pantas</Text>
                 <View
                   style={{
                     flex: 1,
@@ -161,6 +162,7 @@ const Hubungikami = ({ navigation }) => {
                 </View>
               </View>
             </ImageBackground>
+            
           </View>
         </ImageBackground>
       </View>
@@ -222,7 +224,7 @@ const Hubungikami = ({ navigation }) => {
     childTwoContent: {
       flex: 1,
       alignItems: "center",
-      marginTop: "5%",
+      marginTop: "3%",
     },
     iconsContainer: {
       flex: 1,
@@ -244,6 +246,7 @@ const Hubungikami = ({ navigation }) => {
       flex: 0.2,
       justifyContent: "center",
       alignItems: "center",
+      marginBottom: "6%",
     },
     container2: {
       flexDirection: 'column',

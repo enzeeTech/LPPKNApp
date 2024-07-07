@@ -130,10 +130,8 @@ const KafeTEEN = ({ navigation }) => {
                     </View>
                     {/* Subsection One */}
                     <GreenTickListItems title={bulletTitle} bulletPoints={bulletPoints} />
-                    {/* Galeri */}
-                    <GalleryBasic title={galleryTitle} images={images} />
                     {/* Buttons section */}
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, {marginBottom: 40, marginTop: 30}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={kafeTeenAppRedirectButton}> 
                             <Text style={styles.buttonTextOne}>Muat Turun Aplikasi</Text>
                         </TouchableOpacity>
@@ -141,6 +139,8 @@ const KafeTEEN = ({ navigation }) => {
                             <Text style={styles.buttonTextTwo}>Hubungi KafeTEEN</Text>
                         </TouchableOpacity>
                     </View>
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
                 </View>
                 <View style={{height: 110, backgroundColor: '#FFF'}}></View>
             </ScrollView>

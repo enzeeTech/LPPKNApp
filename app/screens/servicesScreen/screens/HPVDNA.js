@@ -37,7 +37,6 @@ const HpvDna = ({navigation}) => {
                 setPapSmearData(componentData
                     .filter(component => 
                       component.__component === 'links.link1' && 
-                      component.Title === 'Info Pap Smear' && 
                       component.id === 2  
                     )
                     .map(component => [component.Title, component.URL])[0] || []
@@ -46,7 +45,6 @@ const HpvDna = ({navigation}) => {
                 setHpvDnaData(componentData
                 .filter(component => 
                     component.__component === 'links.link1' && 
-                    component.Title === 'Info HPV DNA' && 
                     component.id === 3  
                 )
                 .map(component => [component.Title, component.URL])[0] || []
@@ -199,14 +197,13 @@ const HpvDna = ({navigation}) => {
 
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity 
-                            style={styles.buttonViewTwo}
+                            style={[styles.buttonViewTwo, papSmearData[1] === null && {opacity: 0.5}]}
                             onPress= {() => {
                                 if (papSmearData[1] !== null) {
                                     Linking.openURL(papSmearData[1]);
-                                } else {
-                                    Alert.alert('Link not available');
                                 }
                             }}
+                            disabled={papSmearData[1] === null}
                         >
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={styles.buttonTextTwo}>{papSmearData[0]}</Text>
@@ -272,7 +269,7 @@ const HpvDna = ({navigation}) => {
 
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity 
-                            style={styles.buttonViewTwo}
+                            style={[styles.buttonViewTwo, hpvDnaData[1] === null && {opacity: 0.5}]}
                             onPress= {() => {
                                 if (hpvDnaData[1] !== null) {
                                     Linking.openURL(hpvDnaData[1]);
@@ -280,6 +277,7 @@ const HpvDna = ({navigation}) => {
                                     Alert.alert('Link not available');
                                 }
                             }}
+                            disabled={hpvDnaData[1] === null}
                         >
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={styles.buttonTextTwo}>{hpvDnaData[0]}</Text>
@@ -290,13 +288,14 @@ const HpvDna = ({navigation}) => {
                     </View>
                     <View style={{height: 50, backgroundColor: '#FFF'}}></View>
 
-                    {/* Galeri */}
-                    <GalleryBasic title={galleryTitle} images={images} />
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, {marginBottom: 40}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
+
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
 
       <View style={{height: 100, backgroundColor: '#FFF'}}></View>
     </View>

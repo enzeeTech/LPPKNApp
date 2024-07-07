@@ -164,14 +164,14 @@ const KeluargaKerja = ({ navigation }) => {
                             />
                     ))}
                     <View style={{height: 30, backgroundColor: '#FFF'}}></View>
-                    {/* Galeri */}
-                    <GalleryBasic title={galleryTitle} images={images} />
                     {/* Buttons section */}
-                    <View style={[styles.buttonContainer, {marginTop: 30}]}>
+                    <View style={[styles.buttonContainer, {marginBottom: 60, marginTop:40}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>
                     </View>
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
                     <View style={{height: 110, backgroundColor: '#FFF'}}></View>
                     {/* View created to add padding */}
                     <View style={{height: 20, backgroundColor: '#FFF'}}></View>

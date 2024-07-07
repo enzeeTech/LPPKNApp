@@ -142,14 +142,16 @@ const Kaunseling = ({navigation}) => {
                         </ScrollView>
                         </View>
                     </View>
-                    {/* Gallery section */}
-                    <GalleryBasic title={galleryBasicTitle} images={basicImages} />
                     {/* Buttons section */}
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, {marginBottom: 40}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
+
+                    {/* Gallery section */}
+                    <GalleryBasic title={galleryBasicTitle} images={basicImages} />
+
                     {/* View created to add padding */}
                     <View style={{height: 100, backgroundColor: '#FFF'}}></View>
                 </View>

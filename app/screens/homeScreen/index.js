@@ -84,6 +84,7 @@ const HomeScreen = ({navigation}) => {
         const formattedData = response.data.data.map((item) => ({
           id: item.id,
           title: item.attributes.Title,
+          publishedDate: item.attributes.publishedAt,
           date: formatDate(item.attributes.Date),
           tileImage: item.attributes.TileImage.data.attributes.url,
         
@@ -203,6 +204,7 @@ const HomeScreen = ({navigation}) => {
         id={news.id}
         title={news.title}
         date={news.date}
+        publishedAt={news.publishedDate}
         imageSource={{ uri: news.tileImage }}
       />
     ));

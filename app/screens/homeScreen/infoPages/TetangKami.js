@@ -83,15 +83,15 @@ function TetangKami({ navigation }) {
                             </Text>
                         </View>
 
-                        <Image source={require("../../../assets/eyeIcon.jpg")} />
+                        {/* <Image source={require("../../../assets/eyeIcon.jpg")} /> */}
                         <View style={styles.textContainer}>
-                            <Text style={[styles.titleStyle, {marginTop: -5}]}>Visi</Text>
+                            <Text style={[styles.titleStyle, {marginTop: -25}]}>Visi</Text>
                             <Text style={styles.centeredText}>
                             Menjadi organisasi kecemerlangan {"\n"}penduduk dan
                             keluarga.
                             </Text>
                         </View>
-                        <Image source={require("../../../assets/rocketIcon.png")} />
+                        {/* <Image source={require("../../../assets/rocketIcon.png")} /> */}
                         <View style={styles.textContainer}>
                             <Text style={[styles.titleStyle, {marginTop: -5}]}>Misi</Text>
                             <Text style={styles.centeredText}>
@@ -101,7 +101,7 @@ function TetangKami({ navigation }) {
                             </Text>
                         </View>
 
-                        <Image source={require("../../../assets/awardIcon.png")} />
+                        {/* <Image source={require("../../../assets/awardIcon.png")} /> */}
                         <View style={styles.textContainer}>
                             <Text style={[styles.titleStyle, {marginTop: -5}]}>Nilai Bersama</Text>
                         </View>
@@ -215,7 +215,6 @@ function TetangKami({ navigation }) {
       alignItems: "center",
     },
     textContainer: {
-        marginTop: "3.5%",
         marginBottom: "20%",
         alignItems: "center",
         paddingRight: "10%",

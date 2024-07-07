@@ -136,13 +136,15 @@ const SubsidiMamogram = ({ navigation }) => {
               style={styles.subsidiMamoImage}
             />
           </View>
-          {/* Galeri */}
-          <GalleryBasic title={galleryTitle} images={images} />
-          <View style={styles.subsidiButtonContainer}>
+          <View style={[styles.subsidiButtonContainer, {marginBottom: 40}] }>
                 <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                     <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                 </TouchableOpacity>
           </View>
+
+          {/* Galeri */}
+          <GalleryBasic title={galleryTitle} images={images} />
+
           {/* View created to add padding */}
           <View style={{ height: 100, backgroundColor: '#FFF' }}></View>
         </View>

@@ -171,14 +171,14 @@ const Smartstart = ({ navigation }) => {
                         ))
                     }
                     <View style={{height: 50, backgroundColor: '#FFF'}}></View>
-                    {/* Galeri */}
-                    <GalleryBasic title={galleryTitle} images={images} />
                     {/* Buttons section */}
-                    <View style={[styles.buttonContainer, {marginTop: 30}]}>
+                    <View style={[styles.buttonContainer, {marginBottom: 40, marginTop: 30}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>
                     </View>
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
                 </View>
                 <View style={{height: 130, backgroundColor: '#FFF'}}></View>
 

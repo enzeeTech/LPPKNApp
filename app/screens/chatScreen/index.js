@@ -32,7 +32,7 @@ const ChatScreen = () => {
           </body>
           </html>
           `,
-          baseUrl: 'https://sociodev.onthewifi.com',
+          baseUrl: 'https://lppkn.sociodev.com.my/',
         }}
         onMessage={({ nativeEvent }) => {
           if (nativeEvent.data === 'close') {

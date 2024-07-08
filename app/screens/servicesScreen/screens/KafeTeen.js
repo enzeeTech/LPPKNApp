@@ -133,7 +133,7 @@ const KafeTEEN = ({ navigation }) => {
                     {/* Buttons section */}
                     <View style={[styles.buttonContainer, {marginBottom: 40, marginTop: 30}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={kafeTeenAppRedirectButton}> 
-                            <Text style={styles.buttonTextOne}>Muat Turun Aplikasi</Text>
+                            <Text style={styles.buttonTextOne}>Muat Turun Aplikasi MyKafeTEEN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonViewTwo} onPress={hubungiButton}>
                             <Text style={styles.buttonTextTwo}>Hubungi KafeTEEN</Text>

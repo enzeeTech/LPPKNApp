@@ -61,7 +61,8 @@ const HomeScreen = ({navigation}) => {
               type: item.attributes.Content.data.attributes.mime.includes('video') ? 'video' : 'image',
               source: { uri: item.attributes.Content.data.attributes.url },
               title: item.attributes.Title,
-              subtitle: item.attributes.Subtitle
+              subtitle: item.attributes.Subtitle,
+              link : item.attributes.Link,
             }));
             setContentData(formattedData);
             // Testing with empty data

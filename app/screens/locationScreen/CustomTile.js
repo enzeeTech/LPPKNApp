@@ -4,7 +4,7 @@ import { View, Text, Image, StyleSheet, Platform, Pressable } from 'react-native
 
 const defaultImage = '../../assets/backgroundLPPKNHQ.png';
 
-const CustomTile = ({ onPress, title, backgroundImage, operationTime}) => {
+const CustomTile = ({onPress, title, backgroundImage, operationTime}) => {
 
     const imageSource = backgroundImage ? {uri: backgroundImage} : require(defaultImage);
 

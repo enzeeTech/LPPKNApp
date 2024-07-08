@@ -4,7 +4,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { openURL } from 'expo-linking';
 import { Alert } from 'react-native';
 
-function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime, locationURL}) {
+function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime, locationURL, activeState}) {
 
     // Lihat Peta Button Pressed
     const onLihatPetaPressed = () => {
@@ -60,6 +60,8 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime, locat
         return phoneNumber.replace("ext.", "samb.");
     };
 
+    console.log('activeState: ', activeState);
+
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
@@ -83,10 +85,13 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime, locat
                     <Text style={styles.infoText}>{formatPhoneNumber(phoneNo)}</Text>
                 </View>
 
-                <View style={styles.infoContainer}>
-                    <Image source={require('../../assets/faxIcon.png')} style={styles.icon} />
-                    <Text style={styles.infoText}>{faxNo}</Text>
-                </View>
+                {/* If active state is pahang, dont show this view component */}
+                {activeState === 'Pahang' ? null : 
+                    <View style={styles.infoContainer}>
+                        <Image source={require('../../assets/faxIcon.png')} style={styles.icon} />
+                        <Text style={styles.infoText}>{faxNo}</Text>
+                    </View>
+                }
 
                 {/* Operating Hours */}
                 <View style={styles.infoContainerTime}>

@@ -14,6 +14,7 @@ const Subfertiliti = ({navigation}) => {
     const [componentData, setComponentData] = useState([]);
     const [priceTilesData, setPriceTilesData] = useState([]);
     const [buttonData, setButtonData] = useState([]);
+    const [buttonDataTwo, setButtonDataTwo] = useState([]);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -34,11 +35,19 @@ const Subfertiliti = ({navigation}) => {
 
                 // Extract button data
                 setButtonData(componentData
-                .filter(component => 
-                    component.__component === 'links.link1' && 
-                    component.Title === 'Pengeluaran Caruman KWSP'  
-                )
-                .map(component => [component.Title, component.URL])[0] || []
+                    .filter(component => 
+                        component.__component === 'links.link1' && 
+                        component.id === 4  
+                    )
+                    .map(component => [component.Title, component.URL])[0] || []
+                );
+
+                setButtonDataTwo(componentData
+                    .filter(component => 
+                        component.__component === 'links.link1' && 
+                        component.id === 5  
+                    )
+                    .map(component => [component.Title, component.URL])[0] || []
                 );
 
                 const responseData = {
@@ -245,6 +254,29 @@ const Subfertiliti = ({navigation}) => {
                     </View>
                     
                     <View style={{height: 40, backgroundColor: '#FFF'}}></View>
+
+                    
+
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity 
+                            style={styles.buttonViewTwo}
+                            onPress= {() => {
+                                if (buttonData[1] !== null) {
+                                    Linking.openURL(buttonDataTwo[1]);
+                                } else {
+                                    Alert.alert('Link not available');
+                                }
+                            }}
+                        >
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={styles.buttonTextTwo}>{buttonDataTwo[0]}</Text>
+                            <Image source={require('../../../assets/linkIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
+
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
 
                     <View style={[styles.buttonContainer, {marginBottom: 40}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>

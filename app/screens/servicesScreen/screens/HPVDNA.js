@@ -265,7 +265,7 @@ const HpvDna = ({navigation}) => {
                                 description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
                             />
                     ))}
-                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
 
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity 
@@ -286,13 +286,15 @@ const HpvDna = ({navigation}) => {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
 
                     <View style={[styles.buttonContainer, {marginBottom: 40}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
+
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
 
                     {/* Galeri */}
                     <GalleryBasic title={galleryTitle} images={images} />

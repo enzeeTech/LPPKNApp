@@ -27,7 +27,7 @@ const getBulletinPostWithQuery = (query) => {
 const getBulletinPostById = (id) => AxioInstance.get(`/bulletin-posts/${id}?populate=*`);
 
 // Function to get sorotan posts
-const getSorotanPost = () => AxioInstance.get("/sorotan-posts?populate=*&pagination[start]=0&pagination[limit]=100&sort=Date:desc");
+const getSorotanPost = () => AxioInstance.get("/sorotan-posts?populate=*&pagination[start]=0&pagination[limit]=100&sort=publishedAt:desc");
 
 // Function to get sorotan post by id
 const getSorotanPostById = (id) => AxioInstance.get(`/sorotan-posts/${id}?populate=*`);

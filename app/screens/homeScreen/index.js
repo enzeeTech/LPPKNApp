@@ -79,7 +79,7 @@ const HomeScreen = ({navigation}) => {
 
   // Calling API to get bulletin posts
   const getBulletinPosts = () => { 
-    const query = "&pagination[start]=0&pagination[limit]=6&sort=Date:desc"
+    const query = "&pagination[start]=0&pagination[limit]=6&sort=publishedAt:desc"
     GlobalApi.getBulletinPostWithQuery(query)
       .then((response) => {
         const formattedData = response.data.data.map((item) => ({
@@ -101,7 +101,7 @@ const HomeScreen = ({navigation}) => {
 
   // Calling API to get sorotan posts
   const getSorotanPosts = () => {
-    const query = "&pagination[start]=0&pagination[limit]=4&sort=Date:desc"
+    const query = "&filters[PinPost][$eq]=true&sort=publishedAt:desc"
     GlobalApi.getSorotanPostWithQuery(query)
       .then((response) => {
         const formattedData = response.data.data.map((item) => ({

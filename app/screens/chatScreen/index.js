@@ -2,33 +2,53 @@ import { useRouter } from 'expo-router';
 import * as React from 'react';
 import { SafeAreaView, Dimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { Asset } from 'expo-asset';
 
 const screenHeight = Dimensions.get('window').height;
 
 const ChatScreen = () => {
-  let router = useRouter();
+  const router = useRouter();
+
+  // Load the local image asset
+  const chatBubbleAsset = Asset.fromModule(require('../../assets/ChatBubble.png'));
+  const chatBubbleUri = chatBubbleAsset.localUri || chatBubbleAsset.uri;
 
   return (
     <SafeAreaView style={{ height: screenHeight * 0.91 }}>
-      {/* https://gist.github.com/hetmann/bda29c335da8bb51f8e2e2d520edf3b6?permalink_comment_id=3869363 */}
-      {/* https://github.com/react-native-webview/react-native-webview/issues/447#issuecomment-477201365 */}
       <WebView
         source={{
           html: `
           <!DOCTYPE html>
           <html lang="en">
           <head>
-          <script src="https://app.wotnot.io/chat-widget/7UxunTEaV8r3065055405418JExg28HZ.js" defer></script>          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+            <script src="https://app.wotnot.io/chat-widget/7UxunTEaV8r3065055405418JExg28HZ.js" defer></script>
+            <style>
+              .chat-bubble {
+                position: fixed;
+                bottom: 70px;
+                left: 20px;
+                width: 310px;
+                height: 100px;
+                background-image: url('${chatBubbleUri}');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+              }
+            </style>
           </head>
           <body>
-          <script type="text/javascript">
-          
-          document.addEventListener( 'DOMContentLoaded', function( event ) {
-          zE('messenger', 'open');
-          zE('messenger:on', 'close', () => {window.ReactNativeWebView.postMessage("close"); setTimeout(()=>{zE('messenger', 'open');}, 500)});
-          });
-          
-          </script>
+            <div class="chat-bubble"></div>
+            <script type="text/javascript">
+              document.addEventListener('DOMContentLoaded', function(event) {
+                zE('messenger', 'on', 'close', () => {
+                  window.ReactNativeWebView.postMessage("close");
+                  setTimeout(() => {
+                    zE('messenger', 'open');
+                  }, 500);
+                });
+              });
+            </script>
           </body>
           </html>
           `,

@@ -108,19 +108,19 @@ const Hubungikami = ({ navigation }) => {
                       </Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={handlePhonePress} style={styles.container2}>
+                  <TouchableOpacity onPress={handlePhonePress} style={[styles.container2, {marginTop: -5}]}>
                     <Image source={require("../../../assets/phoneIconUtama.png")}  />
                     <View style={styles.textContainer2}>
                       <Text style={styles.centeredText2}>03-2613 7555</Text>
                     </View>
                   </TouchableOpacity>
-                  <View style={styles.container2}>
+                  {/* <View style={styles.container2}>
                     <Image source={require("../../../assets/faxIconUtama.png")}  />
                     <View style={styles.textContainer2}>
                       <Text style={styles.centeredText2}>03-2693 7250</Text>
                     </View>
-                  </View>
-                  <TouchableOpacity onPress={handleEmailPress} style={styles.container2}>
+                  </View> */}
+                  <TouchableOpacity onPress={handleEmailPress} style={[styles.container2, {marginTop: 20}]}>
                     <Image source={require("../../../assets/emailIcon.png")}  />
                     <View style={styles.textContainer2}>
                       <Text style={styles.centeredText2}>
@@ -131,7 +131,7 @@ const Hubungikami = ({ navigation }) => {
                 </View>
               </View>
               <View style={styles.socialmediaContainer}>
-                <Text style={{color: "#777", textAlign: "center", fontSize: 20, fontStyle: "normal", fontWeight: 'bold', marginBottom: 30}}>Pautan Pantas</Text>
+                <Text style={{color: "#777", textAlign: "center", fontSize: 17, fontStyle: "normal", fontWeight: 'bold', marginBottom: 30}}>Pautan Pantas</Text>
                 <View
                   style={{
                     flex: 1,
@@ -246,7 +246,7 @@ const Hubungikami = ({ navigation }) => {
       flex: 0.2,
       justifyContent: "center",
       alignItems: "center",
-      marginBottom: "6%",
+      marginBottom: "30%",
     },
     container2: {
       flexDirection: 'column',

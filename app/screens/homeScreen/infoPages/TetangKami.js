@@ -92,7 +92,7 @@ function TetangKami({ navigation }) {
                             </Text>
                         </View>
                         {/* <Image source={require("../../../assets/rocketIcon.png")} /> */}
-                        <View style={styles.textContainer}>
+                        <View style={[styles.textContainer,{marginTop: -20}]}>
                             <Text style={[styles.titleStyle, {marginTop: -5}]}>Misi</Text>
                             <Text style={styles.centeredText}>
                             Memacu agenda kependudukan dan kekeluargaan yang
@@ -102,7 +102,7 @@ function TetangKami({ navigation }) {
                         </View>
 
                         {/* <Image source={require("../../../assets/awardIcon.png")} /> */}
-                        <View style={styles.textContainer}>
+                        <View style={[styles.textContainer,{marginTop: -10}]}>
                             <Text style={[styles.titleStyle, {marginTop: -5}]}>Nilai Bersama</Text>
                         </View>
                         </View>
@@ -243,7 +243,7 @@ function TetangKami({ navigation }) {
     nilaibersamaParentContainer: {
       width: "100%",
       marginTop: "-15%",
-      marginBottom: "40%",
+      marginBottom: "30%",
       flexDirection: "column",
       justifyContent: "center",
     },

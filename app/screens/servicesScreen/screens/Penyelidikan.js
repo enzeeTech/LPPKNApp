@@ -126,10 +126,10 @@ const Penyelidikan = ({ navigation }) => {
                     {/* Button selection */}
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity 
-                            style={styles.buttonViewOne}
+                            style={styles.buttonViewTwo}
                             onPress={() => Linking.openURL(linkURL[0])}  
                         >
-                            <Text style={styles.buttonTextOne}>{linkTitle}</Text>
+                            <Text style={styles.buttonTextTwo}>{linkTitle}</Text>
                         </TouchableOpacity>
                     </View>
 

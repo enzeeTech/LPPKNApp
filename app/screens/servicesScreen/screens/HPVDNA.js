@@ -12,7 +12,7 @@ const HpvDna = ({navigation}) => {
 
     const [responseData, setResponseData] = useState([]);
     const [componentData, setComponentData] = useState([]);
-    const [papSmearData, setPapSmearData] = useState([]);
+    // const [papSmearData, setPapSmearData] = useState([]);
     const [hpvDnaData, setHpvDnaData] = useState([]);
     const [bulletPointData, setBulletPointData] = useState([]);
     const [priceTilesData, setPriceTilesData] = useState([]);
@@ -34,13 +34,13 @@ const HpvDna = ({navigation}) => {
 
                 setPriceTilesData(priceTiles);
 
-                setPapSmearData(componentData
-                    .filter(component => 
-                      component.__component === 'links.link1' && 
-                      component.id === 2  
-                    )
-                    .map(component => [component.Title, component.URL])[0] || []
-                );
+                // setPapSmearData(componentData
+                //     .filter(component => 
+                //       component.__component === 'links.link1' && 
+                //       component.id === 2  
+                //     )
+                //     .map(component => [component.Title, component.URL])[0] || [] 
+                // );
                   
                 setHpvDnaData(componentData
                 .filter(component => 
@@ -193,9 +193,9 @@ const HpvDna = ({navigation}) => {
                                 description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
                             />
                     ))}
-                    <View style={{height: 40, backgroundColor: '#FFF'}}></View>
+                    {/* <View style={{height: 40, backgroundColor: '#FFF'}}></View> */}
 
-                    <View style={styles.buttonContainer}>
+                    {/* <View style={styles.buttonContainer}>
                         <TouchableOpacity 
                             style={[styles.buttonViewTwo, papSmearData[1] === null && {opacity: 0.5}]}
                             onPress= {() => {
@@ -211,7 +211,7 @@ const HpvDna = ({navigation}) => {
 
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                     
                     <View style={{height: 10, backgroundColor: '#FFF'}}></View>
                     {componentData
@@ -286,7 +286,7 @@ const HpvDna = ({navigation}) => {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
+                    <View style={{height: 10, backgroundColor: '#FFF'}}></View>
 
                     <View style={[styles.buttonContainer, {marginBottom: 40}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>

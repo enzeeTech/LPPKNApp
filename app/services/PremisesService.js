@@ -24,9 +24,12 @@ export const getPremisesData = async (query, userLocation) => {
         const allPremises = formatData(response.data);
 
         // Filter premises by type
-        const filteredPremises = allPremises.filter(premise =>
-            premise.title.includes(query)
-        );
+        let filteredPremises = [];
+        if (query === 'Pejabat') {
+            filteredPremises = allPremises.filter(premise => premise.title.includes('Pejabat') || premise.title.includes('Pusat Keluarga'));
+        } else {
+            filteredPremises = allPremises.filter(premise => premise.title.includes(query));
+        }
 
         // Calculate distance and sort by closest
         const userLatitude = userLocation.coords.latitude;

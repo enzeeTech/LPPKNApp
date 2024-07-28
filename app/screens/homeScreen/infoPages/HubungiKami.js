@@ -99,7 +99,7 @@ const Hubungikami = ({ navigation }) => {
             >
               <View style={styles.childTwoContent}>
                 <View style={styles.iconsContainer}>
-                  <TouchableOpacity onPress={handleLocationPress} style={styles.container2}>
+                  <TouchableOpacity onPress={handleLocationPress} style={[styles.container2,{marginTop: 20}]}>
                     <Image source={require("../../../assets/locationIcon.png")} />
                     <View style={styles.textContainer}>
                       <Text style={styles.centeredText}>
@@ -179,7 +179,8 @@ const Hubungikami = ({ navigation }) => {
     },
     backgroundContainer: {
       flex: 1,
-      height: "25%",
+      height: "40%",
+      width: '100%',
       marginTop: Platform.OS === "ios" ? "0%" : "7%",
       zIndex: -1,
       resizeMode: "contain",
@@ -211,7 +212,7 @@ const Hubungikami = ({ navigation }) => {
     childTwoContainer: {
       flex: 1,
       width: "100%",
-      marginTop: "45%",
+      marginTop: "60%",
     },
     imageStyle: {
       flex: 1,
@@ -246,7 +247,7 @@ const Hubungikami = ({ navigation }) => {
       flex: 0.2,
       justifyContent: "center",
       alignItems: "center",
-      marginBottom: "30%",
+      marginBottom: "11%",
     },
     container2: {
       flexDirection: 'column',

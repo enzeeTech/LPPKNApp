@@ -1,158 +1,150 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
-import { Ionicons } from 'react-native-vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import GlobalApi from '../../../services/GlobalApi';
+import CriteriaDropdown from './reusableComponents/dropdownListItems/CriteriaDropdown';
+import { extractGalleryData } from '../../../utilities/GalleryExtract';
+import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
 
 const SubsidiMamogram = ({ navigation }) => {
-  const kriteriaItems = [
-    { label: 'Wanita warganegara Malaysia atau penduduk tetap', hasDropdown: false },
-    { label: 'Berumur 35-70 tahun', hasDropdown: false },
-    { label: 'Pendapatan isi rumah RM10,000 dan ke bawah(Anda layak menerima subsidi penuh)', hasDropdown: false },
-    { label: 'Jika pendapatan isi rumah RM10,000 ke atas subsidi RM50', hasDropdown: false },
-    { label: 'Wanita yang berusia 40-70 tahun dan menepati syarat seperti:', hasDropdown: true, dropdownItems: ['Mempunyai risiko tinggi untuk mendapat kanser payudara', 'Wanita yang dirujuk untuk ujian diagnostik mamogram', 
-                                                                                                                'Ujian mamogram saringan sebelum memulakan Terapi Hormon Gantian', 'Ujian mamogram ulangan bagi program subsidi'] },
-    { label: 'Wanita yang berusia 35-39 tahun dan menepati syarat seperti:', hasDropdown: true, dropdownItems: ['Mempunyai sejarah keluarga mendapat kanser payudara pada usia kurang dari 40 tahun', 'Telah menjalani penilaian oleh doktor'] },
-  ];
+  
+  const [responseData, setResponseData] = useState([]);
+  const [componentData, setComponentData] = useState([]);
+  const [kriteriaData, setKriteriaData] = useState([]);
 
-  const initialArrowDirection = kriteriaItems.map(item => (item.hasDropdown ? 'down' : 'down'));
+  const fetchPerkhidmatanKeluarga = async () => {
+    try {
+        const response = await GlobalApi.getServiceByName('SubsidiMamogram');
+        
+        if (response.data.data.length > 0) {
+            const service = response.data.data[0].attributes;
 
+            const componentData = service.Content;
 
-  const [showDropdown, setShowDropdown] = useState(Array(kriteriaItems.length).fill(false));
-  const [arrowDirection, setArrowDirection] = useState(initialArrowDirection);
+            setKriteriaData(componentData.map(component => {
+                if (component.__component === 'dropdown.plain-text-dropdown') {
+                    return component.DropdownData.listItems;
+                }
+            }));
 
-  const handleBackPress = () => {
-    navigation.goBack();
+            const responseData = {
+                ServiceID: service.ServiceID,
+                Title: service.ServiceTitle,
+                ServiceImage: service.ServiceImage.data.attributes.url,
+                Description: service.Description,
+            };
+            
+            setResponseData(responseData);
+            setComponentData(componentData);
+        } else {
+            console.log('No data found');
+        }
+      } catch (error) {
+          console.error('Error fetching KafeTEEN service:', error);
+      } 
   };
 
-  const upArrowImage = require('../../../assets/dropdownArrow.png');
-  const downArrowImage = require('../../../assets/pullUpArrow.png');
-
-  const toggleDropdown = (index) => {
-    const newDropdownState = [...showDropdown];
-    newDropdownState[index] = !newDropdownState[index];
-    setShowDropdown(newDropdownState);
-
-    const newArrowDirection = [...arrowDirection];
-    newArrowDirection[index] = newDropdownState[index] ? 'up' : 'down';
-    setArrowDirection(newArrowDirection);
-  };
-
-  const renderDropdown = (items) => (
-    <View style={styles.dropdownContainer}>
-      {items.map((item, index) => (
-        <View key={index} style={styles.dropdownItemContainer}>
-          <View style={styles.dropdownPointContainer}>
-            <Icon name="circle" size={8} color="#9448DA" style={styles.pointIcon} />
-            <Text style={styles.dropdownPointText}>{item}</Text>
-          </View>
-        </View>
-      ))}
-    </View>
-  );
+  useEffect(() => {
+      fetchPerkhidmatanKeluarga();
+  }, []);
 
   // Hubungi button navigation
   const hubungiButton = () => {
     navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
   }
 
-  const galeriData = [
-    { image: require('../../../assets/galeriPlaceholder.png') },
-    { image: require('../../../assets/galeriPlaceholder.png') },
-    { image: require('../../../assets/galeriPlaceholder.png') },
-    { image: require('../../../assets/galeriPlaceholder.png') },
-  ];
+  // Back button navigation
+  const handleBackPress = () => {
+    navigation.goBack();
+  }
+
+
+  // Dropdown title
+  const dropdownTitle = (componentData.map(component => {
+    if (component.__component === 'dropdown.plain-text-dropdown') {
+        return component.DropdownData.Title;
+    }
+  }));
+
+  // Extract gallery data for the gallery component
+  const { title: galleryTitle, images } = extractGalleryData(componentData);
+
+  // Extract Subsection
+  const sectionTitle = (componentData.map(component => {
+    if (component.__component === 'subsections.section-with-image') {
+        return component.Title;
+    }
+  }));
+
+  // Extracct Subsection Image URL
+  const sectionImage = (componentData.map(component => {
+    if (component.__component === 'subsections.section-with-image') {
+        return component.Image.data.attributes.url;
+    }
+  }));
+
+  if (!responseData.ServiceID) {
+    return (
+        <SafeAreaView style={styles.container}>
+            <Header onBackPress={handleBackPress} />
+            <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                <View style={styles.backgroundContainer}>
+                    <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                </View>
+                <View style={styles.contentContainer}>
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.headerText}>Loading...</Text>
+                    </View>
+                    {/** padding till the end of the screen */}
+                    <View style={{height: 500, backgroundColor: '#FFF'}}></View>
+
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    );    
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <Header onBackPress={handleBackPress} />
       <ScrollView style={{ marginTop: -10, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
         <View style={styles.backgroundContainer}>
-          <Image source={require('../../../assets/subsidiMamogramBackground.png')} style={styles.backgroundImage} />
+          <Image source={{uri : responseData.ServiceImage}} style={styles.backgroundImage} />
         </View>
         <View style={styles.contentContainer}>
           <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>SUBSIDI MAMOGRAM</Text>
+            <Text style={styles.headerText}>{responseData.Title}</Text>
           </View>
           <View style={styles.introContainer}>
             <Text style={styles.introText}>
-              {'Subsidi kepada wanita yang layak bagi menjalani saringan awal ujian mamogram di pusat-pusat mamogram yang terpilih.\n\n' +
-                'Saringan awal mamogram berkesan untuk meneliti kesihatan payudara serta mengesan ketulan payudara di peringkat awal yang mendorong kepada kanser payudara.'}
+              {responseData.Description}
             </Text>
           </View>
           <View style={styles.subTextFiveContainer}>
-            <Text style={styles.subTextOne}>Kriteria Kelayakan</Text>
+            <Text style={styles.subTextOne}>{dropdownTitle}</Text>
           </View>
-          {kriteriaItems.map((item, index) => (
-          <View key={index} style={[styles.subTextFourContainer, { borderTopWidth: 1, borderBottomWidth: index < kriteriaItems.length - 1 ? 1 : 0, borderColor: 'rgba(123, 128, 126, 0.18)', position: 'relative', zIndex: showDropdown[index] ? 2 : 1 }]}>
-            <TouchableOpacity
-              disabled={!(item.hasDropdown && (index === 4 || index === 5))}
-              onPress={() => (item.hasDropdown && (index === 4 || index === 5)) ? toggleDropdown(index) : null}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                paddingHorizontal: 1,
-                marginBottom: 1,
-                marginTop: -5,
-              }}
-            >
-                <View style={{ flexDirection: 'row', alignItems: 'center', maxWidth: '80%' }}>
-                  <Image
-                    source={require('../../../assets/GreenTickIcon.png')} 
-                    style={{ width: 20, height: 20, marginBottom: 10, marginRight: 10, marginTop: 10 }}
-                  />
-                <Text style={styles.subTextThree}>{item.label}</Text>
-              </View>
-              {item.hasDropdown && (
-                <Image
-                  source={showDropdown[index] ? downArrowImage : upArrowImage}
-                  style={{ width: 20, height: 19, marginLeft: 30 }}
-                  resizeMode="contain"
-                />
-              )}
-            </TouchableOpacity>
-            {item.hasDropdown && showDropdown[index] && renderDropdown(item.dropdownItems)}
+          {/* Dropdown component */}
+          <CriteriaDropdown data={kriteriaData} />
+          {/* Subsection */}
+          <View style={[styles.subTextFiveContainer, { marginTop: 50 }]}>
+            <Text style={styles.subTextOne}>{sectionTitle}</Text>
           </View>
-        ))}
-         <View style={[styles.subTextFiveContainer, { marginTop:5 }]}>
-          <Text style={styles.subTextOne}>Carta Alir Ujian Mamogram</Text>
-        </View>
-        <View style={styles.cartaAlirTextContainer}>
-          <Text style={styles.cartaAlirText}>
-          </Text>
-        </View>
-        <View style={styles.cartaAlirImageContainer}>
-          <Image
-            source={require('../../../assets/cartaAlirUjianMamogram.png')} 
-            style={styles.subsidiMamoImage}
-          />
-        </View>
-          <View style={styles.subTextSixContainer}>
-                        <Text style={styles.subTextOne}>Galeri</Text>
-                    </View>
-                    <View style={styles.galleryParentContainer}>
-                        <ScrollView 
-                            horizontal={true} 
-                            showsHorizontalScrollIndicator={false} 
-                            style={styles.galleryScrollStyle}
-                        >
-                            <View style={styles.galeriContainer}>
-                                {galeriData.map((item, index) => (
-                                    <View key={index} style={styles.galeriItemContainer}>
-                                        <Image source={item.image} style={styles.galeriImage}/>
-                                    </View>
-                                ))}
-                            </View>
-                        </ScrollView>
-                    </View>
-          <View style={styles.subsidiButtonContainer}>
+          <View style={styles.cartaAlirImageContainer}>
+            <Image
+              source={{uri: sectionImage[1]}} 
+              style={styles.subsidiMamoImage}
+            />
+          </View>
+          <View style={[styles.subsidiButtonContainer, {marginBottom: 40}] }>
                 <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                     <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                 </TouchableOpacity>
           </View>
+
+          {/* Galeri */}
+          <GalleryBasic title={galleryTitle} images={images} />
+
           {/* View created to add padding */}
           <View style={{ height: 100, backgroundColor: '#FFF' }}></View>
         </View>

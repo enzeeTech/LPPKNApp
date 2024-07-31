@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback, Alert} from 'react-native';
 import { ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from './HomeScreenHeader';
@@ -8,6 +8,8 @@ import NewsItem from './customTiles/NewsItem';
 import PosterItem from './customTiles/PosterItem';
 import ContentSlider from './ContentSlider';
 import GlobalApi from '../../services/GlobalApi';
+import LottieView from 'lottie-react-native';
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -23,10 +25,10 @@ const iconsData = [
   { iconSource: require('../../assets/smartstart.png'), label: 'SMARTSTART 2.0' },
   { iconSource: require('../../assets/smartBelanja.png'), label: 'SMARTBelanja' },
   { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTEEN' },
-  { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'Keibubapaan Digital' },
+  // { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'Keibubapaan Digital' },
   { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
-  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
+  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
 ];
 
 const HomeScreen = ({navigation}) => {
@@ -59,9 +61,12 @@ const HomeScreen = ({navigation}) => {
               type: item.attributes.Content.data.attributes.mime.includes('video') ? 'video' : 'image',
               source: { uri: item.attributes.Content.data.attributes.url },
               title: item.attributes.Title,
-              subtitle: item.attributes.Subtitle
+              subtitle: item.attributes.Subtitle,
+              link : item.attributes.Link,
             }));
             setContentData(formattedData);
+            // Testing with empty data
+            // setContentData([]);
           }
         } catch (error) {
           console.error('Error fetching home slider content:', error);
@@ -72,20 +77,22 @@ const HomeScreen = ({navigation}) => {
     }, []);
 
 
-
   // Calling API to get bulletin posts
   const getBulletinPosts = () => { 
-    const query = "&pagination[start]=0&pagination[limit]=6&sort=Date:desc"
+    const query = "&pagination[start]=0&pagination[limit]=6&sort=publishedAt:desc"
     GlobalApi.getBulletinPostWithQuery(query)
       .then((response) => {
         const formattedData = response.data.data.map((item) => ({
           id: item.id,
           title: item.attributes.Title,
+          publishedDate: item.attributes.publishedAt,
           date: formatDate(item.attributes.Date),
           tileImage: item.attributes.TileImage.data.attributes.url,
         
         }));
         setBulletinItems(formattedData);
+        // Testing with empty data
+        // setBulletinItems([]);
       })
       .catch((error) => {
         console.log(error);
@@ -94,7 +101,7 @@ const HomeScreen = ({navigation}) => {
 
   // Calling API to get sorotan posts
   const getSorotanPosts = () => {
-    const query = "&pagination[start]=0&pagination[limit]=4&sort=Date:desc"
+    const query = "&filters[PinPost][$eq]=true&sort=publishedAt:desc"
     GlobalApi.getSorotanPostWithQuery(query)
       .then((response) => {
         const formattedData = response.data.data.map((item) => ({
@@ -105,6 +112,8 @@ const HomeScreen = ({navigation}) => {
 
         }));
         setPosterItems(formattedData);
+        // Testing with empty data
+        // setPosterItems([]);
         
       })
       .catch((error) => {
@@ -160,7 +169,7 @@ const HomeScreen = ({navigation}) => {
       case 'SMARTBelanja':
           navigation.navigate('SmartBelanja');
           break;
-      case 'Ilmu Keluarga':
+      case 'IlmuKeluarga':
           navigation.navigate('Ilmukeluarga');
           break;
       case 'Subfertiliti':
@@ -174,6 +183,10 @@ const HomeScreen = ({navigation}) => {
           break;
       case 'KafeTEEN':
           navigation.navigate('KafeTeen');
+          break;
+      case 'Keibubapaan Digital':
+          // navigation.navigate('KeibubapaanDigital');
+          Alert.alert('Coming Soon!');
           break;
       default:
         break;
@@ -192,6 +205,7 @@ const HomeScreen = ({navigation}) => {
         id={news.id}
         title={news.title}
         date={news.date}
+        publishedAt={news.publishedDate}
         imageSource={{ uri: news.tileImage }}
       />
     ));
@@ -213,8 +227,6 @@ const HomeScreen = ({navigation}) => {
     </View>
   );
 
-
-  
   //////// SEARCH BAR FUNCTIONS AND DECLARATIONS ////////
 
   // State to store the visibility of the search bar
@@ -294,7 +306,14 @@ const HomeScreen = ({navigation}) => {
           {/* <Image source={require('../../assets/newsTileDummy.png')} 
           style={{width: Platform.OS === 'ios' ? 400 : 450, height: 230, resizeMode: 'stretch'}}
           /> */}
-          <ContentSlider contents={contentData} />
+          {contentData.length > 0 ?(
+            <ContentSlider contents={contentData} />
+          ) : (
+            <View style={{flex: 1, justifyContent: 'flex-end' , backgroundColor: '#F3E9FF', marginBottom: 30}}>
+              <View style={{backgroundColor: '#F8F2FF', height: 20, width: '30%', marginBottom: 10, marginLeft: 20}}></View>
+              <View style={{backgroundColor: '#F8F2FF', height: 20, width: '70%', marginBottom: 20, marginLeft: 20}}></View>
+            </View>
+          )}
         </View>
         {/* PERKHIDMATAN SECTION */}
         <View style={styles.perkhidmatanContainer}>
@@ -308,38 +327,61 @@ const HomeScreen = ({navigation}) => {
         </View>
         {/* BERITA LPPKN SECTION */}
         <View style={styles.beritaContainer}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.sectionText}>Berita LPPKN</Text>
-            <TouchableOpacity style={{flexDirection: 'row'}} onPress={onBulletinLihatSemuaPress}>
+            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onBulletinLihatSemuaPress}>
               <Text style={styles.sectionSubText}>Lihat Semua</Text>
-              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrow}/>
+              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrow} />
             </TouchableOpacity>
           </View>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.beritaGridContainer}>
+          {bulletinItems.length > 0 ? (
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              <View style={styles.beritaGridContainer}>
                 {/* Render the news rows */}
-                {renderNewsRow(bulletinItems?.slice(0, 2))}
-                {renderNewsRow(bulletinItems?.slice(2, 4))}
-                {renderNewsRow(bulletinItems?.slice(4, 6))}
+                {renderNewsRow(bulletinItems.slice(0, 2))}
+                {renderNewsRow(bulletinItems.slice(2, 4))}
+                {renderNewsRow(bulletinItems.slice(4, 6))}
+              </View>
+            </ScrollView>
+          ) : (
+            <View style={{height: 350, justifyContent: 'center', alignItems: 'center' }}>
+              <LottieView
+                source={require('../../assets/Json/loadingAnimation.json')}
+                autoPlay
+                loop
+                style={{ width: 300, height: 300}}
+              />
             </View>
-          </ScrollView>
+          )}
         </View>
         {/* SOROTAN SECTION */}
-        <View style={styles.sorotanContainer}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.sorotanText}>Sorotan</Text>
-            <TouchableOpacity style={{flexDirection: 'row'}} onPress={onSorotanLihatSemuaPress}>
-              <Text style={styles.sorotanSubText}>Lihat Semua</Text>
-              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan}/>
-            </TouchableOpacity>
-          </View>
+        {/* SOROTAN SECTION */}
+      <View style={styles.sorotanContainer}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.sorotanText}>Highlights</Text>
+          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onSorotanLihatSemuaPress}>
+            <Text style={styles.sorotanSubText}>Lihat Semua</Text>
+            <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan} />
+          </TouchableOpacity>
+        </View>
+        {posterItems && posterItems.length > 0 ? (
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View>
-                {/* Render the poster row */}
-                {renderPosterRow(posterItems)}
+              {/* Render the poster row */}
+              {renderPosterRow(posterItems)}
             </View>
           </ScrollView>
-        </View>
+        ) : (
+          <View style={{height: 350, justifyContent: 'center', alignItems: 'center' }}>
+            <LottieView
+              source={require('../../assets/Json/loadingAnimation.json')}
+              autoPlay
+              loop
+              style={{ width: 300, height: 200}}
+            />
+          </View>
+        )}
+      </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -366,7 +408,7 @@ const styles = StyleSheet.create({
   },
   slidingNewsContainer: {
     height: 250,
-    marginTop: -13,
+    marginTop: -6,
     zIndex: 3,
   },
   perkhidmatanContainer: {
@@ -424,6 +466,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: Platform.OS === 'ios' ? screenWidth * 1.65: screenWidth * 1.55, 
     gap: 20,
+    marginLeft: 5,
   },
   rowContainer: {
     flexDirection: 'row',

@@ -1,6 +1,6 @@
 // ServiceIcon.js
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, Dimensions, Platform } from 'react-native';
 
 // Calculating the size of the icon container based on the screen width and desired padding/margin
 const screenWidth = Dimensions.get('window').width;
@@ -12,16 +12,15 @@ const iconSize = iconContainerWidth / 2;
 const ServiceIcon = ({ iconSource, label, onPress }) => {
 
     return (
-        <TouchableOpacity 
-            style={styles.iconWrapper} 
+        <Pressable 
+            style={({pressed}) => [styles.iconWrapper, { opacity: pressed ? 1 : 1 }]}
             onPress={onPress}
-            activeOpacity={Platform.OS === 'ios' ? 0.2 : 0.75}
         >
         <View style={styles.iconCircle}>
             <Image source={iconSource} style={styles.icon} />
         </View>
         <Text style={styles.iconLabel}>{label}</Text>
-        </TouchableOpacity>
+        </Pressable>
     );
 };
 

@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         flex: 1,
         marginTop: '-4%',
+        minHeight: screenHeight - sliderImageHeight,
     },
     headerContainer: {
         flexDirection: 'column',    

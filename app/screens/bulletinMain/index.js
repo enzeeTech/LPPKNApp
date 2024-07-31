@@ -55,7 +55,7 @@ function BulletinMain({navigation}) {
             url: image.attributes?.url,
           })) || [], // Use empty array if data is null
         }));
-        console.log(formattedData);
+        // console.log(formattedData);
         setAllBulletinItems(formattedData);
         setBulletinItems(formattedData.slice(0, ITEMS_PER_PAGE)); // Loads the first 10 items
         setHasMoreItems(formattedData.length > ITEMS_PER_PAGE);

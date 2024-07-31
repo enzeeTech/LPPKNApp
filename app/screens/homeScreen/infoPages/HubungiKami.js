@@ -1,10 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, Linking, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, Linking, TouchableOpacity, Platform, TurboModuleRegistry } from 'react-native';
 
 const Hubungikami = ({ navigation }) => {
 
   const handleBackPress = () => {
     navigation.goBack();
+  };
+
+  const handleLocationPress = () => {
+    Linking.openURL('https://maps.app.goo.gl/RSNrbU3xB9sVpPhL9');
+  };
+
+  const handlePhonePress = () => {
+    Linking.openURL('tel:03 2613 7555');
+  };
+
+  const handleEmailPress = () => {
+    Linking.openURL('mailto: penduduk@lppkn.gov.my');
   };
 
   // Linking URL to touch buttons
@@ -72,9 +84,9 @@ const Hubungikami = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+              {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                 <Image source={require("../../../assets/settingsIcon.png")} style={{width:25, height: 25, resizeMode: 'contain', marginTop:5}} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
 
@@ -87,30 +99,39 @@ const Hubungikami = ({ navigation }) => {
             >
               <View style={styles.childTwoContent}>
                 <View style={styles.iconsContainer}>
-                  <Image source={require("../../../assets/locationIcon.png")} />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.centeredText}>
-                      No.12B, Bangunan LPPKN, {"\n"}Jalan Raja Laut,{"\n"} 50350
-                      Kuala Lumpur
-                    </Text>
-                  </View>
-                  <Image source={require("../../../assets/phoneIconUtama.png")} />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.centeredText}>03-2613 7555</Text>
-                  </View>
-                  <Image source={require("../../../assets/faxIconUtama.png")} />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.centeredText}>03-2693 7250</Text>
-                  </View>
-                  <Image source={require("../../../assets/emailIcon.png")} />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.centeredText}>
-                      penduduk@lppkn.gov.my
-                    </Text>
-                  </View>
+                  <TouchableOpacity onPress={handleLocationPress} style={[styles.container2,{marginTop: 20}]}>
+                    <Image source={require("../../../assets/locationIcon.png")} />
+                    <View style={styles.textContainer}>
+                      <Text style={styles.centeredText}>
+                        No.12B, Bangunan LPPKN, {"\n"}Jalan Raja Laut,{"\n"} 50350
+                        Kuala Lumpur
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handlePhonePress} style={[styles.container2, {marginTop: -5}]}>
+                    <Image source={require("../../../assets/phoneIconUtama.png")}  />
+                    <View style={styles.textContainer2}>
+                      <Text style={styles.centeredText2}>03-2613 7555</Text>
+                    </View>
+                  </TouchableOpacity>
+                  {/* <View style={styles.container2}>
+                    <Image source={require("../../../assets/faxIconUtama.png")}  />
+                    <View style={styles.textContainer2}>
+                      <Text style={styles.centeredText2}>03-2693 7250</Text>
+                    </View>
+                  </View> */}
+                  <TouchableOpacity onPress={handleEmailPress} style={[styles.container2, {marginTop: 20}]}>
+                    <Image source={require("../../../assets/emailIcon.png")}  />
+                    <View style={styles.textContainer2}>
+                      <Text style={styles.centeredText2}>
+                        penduduk@lppkn.gov.my
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.socialmediaContainer}>
+                <Text style={{color: "#777", textAlign: "center", fontSize: 17, fontStyle: "normal", fontWeight: 'bold', marginBottom: 30}}>Pautan Pantas</Text>
                 <View
                   style={{
                     flex: 1,
@@ -141,6 +162,7 @@ const Hubungikami = ({ navigation }) => {
                 </View>
               </View>
             </ImageBackground>
+            
           </View>
         </ImageBackground>
       </View>
@@ -157,7 +179,8 @@ const Hubungikami = ({ navigation }) => {
     },
     backgroundContainer: {
       flex: 1,
-      height: "25%",
+      height: "40%",
+      width: '100%',
       marginTop: Platform.OS === "ios" ? "0%" : "7%",
       zIndex: -1,
       resizeMode: "contain",
@@ -189,7 +212,7 @@ const Hubungikami = ({ navigation }) => {
     childTwoContainer: {
       flex: 1,
       width: "100%",
-      marginTop: "45%",
+      marginTop: "60%",
     },
     imageStyle: {
       flex: 1,
@@ -202,7 +225,7 @@ const Hubungikami = ({ navigation }) => {
     childTwoContent: {
       flex: 1,
       alignItems: "center",
-      marginTop: "5%",
+      marginTop: "3%",
     },
     iconsContainer: {
       flex: 1,
@@ -224,6 +247,24 @@ const Hubungikami = ({ navigation }) => {
       flex: 0.2,
       justifyContent: "center",
       alignItems: "center",
+      marginBottom: "11%",
+    },
+    container2: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: 10,
+    },
+    textContainer2: {
+      justifyContent: 'center',
+      marginTop: 5,
+    },
+    centeredText2: {
+      color: "#777",
+      textAlign: "center",
+      fontSize: 16,
+      fontStyle: "normal",
+      fontWeight: "500",
     },
   });
 

@@ -1,123 +1,105 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, Modal, TouchableOpacity, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
 import DropdownMenu from './reusableComponents/ServicesDropdownList';
+import GlobalApi from '../../../services/GlobalApi';
+import { extractGalleryData } from '../../../utilities/GalleryExtract';
+import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
 
 const PerancangKeluarga = ({navigation}) => {
 
-    const [showPopup, setShowPopup] = useState(false);
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
+    const [dropdownData, setDropdownData] = useState({});
+    const [dropdownHeader, setDropdownHeader] = useState([]);
 
-    // Data for dropdown menu
-    const pilData = {
-        type: 'normal',
-        items: [
-            { name: 'Pil Mercilond', price: 'RM16.00' },
-            { name: 'Pil Marvelon', price: 'RM7.00' },
-            { name: 'Pil Noriday', price: 'RM10.00' },
-            { name: 'Pil Rigevidon', price: 'RM5.00' },
-            { name: 'Pil Minipill', price: 'RM16.00' },
-            { name: 'Pil Yasmin', price: 'RM52.00' },
-            { name: 'Pil Loette', price: 'RM16.00' },
-        ]
-    }
+    const fetchPerkhidmatanKeluarga = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('PerancangKeluarga');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
     
-    const suntikanData = {
-        type: 'normal',
-        items: [
-            { name: 'NON-PREG (3 Bulan)', price: 'RM36.00' },
-            { name: 'Depoprovera (3 Bulan)', price: 'RM36.00' },
-            { name: 'Depocon (2 Bulan)', price: 'RM18.00' },
-        ]
+                const componentData = service.Content;
+
+                const dropdownComponent = componentData.find(component => component.__component === 'dropdown.dropdown-normal');
+
+                setDropdownData(dropdownComponent ? dropdownComponent.DropdownData : {});
+                setDropdownHeader(dropdownComponent ? dropdownComponent.DropdownData.title : []);
+
+                const responseData = {
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+                
+                setResponseData(responseData);
+                setComponentData(componentData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
     };
 
-    const alatData = {
-        type: 'bullet', 
-        items: [
-          {
-            title: 'ADR (5 Tahun)',
-            items: [
+    useEffect(() => {
+        fetchPerkhidmatanKeluarga();
+    }, []);
 
-              { label: 'Termasuk caj pemasangan', price: 'RM110.00' },
-              { label: 'Caj pengeluaran ADR', price: 'RM20.00' },
-            ],
-          },
-          {
-            title: 'ADR (5 Tahun)',
-            items: [
-              { label: 'Termasuk caj pemasangan', price: 'RM80.00' },
-              { label: 'Caj pengeluaran ADR', price: 'RM20.00' },
-            ],
-          },
-        ],
-    };
+    // Get Gallery data with description data
+    const galleryDescriptionHeader = componentData.map(component => {
+        if (component.__component === 'gallery.gallery-with-description') {
+            return component.Title;
+        }   
+        return null;
+    }).flat().filter(item => item !== null);
 
-    const implanData = {
-        type: 'bullet', 
-        items: [
-          {
-            title: 'Implan (3 Tahun)',
-            items: [
+    // Data for the carousel
+    const galleryData = componentData.map(component => {
+        if (component.__component === 'gallery.gallery-with-description') {
+            return component.GalleryData.items;
+        }
+        return null;
+    }).flat().filter(item => item !== null);
 
-              { label: 'Termasuk caj pemasangan', price: 'RM500.00' },
-              { label: 'Caj pengeluaran implan', price: 'RM100.00' },
-            ],
-          },
-        ],
-    };
 
-    const kondomData = {
-        type: 'normal',
-        items: [
-            { name: 'Kondom Lelaki', price: 'RM4.00/Kotak' },
-        ]
-    };
+    // Extract gallery data for the gallery component
+    const { title: galleryTitle, images } = extractGalleryData(componentData);
 
-    // Data for galeri
-    const galeriData = [
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-    ];
-
-    // Data for image slider
-    const data = [
-        {
-          image: require('../../../assets/carouselItem1.png'),
-          // text: 'Menjarakkan kehamilan supaya tidak terlalu rapat.',
-          text: 'Menjarakkan kehamilan',
-        },
-        {
-          image: require('../../../assets/perancangKeluargaBackground.png'),
-          text: 'Merancang masa yang sesuai untuk mempunyai anak supaya tidak terlalu awal atau tidak terlalu lewat.',
-        },
-        {
-          image: require('../../../assets/carouselItem1.png'),
-          text: 'Mencegah kehamilan untuk ibu yang mempunyai masalah kesihatan.',
-        },
-      ];
 
     // Handle back press navigation
-
     const handleBackPress = () => {
         navigation.goBack();
     }
-
 
     // Hubungi button navigation
     const hubungiButton = () => {
         navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
     }
 
-    // const openPopup = () => {
-    //     setShowPopup(true);
-    // }
+    if (!responseData.ServiceID) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header onBackPress={handleBackPress} />
+                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                    <View style={styles.backgroundContainer}>
+                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                    </View>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerText}>Loading...</Text>
+                        </View>
+                        {/** padding till the end of the screen */}
+                        <View style={{height: 500, backgroundColor: '#FFF'}}></View>
 
-    // const closePopup = () => {
-    //     setShowPopup(false);
-    // }
-
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );    
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -125,147 +107,114 @@ const PerancangKeluarga = ({navigation}) => {
             <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/perancangKeluargaBackground.png')} 
+                    <Image source={{uri: responseData.ServiceImage}} 
                     style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>PERANCANG KELUARGA</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'Menjarakkan kelahiran anak dapat memberi ruang memulihkan kesihatan anda selepas'
-                        + 'bersalin serta tumpuan kepada anak dan keluarga.\n\n'+
-                        'Selain itu, perancang keluarga dapat mengelakkan kehamilan tidak dirancang serta kehamilan berisiko.'}
+                        {responseData.Description}
                         </Text>
                     </View>
-                    {/* Image Slider */}
-                    <View style={styles.subTextOneContainer}>
-                        <Text style={styles.subTextOne}>Tujuan Lain Merancang Kehamilan</Text>
+
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+                        
+                    {/* Image plus text carousel */}
+                    <View style={[styles.subTextOneContainer]}>
+                        <Text style={styles.subTextOne}>{galleryDescriptionHeader}</Text>
                     </View>
                     <View style={styles.carouselContainer}>
-                        {/* <ItemCarousel /> */}
                         <View style={styles.sliderContainer}>
                             <ScrollView 
                                 horizontal={true} 
                                 showsHorizontalScrollIndicator={false} 
-                                style={styles.scrollViewStyle}    
+                                style={{
+                                    width: '100%',
+                                    // height: 380,
+                                    marginLeft: 10,
+                                    paddingBottom: 10
+                                }}    
                             > 
-                                {/*Render items from data*/}
-                                {data.map((item, index) => (
+                                {/* Render items from data  */}
+                                {galleryData.map((item, index) => (
                                     <View key={index} style={styles.slide}>
-                                        <View style={styles.imageView}>
-                                            <Image source={item.image} style={styles.image} />
+                                        <View style={[styles.imageView, {elevation: 0}]}>
+                                            <Image source={{uri: item.url}} style={styles.image} />
                                         </View>
                                         <View style={styles.carouselTextContainer}>
-                                            <Text style={styles.text}>{item.text}</Text>
+                                            <Text style={styles.text}>{item.description}</Text>
                                         </View>
                                     </View>
                                 ))}
                             </ScrollView>
                         </View>
                     </View>
+                    
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+
                     <View style={styles.subTextOneContainer}>
-                        <Text style={styles.subTextOne}>Kaedah Perancang Keluarga</Text>
+                        <Text style={styles.subTextOne}>{dropdownHeader}</Text>
                     </View>
+
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+                    
                     {/* Dropdown Menu */}
-                    <View style={styles.dropdownContainer}>
-                        {/* Dropdown Menu for Perancang Keluarga */}
-                        <DropdownMenu 
-                            data={pilData.items}
-                            headerTitle="Pil Perancang Keluarga"
-                            imageSource={require('../../../assets/medicineIcon.png')}
-                            type={pilData.type} />
-                        {/* Dropdown Menu for Suntikan Kontraseptif */}
-                        <DropdownMenu 
-                            data={suntikanData.items}
-                            headerTitle="Suntikan Kontraseptif"
-                            imageSource={require('../../../assets/injectionIcon.png')}
-                            type={suntikanData.type}/>
-                        {/* Dropdown Menu for Alat Dalam Rahim (ADR) */}
-                        <DropdownMenu 
-                            data={alatData.items}
-                            headerTitle="Alat Dalam Rahim (ADR)"
-                            imageSource={require('../../../assets/adrIcon.png')}
-                            type={alatData.type}
-                        />
-                        {/* Dropdown Menu for Implan */}
-                        <DropdownMenu 
-                            data={implanData.items}
-                            headerTitle="Implan"
-                            imageSource={require('../../../assets/implanIcon.png')}
-                            type={implanData.type}/>
-                        {/* Dropdown Menu for Kondom */}
-                        <DropdownMenu 
-                            data={kondomData.items}
-                            headerTitle="Kondom"
-                            imageSource={require('../../../assets/condomIcon.png')}
-                            type={kondomData.type}/>
-                    </View>
-                    {/* Gallery Section */}
-                    <View style={styles.subTextOneContainer}>
-                        <Text style={styles.subTextOne}>Galeri</Text>
-                    </View>
-                    <View style={styles.galleryParentContainer}>
-                        <ScrollView 
-                            horizontal={true} 
-                            showsHorizontalScrollIndicator={false} 
-                            style={styles.HPVScrollStyle}
-                        >
-                            <View style={styles.galeriContainer}>
-                                {galeriData.map((item, index) => (
-                                    <View key={index} style={styles.galeriItemContainer}>
-                                        <Image source={item.image} style={styles.galeriImage}/>
-                                    </View>
-                                ))}
+                    {Object.keys(dropdownData).map((key, index) => {
+                        const data = dropdownData[key];
+                        if (typeof data === 'object' && data !== null && data.items) {
+                        return (
+                            <DropdownMenu
+                            key={index}
+                            headerTitle={data.title}
+                            items={data.items}
+                            imageSource={{ uri: data.imageSource }}
+                            type={data.type}
+                            />
+                        );
+                        }
+                        return null;
+                    })}
+
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
+
+
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+                    {/* Subsection Two */}
+                    {componentData
+                        .filter(component => component.__component === 'subsections.section' && component.SectionTitle === 'SectionTitle')
+                        .map(section => (
+                            <View key={section.id}>
+                                <View style={styles.subTextTwoContainer}>
+                                    <Text style={styles.subTextTwo}>{section.Description}</Text>
+                                </View>
                             </View>
-                        </ScrollView>
-                    </View>
-                    <View style={styles.subTextTwoContainer}>
-                        <Text style={styles.subTextTwo}>Hubungi Klinik Nur Sejahtera LPPKN untuk temujanji anda.</Text>
-                    </View>
+                        ))
+                    }
+
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+                    
                     {/* Buttons section */}
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, {marginBottom: 60}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity style={styles.buttonViewTwo} onPress={openPopup}>
-                            <Text style={styles.buttonTextTwo}>Hubungi Klinik Nur Sejahtera</Text>
-                        </TouchableOpacity> */}
                     </View>
+
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
+
                     {/* View created to add padding */}
-                    <View style={{height: 100, backgroundColor: '#FFF'}}></View>
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
 
-                    {/* Popup/Modal */}
-                {/* <Modal
-                    transparent={true}
-                    animationType="slide"
-                    visible={showPopup}
-                    onRequestClose={closePopup}
-                >
-                    <View style={styles.popupContainer}>
-                        <View style={styles.whiteBox}>
-                        <TouchableOpacity style={styles.closeButton} onPress={closePopup}>
-                            <Image source={require('../../../assets/CloseButton.png')} style={styles.closeButtonImage} />
-                        </TouchableOpacity>
-                        <View style={styles.popupContent}>
-                        <View style={styles.buttonContainer}>
 
-                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
-                        <Text style={styles.buttonTextTwo}>Hubungi Ibu Pejabat</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL('tel:+0326137555')}>
-                        <Text style={styles.buttonTextTwo}>Hubungi LPPKN Negeri</Text>
-                    </TouchableOpacity>
-                </View>
-                </View>
-                        </View>
-                    </View>
-                </Modal> */}
+
                  {/* View created to add padding */}
-                 <View style={{height: 100, backgroundColor: '#FFF'}}></View>
+                 <View style={{height: 70, backgroundColor: '#FFF'}}></View>
                 </View>
             </ScrollView>
         </SafeAreaView>

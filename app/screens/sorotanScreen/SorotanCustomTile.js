@@ -8,7 +8,7 @@ const CustomSorotanTile = ({ onPress, image, title, date }) => {
         <Pressable
         style={({ pressed }) => [
             styles.tileContainer,
-            { opacity: pressed ? 0.80 : 1 } 
+            { opacity: pressed ? 1 : 1 } 
         ]}
         onPress={onPress}
         >

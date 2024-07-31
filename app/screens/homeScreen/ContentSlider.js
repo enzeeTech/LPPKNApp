@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, FlatList, Image, Dimensions } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, Dimensions, TouchableWithoutFeedback } from "react-native";
 import React from "react";
 import { Video, ResizeMode } from 'expo-av';
 import { useRef, useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import { Linking } from "react-native";
 
 
 const ContentSlider = ({contents}) => {
@@ -31,28 +32,37 @@ const ContentSlider = ({contents}) => {
 
   // Display Images and Videos
   const renderContent = ({ item, index }) => {
+    const handlePress = () => {
+      if (!isAutoScrolling.current && item.link) {
+        Linking.openURL(item.link);
+      }
+    };
+
     return (
-      <View style={{ width: width, height: 230 }}>
-        {item.type === 'image' ? (
-          <Image source={item.source} style={styles.image} />
-        ) : (
-          <Video
-            source={item.source}
-            style={{ width: width, height: 230 }}
-            resizeMode={ResizeMode.COVER}
-            shouldPlay
-            isLooping
-            isMuted
-          />
-        )}
-        <LinearGradient
-          colors={['rgba(93,46,134,0)', 'rgba(93,46,134,0.3)', 'rgba(93,46,134,0.6)', 'rgba(93,46,134,0.9)', 'rgba(93,46,134,1)']}
-          style={styles.gradient}
-        >
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.subtitle} numberOfLines={1}>{item.subtitle}</Text>
-        </LinearGradient>
-      </View>
+      <TouchableWithoutFeedback onPress={handlePress}>
+        <View style={{ width: width, height: 230 }}>
+          {item.type === 'image' ? (
+            <Image source={item.source} style={styles.image} />
+          ) : (
+            
+              <Video
+                source={item.source}
+                style={{ width: width, height: 230,}}
+                resizeMode={ResizeMode.CONTAIN}
+                shouldPlay
+                isLooping
+                isMuted
+              />
+          )}
+          <LinearGradient
+            colors={['rgba(93,46,134,0)', 'rgba(93,46,134,0.3)', 'rgba(93,46,134,0.6)', 'rgba(93,46,134,0.9)', 'rgba(93,46,134,1)']}
+            style={styles.gradient}
+          >
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.subtitle} numberOfLines={1}>{item.subtitle}</Text>
+          </LinearGradient>
+        </View>
+      </TouchableWithoutFeedback>
     );
   };
   // Render Dot Indicators
@@ -80,6 +90,7 @@ const ContentSlider = ({contents}) => {
     setCurrentIndex(index);
   }
 
+  
 
   return (
     <View style={{height:230, width: width}}>
@@ -98,13 +109,16 @@ const ContentSlider = ({contents}) => {
       </View>
     </View>
   );
+
+
+  
 }
 
 const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 230,
-    resizeMode: 'contain',
+    resizeMode: 'conver',
   },
   gradient: {
     position: 'absolute',

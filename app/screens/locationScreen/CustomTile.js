@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Platform } from 'react-native';
-import { TouchableOpacity} from 'react-native-gesture-handler';
+import { View, Text, Image, StyleSheet, Platform, Pressable } from 'react-native';
+
 
 const defaultImage = '../../assets/backgroundLPPKNHQ.png';
 
-const CustomTile = ({ onPress, title, backgroundImage, operationTime }) => {
+const CustomTile = ({onPress, title, backgroundImage, operationTime}) => {
 
     const imageSource = backgroundImage ? {uri: backgroundImage} : require(defaultImage);
 
   return (
-    <TouchableOpacity style={styles.tileContainer} onPress={onPress} delayLongPress={3}>
+    <Pressable style={({pressed}) => [styles.tileContainer, { opacity: pressed ? 1 : 1 }]}onPress={onPress}>
         <View style={styles.imageContainer}>
             <Image source={imageSource} style={styles.image} />
         </View>
@@ -25,7 +25,7 @@ const CustomTile = ({ onPress, title, backgroundImage, operationTime }) => {
                 </View>
             </View>
         </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 

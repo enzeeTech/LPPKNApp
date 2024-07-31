@@ -25,7 +25,7 @@ const DetailsComponent = ({ navigation, activeState }) => {
     const [responseData, setResponseData] = useState([]);
 
     const handlePress = (item) => {
-        navigation.navigate('LocationInfo', { item: item });
+        navigation.navigate('LocationInfo', { item: item, activeState: activeState});
     };
 
     if (activeState == "WP                Kuala Lumpur"){

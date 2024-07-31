@@ -6,7 +6,7 @@ import Header from './Header';
 import React from 'react';
 import LocationDetailsList from './LocationDetailsList';
 import { useLocation } from '../../../services/LocationProvider';
-import GlobalApi from '../../../services/GlobalApi';
+import { getPremisesData } from '../../../services/PremisesService';
 
 function LocationCollection({navigation, route}) {
     const [responseData, setResponseData] = useState([]);
@@ -16,23 +16,8 @@ function LocationCollection({navigation, route}) {
     const query = route.params.query;
     // console.log(query);
 
-    const { stateName } = useLocation();
-    // console.log(stateName);
-
-    // Helper function for formatting the data
-    const formatData = (data) => {
-        if (!data) return [];
-        return data.map((item) => ({
-            id: item.id,
-            title: item.Title || '-',
-            location: item.Location || '-',
-            phoneNo: item.PhoneNo || '-',
-            faxNo: item.FaxNo || '-',
-            operationTime: item.OperationTime || '-',
-            icon: item.Icon?.url,
-            background: item.BackgroundImage?.url,
-        }));
-    };
+    const { location } = useLocation();
+    // console.log(location);
 
     // Helper function for formatting the title
     if (query === 'Pejabat') {
@@ -41,30 +26,32 @@ function LocationCollection({navigation, route}) {
         title = 'Klinik Nur Sejahtera'; 
     } else if (query === 'KafeTEEN') {
         title = 'KafeTEEN';
+    } else if (query === 'Klinik Subfertiliti') {
+        title = 'Klinik Subfertiliti';
     }
 
-    // Call the api to get the location collectiton
-    const getLocationCollection = () => {
-        GlobalApi.searchCollection(encodeURIComponent(query), stateName)
-            .then((response) => {
-                setResponseData(formatData(response.data));
+    // Fetch the closest premises
+    const fetchClosestPremises = async () => {
+        if (location) {
+            try {
+                const premisesData = await getPremisesData(query, location);
+                setResponseData(premisesData);
                 setLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
+            } catch (error) {
+                console.error('Error fetching closest premises:', error);
                 setLoading(false);
-            });
-    }
+            }
+        }
+    };
+
+    useEffect(() => {
+        fetchClosestPremises();
+    }, [location, query]);
     
     // navigate back to the previous screen
     const handleBackButton = () => {
         navigation.goBack();
     };
-
-
-    useEffect(() => {
-        getLocationCollection();
-    }, []);
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>

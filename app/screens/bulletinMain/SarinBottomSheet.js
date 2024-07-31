@@ -179,7 +179,7 @@ const SarinBottomSheet = ({ isVisible, onClose, onConfirmSelection }) => {
               // Check if a month is selected but not a year
               if (selectedMonth && !selectedYear) {
                 // Display an alert if a month is selected without a year
-                Alert.alert("Selection Required", "Please select a year to filter by month.");
+                Alert.alert("Pilihan Diperlukan", "Sila pilih tahun untuk ditapis mengikut bulan");
               } else {
                   // Proceed with the selection confirmation
                   onConfirmSelection(selectedYear, selectedMonth);

@@ -1,26 +1,77 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
-import KesejahteraanPriceTile from './reusableComponents/KesejahteraanPriceTile';
+import PriceTabTile from './reusableComponents/PriceTabTile';
+import GlobalApi from '../../../services/GlobalApi';
 
 const SaringanKesejahteraan = ({ navigation }) => {
 
-    // Data for bullet point text
-    const bulletPointTextData = [
-        'Memberi kesedaran mengenai peranan dan tanggungjawab setiap anggota terhadap kewangan keluarga.',
-        'Memberi pengetahuan kepada keluarga mengenai kepentingan merancang dan mempraktikkan pengurusan kewangan yang lebih baik.',
-        'Membolehkan keluarga membina pelan kewangan yang lebih berkesan.',
-        'Membantu keluarga mengawal pendapatan yang diperolehi melalui perbelanjaan berhemah.',
-    ];
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
+    const [activeTab, setActiveTab] = useState('resident');
+    const [ticket1, setTicket1] = useState([]);
+    const [ticket2, setTicket2] = useState([]);
 
-    // Data for galeri
-    const galeriData = [
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-    ];
+    const fetchPerkhidmatanKeluarga = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('SaringanKesejahteraan');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
+    
+                const componentData = service.Content;
+
+                setTicket1(componentData.map(component => {
+                    if (component.__component === 'tickets.double-ticket') {
+                        return component.Ticket1.data.attributes.url;
+                    }
+                    return null;
+                }).flat().filter(item => item !== null));
+
+                setTicket2(componentData.map(component => {
+                    if (component.__component === 'tickets.double-ticket') {
+                        return component.Ticket2.data.attributes.url;
+                    }
+                    return null;
+                }).flat().filter(item => item !== null));
+
+                const responseData = {
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+                
+                setResponseData(responseData);
+                setComponentData(componentData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPerkhidmatanKeluarga();
+    }, []);
+
+    // Extract prices and items for PriceTabTile component
+    const priceTileComponent = componentData.find(component => component.__component === 'tiles.price-tile1');
+    const priceData = priceTileComponent ? priceTileComponent.TileData.tile : null;
+
+    const prices = priceData ? {
+        resident: priceData.price1.value,
+        nonResident: priceData.price2.value
+    } : {};
+
+    const price1Items = priceData ? priceData.price1.items : [];
+    const price2Items = priceData ? priceData.price2.items : [];
+
+    const price1Title = priceData ? priceData.price1.title : '';
+    const price2Title = priceData ? priceData.price2.title : '';
+
 
     // Handle back press navigation
      const handleBackPress = () => {
@@ -32,21 +83,26 @@ const SaringanKesejahteraan = ({ navigation }) => {
         navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
     }
 
-    const dataPakej1 = [
-        { title: 'Pemeriksaan Tekanan Darah'},
-        { title: 'Pemeriksaan Indeks Jisim Tubuh'},
-        { title: 'Pemeriksaan Darah Kolestrol'},
-        { title: 'Pemeriksaan Darah Glukos'},
-    ];
-    
-    const dataPakej2 = [
-        { title: 'Pemeriksaan Tekanan Darah'},
-        { title: 'Pemeriksaan Indeks Jisim Tubuh'},
-        { title: 'Pemeriksaan Darah Kolestrol'},
-        { title: 'Pemeriksaan Darah Glukos'},
-        { title: 'Saringan Kanser Serviks'},
-        { title: 'Pemeriksaan Klinikal Payudara'}
-    ];
+    if (!responseData.ServiceID) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header onBackPress={handleBackPress} />
+                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                    <View style={styles.backgroundContainer}>
+                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                    </View>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerText}>Loading...</Text>
+                        </View>
+                        {/** padding till the end of the screen */}
+                        <View style={{height: 500, backgroundColor: '#FFF'}}></View>
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );    
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -54,45 +110,44 @@ const SaringanKesejahteraan = ({ navigation }) => {
             <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/saringanKesejahteraanBackground.png')} 
-                    style={styles.backgroundImage}
+                    <Image 
+                        source={{ uri: responseData.ServiceImage }} 
+                        style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>SARINGAN KESEJAHTERAAN</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'Memantau status kesihatan anda secara berkala dapat mengekalkan kesejahteraan hidup. \n\n' + 
-                        'Datanglah ke Klinik Nur Sejahtera LPPKN bagi mendapatkan pakej-pakej saringan kesejahteraan dengan harga yang berpatutan.'}
+                        {responseData.Description}
                         </Text>
                     </View>
                     <View style={{height: 20, backgroundColor: '#FFF'}}></View>
                     {/* Ticket Pictures */}
                     <View style={[styles.ticketContainer]}>
-                        <Image source={require('../../../assets/saringanTicket1.png')} 
+                        <Image source={{uri: ticket1[0]}} 
                         style={styles.ticketImage}
                         />
-                        <Image source={require('../../../assets/saringanTicket2.png')}
+                        <Image source={{uri: ticket2[0]}}
                         style={styles.ticketImage}
                         />
                     </View>
                     {/* Subsection One */}
-                    <View style={[styles.subTextOneContainer]}>
-                        <Text style={styles.subTextOne}>Pakej Yang Disediakan</Text>
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <KesejahteraanPriceTile
-                        prices={{
-                            resident: 'RM10',
-                            nonResident: 'RM25',
-                        }}
-                        dataPakej1={dataPakej1} 
-                        dataPakej2={dataPakej2} 
-                    />
-                    </View>
+                    {priceData && (
+                        <PriceTabTile
+                            data={activeTab === 'resident' ? price1Items : price2Items}
+                            prices={prices}
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                            price1Title={price1Title}
+                            price2Title={price2Title}
+                        />  
+                    )}
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
+                    {/* Hubungi Button */}
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>

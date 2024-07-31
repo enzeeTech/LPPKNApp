@@ -1,15 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { openURL } from 'expo-linking';
 import { Alert } from 'react-native';
 
-function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
+function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime, locationURL, activeState}) {
 
     // Lihat Peta Button Pressed
-    const onLihatPetaPressed = (address) => {
-        const url = `https://www.google.com/maps?q=${encodeURIComponent(address)}`;
-        openURL(url);
+    const onLihatPetaPressed = () => {
+        if (locationURL === '-') {
+            Alert.alert(
+                'Location URL Not Available',
+                'Sorry, the location URL is not available for this location.',
+                [{ text: 'OK', style: 'cancel' }],
+                { cancelable: true },
+            );
+            return;
+        }
+        openURL(locationURL);
     };
 
     // Hubungi Pejabat Button Pressed
@@ -52,6 +60,8 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
         return phoneNumber.replace("ext.", "samb.");
     };
 
+    console.log('activeState: ', activeState);
+
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
@@ -66,6 +76,7 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
                     <Image source={require('../../assets/locationPinIcon.png')} style={styles.iconLocation} />
                     <View style={styles.textContainerLocation}>
                         <Text style={styles.infoText}>{location}</Text>
+                        {/* <Text style={styles.infoText}>{address}</Text> */}
                     </View>
                 </View>
 
@@ -74,10 +85,13 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
                     <Text style={styles.infoText}>{formatPhoneNumber(phoneNo)}</Text>
                 </View>
 
-                <View style={styles.infoContainer}>
-                    <Image source={require('../../assets/faxIcon.png')} style={styles.icon} />
-                    <Text style={styles.infoText}>{faxNo}</Text>
-                </View>
+                {/* If active state is pahang, dont show this view component */}
+                {activeState === 'Pahang' ? null : 
+                    <View style={styles.infoContainer}>
+                        <Image source={require('../../assets/faxIcon.png')} style={styles.icon} />
+                        <Text style={styles.infoText}>{faxNo}</Text>
+                    </View>
+                }
 
                 {/* Operating Hours */}
                 <View style={styles.infoContainerTime}>
@@ -91,7 +105,7 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime}) {
                 {/* Buttons */}
                 <View style={styles.buttonContainer}>
                     {/* Button Lihat Peta */}
-                    <TouchableOpacity style={styles.buttonOne} onPress={() => onLihatPetaPressed(location)}>
+                    <TouchableOpacity style={styles.buttonOne} onPress={onLihatPetaPressed} >
                         <Text style={styles.buttonTextOne}>Lihat Lokasi</Text>
                     </TouchableOpacity>
 

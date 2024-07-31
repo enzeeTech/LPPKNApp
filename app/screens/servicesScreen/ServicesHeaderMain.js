@@ -6,12 +6,12 @@ function Header() {
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>Perkhidmatan</Text>
-                <TouchableOpacity onPress={()=>{console.log("settings button pressed")}}>
+                {/* <TouchableOpacity onPress={()=>{console.log("settings button pressed")}}>
                     <Image 
                         source={require('../../assets/settingsIcon.png')}
                         style = {styles.iconStyleSetting}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     );
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#9448DA',
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight-20: 0,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight+15: 0,
         zIndex: 1,
     },
     headerContainer: {
@@ -38,11 +38,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         width: '40%',
         textAlign: 'center',
-        marginRight: '50%',
+        marginRight: '55%',
     },
     iconStyleSetting: {
         width: 25, 
         height: 25, 
+        marginLeft: 11,
         resizeMode: 'contain',
         backgroundColor: 'transparent',
     },

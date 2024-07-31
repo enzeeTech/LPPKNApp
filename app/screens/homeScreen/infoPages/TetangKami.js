@@ -49,9 +49,9 @@ function TetangKami({ navigation }) {
                     alignItems: "center",
                 }}
                 >
-                    <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
+                    {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
                         <Image source={require("../../../assets/settingsIcon.png")} style={{width:25, height: 25, resizeMode: 'contain', marginTop:5}}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -83,16 +83,16 @@ function TetangKami({ navigation }) {
                             </Text>
                         </View>
 
-                        <Image source={require("../../../assets/eyeIcon.jpg")} />
+                        {/* <Image source={require("../../../assets/eyeIcon.jpg")} /> */}
                         <View style={styles.textContainer}>
-                            <Text style={[styles.titleStyle, {marginTop: -5}]}>Visi</Text>
+                            <Text style={[styles.titleStyle, {marginTop: -25}]}>Visi</Text>
                             <Text style={styles.centeredText}>
                             Menjadi organisasi kecemerlangan {"\n"}penduduk dan
                             keluarga.
                             </Text>
                         </View>
-                        <Image source={require("../../../assets/rocketIcon.png")} />
-                        <View style={styles.textContainer}>
+                        {/* <Image source={require("../../../assets/rocketIcon.png")} /> */}
+                        <View style={[styles.textContainer,{marginTop: -20}]}>
                             <Text style={[styles.titleStyle, {marginTop: -5}]}>Misi</Text>
                             <Text style={styles.centeredText}>
                             Memacu agenda kependudukan dan kekeluargaan yang
@@ -101,8 +101,8 @@ function TetangKami({ navigation }) {
                             </Text>
                         </View>
 
-                        <Image source={require("../../../assets/awardIcon.png")} />
-                        <View style={styles.textContainer}>
+                        {/* <Image source={require("../../../assets/awardIcon.png")} /> */}
+                        <View style={[styles.textContainer,{marginTop: -10}]}>
                             <Text style={[styles.titleStyle, {marginTop: -5}]}>Nilai Bersama</Text>
                         </View>
                         </View>
@@ -110,32 +110,49 @@ function TetangKami({ navigation }) {
                         <View style={styles.nilaibersamaChildContainer}>
                             <View style={styles.nilaibersamaElements}>
                             <Image
-                                source={require("../../../assets/kerjasamaTile.png")}
+                                source={require("../../../assets/kerjaBerpasukanTile.png")}
+                                style={{height: 80, width: 80, resizeMode: "contain"}}
                             />
-                            <Text style={[styles.elementStyle, {marginTop: 25}]}>Kerjasama</Text>
+                            <Text style={[styles.elementStyle, {marginTop: 15}]}>Kerja Berpasukan</Text>
                             </View>
                             <View style={styles.nilaibersamaElements}>
                             <Image
-                                source={require("../../../assets/integritiTile.png")}
+                                source={require("../../../assets/amanahTile.png")}
+                                style={{height: 80, width: 80, resizeMode: "contain"}}
                             />
-                            <Text style={[styles.elementStyle, {marginTop: 25}]}>Integriti</Text>
+                            <Text style={[styles.elementStyle, {marginTop: 23}]}>Amanah</Text>
                             </View>
                         </View>
                         <View style={styles.nilaibersamaChildContainer}>
                             <View style={styles.nilaibersamaElements}>
                             <Image
-                                source={require("../../../assets/penyayangTile.png")}
+                                source={require("../../../assets/sayangiOrganisasiTile.png")}
+                                style={{height: 80, width: 80, resizeMode: "contain"}}
                             />
-                            <Text style={[styles.elementStyle, {marginTop: 25}]}>Penyayang</Text>
+                            <Text style={[styles.elementStyle, {marginTop: 15}]}>Sayangi Organisasi</Text>
                             </View>
                             <View style={styles.nilaibersamaElements}>
                                 <View style={{marginTop: 20}} >
                                     <Image
-                                        source={require("../../../assets/profesionalismeTile.png")}
+                                        source={require("../../../assets/IlmuTile.png")}
+                                        style={{height: 80, width: 80, resizeMode: "contain"}}
                                     />
                                 </View>
                                 <View >
-                                    <Text style={[styles.elementStyle, {marginTop: 30}]}>Profesionalisme</Text> 
+                                    <Text style={[styles.elementStyle, {marginTop: 25, marginBottom:25}]}>Ilmu</Text> 
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.nilaibersamaChildContainer}>
+                            <View style={styles.nilaibersamaElements}>
+                                <View style={{marginTop: 20}} >
+                                    <Image
+                                        source={require("../../../assets/HormatTile.png")}
+                                        style={{height: 80, width: 80, resizeMode: "contain"}}
+                                    />
+                                </View>
+                                <View >
+                                    <Text style={[styles.elementStyle, {marginTop: 25}]}>Hormat</Text> 
                                 </View>
                             </View>
                         </View>
@@ -215,7 +232,6 @@ function TetangKami({ navigation }) {
       alignItems: "center",
     },
     textContainer: {
-        marginTop: "3.5%",
         marginBottom: "20%",
         alignItems: "center",
         paddingRight: "10%",
@@ -244,7 +260,7 @@ function TetangKami({ navigation }) {
     nilaibersamaParentContainer: {
       width: "100%",
       marginTop: "-15%",
-      marginBottom: "40%",
+      marginBottom: "30%",
       flexDirection: "column",
       justifyContent: "center",
     },
@@ -256,8 +272,8 @@ function TetangKami({ navigation }) {
     nilaibersamaElements: {
       margin: "2%",
       padding: "3%",
-      width: 160,
-      height: 170,
+      width: 165,
+      height: 175,
       borderRadius: 40,
       backgroundColor: "#F4EBFF",
       justifyContent: "center",

@@ -19,7 +19,7 @@ const getBulletinPost = () => AxioInstance.get("/bulletin-posts?populate=*&pagin
 const getBulletinPostWithQuery = (query) => {
     path = "/bulletin-posts?populate=*";
     path += query;
-    console.log(path);
+    // console.log(path);
     return AxioInstance.get(path);
 };
 
@@ -27,7 +27,7 @@ const getBulletinPostWithQuery = (query) => {
 const getBulletinPostById = (id) => AxioInstance.get(`/bulletin-posts/${id}?populate=*`);
 
 // Function to get sorotan posts
-const getSorotanPost = () => AxioInstance.get("/sorotan-posts?populate=*&pagination[start]=0&pagination[limit]=100&sort=Date:desc");
+const getSorotanPost = () => AxioInstance.get("/sorotan-posts?populate=*&pagination[start]=0&pagination[limit]=100&sort=publishedAt:desc");
 
 // Function to get sorotan post by id
 const getSorotanPostById = (id) => AxioInstance.get(`/sorotan-posts/${id}?populate=*`);
@@ -36,12 +36,9 @@ const getSorotanPostById = (id) => AxioInstance.get(`/sorotan-posts/${id}?popula
 const getSorotanPostWithQuery = (query) => {
     path = "/sorotan-posts?populate=*";
     path += query;
-    console.log(path);
+    // console.log(path);
     return AxioInstance.get(path);
 };
-
-// Function to get perkhidmatan buttons
-const getPerkhidmatanOptions = () => AxioInstance.get("/perkhidmatan-options?populate=*");
 
 // Function to get lokasi selangor
 const getLokasiSelangor = () => AxioInstance.get("/lokasi-selangors?populate=*");
@@ -88,6 +85,9 @@ const getLokasiSabah = () => AxioInstance.get("/lokasi-sabahs?populate=*");
 // Function to get lokasi WP Labuan
 const getLokasiWPLabuan = () => AxioInstance.get("/lokasi-wp-labuans?populate=*");
 
+// Function to fetch all premises data
+const getAllPremises = () => AxioInstance.get("/hubungi-collection/search?fetchAll=true&populate=*");
+
 // Function to submit form data and upload files
 const submitAduanForm = async (formData, files) => {
     try {
@@ -108,6 +108,10 @@ const searchCollection = (query, location) => {
 // Function to get home screen slider content
 const getHomeSliderContent = () => AxioInstance.get("/home-screen-media-libraries?populate=*");
 
+const getServiceByName = (name) => {
+    return AxioInstance.get(`/perkhidmatans?filters[ServiceID][$eq]=${name}&populate[ServiceImage]=*&populate[Content][populate]=*`);
+  };
+
 export default {
     getBulletinPost,
     getBulletinPostWithQuery,
@@ -115,7 +119,6 @@ export default {
     getSorotanPost,
     getSorotanPostById,
     getSorotanPostWithQuery,
-    getPerkhidmatanOptions,
     getLokasiSelangor,
     getLokasiWPKL,
     getLokasiKedah,
@@ -133,6 +136,8 @@ export default {
     getLokasiWPLabuan,
     submitAduanForm,
     searchCollection,
-    getHomeSliderContent
+    getHomeSliderContent,
+    getAllPremises,
+    getServiceByName
 }
 

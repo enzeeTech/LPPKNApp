@@ -2,21 +2,23 @@ import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-const HPVPriceTile = ({ prices, imageSource, additionalText, isLastTile, onPress }) => {
+const HPVPriceTile = ({ prices, imageSource, title, isSingleTile, onPress }) => {
   const [activeTab, setActiveTab] = useState('resident');
   const [isPressed, setIsPressed] = useState(true);
 
-  const tileStyle = isLastTile ? { marginRight: 20 } : {};
+  const tileStyle = isSingleTile ? { marginRight: 20 } : {};
 
   const handlePress = () => {
     setIsPressed(isPressed);
     onPress && onPress();
   };
 
+  // console.log('HPVPriceTile imageSource:', imageSource); // Log the image source URL
+
   return (
     <View style={[styles.tabParentContainer, tileStyle]}>
       <TouchableWithoutFeedback onPress={handlePress}>
-        <Image source={imageSource} style={styles.imageAboveOptions} />
+        <Image source={{ uri: imageSource }} style={styles.imageAboveOptions} onError={(e) => console.log(e.nativeEvent.error)} />
       </TouchableWithoutFeedback>
 
       {onPress && isPressed && (
@@ -25,9 +27,9 @@ const HPVPriceTile = ({ prices, imageSource, additionalText, isLastTile, onPress
         </View>
       )}
 
-      <Text style={[styles.headerText, { textAlign: 'center', marginRight: 20 }]}>{additionalText}</Text>
+      <Text style={[styles.headerText, { textAlign: 'center', marginRight: 20 }]}>{title}</Text>
 
-      {!isLastTile && (
+      {!isSingleTile && (
         <View style={styles.tabButtonContainer}>
           <TouchableOpacity
             style={[
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
         borderColor: '#D6BDF4',
         borderWidth: 1,
         overflow: 'hidden',
-        //Add shadow
+        // Add shadow
         shadowColor: '#000000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.15,
@@ -79,14 +81,15 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     imageAboveOptions: {
-        // height: 150, // Adjust the height as needed
-        // flex: 1,
-        // width: '85%',
+        height: 150, 
+        width: '90%', 
         resizeMode: 'cover',
         marginBottom: 10,
         marginTop: 10,
-        marginLeft: 10,
-        },
+        marginLeft: '5%',
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
     tabButtonContainer: {
         flexDirection: 'row',
         width: '90%',

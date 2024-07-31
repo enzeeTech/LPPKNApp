@@ -61,7 +61,7 @@ function Header({toggleSearch}) {
                     alignItems: 'center',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    marginLeft: 20,
+                    // marginLeft: 20,
                     marginTop: -15,
                     }}
                 >
@@ -84,16 +84,16 @@ function Header({toggleSearch}) {
                     />
                 </View>
                 {/* SETTINGS BUTTON */}
-                <TouchableOpacity onPress={openSettings}>
+                {/* <TouchableOpacity onPress={openSettings}>
                     <Image 
                         source={require('../../assets/settingsIconHome.png')}
                         style = {styles.iconStyleSetting}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* Settings Overlay */}
-                {showSettings && (
+                {/* {showSettings && (
                     <SettingsScreen onClose={closeSettings} />
-                )}
+                )} */}
             </View>
         </View>
     );
@@ -104,7 +104,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight-20: 0,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight+15: 0,
+        // paddingTop: 40,
+        
     },
     headerContainer: {
         height: 68, 
@@ -132,13 +134,14 @@ const styles = StyleSheet.create({
     iconStyleHome: {
         width: 150, 
         height: 70, 
-        resizeMode: 'contain',  
+        resizeMode: 'contain',
+        // marginRight: 10,  
     },
     iconStyleSetting: {
-        width: 22, 
-        height: 22, 
-        marginRight: 5,
+        width: 25, 
+        height: 25, 
         resizeMode: 'contain',
+        // marginRight: 5,
         backgroundColor: 'transparent',
     },
     searchBarMainContainer: {

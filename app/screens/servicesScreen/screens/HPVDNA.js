@@ -1,62 +1,91 @@
-import React, { useState } from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking, Alert } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
 import HPVPriceTile from './reusableComponents/HPVPriceTile';
+import GlobalApi from '../../../services/GlobalApi';
+import { extractGalleryData } from '../../../utilities/GalleryExtract';
+import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
+import BulletPointList from './reusableComponents/bulletpointLists/BulletPointList';
 
 const HpvDna = ({navigation}) => {
 
-    const bulletPointTextData1 = [
-        'Pap Smear adalah salah satu ujian saringan awal bagi mengesan kanser serviks.',
-        'Ia dapat mengesan sel kanser pada peringkat awal.',
-        'Pengesanan dan rawatan awal dapat menyembuhkan kanser serviks.',
-        'Pengesanan dan rawatan awal dapat menyembuhkan kanser serviks.',
-    ];
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
+    // const [papSmearData, setPapSmearData] = useState([]);
+    const [hpvDnaData, setHpvDnaData] = useState([]);
+    const [bulletPointData, setBulletPointData] = useState([]);
+    const [priceTilesData, setPriceTilesData] = useState([]);
 
-    const bulletPointTextData2 = [
-        'Ujian Pap Smear boleh dilakukan pada bila-bila masa kecuali pada masa haid dan nifas.',
-        'Ianya dilakukan oleh anggota klinikal yang terlatih dengan memasukkan spekulum ke dalam faraj.',
-        'Sel permukaan serviks akan diambil dengan menggunakan spatula atau berus serviks dan dihantar'
-        + ' ke makmal untuk dianalisis yang akan mengambil masa beberapa minggu.',
-    ];
+    const fetchPerkhidmatanKeluarga = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('HPV');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
+    
+                const componentData = service.Content;
 
-    const bulletPointTextData3 = [
-        'Human Papillomavirus (HPV) adalah virus yang menyebabkan jangkitan kelamin yang boleh dijangkiti'
-        + ' melalui hubungan seksual serta penyebab utama kanser serviks.',
-        'Kanser serviks merupakan kanser',
-    ];
+                // Extract price tile data
+                const priceTiles = componentData
+                    .filter(component => component.__component === 'tiles.image-price-tile')
+                    .map(component => component.TileData.hpvPriceTiles)
+                    .flat();
 
-    const bulletPointTextData4 = [
-        'Human Papillomavirus (HPV) adalah virus yang menyebabkan jangkitan kelamin yang boleh dijangkiti'
-        + ' melalui hubungan seksual serta penyebab utama kanser serviks.',
-        'Kanser serviks merupakan kanser',
-    ];
+                setPriceTilesData(priceTiles);
 
-    const bulletPointTextData5 = [
-        {
-            mainPoint: 'Wanita akan dibekalkan dengan Kit Ujian HPV DNA dan boleh mengambil sampel sendiri'
-                        + ' atau dengan bantuan jururawat di Klinik Nur Sejahtera.',
-            subPoints: [
-                'Tidak Menyakitkan',
-                'Mudah',
-                'Tiada Kesan Sampingan',
-                // Add more sub-points as needed
-            ],
-        },
-    ];
+                // setPapSmearData(componentData
+                //     .filter(component => 
+                //       component.__component === 'links.link1' && 
+                //       component.id === 2  
+                //     )
+                //     .map(component => [component.Title, component.URL])[0] || [] 
+                // );
+                  
+                setHpvDnaData(componentData
+                .filter(component => 
+                    component.__component === 'links.link1' && 
+                    component.id === 3  
+                )
+                .map(component => [component.Title, component.URL])[0] || []
+                );
 
-    const bulletPointTextData6 = [
-        'Wanita Warganegara Malaysia dan penduduk tetap',
-        'Wanita berumur 30 - 65 tahun',
-        'Wanita dalam kalangan B40 dan M40',
-    ];
+                const bulletPointsData = componentData
+                    .filter(component => component.__component === 'lists.bullet-point-list')
+                    .map(component => component.BulletPoints.bulletPointList)
+                    .find(list => list.identifier === 'kit-hpv-dna') || {};
 
-    const galeriData = [
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-        { image: require('../../../assets/galeriPlaceholder.png') },
-    ];
+                setBulletPointData(bulletPointsData);
+
+                console.log('bulletPointsData:', bulletPointsData);
+
+                const responseData = {
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+                
+                setResponseData(responseData);
+                setComponentData(componentData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPerkhidmatanKeluarga();
+    }, []);
+
+    // Get price tiles header
+    const priceTilesHeader = componentData.map(component => {
+        if (component.__component === 'tiles.image-price-tile') {
+            return component.TileData.title;
+        }
+    })
 
     // Handle back press navigation
     const handleBackPress = () => {
@@ -68,219 +97,207 @@ const HpvDna = ({navigation}) => {
         navigation.navigate('LocationCollection', { query: 'Klinik Nur Sejahtera' });
     }
 
+
+    // Get gallery data
+    const { title: galleryTitle, images } = extractGalleryData(componentData);
+
+    if (!responseData.ServiceID) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header onBackPress={handleBackPress} />
+                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                    <View style={styles.backgroundContainer}>
+                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                    </View>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerText}>Loading...</Text>
+                        </View>
+                        {/** padding till the end of the screen */}
+                        <View style={{height: 500, backgroundColor: '#FFF'}}></View>
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );    
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Header onBackPress={handleBackPress} />
             <ScrollView style={{ marginTop: -10 }} showsVerticalScrollIndicator={false}>
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/HPVDNABackground.png')}
+                    <Image source={{uri: responseData.ServiceImage}}
                         style={styles.backgroundImage}
                     />
                 </View>
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>SARINGAN KANSER REPRODUKTIF</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
                         <Text style={styles.introText}>
-                        {'Pengesanan awal kanser reproduktif dapat menyelamatkan nyawa anda. LPPKN sentiasa menggalakkan pengesanan'
-                        + ' kanser payudara dan serviks dilakukan melalui ujian dan pemeriksaan berikut:'}
+                        {responseData.Description}
                         </Text>
                     </View>
                     {/* Image Slider */}
                     <View style={styles.subTextOneContainer}>
-                        <Text style={[styles.subTextOne, {marginTop: 10, marginBottom: 20}]}>Bayaran Perkhidmatan</Text>
+                        <Text style={[styles.subTextOne, {marginTop: 10, marginBottom: 20}]}>{priceTilesHeader}</Text>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
-                    {/* Add the PriceTabTile component here */}
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                        
-                        prices={{
-                            resident: 'RM5',
-                            nonResident: 'RM10',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/HPVPerkhidmatan1.png')}
-                        additionalText="Pendaftaran Ujian Pap Smear"
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                    
-                        prices={{
-                            resident: 'RM20',
-                            nonResident: 'RM40',
-                            // Add more prices as needed
-                        }}
-                        imageSource={require('../../../assets/HPVPerkhidmatan1.png')}
-                        additionalText="Pendaftaran Ujian Pap Smear"
-                    />
-                    </View>
-                    <View style={{ width: 300 }}>
-                    <HPVPriceTile
-                        prices={{
-                        resident: 'RM80',
-                        }}
-                        imageSource={require('../../../assets/HPVPerkhidmatan2.png')}
-                        additionalText="Ujian HPV DNA"
-                        isLastTile={true}
-                    />
-                    </View>
-                    <View style={{ width: 25 }} />
+                        {priceTilesData.map((tile, index) => {
+                            return (
+                                <View key={index} style={{ width: 300 }}>
+                                    <HPVPriceTile
+                                        prices={tile.prices}
+                                        imageSource={tile.imageSource}
+                                        title={tile.title}
+                                        isSingleTile={tile.isSinglePrice}
+                                    />
+                                </View>
+                            );
+                        })}
+                        <View style={{ width: 25 }} />
                     </ScrollView>
 
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 60, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Info Pap Smear</Text>
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'info-pap-smear')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'keedah-pap-smear')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
                     
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData1.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData1.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
-                    
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Kaedah Pap Smear</Text>
-                    </View>
-                    
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData2.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData2.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
-                    
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Kriteria Kelayakan</Text>
-                    </View>
-                    
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData3.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData3.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'kriteria-kelayakan1')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+                    {/* <View style={{height: 40, backgroundColor: '#FFF'}}></View> */}
 
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewTwo}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={styles.buttonTextTwo}>Info Pap Smear</Text>
-                            <Image source={require('../../../assets/linkIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
-
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 60, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Info HPV</Text>
-                    </View>
-                    
-                    <View style={styles.bulletContainer}>
-                    {bulletPointTextData4.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData4.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
-
-
-                    
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Kit HPV DNA</Text>
-                    </View>
-                    
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData5.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData5.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={[styles.bullet, { marginBottom: 120, marginRight: 13 }]}>{'\u2022'}</Text>
-                                    {typeof item === 'object' ? (
-                                        <View>
-                                            <Text style={styles.bulletPointText}>{item.mainPoint}</Text>
-                                            <View style={{ marginLeft: 20 }}>
-                                                {item.subPoints.map((subItem, subIndex) => (
-                                                    <View key={subIndex} style={[styles.subBulletContainer, { marginTop: 5 }]}>
-                                                        <Text style={styles.subBullet}>{'\u2022'}</Text>
-                                                        <Text style={styles.bulletPointText}>{subItem}</Text>
-                                                    </View>
-                                                ))}
-                                            </View>
-                                        </View>
-                                    ) : (
-                                        <Text style={styles.bulletPointText}>{item}</Text>
-                                    )}
-                                </View>
-                            </View>
-                        ))}
-                    </View>
-                    
-                    <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15}]}>
-                        <Text style={styles.subTextOne}>Kriteria Kelayakan</Text>
-                    </View>
-                    
-                    <View style={styles.bulletContainer}>
-                        {bulletPointTextData6.map((item, index) => (
-                            <View key={index} style={[styles.bulletPointContainer, index === bulletPointTextData6.length - 1 && styles.lastBulletPointContainer]}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.bullet}>{'\u2022'}</Text>
-                                    <Text style={styles.bulletPointText}>{item}</Text>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
-
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewTwo}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={styles.buttonTextTwo}>Info HPV DNA</Text>
-                            <Image source={require('../../../assets/linkIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
-
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={[styles.subTextOneContainer, { marginTop: 65 }]}>
-                        <Text style={styles.subTextOne}>Galeri</Text>
-                    </View>
-                    <View style={styles.galleryParentContainer}>
-                        <ScrollView 
-                            horizontal={true} 
-                            showsHorizontalScrollIndicator={false} 
-                            style={styles.HPVScrollStyle}
+                    {/* <View style={styles.buttonContainer}>
+                        <TouchableOpacity 
+                            style={[styles.buttonViewTwo, papSmearData[1] === null && {opacity: 0.5}]}
+                            onPress= {() => {
+                                if (papSmearData[1] !== null) {
+                                    Linking.openURL(papSmearData[1]);
+                                }
+                            }}
+                            disabled={papSmearData[1] === null}
                         >
-                            <View style={styles.galeriContainer}>
-                                {galeriData.map((item, index) => (
-                                    <View key={index} style={styles.galeriItemContainer}>
-                                        <Image source={item.image} style={styles.galeriImage}/>
-                                    </View>
-                                ))}
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={styles.buttonTextTwo}>{papSmearData[0]}</Text>
+                            <Image source={require('../../../assets/linkIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
+
                             </View>
-                        </ScrollView>
+                        </TouchableOpacity>
+                    </View> */}
+                    
+                    <View style={{height: 10, backgroundColor: '#FFF'}}></View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'info-hpv')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+                    <View>
+                        <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+                        <View style={[styles.subTextOneContainer, { alignItems: 'flex-start', marginLeft: 15, marginTop: 20, marginBottom: 15 }]}>
+                            <Text style={styles.subTextOne}>{bulletPointData.title}</Text>
+                        </View>
+                        <View style={[styles.bulletContainer, {marginTop:0}]}>
+                            {bulletPointData.bulletPoints && bulletPointData.bulletPoints.map((item, index) => (
+                                <View key={index} style={[styles.bulletPointContainer, index === bulletPointData.bulletPoints.length - 1 && styles.lastBulletPointContainer]}>
+                                    <View style={[styles.textContainer, {marginBottom: -5, paddingTop: 5}]}>
+                                        <Text style={[styles.bullet, { marginBottom: 120, marginRight: 13 }]}>{'\u2022'}</Text>
+                                        {typeof item === 'object' && item.mainPoint ? (
+                                            <View>
+                                                <Text style={styles.bulletPointText}>{item.mainPoint}</Text>
+                                                <View style={{ marginLeft: 20,}}>
+                                                    {item.subPoints && item.subPoints.map((subItem, subIndex) => (
+                                                        <View key={subIndex} style={[styles.subBulletContainer, { marginTop: 5 }]}>
+                                                            <Text style={styles.subBullet}>{'\u2022'}</Text>
+                                                            <Text style={[styles.bulletPointText, {fontWeight: 'bold'}]}>{subItem}</Text>
+                                                        </View>
+                                                    ))}
+                                                </View>
+                                            </View>
+                                        ) : (
+                                            <Text style={styles.bulletPointText}>{item}</Text>
+                                        )}
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
                     </View>
+                    <View style={{height: 10, backgroundColor: '#FFF', marginTop: -40}}></View>
+                    {componentData
+                        .filter(component => component.__component === 'lists.bullet-point-list' && component.BulletPoints.bulletPointList.identifier === 'kriteria-kelayakan2')
+                        .map(bulletPointComponent => (
+                            <BulletPointList
+                                key={bulletPointComponent.id}
+                                title={bulletPointComponent.BulletPoints.bulletPointList.title}
+                                bulletPoints={bulletPointComponent.BulletPoints.bulletPointList.bulletPoints}
+                                description={bulletPointComponent.BulletPoints.bulletPointList.description ? bulletPointComponent.BulletPoints.bulletPointList.description : null}
+                            />
+                    ))}
+                    <View style={{height: 50, backgroundColor: '#FFF'}}></View>
+
                     <View style={styles.buttonContainer}>
+                        <TouchableOpacity 
+                            style={[styles.buttonViewTwo, hpvDnaData[1] === null && {opacity: 0.5}]}
+                            onPress= {() => {
+                                if (hpvDnaData[1] !== null) {
+                                    Linking.openURL(hpvDnaData[1]);
+                                } else {
+                                    Alert.alert('Link not available');
+                                }
+                            }}
+                            disabled={hpvDnaData[1] === null}
+                        >
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={styles.buttonTextTwo}>{hpvDnaData[0]}</Text>
+                            <Image source={require('../../../assets/linkIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
+
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{height: 10, backgroundColor: '#FFF'}}></View>
+
+                    <View style={[styles.buttonContainer, {marginBottom: 40}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Klinik Nur Sejahtera</Text>
                         </TouchableOpacity>
                     </View>
+
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
+
+                    {/* Galeri */}
+                    <GalleryBasic title={galleryTitle} images={images} />
 
       <View style={{height: 100, backgroundColor: '#FFF'}}></View>
     </View>

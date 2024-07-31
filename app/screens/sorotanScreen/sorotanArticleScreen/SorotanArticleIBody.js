@@ -1,9 +1,9 @@
 import React from 'react';
-import { ImageBackground, Platform } from 'react-native';
+import { Alert, ImageBackground, Platform } from 'react-native';
 import { View, Image, TouchableOpacity, StyleSheet, Text, Dimensions, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
-import { Share } from 'react-native';
+import { openURL } from 'expo-linking';
 
 
 // Get the full height of the screen
@@ -23,33 +23,27 @@ const SorotanArticleBody = ({title, date, images, information, link}) => {
         setActiveSlide(roundedIndex);
     };
 
-    // Function to share link to article 
-    const shareArticle = async (shareTitle, url) => {
-        if (url === !null) {
-            try {
-            const result = await Share.share({
-                message: `${shareTitle}\n\n${url}`,
-                // For iOS, you can also specify a URL directly:
-                url: Platform.OS === 'ios' ? url : undefined,
-                title: 'Share Article' 
-            });
-        
-            if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-                // Shared with activity type of result.activityType
-                } else {
-                // Shared
-                }
-            } else if (result.action === Share.dismissedAction) {
-                // Dismissed
-            }
-            } catch (error) {
-            console.error('Error while sharing the article:', error.message);
-            }
-        } else {
-            alert('No link to share');
+    // Function to open link if link is available
+    const openLink = async () => {
+        if (link) {
+            await openURL(link);
         }
-      };
+        else {
+            //Alert user that there is no link available
+            Alert.alert(
+                "Tiada maklumat lanjut",
+                "Maaf, maklumat lanjut tidak disediakan untuk artikel ini.",
+                [
+                    {
+                        text: "OK",
+                        onPress: () => console.log("OK Pressed"),
+                        style: "cancel"
+                    },
+                ],
+                { cancelable: false }
+            );
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -97,6 +91,22 @@ const SorotanArticleBody = ({title, date, images, information, link}) => {
                     <Text style={styles.body}>
                         {information}
                     </Text>
+
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            style={[
+                                styles.buttonViewTwo,
+                                !link && styles.buttonDisabled 
+                            ]}
+                            onPress={openLink}
+                            disabled={!link} 
+                        >
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={styles.buttonTextTwo}>Maklumat Lanjut</Text>
+                                <Image source={require('../../../assets/linkIcon.png')} style={{ width: 20, height: 20, marginLeft: 10 }} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
@@ -230,6 +240,32 @@ const styles = StyleSheet.create({
         backgroundColor: '#21CF44', 
         borderRadius: 4,
         height: 8,
+    },
+    buttonContainer: {
+        width: '90%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonViewTwo:{
+        alignItems: "center",
+        height: 45,
+        width: "60%",
+        justifyContent: "center",
+        alignContent: "center",
+        alignSelf: "center",
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#973BD9",
+    },
+    buttonTextTwo:{
+        color: "#9448DA",
+        fontSize: 16,
+        fontStyle: "normal",
+        fontWeight: "700",
+    },
+    buttonDisabled: {
+        opacity: 0.4
     },
 });
 

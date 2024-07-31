@@ -1,16 +1,11 @@
 {
   "expo": {
-    "name": "lppknApp",
+    "name": "LPPKN On The Go",
     "slug": "lppknApp",
-    "version": "1.0.0",
+    "version": "0.9.9",
     "orientation": "portrait",
-    "icon": "./app/assets/onTheGoIcon.png",
+    "icon": "./app/assets/appIcon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./app/assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -20,11 +15,7 @@
     "android": {
       "package": "com.socio.lppknApp",
       "softwareKeyboardLayoutMode": "pan",
-      "googleServicesFile": "./google-services.json",
-      "adaptiveIcon": {
-        "foregroundImage": "./app/assets/onTheGoIcon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,7 +29,14 @@
       "policy": "appVersion"
     },
     "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/8d7a4c07-5171-4e06-9cd0-0d2899e2ee47"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-router"
+    ]
   }
 }

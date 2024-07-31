@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, Linking, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Linking, ScrollView, Platform} from 'react-native';
 import styles from "./layouts/StageThreeLayout";
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';

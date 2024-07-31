@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 
-const NewsItem = ({ navigation, id, title, date, imageSource }) => {
+const NewsItem = ({ navigation, id, title, date, imageSource, publishedAt }) => {
 
   // Function to navigate to the BulletingInfo screen
   const handlePress = () => {
@@ -25,27 +25,36 @@ const NewsItem = ({ navigation, id, title, date, imageSource }) => {
       'Disember': '12'
     };
 
-    // Splitting the dateString into [day, monthName, year]
-    const parts = dateString.split(' ');
-    const day = parts[0];
-    const month = monthNames[parts[1]];
-    const year = parts[2];
+    // If dateString is in the format "2024-03-25T14:02:02.727Z", extract the date part
+    if (dateString.includes('T')) {
+      dateString = dateString.split('T')[0];
+      return new Date(dateString);
+    } 
+    else if (dateString.includes(' ')) {
+      // Splitting the dateString into [day, monthName, year]
+      const parts = dateString.split(' ');
+      const day = parts[0];
+      const month = monthNames[parts[1]];
+      const year = parts[2];
 
-    // Constructing a date format that JavaScript can parse
-    return new Date(`${year}-${month}-${day}`);
+      // Constructing a date format that JavaScript can parse
+      return new Date(`${year}-${month}-${day}`);
+    }
   };
 
   // Function to check if the article is within the last 2 days
   const isRecentArticle = () => {
-    const articleDate = parseCustomDate(date);
+    const articleDate = parseCustomDate(publishedAt);
     const currentDate = new Date();
+    // console.log('currentDate:', currentDate);
+    // console.log('articleDate:', articleDate);
     const differenceInTime = currentDate.getTime() - articleDate.getTime();
     const differenceInDays = differenceInTime / (1000 * 3600 * 24);
     return differenceInDays <= 2;
   };
 
   return (
-    <TouchableOpacity style={styles.newsItemContainer} onPress={handlePress}>
+    <Pressable style={({pressed}) => [styles.newsItemContainer, { opacity: pressed ? 1 : 1 }]} onPress={handlePress}>
       <Image source={imageSource} style={styles.imageStyle} />
       <View style={styles.textContainer}>
         {isRecentArticle() && (
@@ -57,7 +66,7 @@ const NewsItem = ({ navigation, id, title, date, imageSource }) => {
         <Text style={styles.titleStyle} numberOfLines={3}>{title}</Text>
         <Text style={styles.dateStyle}>{date}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

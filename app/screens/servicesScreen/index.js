@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions, FlatList } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions, FlatList, Alert } from 'react-native';
 import Header from './ServicesHeaderMain';
 import ServiceIcon from '../common/ServiceIcon';
 import GlobalApi from '../../services/GlobalApi';
@@ -20,75 +20,75 @@ const iconsData = [
   { iconSource: require('../../assets/saringanKesejahteraan.png'), label: 'Saringan Kesejahteraan' },
   { iconSource: require('../../assets/PEKA.png'), label: 'PEKA' },
   { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan & Data Mentah' },
-  { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'KASIH Keibubapaan Digital' },
+  // { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'KASIH Keibubapaan Digital' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
-  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'Ilmu Keluarga' },
+  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
 ];
 
 function ServicesScreen({navigation}) {
-  const [perkhidmatanOptions, setPerkhidmatanOptions] = React.useState([]);
+  // const [perkhidmatanOptions, setPerkhidmatanOptions] = React.useState([]);
 
-  const serviceOrder = [
-    'Subfertiliti',
-    'Perancang Keluarga',
-    'HPV DNA',
-    'Subsidi Mamogram',
-    'Kaunseling',
-    'SMARTSTART 2.0',
-    'SMARTBelanja',
-    'KafeTEEN',
-    'Saringan Kesejahteraan',
-    'PEKA',
-    'Penyelidikan & Data Mentah',
-    'KASIH Keibubapaan Digital',
-    'Keluarga@Kerja',
-    'IlmuKeluarga',
-  ]
+  // const serviceOrder = [
+  //   'Subfertiliti',
+  //   'Perancang Keluarga',
+  //   'HPV DNA',
+  //   'Subsidi Mamogram',
+  //   'Kaunseling',
+  //   'SMARTSTART 2.0',
+  //   'SMARTBelanja',
+  //   'KafeTEEN',
+  //   'Saringan Kesejahteraan',
+  //   'PEKA',
+  //   'Penyelidikan & Data Mentah',
+  //   'KASIH Keibubapaan Digital',
+  //   'Keluarga@Kerja',
+  //   'IlmuKeluarga',
+  // ]
 
-  // Fetch perkhidmatan options from API
-  const fetchPerkhidmatanOptions = () => {
-    GlobalApi.getPerkhidmatanOptions()
-      .then((response) => {
-        const perkhidmatanOptions = response.data.data.map((item) => ({
-          id: item.id,
-          label: item.attributes.Title,
-          imageSource: item.attributes.Icon.data.attributes.url,
-        }));
+  // // Fetch perkhidmatan options from API
+  // const fetchPerkhidmatanOptions = () => {
+  //   GlobalApi.getPerkhidmatanOptions()
+  //     .then((response) => {
+  //       const perkhidmatanOptions = response.data.data.map((item) => ({
+  //         id: item.id,
+  //         label: item.attributes.Title,
+  //         imageSource: item.attributes.Icon.data.attributes.url,
+  //       }));
 
-        const sortedOptions = perkhidmatanOptions.sort((a, b) => {
-          return serviceOrder.indexOf(a.label) - serviceOrder.indexOf(b.label);
-        });
+  //       const sortedOptions = perkhidmatanOptions.sort((a, b) => {
+  //         return serviceOrder.indexOf(a.label) - serviceOrder.indexOf(b.label);
+  //       });
         
-        setPerkhidmatanOptions(perkhidmatanOptions);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  //       setPerkhidmatanOptions(perkhidmatanOptions);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
-  // Fetch perkhidmatan options on focus
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchPerkhidmatanOptions();
-    }, [])
-  );
-
-  // Helper function to render each service icon
-  // const renderServiceIcon = ({ item }) => (
-  //   <ServiceIcon 
-  //     iconSource={item.iconSource} 
-  //     label={item.label} 
-  //     onPress={() => navigateToService(item.label)}
-  //   />
+  // // Fetch perkhidmatan options on focus
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     fetchPerkhidmatanOptions();
+  //   }, [])
   // );
 
+  // Helper function to render each service icon
   const renderServiceIcon = ({ item }) => (
     <ServiceIcon 
-      iconSource={{uri: item.imageSource}} 
+      iconSource={item.iconSource} 
       label={item.label} 
       onPress={() => navigateToService(item.label)}
     />
   );
+
+  // const renderServiceIcon = ({ item }) => (
+  //   <ServiceIcon 
+  //     iconSource={{uri: item.imageSource}} 
+  //     label={item.label} 
+  //     onPress={() => navigateToService(item.label)}
+  //   />
+  // );
 
   // Handle back press navigation
   const handleBackPress = () => {
@@ -119,7 +119,6 @@ function ServicesScreen({navigation}) {
         navigation.navigate('SmartBelanja');
         break;
       case 'IlmuKeluarga':
-        console.log(serviceLabel + ' pressed!)');
         navigation.navigate('Ilmukeluarga');
         break;
       case 'HPV DNA':
@@ -137,6 +136,9 @@ function ServicesScreen({navigation}) {
       case 'KafeTEEN':
         navigation.navigate('KafeTeen');
         break;
+      case 'KASIH Keibubapaan Digital':
+        Alert.alert('Coming Soon!');
+        break;
       default:
         break;
     }
@@ -148,8 +150,8 @@ function ServicesScreen({navigation}) {
       <Header onBackPress={handleBackPress} />
       <View style={styles.content}>
           <FlatList
-            // data={iconsData}
-            data={perkhidmatanOptions}
+            data={iconsData}
+            // data={perkhidmatanOptions}
             renderItem={renderServiceIcon}
             keyExtractor={(item, index) => index.toString()}
             numColumns={4}

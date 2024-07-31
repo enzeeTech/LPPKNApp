@@ -1,12 +1,90 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Linking } from 'react-native';
 import Header from './Header';
 import styles from '../StyleServices';
 import PenyelidikanList from './reusableComponents/PenyelidikanList';
+import GlobalApi from '../../../services/GlobalApi';
 
 const Penyelidikan = ({ navigation }) => {
+
+    const [responseData, setResponseData] = useState([]);
+    const [componentData, setComponentData] = useState([]);
+    const [linkTitle, setLinkTitle] = useState([]);
+    const [linkURL, setLinkURL] = useState([]);
+
+    const fetchPerkhidmatanKeluarga = async () => {
+        try {
+            const response = await GlobalApi.getServiceByName('Penyelidikan');
+            
+            if (response.data.data.length > 0) {
+                const service = response.data.data[0].attributes;
+    
+                const componentData = service.Content.map(component => {
+                    if (component.__component === 'tiles.image-desc-tile') {
+                        return component.TileData.tile.items;
+                    }
+                    return null;
+                }).flat().filter(item => item !== null);
+
+                setLinkTitle(service.Content.map(component => {
+                    if (component.__component === 'links.link1') {
+                        return component.Title;
+                    }
+                    return null;
+                }).flat().filter(item => item !== null));
+
+                setLinkURL(service.Content.map(component => {
+                    if (component.__component === 'links.link1') {
+                        return component.URL;
+                    }
+                    return null;
+                }).flat().filter(item => item !== null));
+
+
+                const responseData = {
+                    ServiceID: service.ServiceID,
+                    Title: service.ServiceTitle,
+                    ServiceImage: service.ServiceImage.data.attributes.url,
+                    Description: service.Description,
+                };
+                
+                setResponseData(responseData);
+                setComponentData(componentData);
+            } else {
+                console.log('No data found');
+            }
+        } catch (error) {
+            console.error('Error fetching KafeTEEN service:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPerkhidmatanKeluarga();
+    }, []);
+
     const handleBackPress = () => {
         navigation.goBack();
+    }
+
+    if (!responseData.ServiceID) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header onBackPress={handleBackPress} />
+                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                    <View style={styles.backgroundContainer}>
+                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                    </View>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerText}>Loading...</Text>
+                        </View>
+                        {/** padding till the end of the screen */}
+                        <View style={{height: 500, backgroundColor: '#FFF'}}></View>
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );    
     }
 
     return (
@@ -16,86 +94,42 @@ const Penyelidikan = ({ navigation }) => {
 
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
-                    <Image source={require('../../../assets/PenyelidikanBG.png')}
-                        style={styles.backgroundImage}
-                    />
+                    <Image source={{ uri: responseData.ServiceImage }} style={styles.backgroundImage} />
                 </View>
 
                 {/* Content */}
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>PENYELIDIKAN</Text>
+                        <Text style={styles.headerText}>{responseData.Title}</Text>
                     </View>
                     <View style={styles.introContainer}>
-                        <Text style={[styles.introText, { fontSize: 15 }]}>
-                            {'Pendapat awam atau '}
-                            <Text style={{ fontStyle: 'italic' }}>public opinion</Text>
-                            {' didefinisikan \n'
-                                + 'sebagai pandangan umum tentang sesuatu isu dan \n'
-                                + 'polisi yang akan diambil kira dalam membuat sesuatu\nkeputusan.'}
+                        <Text style={styles.introText}>
+                        {responseData.Description}
                         </Text>
                     </View>
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
 
                     {/* Containers */}
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <View style={{ width: 400, marginRight: -50}}>
-                        <PenyelidikanList
-
-                            title="Penyelidikan Kependudukan & Keluarga"
-                            imageSource={require('../../../assets/Penyelidikan1.png')}
-                            additionalText="Fungsi utama Lembaga Penduduk dan Pembangunan Keluarga (LPPKN) adalah untuk mempromosi dan menjalankan aktiviti penyelidikan berkaitan penduduk, keluarga, dan kesihatan reproduktif."
-                        
-
-                        />
-                    </View>
-                    <View style={{ width: 400, marginRight: -50 }}>
-                        <PenyelidikanList
-
-                            title="Penerbitan"
-                            imageSource={require('../../../assets/Penyelidikan2.png')}
-                            additionalText="Kaedah terbaik untuk memelihara dan menyebarkan maklumat dan mempromosikan hasil penyelidikan adalah dengan penerbitan. Sejak ditubuhkan, pelbagai produk penerbitan merangkumi buku-buku kajian, infografik dan POPinfo telah dihasilkan."
-                            titleStyle={{ marginBottom: 40}}
-                        />
-                    </View>
-                    <View style={{ width: 400, marginRight: -50 }}>
-                        <PenyelidikanList
-
-                            title="Persidangan/Seminar/Forum/Webinar"
-                            imageSource={require('../../../assets/Penyelidikan3.png')}
-                            additionalText="Malaysia telah mula meraikan Hari Penduduk Sedunia sejak tahun 2006 di mana setiap tahun, Badan Tabung Kependudukan Bangsa-bangsa Bersatu (United Nations Population Fund [UNFPA]) akan memperkenalkan tema-tema tertentu bagi meningkatkan kesedaran masyarakat dunia mengenai isu kependudukan global setiap tahun."
-                        
-
-                        />
-                    </View>
-                    <View style={{ width: 400, marginRight: -50 }}>
-                        <PenyelidikanList
-
-                            title="Klinik Dan Newsletter Konsultasi Statistik"
-                            imageSource={require('../../../assets/Penyelidikan4.png')}
-                            additionalText="Penganjuran Klinik Konsultasi Statistik adalah bertujuan untuk meningkatkan kefahaman masyarakat mengenai statistik khususnya memahami data dan mengenal pasti kaedah analisa yang bersesuaian."
-                        
-
-                        />
-                    </View>
-                    <View style={{ width: 400 }}>
-                        <PenyelidikanList
-
-                            title="Malaysia Population Research Hub (MPRH)"
-                            imageSource={require('../../../assets/Penyelidikan5.png')}
-                            additionalText="Malaysia Population Research Hub (MPRH) adalah perkhidmatan awam yang merangkumi multi disiplin, berfungsi sebagai hab intelektual untuk penyelidikan demografi terutamanya berkaitan kependudukan dan keluarga di Malaysia"
-                        
-
-                        />
-                    </View>
-
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ marginLeft: 20, paddingRight: 40 }}>
+                            {componentData.map((item, index) => (
+                                <PenyelidikanList 
+                                    key={`${item.title}-${index}`}
+                                    title={item.title}
+                                    imageSource={{ uri: item.imageSource }}
+                                    additionalText={item.additionalText}
+                                />
+                            ))}
                     </ScrollView>
 
                     <View style={{ height: 50, backgroundColor: '#FFF' }}></View>
 
                     {/* Button selection */}
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.buttonViewOne} onPress={() => Linking.openURL('https://www.lppkn.gov.my/lppkngateway/frontend/web/index.php?r=portal/article&menu=81&id=UGMzMjExaGE0STI0cG5ZMXhFTDlNUT09#kajian')}>
-                            <Text style={styles.buttonTextOne}>Layari Portal</Text>
+                        <TouchableOpacity 
+                            style={styles.buttonViewTwo}
+                            onPress={() => Linking.openURL(linkURL[0])}  
+                        >
+                            <Text style={styles.buttonTextTwo}>{linkTitle}</Text>
                         </TouchableOpacity>
                     </View>
 

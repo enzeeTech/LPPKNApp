@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import ListItem from './tileListItems/ListItems';
 
-const PriceTabTile = ({data, prices}) => {
-    const [activeTab, setActiveTab] = useState('resident');
+const PriceTabTile = ({ data, prices, activeTab, setActiveTab, price1Title, price2Title }) => {
+    // Function to determine if the title needs to be split into multiple lines
+    const renderTitle = (title) => {
+        if (title.length > 12) {
+            return title.split(' ').join('\n');
+        }
+        return title; 
+    };
 
     return (
         <View style={styles.tabParentContainer}>
@@ -11,31 +17,31 @@ const PriceTabTile = ({data, prices}) => {
             <View style={styles.tabButtonContainer}>
                 <TouchableOpacity
                     style={[
-                    styles.tabButton,
-                    activeTab === 'resident' ? styles.buttonActive : styles.buttonInactive
+                        styles.tabButton,
+                        activeTab === 'resident' ? styles.buttonActive : styles.buttonInactive
                     ]}
                     onPress={() => setActiveTab('resident')}
                 >
                     <Text style={[styles.tabText, activeTab === 'resident' ? styles.tabTextActive : styles.tabTextInactive]}>
-                        Kakitangan{'\n'}Kerajaan
+                        {renderTitle(price1Title)}
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[
-                    styles.tabButton,
-                    activeTab === 'nonResident' ? styles.buttonActive : styles.buttonInactive
+                        styles.tabButton,
+                        activeTab === 'nonResident' ? styles.buttonActive : styles.buttonInactive
                     ]}
                     onPress={() => setActiveTab('nonResident')}
                 >
                     <Text style={[styles.tabText, activeTab === 'nonResident' ? styles.tabTextActive : styles.tabTextInactive]}>
-                        Kakitangan{'\n'}Swasta
+                        {renderTitle(price2Title)}
                     </Text>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.priceText}>{prices[activeTab]}</Text>
+            <Text style={styles.priceText}>RM{prices[activeTab]}</Text>
             <View style={{ marginTop: 10 }}>
                 {data.map((item, index) => (
-                <ListItem key={index} title={item.title} subtitle={item.subtitle} />
+                    <ListItem key={index} title={item.title} subtitle={item.subtitle ? item.subtitle : null} />
                 ))}
             </View>
         </View>
@@ -73,10 +79,10 @@ const styles = StyleSheet.create({
     },
     tabButton: {
         flexGrow: 1, 
+        height: 50,
         justifyContent: 'center', 
         alignItems: 'center', 
         borderColor: 'transparent', 
-        // height: 50,
         borderWidth: 1,
         borderLeftWidth: 0, 
         borderRightWidth: 0,
@@ -111,5 +117,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#5D2E86',
     },
-
 });

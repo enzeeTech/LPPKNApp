@@ -26,7 +26,7 @@ const ServiceIcon = ({ iconSource, label, onPress }) => {
 
 const styles = StyleSheet.create({
   iconWrapper: {
-    width: iconContainerWidth+7,
+    width: iconContainerWidth+11,
     marginTop: 10,
     alignItems: 'center',
     margin: Platform.OS === 'ios' ? padding / 1.5 : padding / 2, 

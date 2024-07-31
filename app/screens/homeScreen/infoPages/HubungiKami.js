@@ -170,6 +170,7 @@ const Hubungikami = ({ navigation }) => {
   );
 }
 
+
   //Hubungikami page style
   const styles = StyleSheet.create({
     parentContainer: {

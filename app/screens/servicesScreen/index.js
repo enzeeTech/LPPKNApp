@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   content: {
     alignContent: 'center',
-    paddingLeft: 4.5,
+    // paddingLeft: 0.5,
     paddingTop: 25,
     height: screenHeight,
     width: '100%',

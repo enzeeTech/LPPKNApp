@@ -458,8 +458,8 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'column',
     flexWrap: 'wrap',
-    width: Platform.OS === 'ios' ? screenWidth * 1.75 : screenWidth * 1.75, 
-    marginLeft: 0,
+    width: Platform.OS === 'ios' ? screenWidth * 1.75 : screenWidth * 1.70, 
+    marginLeft: Platform.OS === 'ios' ? 0 : 3,
   },
   beritaGridContainer: {
     flexDirection: 'column',

@@ -229,9 +229,9 @@ const Peka = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     
-                    <View style={[styles.buttonContainer, {marginBottom: 50, marginTop: 10}] }>
-                        <TouchableOpacity style={styles.buttonViewOne} onPress={() => openURL(buttonData[1])}>
-                            <Text style={styles.buttonTextOne}>{buttonData[0]}</Text>
+                    <View style={[styles.buttonContainer, {marginBottom: 50}] }>
+                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL(buttonData[1])}>
+                            <Text style={styles.buttonTextTwo}>{buttonData[0]}</Text>
                         </TouchableOpacity>
                     </View>
                     {/* View created to add padding */}

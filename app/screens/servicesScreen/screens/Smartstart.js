@@ -202,15 +202,15 @@ const Smartstart = ({ navigation }) => {
                     }
                     <View style={{height: 50, backgroundColor: '#FFF'}}></View>
                     {/* Buttons section */}
-                    <View style={[styles.buttonContainer, {marginBottom: 10, marginTop: 30}] }>
+                    <View style={[styles.buttonContainer, {marginTop: 30}] }>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={[styles.buttonContainer, {marginBottom: 50}] }>
-                        <TouchableOpacity style={styles.buttonViewOne} onPress={() => openURL(buttonData[1])}>
-                            <Text style={styles.buttonTextOne}>{buttonData[0]}</Text>
+                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL(buttonData[1])}>
+                            <Text style={styles.buttonTextTwo}>{buttonData[0]}</Text>
                         </TouchableOpacity>
                     </View>
 

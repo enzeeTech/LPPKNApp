@@ -163,15 +163,15 @@ const Ilmukeluarga = ({ navigation }) => {
                     ))}
                     <View style={{height: 40, backgroundColor: '#FFF'}}></View>
                     {/* Buttons section */}
-                    <View style={[styles.buttonContainer, {marginTop: 30, marginBottom: 10}]}>
+                    <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={[styles.buttonContainer, {marginBottom: 50}] }>
-                        <TouchableOpacity style={styles.buttonViewOne} onPress={() => openURL(buttonData[1])}>
-                            <Text style={styles.buttonTextOne}>{buttonData[0]}</Text>
+                        <TouchableOpacity style={styles.buttonViewTwo} onPress={() => openURL(buttonData[1])}>
+                            <Text style={styles.buttonTextTwo}>{buttonData[0]}</Text>
                         </TouchableOpacity>
                     </View>
 

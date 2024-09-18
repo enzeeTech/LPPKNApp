@@ -14,6 +14,7 @@ const Peka = ({ navigation }) => {
     const [dropdownData, setDropdownData] = useState([]);
     const [dropdownHeader, setDropdownHeader] = useState([]);
     const [ticket1, setTicket1] = useState([]);
+    const [buttonData, setButtonData] = useState([]);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -44,6 +45,14 @@ const Peka = ({ navigation }) => {
                     }
                     return null;
                 }).flat().filter(item => item !== null));
+
+                setButtonData(componentData
+                    .filter(component => 
+                        component.__component === 'links.link1' && 
+                        component.id === 8  
+                    )
+                    .map(component => [component.Title, `mailto:${component.URL}`])[0] || []
+                );
 
                 const responseData = {
                     ServiceID: service.ServiceID,
@@ -95,6 +104,26 @@ const Peka = ({ navigation }) => {
     const hubungiButton = () => {
         navigation.navigate('LocationCollection', { query: 'Pejabat' });
     }
+
+    // Open email app function
+    const openURL = (url) => {
+        if (url) {
+          Linking.openURL(url).catch(err => {
+            Alert.alert(
+              "Error",
+              "Unable to open the email link. Please check your email app configuration.",
+              [{ text: "OK" }]
+            );
+            console.error("Failed to open URL: ", err);
+          });
+        } else {
+          Alert.alert(
+            "Invalid URL",
+            "The email link is not available.",
+            [{ text: "OK" }]
+          );
+        }
+    };
 
     if (!responseData.ServiceID) {
         return (
@@ -197,6 +226,12 @@ const Peka = ({ navigation }) => {
                     <View style={[styles.buttonContainer, {marginTop: 30}]}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
+                        </TouchableOpacity>
+                    </View>
+                    
+                    <View style={[styles.buttonContainer, {marginBottom: 50, marginTop: 10}] }>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={() => openURL(buttonData[1])}>
+                            <Text style={styles.buttonTextOne}>{buttonData[0]}</Text>
                         </TouchableOpacity>
                     </View>
                     {/* View created to add padding */}

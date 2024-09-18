@@ -12,6 +12,7 @@ const Ilmukeluarga = ({ navigation }) => {
     const [responseData, setResponseData] = useState([]);
     const [componentData, setComponentData] = useState([]);
     const [activeTab, setActiveTab] = useState('resident');
+    const [buttonData, setButtonData] = useState([]);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -27,6 +28,14 @@ const Ilmukeluarga = ({ navigation }) => {
                     ServiceImage: service.ServiceImage.data.attributes.url,
                     Description: service.Description,
                 };
+
+                setButtonData(componentData
+                    .filter(component => 
+                        component.__component === 'links.link1' && 
+                        component.id === 10  
+                    )
+                    .map(component => [component.Title, `mailto:${component.URL}`])[0] || []
+                );
                 
                 setResponseData(responseData);
                 setComponentData(componentData);
@@ -66,6 +75,26 @@ const Ilmukeluarga = ({ navigation }) => {
 
     const price1Title = priceData ? priceData.price1.title : '';
     const price2Title = priceData ? priceData.price2.title : '';
+
+    // Open email app function
+    const openURL = (url) => {
+        if (url) {
+          Linking.openURL(url).catch(err => {
+            Alert.alert(
+              "Error",
+              "Unable to open the email link. Please check your email app configuration.",
+              [{ text: "OK" }]
+            );
+            console.error("Failed to open URL: ", err);
+          });
+        } else {
+          Alert.alert(
+            "Invalid URL",
+            "The email link is not available.",
+            [{ text: "OK" }]
+          );
+        }
+    };
 
     if (!responseData.ServiceID) {
         return (
@@ -134,11 +163,18 @@ const Ilmukeluarga = ({ navigation }) => {
                     ))}
                     <View style={{height: 40, backgroundColor: '#FFF'}}></View>
                     {/* Buttons section */}
-                    <View style={[styles.buttonContainer, {marginTop: 30}]}>
+                    <View style={[styles.buttonContainer, {marginTop: 30, marginBottom: 10}]}>
                         <TouchableOpacity style={styles.buttonViewOne} onPress={hubungiButton}>
                             <Text style={styles.buttonTextOne}>Hubungi Pejabat LPPKN Negeri</Text>
                         </TouchableOpacity>
                     </View>
+
+                    <View style={[styles.buttonContainer, {marginBottom: 50}] }>
+                        <TouchableOpacity style={styles.buttonViewOne} onPress={() => openURL(buttonData[1])}>
+                            <Text style={styles.buttonTextOne}>{buttonData[0]}</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
                 <View style={{height: 110, backgroundColor: '#FFF'}}></View>
 

@@ -2,7 +2,7 @@
   "expo": {
     "name": "LPPKN On The Go",
     "slug": "lppknApp",
-    "version": "0.9.9",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/appIcon.png",
     "userInterfaceStyle": "automatic",
@@ -10,12 +10,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "my.gov.lppkn.go"
     },
     "android": {
       "package": "com.socio.lppknApp",
       "softwareKeyboardLayoutMode": "pan",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

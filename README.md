@@ -8,9 +8,6 @@ This is a **React Native** application built with **Expo**. The app is designed 
 - Built with **React Native** and **Expo**
 - Supports push notifications using **Expo's Notifications API**
 - Fetches data from external APIs
-- Integrated with **Google Play** and **App Store** for app distribution
-- Integrated with **Google Email Services** for email functionality
-- Uses **Google Play's app signing key**
 
 ## Getting Started
 

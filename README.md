@@ -27,8 +27,6 @@ Follow these instructions to set up and run the project locally.
 
 1. Clone the Repository
 2. Navigate to project directory
-3. Install dependencies:
-npm install
-4. Start development server
-npm start
+3. Install dependencies : npm install
+5. Start development server : npm start
 

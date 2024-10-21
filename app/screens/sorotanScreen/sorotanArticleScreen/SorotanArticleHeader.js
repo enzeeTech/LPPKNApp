@@ -11,7 +11,7 @@ const SorotanArticleHeader = ({onBackPress}) => {
                         style = {styles.iconStyleBack}
                     />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>Berita LPPKN</Text>
+                <Text style={styles.headerText}>Highlight</Text>
             </View>
         </View>
     );

@@ -204,27 +204,67 @@
 
 
 import React, { useState, useCallback } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useFocusEffect } from '@react-navigation/native';
 
 const AduanForm = () => {
   const [key, setKey] = useState(0);
+  const [hasError, setHasError] = useState(false);
+  const [loading, setLoading] = useState(true); // Track loading state
 
   useFocusEffect(
     useCallback(() => {
-      // Change the key to force remount and reload the URL
+      // Reset error and loading, and change the key to force remount and reload the URL
+      setHasError(false);
+      setLoading(true);
       setKey(prevKey => prevKey + 1);
     }, [])
   );
 
+  const handleReload = () => {
+    setHasError(false);
+    setLoading(true);
+    setKey(prevKey => prevKey + 1);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <WebView
-        key={key}
-        source={{ uri: 'https://lppkn.sociodev.com.my/lppkngateway/frontend/web/index.php?r=feedback%2Fcreate' }}
-        style={{ flex: 1 }}
-      />
+      {hasError ? (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorMessage}>
+            Sorry, the feedback form is currently unavailable. Please check your connection and try again later.
+          </Text>
+          <TouchableOpacity style={styles.buttonViewOne} onPress={handleReload}>
+            <Text style={styles.buttonTextOne}>Reload</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <>
+          {loading && (
+            <ActivityIndicator
+              size="large"
+              color="#0000ff"
+              style={styles.loader}
+            />
+          )}
+          <WebView
+            key={key}
+            source={{ uri: 'https://lppkn.sociodev.com.my/lppkngateway/frontend/web/index.php?r=feedback%2Fcreate' }}
+            style={{ flex: 1 }}
+            onLoadStart={() => setLoading(true)}
+            onLoadEnd={() => setLoading(false)} // Stop loading spinner when page is loaded
+            onError={() => {
+              setHasError(true);
+              setLoading(false); // Stop loading spinner if there's an error
+            }}
+            onHttpError={() => {
+              setHasError(true);
+              setLoading(false); // Stop loading spinner on HTTP error
+            }}
+          />
+        </>
+      )}
     </SafeAreaView>
   );
 };
@@ -233,8 +273,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  errorMessage: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#777777',
+    fontWeight: '600'
+  },
+  loader: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginLeft: -20,
+    marginTop: -20,
+  },
+  buttonViewOne:{
+    alignItems: "center",
+    height: 45,
+    width: "80%",
+    backgroundColor: "#9448DA",
+    justifyContent: "center",
+    alignContent: "center",
+    alignSelf: "center",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#973BD9",
+  },    
+  buttonTextOne:{
+    alignItems: "center",
+    color: "#FFF",
+    textAlign: "center",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: "700",
+  },
 });
 
 export default AduanForm;
+
+
 
 

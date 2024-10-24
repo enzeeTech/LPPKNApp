@@ -202,20 +202,19 @@
 // // export default AduanForm;
 
 
-
 import React, { useState, useCallback } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ActivityIndicator, TouchableOpacity, Dimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useFocusEffect } from '@react-navigation/native';
 
 const AduanForm = () => {
   const [key, setKey] = useState(0);
   const [hasError, setHasError] = useState(false);
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [loading, setLoading] = useState(true);
+  const screenHeight = Dimensions.get('window').height;
 
   useFocusEffect(
     useCallback(() => {
-      // Reset error and loading, and change the key to force remount and reload the URL
       setHasError(false);
       setLoading(true);
       setKey(prevKey => prevKey + 1);
@@ -226,6 +225,11 @@ const AduanForm = () => {
     setHasError(false);
     setLoading(true);
     setKey(prevKey => prevKey + 1);
+  };
+
+  // Ensure loader has proper visibility even on fast loads
+  const handleLoadEnd = () => {
+    setLoading(false); // Loader stops immediately when content is loaded
   };
 
   return (
@@ -241,28 +245,30 @@ const AduanForm = () => {
         </View>
       ) : (
         <>
-          {loading && (
-            <ActivityIndicator
-              size="large"
-              color="#0000ff"
-              style={styles.loader}
-            />
-          )}
           <WebView
             key={key}
-            source={{ uri: 'https://lppkn.sociodev.com.my/lppkngateway/frontend/web/index.php?r=feedback%2Fcreate' }}
+            // source={{ uri: 'https://lppkn.sociodev.com.my/lppkngateway/frontend/web/index.php?r=feedback%2Fcreate' }}
+            source={{ uri: 'https://www.lppkn.gov.my/lppkngateway/frontend/web/index.php?r=portal%2Ffeedback&menu=81&id=Sjc3cXJZQVRIV2kyMG9SMXJlTkJTQT09' }}
             style={{ flex: 1 }}
             onLoadStart={() => setLoading(true)}
-            onLoadEnd={() => setLoading(false)} // Stop loading spinner when page is loaded
+            onLoadEnd={handleLoadEnd}
             onError={() => {
               setHasError(true);
-              setLoading(false); // Stop loading spinner if there's an error
+              setLoading(false);
             }}
             onHttpError={() => {
               setHasError(true);
-              setLoading(false); // Stop loading spinner on HTTP error
+              setLoading(false);
             }}
           />
+          {loading && (
+            <View style={[styles.loader, { height: screenHeight }]}>
+              <ActivityIndicator
+                size="large"
+                color="#9448DA"
+              />
+            </View>
+          )}
         </>
       )}
     </SafeAreaView>
@@ -287,11 +293,14 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   loader: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginLeft: -20,
-    marginTop: -20,
+    position: 'absolute', 
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', 
   },
   buttonViewOne:{
     alignItems: "center",
@@ -316,6 +325,9 @@ const styles = StyleSheet.create({
 });
 
 export default AduanForm;
+
+
+
 
 
 

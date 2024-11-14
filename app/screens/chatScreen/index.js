@@ -8,14 +8,27 @@ const screenHeight = Dimensions.get('window').height;
 
 const ChatScreen = () => {
   const router = useRouter();
+  const [chatBubbleUri, setChatBubbleUri] = React.useState(null);
 
-  // Load the local image asset
-  const chatBubbleAsset = Asset.fromModule(require('../../assets/ChatBubble.png'));
-  const chatBubbleUri = chatBubbleAsset.localUri || chatBubbleAsset.uri;
+  React.useEffect(() => {
+    // Preload the asset and set the URI when ready
+    const loadAsset = async () => {
+      const asset = Asset.fromModule(require('../../assets/ChatBubble.png'));
+      await asset.downloadAsync();
+      setChatBubbleUri(asset.localUri || asset.uri);
+    };
+    loadAsset();
+  }, []);
+
+  if (!chatBubbleUri) {
+    return null; // Optionally, you can show a loading indicator here
+  }
 
   return (
     <SafeAreaView style={{ height: screenHeight * 0.91 }}>
       <WebView
+        allowFileAccess
+        allowUniversalAccessFromFileURLs
         source={{
           html: `
           <!DOCTYPE html>

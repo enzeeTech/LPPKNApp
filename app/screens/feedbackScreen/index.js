@@ -261,14 +261,14 @@ const AduanForm = () => {
               setLoading(false);
             }}
           />
-          {loading && (
+          {/* {loading && (
             <View style={[styles.loader, { height: screenHeight }]}>
               <ActivityIndicator
                 size="large"
                 color="#9448DA"
               />
             </View>
-          )}
+          )} */}
         </>
       )}
     </SafeAreaView>

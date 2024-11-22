@@ -1,8 +1,9 @@
 import { useRouter } from 'expo-router';
 import * as React from 'react';
-import { SafeAreaView, Dimensions } from 'react-native';
+import { SafeAreaView, Dimensions, Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -11,12 +12,23 @@ const ChatScreen = () => {
   const [chatBubbleUri, setChatBubbleUri] = React.useState(null);
 
   React.useEffect(() => {
-    // Preload the asset and set the URI when ready
     const loadAsset = async () => {
-      const asset = Asset.fromModule(require('../../assets/ChatBubble.png'));
-      await asset.downloadAsync();
-      setChatBubbleUri(asset.localUri || asset.uri);
+      if (Platform.OS === 'android') {
+        // Android: Use localUri
+        const asset = Asset.fromModule(require('../../assets/ChatBubble.png'));
+        await asset.downloadAsync();
+        setChatBubbleUri(asset.localUri || asset.uri);
+      } else if (Platform.OS === 'ios') {
+        // iOS: Convert to Base64
+        const asset = Asset.fromModule(require('../../assets/ChatBubble.png'));
+        await asset.downloadAsync();
+        const base64 = await FileSystem.readAsStringAsync(asset.localUri || asset.uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+        setChatBubbleUri(`data:image/png;base64,${base64}`);
+      }
     };
+
     loadAsset();
   }, []);
 
@@ -29,6 +41,9 @@ const ChatScreen = () => {
       <WebView
         allowFileAccess
         allowUniversalAccessFromFileURLs
+        originWhitelist={['*']}
+        javaScriptEnabled
+        domStorageEnabled
         source={{
           html: `
           <!DOCTYPE html>

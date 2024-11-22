@@ -2,16 +2,17 @@
   "expo": {
     "name": "LPPKN On The Go",
     "slug": "lppknApp",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "orientation": "portrait",
-    "icon": "./app/assets/appIcon.png",
+    "icon": "./app/assets/appIconIOS.png",
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "my.gov.lppkn.go"
+      "bundleIdentifier": "my.gov.lppkn.go",
+      "icon": "./app/assets/appIconIOS.png"
     },
     "android": {
       "package": "com.socio.lppknApp",

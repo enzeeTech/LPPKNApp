@@ -12,9 +12,18 @@
       "android": {
         "buildType": "app-bundle"
       },
+      "ios": {
+        "simulator": true
+      },
       "channel": "preview"
     },
     "production": {
+      "ios": {
+        "distribution": "store"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      },
       "channel": "production"
     }
   },
@@ -23,7 +32,9 @@
       "android": {
         "track": "production"
       },
-      "ios": {}
+      "ios": {
+        "appleId": "dilshanj420@gmail.com"
+      }
     }
   }
 }

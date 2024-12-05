@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-const HPVPriceTile = ({ prices, imageSource, title, isSingleTile, onPress }) => {
+const HPVPriceTile = ({ prices, imageSource, title, isSingleTile, onPress, residentTitle = "Warganegara", nonResidentTitle = "Bukan Warganegara" }) => {
   const [activeTab, setActiveTab] = useState('resident');
   const [isPressed, setIsPressed] = useState(true);
 
@@ -11,6 +11,10 @@ const HPVPriceTile = ({ prices, imageSource, title, isSingleTile, onPress }) => 
   const handlePress = () => {
     setIsPressed(isPressed);
     onPress && onPress();
+  };
+
+  const formatTitle = (title) => {
+    return title.replace(/ /g, '\n'); 
   };
 
   // console.log('HPVPriceTile imageSource:', imageSource); // Log the image source URL
@@ -39,7 +43,7 @@ const HPVPriceTile = ({ prices, imageSource, title, isSingleTile, onPress }) => 
             onPress={() => setActiveTab('resident')}
           >
             <Text style={[styles.tabText, activeTab === 'resident' ? styles.tabTextActive : styles.tabTextInactive]}>
-              Warganegara
+            {formatTitle(residentTitle)}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -50,7 +54,7 @@ const HPVPriceTile = ({ prices, imageSource, title, isSingleTile, onPress }) => 
             onPress={() => setActiveTab('nonResident')}
           >
             <Text style={[styles.tabText, activeTab === 'nonResident' ? styles.tabTextActive : styles.tabTextInactive]}>
-              Bukan{'\n'}Warganegara
+            {formatTitle(nonResidentTitle)}
             </Text>
           </TouchableOpacity>
         </View>

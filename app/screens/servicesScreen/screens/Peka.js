@@ -4,6 +4,7 @@ import Header from './Header';
 import styles from '../StyleServices';
 import DropdownMenu from './reusableComponents/ServicesDropdownList';
 import GlobalApi from '../../../services/GlobalApi';
+import HPVPriceTile from './reusableComponents/HPVPriceTile';
 import { extractGalleryData } from '../../../utilities/GalleryExtract';
 import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
 
@@ -15,6 +16,7 @@ const Peka = ({ navigation }) => {
     const [dropdownHeader, setDropdownHeader] = useState([]);
     const [ticket1, setTicket1] = useState([]);
     const [buttonData, setButtonData] = useState([]);
+    const [priceTilesData, setPriceTilesData] = useState([]);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -24,6 +26,16 @@ const Peka = ({ navigation }) => {
                 const service = response.data.data[0].attributes;
     
                 const componentData = service.Content;
+
+                // Extract price tile data
+                const priceTiles = componentData
+                    .filter(component => component.__component === 'tiles.image-price-tile')
+                    .map(component => component.TileData.hpvPriceTiles)
+                    .flat();
+
+                setPriceTilesData(priceTiles);
+
+                // console.log('Price Tiles:', priceTilesData);
 
                 setTicket1(componentData.map(component => {
                     if (component.__component === 'tickets.single-ticket') {
@@ -166,12 +178,31 @@ const Peka = ({ navigation }) => {
                         {responseData.Description}
                         </Text>
                     </View>
-                    {/* Ticket Image */}
-                    <View style={styles.ticketContainer}>
+                    <View style={{height: 20, backgroundColor: '#FFF'}}></View>
+                    {/* Ticket Image || REMOVED*/}
+                    {/* <View style={styles.ticketContainer}>
                         <Image source={{uri: ticket1[0]}}
                         style={styles.ticketImage}
                         />
-                    </View>
+                    </View> */}
+                    {/* Price Tiles */} 
+                    {priceTilesData.map((tile, index) => {
+                        return (
+                            <View key={index} style={{ width: 300, marginLeft: 40 }}>
+                                <HPVPriceTile
+                                    prices={tile.prices}
+                                    imageSource={tile.imageSource}
+                                    title={tile.title}
+                                    isSingleTile={tile.isSinglePrice}
+                                    residentTitle={tile.residentTitle}
+                                    nonResidentTitle={tile.nonResidentTitle}
+                                />
+                            </View>
+                        );
+                    })}
+
+                    <View style={{height: 30, backgroundColor: '#FFF'}}></View>
+
                     {/* Dropdown Menu */}
                     <View style={[styles.subTextOneContainer, {alignItems: 'flex-start', marginLeft: 15}]}>
                         <Text style={styles.subTextOne}>{dropdownHeader[0]}</Text>

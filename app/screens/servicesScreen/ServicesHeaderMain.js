@@ -5,7 +5,7 @@ function Header() {
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
-                <Text style={styles.headerText}>Perkhidmatan</Text>
+                <Text allowFontScaling={false} style={styles.headerText}>Perkhidmatan</Text>
                 {/* <TouchableOpacity onPress={()=>{console.log("settings button pressed")}}>
                     <Image 
                         source={require('../../assets/settingsIcon.png')}

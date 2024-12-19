@@ -19,7 +19,7 @@ const ServiceIcon = ({ iconSource, label, onPress }) => {
         <View style={styles.iconCircle}>
             <Image source={iconSource} style={styles.icon} />
         </View>
-        <Text style={styles.iconLabel}>{label}</Text>
+        <Text allowFontScaling={false} style={styles.iconLabel}>{label}</Text>
         </Pressable>
     );
 };

@@ -11,7 +11,7 @@ function Header({onBackPress}) {
                         style = {styles.iconStyleBack}
                     />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>Perkhidmatan</Text>
+                <Text allowFontScaling={false} style={styles.headerText}>Perkhidmatan</Text>
 
             </View>
         </View>

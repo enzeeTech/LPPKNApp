@@ -15,7 +15,8 @@
       "icon": "./app/assets/appIconIOS.png",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We use your location to show nearby clinics and services available to you."
-      }
+      },
+      "buildNumber": "2"
     },
     "android": {
       "package": "com.socio.lppknApp",

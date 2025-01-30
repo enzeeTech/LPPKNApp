@@ -2,7 +2,7 @@
   "expo": {
     "name": "LPPKN On The Go",
     "slug": "lppknApp",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./app/assets/appIconIOS.png",
     "userInterfaceStyle": "automatic",
@@ -12,13 +12,16 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "my.gov.lppkn.go",
-      "icon": "./app/assets/appIconIOS.png"
+      "icon": "./app/assets/appIconIOS.png",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "We use your location to show nearby clinics and services available to you."
+      }
     },
     "android": {
       "package": "com.socio.lppknApp",
       "softwareKeyboardLayoutMode": "pan",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 8
+      "versionCode": 9
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -19,7 +19,7 @@ const iconsData = [
   { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTEEN' },
   { iconSource: require('../../assets/saringanKesejahteraan.png'), label: 'Saringan Kesejahteraan' },
   { iconSource: require('../../assets/PEKA.png'), label: 'PEKA' },
-  { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan & Data Mentah' },
+  { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan' },
   // { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'KASIH Keibubapaan Digital' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
@@ -127,7 +127,7 @@ function ServicesScreen({navigation}) {
       case 'Subfertiliti':
         navigation.navigate('Subfertiliti');
         break;
-      case 'Penyelidikan & Data Mentah':
+      case 'Penyelidikan':
         navigation.navigate('Penyelidikan');
         break;
       case 'Saringan Kesejahteraan':

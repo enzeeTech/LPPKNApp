@@ -2,7 +2,7 @@
   "expo": {
     "name": "LPPKN On The Go",
     "slug": "lppknApp",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./app/assets/appIconIOS.png",
     "userInterfaceStyle": "automatic",
@@ -16,13 +16,13 @@
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We use your location to show nearby clinics and services available to you."
       },
-      "buildNumber": "2"
+      "buildNumber": "1"
     },
     "android": {
       "package": "com.socio.lppknApp",
       "softwareKeyboardLayoutMode": "pan",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 9
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/favicon.png"

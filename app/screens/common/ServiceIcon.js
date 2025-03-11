@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   icon: {
-    width: iconSize,
+    width: iconSize*1.4,
     height: iconSize,
     resizeMode: 'contain',
     backgroundColor: 'transparent'

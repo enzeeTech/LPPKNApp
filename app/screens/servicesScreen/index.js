@@ -9,6 +9,8 @@ const screenHeight = Dimensions.get('window').height;
 
 // Array of icons and labels for each row of icons
 const iconsData = [
+  { iconSource: require('../../assets/buai.png'), label: 'Rawatan Kesuburan' },
+  // { iconSource: require('../../assets/buai2.png'), label: 'BUAI' },
   { iconSource: require('../../assets/subfertiliti.png'), label: 'Subfertiliti' },
   { iconSource: require('../../assets/perancangKeluarga.png'), label: 'Perancang Keluarga' },
   { iconSource: require('../../assets/hpvdna.png'), label: 'HPV DNA' },
@@ -138,6 +140,9 @@ function ServicesScreen({navigation}) {
         break;
       case 'KASIH Keibubapaan Digital':
         Alert.alert('Coming Soon!');
+        break;
+      case 'Rawatan Kesuburan':
+        navigation.navigate('Rawatan Kesuburan');
         break;
       default:
         break;

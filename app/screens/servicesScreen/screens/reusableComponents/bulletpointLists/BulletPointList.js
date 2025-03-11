@@ -5,7 +5,11 @@ const BulletPointList = ({ title, description, bulletPoints }) => {
     return (
         <View>
             <View style={[styles.subTextOneContainer, { alignItems: 'flex-start', marginLeft: 15, marginTop: 40 }]}>
+            {title === 'No-Title' ? (
+                <Text style={styles.subTextOne}></Text>
+            ) : (
                 <Text style={styles.subTextOne}>{title}</Text>
+            )}
             </View>
             {description && (
                 <View style={[styles.introContainer, { marginBottom: 5 }]}>

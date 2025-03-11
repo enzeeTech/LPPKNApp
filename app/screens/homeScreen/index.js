@@ -15,6 +15,7 @@ const screenWidth = Dimensions.get('window').width;
 
 // Array of icons and labels for each row of icons
 const iconsData = [
+  { iconSource: require('../../assets/buai.png'), label: 'Rawatan Kesuburan' },
   { iconSource: require('../../assets/subfertiliti.png'), label: 'Subfertiliti' },
   { iconSource: require('../../assets/perancangKeluarga.png'), label: 'Perancang Keluarga' },
   { iconSource: require('../../assets/hpvdna.png'), label: 'HPV DNA' },
@@ -29,6 +30,7 @@ const iconsData = [
   { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
+  
 ];
 
 const HomeScreen = ({navigation}) => {
@@ -187,6 +189,9 @@ const HomeScreen = ({navigation}) => {
       case 'Keibubapaan Digital':
           // navigation.navigate('KeibubapaanDigital');
           Alert.alert('Coming Soon!');
+          break;
+      case 'Rawatan Kesuburan':
+          navigation.navigate('Rawatan Kesuburan');
           break;
       default:
         break;

@@ -16,6 +16,7 @@ import SaringanKesejahteraan from './screens/SaringanKesejahteraan';
 import KafeTeen from './screens/KafeTeen';
 import LocationCollection from './locationCollection/index';
 import LocationInfoScreen from '../locationInfoScreen/index';
+import Buai from './screens/Buai';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ const ServicesStack = () => {
       <Stack.Screen name="Subfertiliti" component={Subfertiliti} />
       <Stack.Screen name="SaringanKesejahteraan" component={SaringanKesejahteraan} />
       <Stack.Screen name="KafeTeen" component={KafeTeen} />
+      <Stack.Screen name="Rawatan Kesuburan" component={Buai} />
       <Stack.Screen name="LocationCollection" component={LocationCollection} />
       <Stack.Screen name="LocationInfoScreen" component={LocationInfoScreen} />
     </Stack.Navigator>

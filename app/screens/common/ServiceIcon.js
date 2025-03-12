@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   iconLabel: {
     marginTop: 7, 
-    fontSize: Platform.OS === 'android' ? 10 : 10, 
+    fontSize: Platform.OS === 'android' ? 10 : 9, 
     color: '#777777', 
     textAlign: 'center', 
     fontWeight: '700', 

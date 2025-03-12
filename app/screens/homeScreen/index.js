@@ -15,7 +15,7 @@ const screenWidth = Dimensions.get('window').width;
 
 // Array of icons and labels for each row of icons
 const iconsData = [
-  { iconSource: require('../../assets/buai.png'), label: 'Rawatan Kesuburan' },
+  { iconSource: require('../../assets/buai.png'), label: 'Bantuan Rawatan Kesuburan' },
   { iconSource: require('../../assets/subfertiliti.png'), label: 'Subfertiliti' },
   { iconSource: require('../../assets/perancangKeluarga.png'), label: 'Perancang Keluarga' },
   { iconSource: require('../../assets/hpvdna.png'), label: 'HPV DNA' },

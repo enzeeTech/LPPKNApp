@@ -190,8 +190,8 @@ const HomeScreen = ({navigation}) => {
           // navigation.navigate('KeibubapaanDigital');
           Alert.alert('Coming Soon!');
           break;
-      case 'Rawatan Kesuburan':
-          navigation.navigate('Rawatan Kesuburan');
+      case 'Bantuan Rawatan Kesuburan':
+          navigation.navigate('Bantuan Rawatan Kesuburan');
           break;
       default:
         break;

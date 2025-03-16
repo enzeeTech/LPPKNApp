@@ -58,7 +58,7 @@ const HomeStack = () => {
       <Stack.Screen name="KafeTeen" component={KafeTeen} />
       <Stack.Screen name="LocationCollection" component={LocationCollection} />
       <Stack.Screen name="LocationInfoScreen" component={LocationInfoScreen} />
-      <Stack.Screen name="Rawatan Kesuburan" component={Buai} />
+      <Stack.Screen name="Bantuan Rawatan Kesuburan" component={Buai} />
     </Stack.Navigator>
   );
 };

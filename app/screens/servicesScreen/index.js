@@ -141,8 +141,8 @@ function ServicesScreen({navigation}) {
       case 'KASIH Keibubapaan Digital':
         Alert.alert('Coming Soon!');
         break;
-      case 'Rawatan Kesuburan':
-        navigation.navigate('Rawatan Kesuburan');
+      case 'Bantuan Rawatan Kesuburan':
+        navigation.navigate('Bantuan Rawatan Kesuburan');
         break;
       default:
         break;

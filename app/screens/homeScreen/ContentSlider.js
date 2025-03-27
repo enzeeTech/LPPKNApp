@@ -4,6 +4,7 @@ import { Video, ResizeMode } from 'expo-av';
 import { useRef, useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Linking } from "react-native";
+import { useMemo } from "react";
 
 
 const ContentSlider = ({contents}) => {
@@ -28,6 +29,10 @@ const ContentSlider = ({contents}) => {
 
     return () => clearInterval(interval);
   }, [currentIndex, contents.length]);
+
+  const sortedContents = useMemo(() => {
+    return [...contents].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  }, [contents]);
   
 
   // Display Images and Videos
@@ -67,7 +72,7 @@ const ContentSlider = ({contents}) => {
   };
   // Render Dot Indicators
   const renderDotIndicators = () => {
-    return contents.map((dot, index) => (
+    return sortedContents.map((dot, index) => (
       <View
         key={`dot-${index}`}
         style={{
@@ -95,7 +100,7 @@ const ContentSlider = ({contents}) => {
   return (
     <View style={{height:230, width: width}}>
       <FlatList 
-        data = {contents} 
+        data = {sortedContents} 
         ref={flatlistRef}
         renderItem={renderContent}
         horizontal = {true}

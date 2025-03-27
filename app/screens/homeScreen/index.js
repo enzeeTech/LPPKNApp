@@ -60,6 +60,7 @@ const HomeScreen = ({navigation}) => {
             // You might need to adjust the mapping depending on your exact data structure
             const formattedData = response.data.data.map(item => ({
               id: item.id,
+              publishedAt: item.attributes.publishedAt,
               type: item.attributes.Content.data.attributes.mime.includes('video') ? 'video' : 'image',
               source: { uri: item.attributes.Content.data.attributes.url },
               title: item.attributes.Title,

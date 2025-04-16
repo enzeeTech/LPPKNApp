@@ -4,6 +4,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, Dimensions, ScrollView
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import { Share } from 'react-native';
+import ImageViewing from 'react-native-image-viewing';
 
 
 // Get the full height of the screen
@@ -13,6 +14,8 @@ const sliderImageHeight = screenHeight * 0.3;
 
 const InfoSection = ({title, date, images, information, link}) => {
     const [activeSlide, setActiveSlide] = useState(0);
+    const [isVisible, setIsVisible] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
     // Listen to slide event for the pagination animation
     const onScroll = (event) => {
@@ -58,11 +61,19 @@ const InfoSection = ({title, date, images, information, link}) => {
                 style={styles.scrollViewStyle} 
             >
                 {images?.map((image, index) => (
-                    <Image
+                    <TouchableOpacity
                         key={index}
-                        source={{uri: image.url}}
+                        activeOpacity={1}
+                        onPress={() => {
+                        setSelectedIndex(index);
+                        setIsVisible(true);
+                        }}
+                    >
+                        <Image
+                        source={{ uri: image.url }}
                         style={styles.image}
-                    />
+                        />
+                    </TouchableOpacity>
                 ))}
             </ScrollView>
             <View style={styles.innerContainer}>
@@ -97,6 +108,14 @@ const InfoSection = ({title, date, images, information, link}) => {
                     </Text>
                 </View>
             </View>
+            <ImageViewing
+                images={images?.map(img => ({ uri: img.url }))}
+                imageIndex={selectedIndex}
+                visible={isVisible}
+                onRequestClose={() => setIsVisible(false)}
+                swipeToCloseEnabled={true}
+                doubleTapToZoomEnabled={true}
+            />
         </View>
     );
 }

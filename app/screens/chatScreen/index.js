@@ -37,7 +37,7 @@ const ChatScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{ height: screenHeight * 0.91 }}>
+    <SafeAreaView style={{backgroundColor: 'white', paddingTop: 30, height: screenHeight * 0.91 }}>
       <WebView
         allowFileAccess
         allowUniversalAccessFromFileURLs
@@ -80,7 +80,7 @@ const ChatScreen = () => {
           </body>
           </html>
           `,
-          baseUrl: 'https://lppkn.sociodev.com.my/',
+          baseUrl: 'https://www.lppkn.gov.my/lppkngateway/frontend/web/',
         }}
         onMessage={({ nativeEvent }) => {
           if (nativeEvent.data === 'close') {

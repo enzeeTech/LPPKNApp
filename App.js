@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   tabIcon: {
     width: 40,
     height: 40,
-    marginTop: Platform.OS === 'ios' ? 10 : 0,
+    marginTop: Platform.OS === 'ios' ? 10 : 10,
   },
   customButton: {
     width: 70,

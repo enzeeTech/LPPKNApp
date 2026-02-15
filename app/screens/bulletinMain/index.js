@@ -1,12 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard, Dimensions } from 'react-native';
 import Header from './BulletinMainHeader';
 import { Platform } from 'react-native';
 import { ScrollView } from 'react-native';
 import BulletinDetailsSection from './BulletinDetailsSection';
 import SarinBottomSheet from './SarinBottomSheet';
 import GlobalApi from '../../services/GlobalApi';
+
+  const screenWidth = Dimensions.get('window').width;
+  const isTablet = screenWidth > 600;
 
 function BulletinMain({navigation}) {
 
@@ -188,13 +191,12 @@ function BulletinMain({navigation}) {
       <View style={styles.headerContainer}>
         <Header onBackPress={handleBackPress} />
       </View>
-      <View style={{marginTop: -10, height: 15, backgroundColor: '#FFFFFF'}}></View>
       <View style={styles.subHeaderContainer}>
         <View style={styles.searchTab}>
           <View style={styles.searchIconContainer}>
             <Image 
               source={require('../../assets/searchButton.png')}
-              style = {styles.searchIcon}
+              style={styles.searchIcon}
             />
             <View style={styles.seachTextContainer}>
               <TextInput 
@@ -203,30 +205,34 @@ function BulletinMain({navigation}) {
                 placeholderTextColor="#A6A6A6"
                 value={searchQuery}
                 onChangeText={handleSearch}
-              >
-              </TextInput>
+                allowFontScaling={false}
+              />
             </View>
           </View>
         </View>
         <TouchableOpacity style={styles.sarineIconContainer} onPress={() => setBottomSheetVisible(true)}> 
           <Image
               source={require('../../assets/sarineButton.png')}
-              style = {styles.sarineIcon}
+              style={styles.sarineIcon}
             />
         </TouchableOpacity>
       </View>
       <ScrollView 
         style={styles.detailsContainer}
         showsVerticalScrollIndicator={false}
-        // contentContainerStyle={styles.contentContainer}
       >
-        <BulletinDetailsSection navigation={navigation} items={bulletinItems} onLoadMore={hasMoreItems ? loadMoreItems : null } />
+        <BulletinDetailsSection 
+          navigation={navigation} 
+          items={bulletinItems} 
+          onLoadMore={hasMoreItems ? loadMoreItems : null } 
+        />
       </ScrollView>
+
       <SarinBottomSheet
-            isVisible={isBottomSheetVisible}
-            onClose={() => setBottomSheetVisible(false)}
-            onConfirmSelection={handleConfirmSelection}
-          />
+        isVisible={isBottomSheetVisible}
+        onClose={() => setBottomSheetVisible(false)}
+        onConfirmSelection={handleConfirmSelection}
+      />
     </SafeAreaView>
   );
 }
@@ -234,69 +240,68 @@ function BulletinMain({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: '#9448DA',
+    backgroundColor: '#FFFFFF', 
   },
   headerContainer: {
-    backgroundColor: 'transparent', 
-    zIndex: 1,
+    backgroundColor: '#9448DA', 
+    zIndex: 10,
   },
-  subHeaderContainer: {
+subHeaderContainer: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    height: 60,
+    paddingVertical: 15, 
     width: '100%',
-    // marginTop: '5%',
+    alignItems: 'center',
+    justifyContent: 'center', 
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+    zIndex: 10,
   },
   searchTab: {
-    width: '75%',
-    height: '65%',
-    marginTop: '3%',
-    marginLeft: '6%',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderWidth: 2,
+  width: isTablet ? '87%' : '75%',    
+  height: 45,
+    borderRadius: 10,
+    borderWidth: 1.5,
     borderColor: '#CBCBCB',
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
   searchIconContainer: {
-    width: '15%',
-    height: '100%',
     flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1, 
   },
   searchIcon: {
-    width: '60%',
-    height: '60%',
-    resizeMode: 'contain',
-    marginLeft: '25%',
-    marginTop: '15%',
-  },
-  sarineIcon: {
-    width: '100%',
-    height: '100%',
+    width: 20,
+    height: 20,
     resizeMode: 'contain',
   },
   seachTextContainer: {
-    width: 200,
-    height: '100%',
+    flex: 1,
+    marginLeft: 10,
   },
   searchText: {
-    color: '#A6A6A6',
-    fontSize: 14,
-    marginTop: '5%',
-    marginLeft: '8%',
-    marginBottom: Platform.OS === 'android' ? '4.5%' : 0,
+    color: '#333333',
+    fontSize: 15,
+    padding: 0, 
   },
   sarineIconContainer: {
-    width: '13%',
-    height: '65%',
-    marginTop: '3.5%',
-    marginLeft: '2%',
+    width: 45,
+    height: 45,
+    marginLeft: 10, 
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sarineIcon: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
   },
   detailsContainer: {
     flex: 1, 
-    backgroundColor: '#FFFF',
-    // marginTop: -13,
+    backgroundColor: '#FFFFFF',
   },
 });
 

@@ -1,104 +1,85 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Platform, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const isTablet = screenWidth > 600;
 
 const CustomBulletinTile = ({ onPress, image, title, date }) => {
-
-    // const handleShareButtonPress = () => {
-    //     console.log('Share Button Pressed!');
-    // };
-
     return (
         <Pressable
-        style={({ pressed }) => [
-            styles.tileContainer,
-            { opacity: pressed ? 1 : 1 } 
-        ]}
-        onPress={onPress}
+            style={({ pressed }) => [
+                styles.tileContainer,
+                { opacity: pressed ? 0.9 : 1 } 
+            ]}
+            onPress={onPress}
         >
             <View style={styles.imageContainer}>
                 <Image source={{uri:image}} style={styles.image} />
-                <View style={styles.overlayContainer}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.titleText} numberOfLines={2}>{title}</Text>
-                        <Text style={styles.dateText}>{date}</Text>
-                    </View>
-                    {/* <TouchableOpacity style={styles.buttonContainer} onPress={handleShareButtonPress}>
-                        <Image source={require('../../assets/shareIcon.png')} style={styles.imageIcon} />
-                    </TouchableOpacity> */}
+            </View>
+
+            <View style={styles.overlayContainer}>
+                <View style={styles.textContainer}>
+                    <Text 
+                        style={styles.titleText} 
+                        numberOfLines={isTablet ? 3 : 2}
+                        allowFontScaling={false}
+                    >
+                        {title}
+                    </Text>
+                    <Text style={styles.dateText} allowFontScaling={false}>
+                        {date}
+                    </Text>
                 </View>
             </View>
         </Pressable>
-
     );
 }
 
 const styles = StyleSheet.create({
     tileContainer: {
-        backgroundColor: '#FFFF',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
-        marginTop: 35,
-        marginLeft: '5%',
-        height: 200,
-        width: '90%',
-        elevation: 3,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        marginTop: 25,
+        alignSelf: 'center',
+        width: '92%',
+        minHeight: 280, 
+        elevation: 4,
         shadowColor: "#000",
-        shadowOffset: {width: 0, height: 1},
-        shadowOpacity: 0.25,
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.2,
         shadowRadius: 4, 
+        overflow: 'hidden', 
     },
     imageContainer: {
         width: '100%',
-        height: 200,
+        height: isTablet ? 250 : 220, 
     },
     image: {
         width: '100%',
-        height: 180,
+        height: '100%',
         resizeMode: 'cover',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
     },
     overlayContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 86,
         backgroundColor: '#FFFFFF',
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
-        flexDirection: 'row',
+        paddingBottom: 15, 
+        paddingHorizontal: '4%',
     },
     textContainer: {
-        width: '80%',
-        height: 90,
-        marginLeft: '3%',
+        width: '100%',
+        paddingTop: 10,
     },
     titleText: {
-        color: '#777777',
-        fontSize: 18,
+        color: '#444444',
+        fontSize: isTablet ? 18 : 16,
         fontWeight: 'bold',
-        paddingTop: '3%',
+        lineHeight: 22,
+        marginBottom: 8,
     },
     dateText: {
         color: '#21CF44',
-        fontSize: 15,
-        marginTop: 4, 
+        fontSize: 14,
+        fontWeight: '600',
     }, 
-    buttonContainer: {
-        width: 30,
-        height: 30,
-        marginTop: '14%',
-        marginLeft: '6%',
-    },   
-    imageIcon: {
-        width: 25,
-        height: 25,
-        resizeMode: 'contain',
-        
-    },
 });
 
 export default CustomBulletinTile;

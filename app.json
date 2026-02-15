@@ -2,7 +2,7 @@
   "expo": {
     "name": "LPPKN On The Go",
     "slug": "lppknApp",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "orientation": "portrait",
     "icon": "./app/assets/appIconIOS.png",
     "userInterfaceStyle": "automatic",
@@ -23,7 +23,7 @@
       "package": "com.socio.lppknApp",
       "softwareKeyboardLayoutMode": "pan",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 16
+      "versionCode": 17
     },
     "web": {
       "favicon": "./assets/favicon.png"

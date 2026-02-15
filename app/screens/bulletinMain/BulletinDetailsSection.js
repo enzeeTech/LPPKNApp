@@ -46,51 +46,36 @@ const BulletinDetailsSection = ({ navigation, items, onLoadMore }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginBottom: Platform.OS === 'ios' ? 100 : 150,
-    },
-    loadMoreContainer: {
+        paddingBottom: Platform.OS === 'ios' ? 100 : 150,
         backgroundColor: '#FFFFFF',
-        marginTop: 10,
-        marginBottom: 30,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
     },
     loadMoreItemContainer: {
-        height: Platform.OS === 'ios' ? 120 : 150,
+        height: 80, 
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '-10%',
-        zIndex: 1,
-        marginTop: '-30%',
-        // marginBottom: '10%',
-        // backgroundColor: '#FFFFFF',
+        marginTop: 10, 
+        zIndex: 5,
+        backgroundColor: '#FFFFFF',
     },
     loadMoreText: {
-        fontSize: 20,
+        fontSize: 18,
         color: '#5C2D86',
-        textAlign: 'center',
-        // padding: 20,
-        paddingLeft: 20, 
-        height: Platform.OS === 'ios' ? 40 : 40,
         fontWeight: 'bold',
-        marginTop: Platform.OS === 'ios' ? 105 : 123,
+        marginLeft: 10,
     },
     downArrowIcon: {
         width: 18,
         height: 18,
         resizeMode: 'contain',
-        marginTop: Platform.OS === 'ios' ? 90 : 110,
-        marginRight: -10,
     },
     gradient: {
         position: 'absolute',
         left: 0,
         right: 0,
-        bottom: -50,
-        height: Platform.OS === 'ios' ? 255 : 250,
+        bottom: 0,
+        height: 100, 
         zIndex: 1,
-
     }
 });
 

@@ -1,16 +1,13 @@
 import React from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions, FlatList, Alert } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Dimensions, FlatList, Alert } from 'react-native';
 import Header from './ServicesHeaderMain';
 import ServiceIcon from '../common/ServiceIcon';
-import GlobalApi from '../../services/GlobalApi';
 
-const screenHeight = Dimensions.get('window').height;
+const { width: screenWidth } = Dimensions.get('window');
+const isTablet = screenWidth > 600;
 
-// Array of icons and labels for each row of icons
 const iconsData = [
   { iconSource: require('../../assets/buai.png'), label: 'Bantuan Rawatan Kesuburan' },
-  // { iconSource: require('../../assets/buai2.png'), label: 'BUAI' },
   { iconSource: require('../../assets/subfertiliti.png'), label: 'Subfertiliti' },
   { iconSource: require('../../assets/perancangKeluarga.png'), label: 'Perancang Keluarga' },
   { iconSource: require('../../assets/hpvdna.png'), label: 'HPV DNA' },
@@ -22,60 +19,12 @@ const iconsData = [
   { iconSource: require('../../assets/saringanKesejahteraan.png'), label: 'Saringan Kesejahteraan' },
   { iconSource: require('../../assets/PEKA.png'), label: 'PEKA' },
   { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan' },
-  // { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'KASIH Keibubapaan Digital' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
 ];
 
-function ServicesScreen({navigation}) {
-  // const [perkhidmatanOptions, setPerkhidmatanOptions] = React.useState([]);
+function ServicesScreen({ navigation }) {
 
-  // const serviceOrder = [
-  //   'Subfertiliti',
-  //   'Perancang Keluarga',
-  //   'HPV DNA',
-  //   'Subsidi Mamogram',
-  //   'Kaunseling',
-  //   'SMARTSTART 2.0',
-  //   'SMARTBelanja',
-  //   'KafeTEEN',
-  //   'Saringan Kesejahteraan',
-  //   'PEKA',
-  //   'Penyelidikan & Data Mentah',
-  //   'KASIH Keibubapaan Digital',
-  //   'Keluarga@Kerja',
-  //   'IlmuKeluarga',
-  // ]
-
-  // // Fetch perkhidmatan options from API
-  // const fetchPerkhidmatanOptions = () => {
-  //   GlobalApi.getPerkhidmatanOptions()
-  //     .then((response) => {
-  //       const perkhidmatanOptions = response.data.data.map((item) => ({
-  //         id: item.id,
-  //         label: item.attributes.Title,
-  //         imageSource: item.attributes.Icon.data.attributes.url,
-  //       }));
-
-  //       const sortedOptions = perkhidmatanOptions.sort((a, b) => {
-  //         return serviceOrder.indexOf(a.label) - serviceOrder.indexOf(b.label);
-  //       });
-        
-  //       setPerkhidmatanOptions(perkhidmatanOptions);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
-
-  // // Fetch perkhidmatan options on focus
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     fetchPerkhidmatanOptions();
-  //   }, [])
-  // );
-
-  // Helper function to render each service icon
   const renderServiceIcon = ({ item }) => (
     <ServiceIcon 
       iconSource={item.iconSource} 
@@ -84,15 +33,6 @@ function ServicesScreen({navigation}) {
     />
   );
 
-  // const renderServiceIcon = ({ item }) => (
-  //   <ServiceIcon 
-  //     iconSource={{uri: item.imageSource}} 
-  //     label={item.label} 
-  //     onPress={() => navigateToService(item.label)}
-  //   />
-  // );
-
-  // Handle back press navigation
   const handleBackPress = () => {
     navigation.goBack();
   }
@@ -147,21 +87,21 @@ function ServicesScreen({navigation}) {
       default:
         break;
     }
-  }  
-
+  }   
 
   return (
     <SafeAreaView style={styles.container}>
       <Header onBackPress={handleBackPress} />
-      <View style={styles.content}>
+      <View style={styles.contentContainer}>
           <FlatList
             data={iconsData}
-            // data={perkhidmatanOptions}
             renderItem={renderServiceIcon}
             keyExtractor={(item, index) => index.toString()}
-            numColumns={4}
-            contentContainerStyle={styles.content}
-            scrollEnabled={false}
+            numColumns={isTablet ? 5 : 4}
+            key={isTablet ? 'tablet-grid' : 'mobile-grid'} 
+            contentContainerStyle={styles.listContent}
+            scrollEnabled={true} 
+            showsVerticalScrollIndicator={false}
           />
       </View>
     </SafeAreaView>
@@ -171,16 +111,20 @@ function ServicesScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#9448DA',
+    backgroundColor: '#9448DA',
   },
-  content: {
-    alignContent: 'center',
-    // paddingLeft: 0.5,
-    paddingTop: 25,
-    height: screenHeight,
-    width: '100%',
-    backgroundColor: '#fff',
-    marginTop: -13,
+  contentContainer: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    marginTop: 0, 
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: 'hidden',
+  },
+  listContent: {
+    paddingTop: 30,
+    paddingBottom: 60,
+    alignItems: 'center', 
   },
 });
 

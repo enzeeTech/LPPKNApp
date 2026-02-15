@@ -1,5 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import { View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, Image, Platform, TouchableOpacity, TouchableWithoutFeedback, Alert} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { 
+  View, Text, TextInput, StyleSheet, SafeAreaView, Dimensions, 
+  Image, Platform, TouchableOpacity, TouchableWithoutFeedback, Alert 
+} from 'react-native';
 import { ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from './HomeScreenHeader';
@@ -10,10 +13,9 @@ import ContentSlider from './ContentSlider';
 import GlobalApi from '../../services/GlobalApi';
 import LottieView from 'lottie-react-native';
 
-
 const screenWidth = Dimensions.get('window').width;
+const isTablet = screenWidth > 600;
 
-// Array of icons and labels for each row of icons
 const iconsData = [
   { iconSource: require('../../assets/buai.png'), label: 'Bantuan Rawatan Kesuburan' },
   { iconSource: require('../../assets/subfertiliti.png'), label: 'Subfertiliti' },
@@ -26,63 +28,52 @@ const iconsData = [
   { iconSource: require('../../assets/smartstart.png'), label: 'SMARTSTART 2.0' },
   { iconSource: require('../../assets/smartBelanja.png'), label: 'SMARTBelanja' },
   { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTEEN' },
-  // { iconSource: require('../../assets/keibubapaanDigital.png'), label: 'Keibubapaan Digital' },
   { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
   { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
   { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
-  
 ];
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const [bulletinItems, setBulletinItems] = useState([]);
   const [posterItems, setPosterItems] = useState([]);
   const [contentData, setContentData] = useState([]);
+  const [searchVisible, setSearchVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Function to format the date correctly
+  const rowOne = iconsData.slice(0, 8);
+  const rowTwo = iconsData.slice(8, iconsData.length);
+
   const formatDate = (dateString) => {
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    // Create a date object from dateString
     const date = new Date(dateString);
-    // Format date to local string with specified options
-    const formattedDate = date.toLocaleDateString('ms-MY', options);
-
-    return formattedDate;
+    return date.toLocaleDateString('ms-MY', options);
   };
 
-    //////// CONTENT SLIDER ////////
-  
-    useEffect(() => {
-      const fetchContent = async () => {
-        try {
-          const response = await GlobalApi.getHomeSliderContent();
-          if (response.data) {
-            // Assuming 'data' is the field where your content is returned
-            // You might need to adjust the mapping depending on your exact data structure
-            const formattedData = response.data.data.map(item => ({
-              id: item.id,
-              publishedAt: item.attributes.publishedAt,
-              type: item.attributes.Content.data.attributes.mime.includes('video') ? 'video' : 'image',
-              source: { uri: item.attributes.Content.data.attributes.url },
-              title: item.attributes.Title,
-              subtitle: item.attributes.Subtitle,
-              link : item.attributes.Link,
-            }));
-            setContentData(formattedData);
-            // Testing with empty data
-            // setContentData([]);
-          }
-        } catch (error) {
-          console.error('Error fetching home slider content:', error);
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const response = await GlobalApi.getHomeSliderContent();
+        if (response.data) {
+          const formattedData = response.data.data.map(item => ({
+            id: item.id,
+            publishedAt: item.attributes.publishedAt,
+            type: item.attributes.Content.data.attributes.mime.includes('video') ? 'video' : 'image',
+            source: { uri: item.attributes.Content.data.attributes.url },
+            title: item.attributes.Title,
+            subtitle: item.attributes.Subtitle,
+            link: item.attributes.Link,
+          }));
+          setContentData(formattedData);
         }
-      };
-  
-      fetchContent();
-    }, []);
+      } catch (error) {
+        console.error('Error fetching home slider content:', error);
+      }
+    };
+    fetchContent();
+  }, []);
 
-
-  // Calling API to get bulletin posts
-  const getBulletinPosts = () => { 
-    const query = "&pagination[start]=0&pagination[limit]=6&sort=publishedAt:desc"
+  const getBulletinPosts = () => {
+    const query = "&pagination[start]=0&pagination[limit]=9&sort=publishedAt:desc"; // Limit 9 agar pas 3x3
     GlobalApi.getBulletinPostWithQuery(query)
       .then((response) => {
         const formattedData = response.data.data.map((item) => ({
@@ -91,20 +82,14 @@ const HomeScreen = ({navigation}) => {
           publishedDate: item.attributes.publishedAt,
           date: formatDate(item.attributes.Date),
           tileImage: item.attributes.TileImage.data.attributes.url,
-        
         }));
         setBulletinItems(formattedData);
-        // Testing with empty data
-        // setBulletinItems([]);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
-  // Calling API to get sorotan posts
   const getSorotanPosts = () => {
-    const query = "&filters[PinPost][$eq]=true&sort=publishedAt:desc"
+    const query = "&filters[PinPost][$eq]=true&sort=publishedAt:desc";
     GlobalApi.getSorotanPostWithQuery(query)
       .then((response) => {
         const formattedData = response.data.data.map((item) => ({
@@ -112,19 +97,12 @@ const HomeScreen = ({navigation}) => {
           title: item.attributes.Title,
           date: formatDate(item.attributes.Date),
           tileImage: item.attributes.TileImage.data.attributes.url,
-
         }));
         setPosterItems(formattedData);
-        // Testing with empty data
-        // setPosterItems([]);
-        
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
-  // Load data when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
       getBulletinPosts();
@@ -132,92 +110,47 @@ const HomeScreen = ({navigation}) => {
     }, [])
   );
 
-  // Function to render each row of icons
-  const renderRow = (slicedIconsRow) => (
-    <View style={styles.rowContainer}>
-      {slicedIconsRow.map((icon, index) => (
-        <ServiceIcon 
-          key={`icon-${index}`} 
-          iconSource={icon.iconSource} 
-          label={icon.label}
-          onPress={()=> navigateToService(icon.label)}/>
-      ))}
-    </View>
-  );
-
-  // Navigate to the selected service screen
   const navigateToService = (serviceLabel) => {
-    switch (serviceLabel) {
-      case 'Perancang Keluarga':
-        navigation.navigate('PerancangKeluarga');
-        break;
-      case 'PEKA':
-        navigation.navigate('Peka');
-        break;
-      case 'SMARTSTART 2.0':
-        navigation.navigate('Smartstart');
-        break;
-      case 'Subsidi Mamogram':
-        navigation.navigate('SubsidiMamogram');
-        break;
-      case 'HPV DNA':
-          navigation.navigate('HPVDNA');
-        break;
-      case 'Kaunseling':
-          navigation.navigate('Kaunseling');
-          break;
-      case 'Keluarga@Kerja':
-          navigation.navigate('KeluargaKerja');
-          break;
-      case 'SMARTBelanja':
-          navigation.navigate('SmartBelanja');
-          break;
-      case 'IlmuKeluarga':
-          navigation.navigate('Ilmukeluarga');
-          break;
-      case 'Subfertiliti':
-          navigation.navigate('Subfertiliti');
-          break;
-      case 'Penyelidikan':
-          navigation.navigate('Penyelidikan')
-          break;
-      case 'Saringan Kesejahteraan':
-          navigation.navigate('SaringanKesejahteraan');
-          break;
-      case 'KafeTEEN':
-          navigation.navigate('KafeTeen');
-          break;
-      case 'Keibubapaan Digital':
-          // navigation.navigate('KeibubapaanDigital');
-          Alert.alert('Coming Soon!');
-          break;
-      case 'Bantuan Rawatan Kesuburan':
-          navigation.navigate('Bantuan Rawatan Kesuburan');
-          break;
-      default:
-        break;
+    const routes = {
+      'Perancang Keluarga': 'PerancangKeluarga',
+      'PEKA': 'Peka',
+      'SMARTSTART 2.0': 'Smartstart',
+      'Subsidi Mamogram': 'SubsidiMamogram',
+      'HPV DNA': 'HPVDNA',
+      'Kaunseling': 'Kaunseling',
+      'Keluarga@Kerja': 'KeluargaKerja',
+      'SMARTBelanja': 'SmartBelanja',
+      'IlmuKeluarga': 'Ilmukeluarga',
+      'Subfertiliti': 'Subfertiliti',
+      'Penyelidikan': 'Penyelidikan',
+      'Saringan Kesejahteraan': 'SaringanKesejahteraan',
+      'KafeTEEN': 'KafeTeen',
+      'Bantuan Rawatan Kesuburan': 'Bantuan Rawatan Kesuburan'
+    };
+    
+    if (serviceLabel === 'Keibubapaan Digital') {
+      Alert.alert('Coming Soon!');
+    } else if (routes[serviceLabel]) {
+      navigation.navigate(routes[serviceLabel]);
     }
-  }
+  };
 
-  // Function to render each news row
-  const renderNewsRow = (newsItems) => {
-    // Sort the news items by date in descending order
-    const sortedNewsItems = newsItems.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-    return sortedNewsItems.map((news, index) => (
-      <NewsItem
-        key={`news-${index}`}
-        navigation={navigation}
-        id={news.id}
-        title={news.title}
-        date={news.date}
-        publishedAt={news.publishedDate}
-        imageSource={{ uri: news.tileImage }}
-      />
+  // MODIFIKASI: Render News Item dengan pembungkus Column
+  const renderNewsContent = (newsItems) => {
+    return newsItems.map((news, index) => (
+      <View key={`news-${index}`} style={isTablet ? styles.newsItemTablet : styles.newsItemMobile}>
+        <NewsItem
+          navigation={navigation}
+          id={news.id}
+          title={news.title}
+          date={news.date}
+          publishedAt={news.publishedDate}
+          imageSource={{ uri: news.tileImage }}
+        />
+      </View>
     ));
   };
-  
-  // Function to render each poster row
+
   const renderPosterRow = (posterRow) => (
     <View style={styles.posterRowContainer}>
       {posterRow.map((poster, index) => (
@@ -227,354 +160,215 @@ const HomeScreen = ({navigation}) => {
           id={poster.id}
           title={poster.title}
           date={poster.date}
-          imageSource={{uri: poster.tileImage}}
+          imageSource={{ uri: poster.tileImage }}
         />
       ))}
     </View>
   );
 
-  //////// SEARCH BAR FUNCTIONS AND DECLARATIONS ////////
-
-  // State to store the visibility of the search bar
-  const [searchVisible, setSearchVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Function to toggle the visibility of the search bar
   const toggleSearch = () => {
     setSearchVisible(!searchVisible);
-    if (!searchVisible) {
-      setSearchQuery('');
-    }
+    if (!searchVisible) setSearchQuery('');
   };
 
-  // Function to hide the search bar
   const hideSearch = () => {
     setSearchVisible(false);
     setSearchQuery('');
   };
 
-  const handleSearchPress = (query) => {
-    console.log(`Search query: ${searchQuery}`); // Logging the search query upon button press
-  };
+  const updateSearchQuery = (query) => setSearchQuery(query);
 
-  const updateSearchQuery = (query) => {
-    setSearchQuery(query);
-  }
-
-  //////// LIHAT SEMUA NAVIGATION ////////
-
-  const onBulletinLihatSemuaPress = () => {
-    navigation.navigate('BulletinHome');
-  };
-
-  const onSorotanLihatSemuaPress = () => {
-    navigation.navigate('SorotanHome');
-  };
+  const onBulletinLihatSemuaPress = () => navigation.navigate('BulletinHome');
+  const onSorotanLihatSemuaPress = () => navigation.navigate('SorotanHome');
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <Header toggleSearch={toggleSearch} />
       </View>
+
       {searchVisible && (
         <TouchableWithoutFeedback onPress={hideSearch}>
           <View style={styles.searchOverlay} />
         </TouchableWithoutFeedback>
       )}
-      {searchVisible && (
-        <View style={styles.searchBarContainer}>
-        <View style={styles.searchTab}>
-          <View style={styles.searchIconContainer}>
-            <Image 
-              source={require('../../assets/greenSearchIcon.png')}
-              style = {styles.searchIcon}
-            />
-            <View style={styles.seachTextContainer}>
+
+      <ScrollView style={{ flex: 1, marginTop: 0 }} showsVerticalScrollIndicator={false}>        
+        {searchVisible && (
+          <View style={styles.searchBarContainer}>
+            <View style={styles.searchTab}>
+              <Image 
+                source={require('../../assets/greenSearchIcon.png')}
+                style={styles.searchIcon}
+              />
               <TextInput 
                 style={styles.searchText}
                 placeholder="Masukkan carian"
                 placeholderTextColor={'#A6A6A6'}
                 value={searchQuery}
                 onChangeText={updateSearchQuery}
-              >
-              </TextInput>
+                underlineColorAndroid="transparent"
+              />
             </View>
+            <TouchableOpacity style={styles.confirmIconContainer} onPress={() => console.log(searchQuery)}> 
+              <Text style={styles.confirmText}>Cari</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-        <TouchableOpacity style={styles.confirmIconContainer} onPress={handleSearchPress}> 
-          <Text style={styles.confirmText}>Cari</Text>
-        </TouchableOpacity>
-      </View>
-      )}
-      <ScrollView style={{marginTop: -9}} showsVerticalScrollIndicator={false}>
-        {/* SLIDING NEWS SECTION */}
+        )}
+
         <View style={styles.slidingNewsContainer}>
-          {/* <Image source={require('../../assets/newsTileDummy.png')} 
-          style={{width: Platform.OS === 'ios' ? 400 : 450, height: 230, resizeMode: 'stretch'}}
-          /> */}
-          {contentData.length > 0 ?(
+          {contentData.length > 0 ? (
             <ContentSlider contents={contentData} />
           ) : (
-            <View style={{flex: 1, justifyContent: 'flex-end' , backgroundColor: '#F3E9FF', marginBottom: 30}}>
-              <View style={{backgroundColor: '#F8F2FF', height: 20, width: '30%', marginBottom: 10, marginLeft: 20}}></View>
-              <View style={{backgroundColor: '#F8F2FF', height: 20, width: '70%', marginBottom: 20, marginLeft: 20}}></View>
-            </View>
+            <View style={styles.loadingPlaceholder} />
           )}
         </View>
-        {/* PERKHIDMATAN SECTION */}
+
         <View style={styles.perkhidmatanContainer}>
           <Text style={styles.sectionText}>Perkhidmatan</Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.gridContainer}>
-              {renderRow(iconsData.slice(0, 7))}
-              {renderRow(iconsData.slice(7, 14))}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContentContainer}>
+            <View style={styles.rowsWrapper}>
+              <View style={styles.rowContainer}>
+                {rowOne.map((icon, index) => (
+                  <ServiceIcon key={`r1-${index}`} iconSource={icon.iconSource} label={icon.label} onPress={() => navigateToService(icon.label)} />
+                ))}
+              </View>
+              <View style={styles.rowContainer}>
+                {rowTwo.map((icon, index) => (
+                  <ServiceIcon key={`r2-${index}`} iconSource={icon.iconSource} label={icon.label} onPress={() => navigateToService(icon.label)} />
+                ))}
+              </View>
             </View>
           </ScrollView>
         </View>
-        {/* BERITA LPPKN SECTION */}
+
+        {/* SECTION BERITA LPPKN - DISESUAIKAN MENJADI 3 BARIS/KOLOM */}
         <View style={styles.beritaContainer}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View style={styles.sectionHeader}>
             <Text style={styles.sectionText}>Berita LPPKN</Text>
-            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onBulletinLihatSemuaPress}>
+            <TouchableOpacity style={styles.lihatSemua} onPress={onBulletinLihatSemuaPress}>
               <Text style={styles.sectionSubText}>Lihat Semua</Text>
               <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrow} />
             </TouchableOpacity>
           </View>
           {bulletinItems.length > 0 ? (
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-              <View style={styles.beritaGridContainer}>
-                {/* Render the news rows */}
-                {renderNewsRow(bulletinItems.slice(0, 2))}
-                {renderNewsRow(bulletinItems.slice(2, 4))}
-                {renderNewsRow(bulletinItems.slice(4, 6))}
-              </View>
-            </ScrollView>
+            <View style={styles.beritaGridContainer}>
+              {renderNewsContent(bulletinItems)}
+            </View>
           ) : (
-            <View style={{height: 350, justifyContent: 'center', alignItems: 'center' }}>
-              <LottieView
-                source={require('../../assets/Json/loadingAnimation.json')}
-                autoPlay
-                loop
-                style={{ width: 300, height: 300}}
-              />
+            <View style={styles.lottieContainer}>
+              <LottieView source={require('../../assets/Json/loadingAnimation.json')} autoPlay loop style={styles.lottie} />
             </View>
           )}
         </View>
-        {/* SOROTAN SECTION */}
-        {/* SOROTAN SECTION */}
-      <View style={styles.sorotanContainer}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={styles.sorotanText}>Highlights</Text>
-          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onSorotanLihatSemuaPress}>
-            <Text style={styles.sorotanSubText}>Lihat Semua</Text>
-            <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan} />
-          </TouchableOpacity>
-        </View>
-        {posterItems && posterItems.length > 0 ? (
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View>
-              {/* Render the poster row */}
-              {renderPosterRow(posterItems)}
-            </View>
-          </ScrollView>
-        ) : (
-          <View style={{height: 350, justifyContent: 'center', alignItems: 'center' }}>
-            <LottieView
-              source={require('../../assets/Json/loadingAnimation.json')}
-              autoPlay
-              loop
-              style={{ width: 300, height: 200}}
-            />
+
+        <View style={styles.sorotanContainer}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sorotanText}>Highlights</Text>
+            <TouchableOpacity style={styles.lihatSemua} onPress={onSorotanLihatSemuaPress}>
+              <Text style={styles.sorotanSubText}>Lihat Semua</Text>
+              <Image source={require('../../assets/rightArrow.png')} style={styles.rightArrowSorotan} />
+            </TouchableOpacity>
           </View>
-        )}
-      </View>
+          {posterItems.length > 0 ? (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {renderPosterRow(posterItems)}
+            </ScrollView>
+          ) : (
+            <View style={styles.lottieContainer}>
+              <LottieView source={require('../../assets/Json/loadingAnimation.json')} autoPlay loop style={styles.lottie} />
+            </View>
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
-// Stylesheet for the HomeScreen component
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: screenWidth,
-    backgroundColor: '#FFFFFF',
-
-  },
+  container: { flex: 1, backgroundColor: '#FFFFFF' },
   headerContainer: {
     backgroundColor: '#FFFFFF', 
-    borderBottomRightRadius: 15,
+    borderBottomRightRadius: 15, 
     borderBottomLeftRadius: 15,
-    zIndex: 5,
-    shadowColor: "#000",
-    shadowOffset: {width: 0, height: 7},
-    shadowOpacity: 0.25,
-    shadowRadius: 4, 
+    zIndex: 20, 
     elevation: 5,
-  },
-  slidingNewsContainer: {
-    height: 250,
-    marginTop: -6,
-    zIndex: 3,
-  },
-  perkhidmatanContainer: {
-    flexDirection: 'column',
-    height: 280,
-  },
-  sectionText: {
-    textAlign: 'left',
-    fontWeight: 'bold',
-    color: '#9448DA',
-    fontWeight: '800',
-    height: 30,
-    fontSize: 19,
-    marginLeft: 13,
-  },
-  sectionSubText: {
-    textAlign: 'right',
-    fontWeight: '600',
-    color: '#9A9C9E',
-    fontSize: 11,
-    marginTop: 6,
-  },
-  rightArrow: {
-    width: 8, 
-    height: 8, 
-    marginTop: Platform.OS === 'ios' ? 8.5 : 10.4, 
-    marginRight: 10, 
-    marginLeft: 3, 
-    resizeMode: 'contain'
-  },
-  rightArrowSorotan: {
-    width: 8, 
-    height: 8, 
-    marginTop: Platform.OS === 'ios' ? 29.5 : 30.7, 
-    marginRight: 10, 
-    marginLeft: 3, 
-    resizeMode: 'contain'
-  },
-  sorotanSubText: {
-    textAlign: 'right',
-    fontWeight: '600',
-    color: '#9A9C9E',
-    fontSize: 11,
-    marginTop: 27,
-    marginBottom: 20,
-  },
-  gridContainer: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    width: Platform.OS === 'ios' ? screenWidth * 1.75 : screenWidth * 1.70, 
-    marginLeft: Platform.OS === 'ios' ? 0 : 3,
-  },
-  beritaGridContainer: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    width: Platform.OS === 'ios' ? screenWidth * 1.65: screenWidth * 1.55, 
-    gap: 20,
-    marginLeft: 5,
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    width: screenWidth, 
-    justifyContent: 'space-between',
-  },
-  beritaContainer: {
-    flexDirection: 'column',
-    height: 450,
-    marginTop: 15,
-  },
-  newsRowContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between', 
-    padding: 10,
-  },
-  posterRowContainer: {
-    flexDirection: 'row',
-    paddingBottom: 10,
-    paddingLeft: 5,
-    paddingRight: 10,
-  },
-  sorotanContainer: { 
-    backgroundColor: '#ECDDFF',
-    flexDirection: 'column',
-    height: 470,
-    marginTop: 15,
-  },
-  sorotanText: {
-    textAlign: 'left',
-    fontWeight: 'bold',
-    color: '#9448DA',
-    fontWeight: '800',
-    height: 30,
-    fontSize: 19,
-    marginLeft: 13,
-    marginTop: 20,
-  },
-  searchOverlay: {
-    position: 'absolute',
-    top: 100,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 1,
   },
   searchBarContainer: {
     flexDirection: 'row',
     backgroundColor: '#9448DA',
-    height: 100,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
     width: '100%',
-    marginTop: '-5%',
-    zIndex: 2,
+    alignItems: 'center',
+    marginTop: 0,
+    position: 'relative',
+    zIndex: 999,
+    elevation: 10,
   },
   searchTab: {
-    width: '75%',
-    height: 40,
-    marginTop: '9%',
-    marginLeft: '6%',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderWidth: 2,
-    borderColor: '#CBCBCB',
-    backgroundColor: '#FFFFFF',
-    zIndex: 2,
-  },
-  searchIconContainer: {
-    width: '10%',
-    height: '100%',
+    flex: 1, 
+    height: 45, 
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF', 
     flexDirection: 'row',
-    marginLeft: 8,
+    alignItems: 'center', 
+    paddingHorizontal: 12,
   },
-  searchIcon: {
-    width: '80%',
-    height: '70%',
-    resizeMode: 'contain',
-    marginTop: '15%',
+  searchIcon: { width: 20, height: 20, resizeMode: 'contain' },
+  searchText: { 
+    flex: 1, 
+    color: 'black', 
+    fontSize: 15, 
+    paddingLeft: 10, 
+    height: '100%', 
+    textAlignVertical: 'center' 
   },
-  seachTextContainer: {
-    width: 250,
-    height: '100%',
+  confirmIconContainer: { marginLeft: 15 },
+  confirmText: { color: '#21CF44', fontSize: 16, fontWeight: 'bold' },
+  searchOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 25 },
+  slidingNewsContainer: { width: '100%', zIndex: 3, marginTop: 0 },
+  loadingPlaceholder: { flex: 1, height: 200, backgroundColor: '#F3E9FF' },
+  perkhidmatanContainer: { paddingTop: 15, backgroundColor: '#FFFFFF' },
+  scrollContentContainer: { paddingHorizontal: 10 },
+  rowsWrapper: { flexDirection: 'column' },
+  rowContainer: { flexDirection: 'row', marginBottom: 10 },
+  sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 10 },
+  sectionText: { fontWeight: '800', color: '#9448DA', fontSize: 19, marginLeft: 13, marginBottom: 5 },
+  sectionSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: 11 },
+  lihatSemua: { flexDirection: 'row', alignItems: 'center' },
+  rightArrow: { width: 8, height: 8, marginLeft: 3, resizeMode: 'contain' },
+  
+  // MODIFIKASI BERITA LPPKN
+  beritaContainer: { 
+    flexDirection: "column", 
+    marginTop: 20, 
+    paddingBottom: 10 
   },
-  searchText: {
-    color: 'black',
-    fontSize: 14,
-    marginTop: Platform.OS === 'ios' ? '3.5%' : '2%',
-    marginLeft: '8%',
+  beritaGridContainer: { 
+    flexDirection: 'row', 
+    flexWrap: 'wrap', 
+    width: '100%', 
+    paddingHorizontal: 10,
+    justifyContent: 'flex-start'
   },
-  confirmIconContainer: {
-    width: '13%',
-    height: '20%',
-    marginTop: '11.5%',
-    marginLeft: '4%',
+  newsItemTablet: {
+    width: '32%', // 3 kolom
+    marginRight: '1%',
+    marginBottom: 15,
   },
-  confirmText: {
-    color: '#21CF44',
-    fontSize: 15,
-    fontWeight: 'bold',
+  newsItemMobile: {
+    width: '100%',
+    marginBottom: 10,
   },
+
+  sorotanContainer: { backgroundColor: '#ECDDFF', marginTop: 5, paddingBottom: 80 },
+  sorotanText: { fontWeight: '800', color: '#9448DA', fontSize: 19, marginLeft: 13, marginTop: 20 },
+  sorotanSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: 11, marginTop: 20 },
+  rightArrowSorotan: { width: 8, height: 8, marginLeft: 3, marginTop: 20, resizeMode: 'contain' },
+  posterRowContainer: { flexDirection: 'row', paddingHorizontal: 10 },
+  lottieContainer: { height: 200, justifyContent: 'center', alignItems: 'center', width: screenWidth },
+  lottie: { width: 150, height: 150 },
 });
 
 export default HomeScreen;

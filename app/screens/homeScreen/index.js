@@ -269,15 +269,11 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           {bulletinItems.length > 0 ? (
-            !isTablet ? (
+            (!isTablet || isLargeTablet) ? (
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.beritaRowContainer}>
                 <View style={styles.beritaMobileGrid}>
                   {renderNewsMobileGrid(bulletinItems)}
                 </View>
-              </ScrollView>
-            ) : isLargeTablet ? (
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.beritaRowContainer}>
-                {renderNewsContent(bulletinItems)}
               </ScrollView>
             ) : (
               <View style={styles.beritaGridContainer}>
@@ -386,16 +382,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   beritaMobileGrid: {
-    width: 674, // 2 cards per row with preserved card width
-    height: 390, // 3 rows
+    width: isLargeTablet ? screenWidth - 20 : 674,
+    height: isLargeTablet ? 510 : 390,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    alignContent: 'space-between',
+    alignContent: isLargeTablet ? 'flex-start' : 'space-between',
   },
   newsItemMobileGridItem: {
-    width: 330,
-    marginBottom: 12,
+    width: isLargeTablet ? '49%' : 330,
+    marginBottom: isLargeTablet ? 20 : 12,
   },
   newsItemTablet: {
     width: isLargeTablet ? '49%' : '32%',

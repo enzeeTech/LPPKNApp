@@ -19,19 +19,19 @@ const isLargeTablet = screenWidth >= 1000;
 
 const iconsData = [
   { iconSource: require('../../assets/buai.png'), label: 'Bantuan Rawatan Kesuburan' },
-  { iconSource: require('../../assets/subfertiliti.png'), label: 'Subfertiliti' },
-  { iconSource: require('../../assets/perancangKeluarga.png'), label: 'Perancang Keluarga' },
-  { iconSource: require('../../assets/hpvdna.png'), label: 'HPV DNA' },
-  { iconSource: require('../../assets/subsidiMamogram.png'), label: 'Subsidi Mamogram' },
-  { iconSource: require('../../assets/saringanKesejahteraan.png'), label: 'Saringan Kesejahteraan' },
-  { iconSource: require('../../assets/PEKA.png'), label: 'PEKA' },
-  { iconSource: require('../../assets/penyelidikan.png'), label: 'Penyelidikan' },
-  { iconSource: require('../../assets/smartstart.png'), label: 'SMARTSTART 2.0' },
-  { iconSource: require('../../assets/smartBelanja.png'), label: 'SMARTBelanja' },
+  { iconSource: require('../../assets/Subfertiliti.webp'), label: 'Subfertiliti' },
+  { iconSource: require('../../assets/Perancang_Keluarga.webp'), label: 'Perancang Keluarga' },
+  { iconSource: require('../../assets/HPV_DNA.webp'), label: 'HPV DNA' },
+  { iconSource: require('../../assets/Subsidi_Mamogram.webp'), label: 'Subsidi Mamogram' },
+  { iconSource: require('../../assets/Saringan_Kesejahteraan.webp'), label: 'Saringan Kesejahteraan' },
+  { iconSource: require('../../assets/PEKA.webp'), label: 'PEKA' },
+  { iconSource: require('../../assets/Penyelidikan__Data_Mentah.webp'), label: 'Penyelidikan' },
+  { iconSource: require('../../assets/SMARTSTART_2.0.webp'), label: 'SMARTSTART 2.0' },
+  { iconSource: require('../../assets/SMARTBelanja.webp'), label: 'SMARTBelanja' },
   { iconSource: require('../../assets/kafeTeen.png'), label: 'KafeTEEN' },
-  { iconSource: require('../../assets/kaunseling.png'), label: 'Kaunseling' },
-  { iconSource: require('../../assets/keluargaKerja.png'), label: 'Keluarga@Kerja' },
-  { iconSource: require('../../assets/IlmuKeluarga.png'), label: 'IlmuKeluarga' },
+  { iconSource: require('../../assets/Kaunseling.webp'), label: 'Kaunseling' },
+  { iconSource: require('../../assets/KeluargaKerja.webp'), label: 'Keluarga@Kerja' },
+  { iconSource: require('../../assets/IlmuKeluarga.webp'), label: 'IlmuKeluarga' },
 ];
 
 const HomeScreen = ({ navigation }) => {

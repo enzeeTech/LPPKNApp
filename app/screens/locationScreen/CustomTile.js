@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Platform, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, Platform, Pressable, Dimensions } from 'react-native';
 
 
 const defaultImage = '../../assets/backgroundLPPKNHQ.png';
+const screenWidth = Dimensions.get('window').width;
+const isLargeScreen = screenWidth >= 500;
+const CARD_HEIGHT = isLargeScreen ? 230 : 150;
 
 const CustomTile = ({onPress, title, backgroundImage, operationTime}) => {
 
@@ -41,7 +44,7 @@ const styles = StyleSheet.create({
         // borderRadius: 12,
         marginTop: 10,
         marginLeft: '2.5%',
-        height: 150,
+        height: CARD_HEIGHT,
         width: '95%',
         elevation: 4,
         shadowColor: "#000",
@@ -56,60 +59,59 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: 150,
+        height: CARD_HEIGHT,
         resizeMode: 'cover',
         borderTopLeftRadius: 12,
         borderBottomLeftRadius: 12,
     },
     imageIcon: {
-        width: 15,
-        height: 15,
+        width: isLargeScreen ? 20 : 15,
+        height: isLargeScreen ? 20 : 15,
         resizeMode: 'stretch',
-        marginLeft: '7.5%',
-        marginTop: '6%',
+        marginLeft: isLargeScreen ? 12 : '7.5%',
+        marginTop: isLargeScreen ? 6 : '6%',
     },
     infoParentContainer: {
         flexDirection: 'column',
         width: '65%',
-        height: 150,
+        height: CARD_HEIGHT,
         marginLeft: '35%',
     },
     infoText: {
         color: '#777777',
-        fontSize: 12,
-        lineHeight: 15,
-        marginLeft: '7%',
+        fontSize: isLargeScreen ? 18 : 12,
+        lineHeight: isLargeScreen ? 28 : 15,
+        marginLeft: isLargeScreen ? 10 : '7%',
    },
     titleContainer: {
         width: '90%',
-        // height: 70,
-        marginTop: '-4%',
-        marginLeft: '2.5%',
+        marginTop: isLargeScreen ? 10 : '-4%',
+        marginLeft: isLargeScreen ? 8 : '2.5%',
         
     },
     textContainer: {
-        width: '80%',
-        height: 84,
-        marginTop: '-2%', 
-        marginLeft: '-1%',
+        width: isLargeScreen ? '92%' : '80%',
+        height: isLargeScreen ? 110 : 84,
+        marginTop: isLargeScreen ? 4 : '-2%', 
+        marginLeft: isLargeScreen ? 0 : '-1%',
     },
     testTextContainer: {
         marginLeft: 20,
     },
     title: {
-        fontSize: 17,
+        fontSize: isLargeScreen ? 25 : 17,
         fontWeight: '700',
         color: '#9448DA',
-        marginTop: '8%',
-        marginLeft: '8%',
+        marginTop: isLargeScreen ? 0 : '8%',
+        marginLeft: isLargeScreen ? 8 : '8%',
         
     },
     detailsContainer: {
         flexDirection: 'row',
         width: '100%',
-        height: 84,
-        marginTop: '-2%',
-        marginLeft: '2.5%',
+        height: isLargeScreen ? 120 : 84,
+        marginTop: isLargeScreen ? 8 : '-2%',
+        marginLeft: isLargeScreen ? 8 : '2.5%',
     },
     titleTest: {
         fontSize: 18,
@@ -123,11 +125,11 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     subHeading: {
-        fontSize: 16,
+        fontSize: isLargeScreen ? 20 : 16,
         fontWeight: '600',
         color: '#777777',
-        marginTop: '9%',
-        marginLeft: '6%',
+        marginTop: isLargeScreen ? 0 : '9%',
+        marginLeft: isLargeScreen ? 8 : '6%',
         paddingBottom: '2%',
     },
 });

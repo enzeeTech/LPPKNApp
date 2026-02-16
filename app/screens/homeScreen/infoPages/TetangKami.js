@@ -1,5 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, ScrollView, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, ScrollView, TouchableOpacity, Platform, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+const isLargeScreen = screenWidth >= 500;
 
 
 function TetangKami({ navigation }) {
@@ -54,7 +58,10 @@ function TetangKami({ navigation }) {
                     </TouchableOpacity> */}
                 </View>
             </View>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                scrollEnabled={!isLargeScreen}
+            >
                 <ImageBackground
                     source={require("../../../assets/backgroundLPPKNHQ.png")}
                     style={styles.backgroundContainer}
@@ -85,16 +92,16 @@ function TetangKami({ navigation }) {
 
                         {/* <Image source={require("../../../assets/eyeIcon.jpg")} /> */}
                         <View style={styles.textContainer}>
-                            <Text style={[styles.titleStyle, {marginTop: -25}]}>Visi</Text>
-                            <Text style={styles.centeredText}>
+                            <Text style={[styles.titleStyle, {marginTop: -25, fontSize: isLargeScreen ? 30 : styles.titleStyle.fontSize}]}>Visi</Text>
+                            <Text style={[styles.centeredText, {fontSize: isLargeScreen ? 20 : styles.centeredText.fontSize}]}>
                             Menjadi organisasi kecemerlangan {"\n"}penduduk dan
                             keluarga.
                             </Text>
                         </View>
                         {/* <Image source={require("../../../assets/rocketIcon.png")} /> */}
                         <View style={[styles.textContainer,{marginTop: -20}]}>
-                            <Text style={[styles.titleStyle, {marginTop: -5}]}>Misi</Text>
-                            <Text style={styles.centeredText}>
+                            <Text style={[styles.titleStyle, {marginTop: -5, fontSize: isLargeScreen ? 30 : styles.titleStyle.fontSize}]}>Misi</Text>
+                            <Text style={[styles.centeredText, {fontSize: isLargeScreen ? 20 : styles.centeredText.fontSize}]}>
                             Memacu agenda kependudukan dan kekeluargaan yang
                             inovatif melalui dasar, kajian, demografi keluarga,
                             program dan perkhidmatan.
@@ -174,12 +181,12 @@ function TetangKami({ navigation }) {
       flex: 1,
     },
     backgroundContainer: {
-      flex: 1,
-      width: 422,
-      height: 237,
+      flex: isLargeScreen ? undefined : 1,
+      width: isLargeScreen ? "100%" : 422,
+      height: isLargeScreen ? Math.round(screenHeight * 0.38) : 237,
       resizeMode: "contain",
-      marginTop: 50,
-      zIndex: 0,
+      marginTop: isLargeScreen ? (Platform.OS === "ios" ? "0%" : "7%") : 50,
+      zIndex: isLargeScreen ? -1 : 0,
     },
     headerStyle: {
       position: "absolute",
@@ -209,7 +216,7 @@ function TetangKami({ navigation }) {
     childTwoContainer: {
         flex: 1,
         width: 422,
-        marginTop: -25,
+        marginTop: isLargeScreen ? -10 : -25,
         width: "100%",
     zIndex: 1,
     },
@@ -225,14 +232,14 @@ function TetangKami({ navigation }) {
     childTwoContent: {
       flex: 1,
       alignItems: "center",
-      marginTop: "10%",
+      marginTop: isLargeScreen ? "6%" : "10%",
     },
     iconsContainer: {
       flex: 1,
       alignItems: "center",
     },
     textContainer: {
-        marginBottom: "20%",
+        marginBottom: isLargeScreen ? "9%" : "20%",
         alignItems: "center",
         paddingRight: "10%",
         paddingLeft: "10%",
@@ -243,7 +250,7 @@ function TetangKami({ navigation }) {
       marginTop: "3.5%",
       color: "#9448DA",
       textAlign: "center",
-      fontSize: 28,
+      fontSize: isLargeScreen ? 30 : 28,
       fontStyle: "normal",
       fontWeight: "bold",
     //   lineHeight: "normal",
@@ -252,25 +259,26 @@ function TetangKami({ navigation }) {
       marginTop: "3.5%",
       color: "#777",
       textAlign: "center",
-      fontSize: 14,
+      fontSize:  isLargeScreen ? 20 : 14,
       fontStyle: "normal",
       fontWeight: "400",
     //   lineHeight: "normal",
     },
     nilaibersamaParentContainer: {
       width: "100%",
-      marginTop: "-15%",
+      marginTop: isLargeScreen ? "-8%" : "-15%",
       marginBottom: "30%",
-      flexDirection: "column",
+      flexDirection: isLargeScreen ? "row" : "column",
       justifyContent: "center",
+      alignItems: isLargeScreen ? "flex-start" : "stretch",
     },
     nilaibersamaChildContainer: {
-      width: "100%",
+      width: isLargeScreen ? "auto" : "100%",
       flexDirection: "row",
       justifyContent: "center",
     },
     nilaibersamaElements: {
-      margin: "2%",
+      margin: isLargeScreen ? 27 : "2%",
       padding: "3%",
       width: 165,
       height: 175,
@@ -285,7 +293,7 @@ function TetangKami({ navigation }) {
       margin: "6%",
       color: "#5C2D86",
       textAlign: "center",
-      fontSize: 15,
+      fontSize: isLargeScreen ? 20 : 15,
       fontStyle: "normal",
       fontWeight: "700",
     //   lineHeight: "20.878",

@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, Pressable, Dimensions } from 'react-nati
 
 const screenWidth = Dimensions.get('window').width;
 const isLargeTablet = screenWidth >= 1000;
+const isMobile = screenWidth <= 600;
 
 const NewsItem = ({ navigation, id, title, date, imageSource, publishedAt }) => {
 
@@ -76,36 +77,37 @@ const NewsItem = ({ navigation, id, title, date, imageSource, publishedAt }) => 
 const styles = StyleSheet.create({
   newsItemContainer: {
     flexDirection: 'row',
-    marginRight: 15,
-    marginLeft: 5,
-    marginBottom: -5,
+    marginRight: isLargeTablet ? 12 : 0,
+    marginLeft: 0,
+    marginBottom: isLargeTablet ? -5 : 4,
     backgroundColor: '#FFFFFF',
     borderRadius: 10, 
     overflow: 'hidden', 
-    width: isLargeTablet ? '100%' : 290,
+    width: isLargeTablet ? 360 : '100%',
     height: isLargeTablet ? 150 : 120,
   },
   imageStyle: {
-    width: '45%',
+    width: isMobile ? 120 : '45%',
     height: '100%', 
     resizeMode: 'cover',
   },
   textContainer: {
-    padding: 10,
+    padding: isLargeTablet ? 10 : 8,
     justifyContent: 'center',
-    width: '55%',
+    width: isLargeTablet ? '55%' : undefined,
+    flex: isMobile ? 1 : undefined,
   },
   titleStyle: {
     fontWeight: '700',
     color: '#777777',
-    fontSize: isLargeTablet ? 23 : 15,
+    fontSize: isLargeTablet ? 23 : 14,
     textAlign: 'left',
     marginBottom: isLargeTablet ? 8 : 10,
     marginTop: isLargeTablet ? 8 : 20,
   },
   dateStyle: {
     color: '#21CF44',
-    fontSize: isLargeTablet ? 22 : 12, 
+    fontSize: isLargeTablet ? 22 : 11, 
     fontWeight: '600',  
     // marginTop: -5,
   },

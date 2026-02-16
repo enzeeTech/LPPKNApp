@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const getBulletinPosts = () => {
-    const bulletinLimit = isLargeTablet ? 6 : 9;
+    const bulletinLimit = isLargeTablet ? 6 : (isTablet ? 9 : 6);
     const query = `&pagination[start]=0&pagination[limit]=${bulletinLimit}&sort=publishedAt:desc`;
     GlobalApi.getBulletinPostWithQuery(query)
       .then((response) => {
@@ -141,6 +141,21 @@ const HomeScreen = ({ navigation }) => {
   const renderNewsContent = (newsItems) => {
     return newsItems.map((news, index) => (
       <View key={`news-${index}`} style={isTablet ? styles.newsItemTablet : styles.newsItemMobile}>
+        <NewsItem
+          navigation={navigation}
+          id={news.id}
+          title={news.title}
+          date={news.date}
+          publishedAt={news.publishedDate}
+          imageSource={{ uri: news.tileImage }}
+        />
+      </View>
+    ));
+  };
+
+  const renderNewsMobileGrid = (newsItems) => {
+    return newsItems.map((news, index) => (
+      <View key={`news-mobile-${index}`} style={styles.newsItemMobileGridItem}>
         <NewsItem
           navigation={navigation}
           id={news.id}
@@ -254,9 +269,21 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           {bulletinItems.length > 0 ? (
-            <View style={styles.beritaGridContainer}>
-              {renderNewsContent(bulletinItems)}
-            </View>
+            !isTablet ? (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.beritaRowContainer}>
+                <View style={styles.beritaMobileGrid}>
+                  {renderNewsMobileGrid(bulletinItems)}
+                </View>
+              </ScrollView>
+            ) : isLargeTablet ? (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.beritaRowContainer}>
+                {renderNewsContent(bulletinItems)}
+              </ScrollView>
+            ) : (
+              <View style={styles.beritaGridContainer}>
+                {renderNewsContent(bulletinItems)}
+              </View>
+            )
           ) : (
             <View style={styles.lottieContainer}>
               <LottieView source={require('../../assets/Json/loadingAnimation.json')} autoPlay loop style={styles.lottie} />
@@ -337,7 +364,7 @@ const styles = StyleSheet.create({
   rowContainer: { flexDirection: 'row', marginBottom: 10 },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 10 },
   sectionText: { fontWeight: '800', color: '#9448DA', fontSize: isLargeTablet ? 40 : 19, marginLeft: 13, marginBottom: 5 },
-  sectionSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: 25 },
+  sectionSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: isLargeTablet ? 25 : 11 },
   lihatSemua: { flexDirection: 'row', alignItems: 'center' },
   rightArrow: { width: 8, height: 8, marginLeft: 3, resizeMode: 'contain' },
   
@@ -351,8 +378,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     flexWrap: 'wrap', 
     width: '100%', 
+    paddingHorizontal: isLargeTablet ? 10 : (isTablet ? 10 : 16),
+    justifyContent: isLargeTablet ? 'space-between' : (isTablet ? 'flex-start' : 'space-between')
+  },
+  beritaRowContainer: {
+    flexDirection: 'row',
     paddingHorizontal: 10,
-    justifyContent: isLargeTablet ? 'space-between' : 'flex-start'
+  },
+  beritaMobileGrid: {
+    width: 674, // 2 cards per row with preserved card width
+    height: 390, // 3 rows
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignContent: 'space-between',
+  },
+  newsItemMobileGridItem: {
+    width: 330,
+    marginBottom: 12,
   },
   newsItemTablet: {
     width: isLargeTablet ? '49%' : '32%',
@@ -360,13 +403,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   newsItemMobile: {
-    width: '100%',
-    marginBottom: 10,
+    width: 330,
+    marginRight: 14,
+    marginBottom: 0,
   },
 
   sorotanContainer: { backgroundColor: '#ECDDFF', marginTop: 5, paddingBottom: 80 },
   sorotanText: { fontWeight: '800', color: '#9448DA', fontSize: isLargeTablet ? 40 : 19, marginLeft: 13, marginTop: 20 },
-  sorotanSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: 25, marginTop: 20 },
+  sorotanSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: isLargeTablet ? 25 : 11, marginTop: 20 },
   rightArrowSorotan: { width: 8, height: 8, marginLeft: 3, marginTop: 20, resizeMode: 'contain' },
   posterRowContainer: { flexDirection: 'row', paddingHorizontal: isLargeTablet ? 2 : 10 },
   lottieContainer: { height: 200, justifyContent: 'center', alignItems: 'center', width: screenWidth },

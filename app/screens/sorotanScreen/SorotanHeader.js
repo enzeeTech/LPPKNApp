@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     headerText: {
         color: '#F5F5F5',
         fontWeight: '700',
-        fontSize: isLargeScreen ? 40 : 26,
+        fontSize: isLargeScreen ? 40 : 20,
         width: '20%',
         textAlign: 'center',
         marginRight: '55%',
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
 
     },
     iconStyleBack: {
-        width: 50, 
-        height: 50, 
+        width: isLargeScreen ? 50 : 25, 
+        height: isLargeScreen ? 50 : 25, 
         marginLeft: isLargeScreen ? -120 : 0,
         resizeMode: 'contain',
     },

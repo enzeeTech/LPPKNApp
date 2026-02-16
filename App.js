@@ -30,6 +30,7 @@ const tabBarOptions = {
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+const isLargeTablet = screenWidth >= 500;
 
 // Notification handler
 Notifications.setNotificationHandler({
@@ -169,7 +170,11 @@ export default function App() {
                     iconSource = focused
                       ? require('./app/assets/PerkhidmatanActive.png')
                       : require('./app/assets/perkhidmatanIcon.png');
-                    iconStyle = {...styles.tabIcon, width: 80, height: 80 };
+                    iconStyle = {
+                      ...styles.tabIcon,
+                      width: isLargeTablet ? 145 : 80,
+                      height: isLargeTablet ? 145 : 80,
+                    };
                   } else if (route.name === 'FeedbackScreen') {
                     iconSource = focused
                       ? require('./app/assets/AduanActive.png')
@@ -192,6 +197,9 @@ export default function App() {
                 },
                 headerShown: false,
                 tabBarShowLabel: false,
+                tabBarLabelStyle: {
+                  fontSize: isLargeTablet ? 13 : 12,
+                },
                 tabBarStyle: styles.tabBar,
               })}
             >
@@ -281,32 +289,33 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     position: 'absolute',
+    bottom: isLargeTablet ? 8 : 0,
     elevation: 10,
     backgroundColor: '#FFFF',
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
-    height: Platform.OS === 'ios' ? 75 : 60,
+    height: isLargeTablet ? 99 : (Platform.OS === 'ios' ? 75 : 60),
     shadowOpacity: 0.25,
     shadowRadius: 4,
     shadowColor: '#000',
     shadowOffset: { height: -1, width: 0 },
   },
   tabIcon: {
-    width: 40,
-    height: 40,
+    width: isLargeTablet ? 77 : 40,
+    height: isLargeTablet ? 77 : 40,
     marginTop: Platform.OS === 'ios' ? 10 : 10,
   },
   customButton: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: isLargeTablet ? 121 : 70,
+    height: isLargeTablet ? 121 : 70,
+    borderRadius: isLargeTablet ? 60.5 : 35,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 10,
   },
   customIcon: {
-    width: 70, 
-    height: 70, 
+    width: isLargeTablet ? 125 : 70,
+    height: isLargeTablet ? 125 : 70,
   },
   shadow: {
     shadowColor: '#000',

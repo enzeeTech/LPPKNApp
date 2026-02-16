@@ -1,7 +1,11 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
+const screenWidth = Dimensions.get('window').width;
+const isLargeTablet = screenWidth >= 1000;
+const CARD_WIDTH = isLargeTablet ? Math.floor((screenWidth - 70) / 4) : 190;
+const CARD_HEIGHT = isLargeTablet ? Math.floor(CARD_WIDTH * 1.45) : 290;
 
 const PosterItem = ({ navigation, id, title, date, imageSource }) => {
   
@@ -34,13 +38,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     elevation: 5,
-    margin: 10,
-    width: 190,
-    height: 290, 
+    margin: isLargeTablet ? 6 : 10,
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT, 
   },
   cardImage: {
-    width: 190,
-    height: 290,
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
     resizeMode: 'cover',
   },
   textContainer: {
@@ -54,11 +58,11 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontWeight: '800',
-    fontSize: 14,
+    fontSize: isLargeTablet ? 26 : 14,
     color: '#21CF44', 
   },
   cardSubtitle: {
-    fontSize: 11,
+    fontSize: isLargeTablet ? 22 : 11,
     fontWeight: '500',
     color: '#FFF', 
   },

@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-nati
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+const isLargeScreen = windowWidth >= 500;
 
 const DropdownMenu = ({ isVisible, onItemSelect, onClose }) => {
   if (!isVisible) return null;
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'yellow', // TESTING PURPOSES
   },
   dropdownMenu: {
-    marginTop: 160,
+    marginTop: isLargeScreen ? 260 : 160,
     marginLeft: 6,
     backgroundColor: '#9448DA',
     borderRadius: 10,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: isLargeScreen ? 27 : 18,
     fontWeight: '700',
   },
 

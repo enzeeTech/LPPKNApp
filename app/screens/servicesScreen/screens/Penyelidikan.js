@@ -68,7 +68,7 @@ const Penyelidikan = ({ navigation }) => {
 
     if (!responseData.ServiceID) {
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={[styles.container, { backgroundColor: '#FFFFFF' }]}>
                 <Header onBackPress={handleBackPress} />
                 <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
                     <View style={styles.backgroundContainer}>
@@ -88,7 +88,7 @@ const Penyelidikan = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: '#FFFFFF' }]}>
             <Header onBackPress={handleBackPress} />
             <ScrollView style={{ marginTop: -10 }} showsVerticalScrollIndicator={false}>
 

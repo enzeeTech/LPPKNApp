@@ -54,8 +54,7 @@ function LocationInfoScreen({navigation, route}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1, 
-        backgroundColor: '#9448DA',
-
+        backgroundColor: '#FFFFFF',
     },
     headerContainer: {
         backgroundColor: '#9448DA', 

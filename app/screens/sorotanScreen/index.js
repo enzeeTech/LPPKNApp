@@ -1,12 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard, Dimensions } from 'react-native';
 import Header from './SorotanHeader';
 import { Platform } from 'react-native';
 import { ScrollView } from 'react-native';
 import SorotanDetailsSection from './SorotanDetailsSection';
 import SarinBottomSheet from '../bulletinMain/SarinBottomSheet';
 import GlobalApi from '../../services/GlobalApi';
+
+const screenWidth = Dimensions.get('window').width;
+const isLargeScreen = screenWidth >= 500;
 
 function SorotanMain({navigation}) {
 
@@ -190,7 +193,9 @@ function SorotanMain({navigation}) {
                 />
             </TouchableOpacity>
             </View>
-            <SorotanDetailsSection navigation={navigation} items={posterItems}/>
+            <View style={styles.listContainer}>
+              <SorotanDetailsSection navigation={navigation} items={posterItems}/>
+            </View>
         </View>
         {/* </ScrollView> */}
         <SarinBottomSheet
@@ -214,15 +219,17 @@ const styles = StyleSheet.create({
   subHeaderContainer: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    height: 60,
+    height: isLargeScreen ? 110 : 60,
     width: '100%',
-    marginTop: '5%',
+    marginTop: isLargeScreen ? '1%' : '5%',
+    justifyContent: isLargeScreen ? 'flex-start' : 'flex-start',
+    alignItems: 'center',
   },
   searchTab: {
-    width: '75%',
-    height: '65%',
-    marginTop: '3%',
-    marginLeft: '6%',
+    width: isLargeScreen ? '80%' : '75%',
+    height: isLargeScreen ? '80%' : '65%',
+    marginTop: isLargeScreen ? '2%' : '3%',
+    marginLeft: isLargeScreen ? '4%' : '6%',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderTopLeftRadius: 10,
@@ -231,43 +238,53 @@ const styles = StyleSheet.create({
     borderColor: '#CBCBCB',
   },
   searchIconContainer: {
-    width: '15%',
+    width: isLargeScreen ? '25%' : '15%',
     height: '100%',
     flexDirection: 'row',
+    justifyContent: isLargeScreen ? 'center' : 'flex-start',
+    alignItems: 'center',
   },
   searchIcon: {
-    width: '60%',
-    height: '60%',
+    width: isLargeScreen ? 30 : '60%',
+    height: isLargeScreen ? 30 : '60%',
     resizeMode: 'contain',
-    marginLeft: '25%',
-    marginTop: '15%',
-  },
-  sarineIcon: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
+    marginLeft: isLargeScreen ? '85%' : '25%',
+    marginTop: isLargeScreen ? 0 : '15%',
   },
   seachTextContainer: {
-    width: 200,
+    width: isLargeScreen ? 400 : 200,
     height: '100%',
+    marginLeft: isLargeScreen ? '15%' : 0,
+    justifyContent: isLargeScreen ? 'center' : 'flex-start',
   },
   searchText: {
     color: '#A6A6A6',
-    fontSize: 14,
-    marginTop: '5%',
-    marginLeft: '8%',
-    marginBottom: Platform.OS === 'android' ? '4.5%' : 0,
+    fontSize: isLargeScreen ? 29 : 14,
+    marginTop: isLargeScreen ? 0 : '5%',
+    marginLeft: isLargeScreen ? 0 : '8%',
+    marginBottom: isLargeScreen ? 0 : (Platform.OS === 'android' ? '4.5%' : 0),
+    textAlignVertical: 'center',
   },
   sarineIconContainer: {
-    width: '13%',
-    height: '65%',
-    marginTop: '3.5%',
-    marginLeft: '2%',
+    width: isLargeScreen ? 70 : '13%',
+    height: isLargeScreen ? 70 : '65%',
+    marginTop: isLargeScreen ? '3%' : '3.5%',
+    marginLeft: isLargeScreen ? 30 : '2%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sarineIcon: {
+    width: isLargeScreen ? 73 : '100%',
+    height: isLargeScreen ? 73 : '100%',
+    resizeMode: 'contain',
   },
   detailsContainer: {
     flex: 1, 
     backgroundColor: '#FFFF',
-    marginTop: -13,
+    marginTop: isLargeScreen ? 8 : -13,
+  },
+  listContainer: {
+    marginTop: isLargeScreen ? 8 : 0,
   },
 });
 

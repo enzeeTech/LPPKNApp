@@ -5,6 +5,9 @@ import SettingsScreen from './menuScreens/SettingsMenu';
 import { useNavigation } from '@react-navigation/native';
 
 
+const screenWidth = Dimensions.get('window').width;
+const isLargeScreen = screenWidth > 600;
+
 function Header({toggleSearch}) {
     const navigation = useNavigation();
 
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
         
     },
     headerContainer: {
-        height: 68, 
+        height: isLargeScreen ? 104 : 68, 
         flexDirection: 'row',
         alignItems: 'center', 
         justifyContent: 'space-between',
@@ -132,8 +135,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     iconStyleHome: {
-        width: 150, 
-        height: 70, 
+        width: isLargeScreen ? 280 : 150, 
+        height: isLargeScreen ? 115 : 70, 
         resizeMode: 'contain',
         // marginRight: 10,  
     },

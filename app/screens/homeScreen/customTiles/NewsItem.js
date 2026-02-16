@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const isLargeTablet = screenWidth >= 1000;
 
 const NewsItem = ({ navigation, id, title, date, imageSource, publishedAt }) => {
 
@@ -79,8 +82,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 10, 
     overflow: 'hidden', 
-    width: 290, 
-    height: 120,
+    width: isLargeTablet ? '100%' : 290,
+    height: isLargeTablet ? 150 : 120,
   },
   imageStyle: {
     width: '45%',
@@ -95,14 +98,14 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontWeight: '700',
     color: '#777777',
-    fontSize: 15,
+    fontSize: isLargeTablet ? 23 : 15,
     textAlign: 'left',
-    marginBottom: 10,
-    marginTop: 20,
+    marginBottom: isLargeTablet ? 8 : 10,
+    marginTop: isLargeTablet ? 8 : 20,
   },
   dateStyle: {
     color: '#21CF44',
-    fontSize: 12, 
+    fontSize: isLargeTablet ? 22 : 12, 
     fontWeight: '600',  
     // marginTop: -5,
   },
@@ -111,8 +114,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     top: 0,
     left: 0,
-    width: 60,
-    height: 30,
+    width: isLargeTablet ? 72 : 60,
+    height: isLargeTablet ? 34 : 30,
     resizeMode: 'contain',
   },
 });

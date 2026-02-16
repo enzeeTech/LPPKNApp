@@ -1,5 +1,9 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet,Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet,Pressable, TouchableOpacity, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const isLargeScreen = screenWidth >= 500;
+const SCALE_FACTOR = 1.75;
 
 const CustomSorotanTile = ({ onPress, image, title, date }) => {
 
@@ -34,8 +38,8 @@ const styles = StyleSheet.create({
         elevation: 5,
         // margin: 10,
         borderRadius: 12,
-        width: 170,
-        height: 270,
+        width: isLargeScreen ? Math.round(170 * SCALE_FACTOR) : 170,
+        height: isLargeScreen ? Math.round(270 * SCALE_FACTOR) : 270,
         elevation: 4,
         shadowColor: "#000",
         shadowOffset: {width: 0, height: 2},
@@ -45,14 +49,14 @@ const styles = StyleSheet.create({
     imageContainer: {
         width: '100%',
         backgroundColor: 'white',
-        height: 270,
+        height: isLargeScreen ? Math.round(270 * SCALE_FACTOR) : 270,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
         overflow: 'hidden',
     },
     image: {
         width: '100%',
-        height: 180,
+        height: isLargeScreen ? Math.round(180 * SCALE_FACTOR) : 180,
         resizeMode: 'cover',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
@@ -64,30 +68,30 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        height: 90,
+        height: isLargeScreen ? Math.round(90 * SCALE_FACTOR) : 90,
         backgroundColor: '#FFFFFF',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
         flexDirection: 'row',
         justifyContent: 'space-between', 
         alignItems: 'center', 
-        paddingHorizontal: 10,
+        paddingHorizontal: isLargeScreen ? 14 : 10,
     },
     textContainer: {
         width: '100%',
-        height: 90,
-        marginTop: 15,
+        height: isLargeScreen ? Math.round(90 * SCALE_FACTOR) : 90,
+        marginTop: isLargeScreen ? 20 : 15,
         marginLeft: '3%',
     },
     titleText: {
         color: '#777777',
-        fontSize: 15,
+        fontSize: isLargeScreen ? Math.round(15 * SCALE_FACTOR) : 15,
         fontWeight: 'bold',
         paddingTop: '3%',
     },
     dateText: {
         color: '#21CF44',
-        fontSize: 12,
+        fontSize: isLargeScreen ? Math.round(12 * SCALE_FACTOR) : 12,
         marginTop: 4, 
     }, 
     buttonContainer: {

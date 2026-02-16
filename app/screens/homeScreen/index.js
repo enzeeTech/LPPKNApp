@@ -15,6 +15,7 @@ import LottieView from 'lottie-react-native';
 
 const screenWidth = Dimensions.get('window').width;
 const isTablet = screenWidth > 600;
+const isLargeTablet = screenWidth >= 1000;
 
 const iconsData = [
   { iconSource: require('../../assets/buai.png'), label: 'Bantuan Rawatan Kesuburan' },
@@ -73,7 +74,8 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const getBulletinPosts = () => {
-    const query = "&pagination[start]=0&pagination[limit]=9&sort=publishedAt:desc"; // Limit 9 agar pas 3x3
+    const bulletinLimit = isLargeTablet ? 6 : 9;
+    const query = `&pagination[start]=0&pagination[limit]=${bulletinLimit}&sort=publishedAt:desc`;
     GlobalApi.getBulletinPostWithQuery(query)
       .then((response) => {
         const formattedData = response.data.data.map((item) => ({
@@ -334,8 +336,8 @@ const styles = StyleSheet.create({
   rowsWrapper: { flexDirection: 'column' },
   rowContainer: { flexDirection: 'row', marginBottom: 10 },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 10 },
-  sectionText: { fontWeight: '800', color: '#9448DA', fontSize: 19, marginLeft: 13, marginBottom: 5 },
-  sectionSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: 11 },
+  sectionText: { fontWeight: '800', color: '#9448DA', fontSize: isLargeTablet ? 40 : 19, marginLeft: 13, marginBottom: 5 },
+  sectionSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: 25 },
   lihatSemua: { flexDirection: 'row', alignItems: 'center' },
   rightArrow: { width: 8, height: 8, marginLeft: 3, resizeMode: 'contain' },
   
@@ -350,11 +352,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap', 
     width: '100%', 
     paddingHorizontal: 10,
-    justifyContent: 'flex-start'
+    justifyContent: isLargeTablet ? 'space-between' : 'flex-start'
   },
   newsItemTablet: {
-    width: '32%', // 3 kolom
-    marginRight: '1%',
+    width: isLargeTablet ? '49%' : '32%',
+    marginRight: isLargeTablet ? 0 : '1%',
     marginBottom: 15,
   },
   newsItemMobile: {
@@ -363,10 +365,10 @@ const styles = StyleSheet.create({
   },
 
   sorotanContainer: { backgroundColor: '#ECDDFF', marginTop: 5, paddingBottom: 80 },
-  sorotanText: { fontWeight: '800', color: '#9448DA', fontSize: 19, marginLeft: 13, marginTop: 20 },
-  sorotanSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: 11, marginTop: 20 },
+  sorotanText: { fontWeight: '800', color: '#9448DA', fontSize: isLargeTablet ? 40 : 19, marginLeft: 13, marginTop: 20 },
+  sorotanSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: 25, marginTop: 20 },
   rightArrowSorotan: { width: 8, height: 8, marginLeft: 3, marginTop: 20, resizeMode: 'contain' },
-  posterRowContainer: { flexDirection: 'row', paddingHorizontal: 10 },
+  posterRowContainer: { flexDirection: 'row', paddingHorizontal: isLargeTablet ? 2 : 10 },
   lottieContainer: { height: 200, justifyContent: 'center', alignItems: 'center', width: screenWidth },
   lottie: { width: 150, height: 150 },
 });

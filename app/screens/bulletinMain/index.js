@@ -10,6 +10,7 @@ import GlobalApi from '../../services/GlobalApi';
 
   const screenWidth = Dimensions.get('window').width;
   const isTablet = screenWidth > 600;
+  const isLargeScreen = screenWidth >= 500;
 
 function BulletinMain({navigation}) {
 
@@ -249,17 +250,21 @@ const styles = StyleSheet.create({
 subHeaderContainer: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    paddingVertical: 15, 
+    height: isLargeScreen ? 110 : undefined,
+    paddingVertical: isLargeScreen ? 0 : 15, 
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'center', 
+    justifyContent: isLargeScreen ? 'flex-start' : 'center', 
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
     zIndex: 10,
+    marginTop: isLargeScreen ? '1%' : 0,
   },
   searchTab: {
-  width: isTablet ? '87%' : '75%',    
-  height: 45,
+  width: isLargeScreen ? '80%' : (isTablet ? '87%' : '75%'),
+  height: isLargeScreen ? '80%' : 45,
+    marginTop: isLargeScreen ? '2%' : 0,
+    marginLeft: isLargeScreen ? '4%' : 0,
     borderRadius: 10,
     borderWidth: 1.5,
     borderColor: '#CBCBCB',
@@ -269,34 +274,47 @@ subHeaderContainer: {
     paddingHorizontal: 10,
   },
   searchIconContainer: {
+    width: isLargeScreen ? '25%' : undefined,
+    height: isLargeScreen ? '100%' : undefined,
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1, 
+    justifyContent: isLargeScreen ? 'center' : 'flex-start',
+    flex: isLargeScreen ? undefined : 1, 
   },
   searchIcon: {
-    width: 20,
-    height: 20,
+    width: isLargeScreen ? 30 : 20,
+    height: isLargeScreen ? 30 : 20,
     resizeMode: 'contain',
+    marginLeft: isLargeScreen ? '85%' : 0,
+    marginTop: isLargeScreen ? 0 : 0,
   },
   seachTextContainer: {
-    flex: 1,
-    marginLeft: 10,
+    width: isLargeScreen ? 400 : undefined,
+    height: isLargeScreen ? '100%' : undefined,
+    flex: isLargeScreen ? undefined : 1,
+    marginLeft: isLargeScreen ? '15%' : 10,
+    justifyContent: isLargeScreen ? 'center' : 'flex-start',
   },
   searchText: {
     color: '#333333',
-    fontSize: 15,
-    padding: 0, 
+    fontSize: isLargeScreen ? 29 : 15,
+    padding: 0,
+    marginTop: isLargeScreen ? 0 : 0,
+    marginLeft: isLargeScreen ? 0 : 0,
+    marginBottom: isLargeScreen ? 0 : 0,
+    textAlignVertical: 'center',
   },
   sarineIconContainer: {
-    width: 45,
-    height: 45,
-    marginLeft: 10, 
+    width: isLargeScreen ? 70 : 45,
+    height: isLargeScreen ? 70 : 45,
+    marginLeft: isLargeScreen ? 30 : 10, 
+    marginTop: isLargeScreen ? '3%' : 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
   sarineIcon: {
-    width: 30,
-    height: 30,
+    width: isLargeScreen ? 73 : 30,
+    height: isLargeScreen ? 73 : 30,
     resizeMode: 'contain',
   },
   detailsContainer: {

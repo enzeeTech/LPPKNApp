@@ -1,5 +1,8 @@
 import React from 'react';
-import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
+import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const isLargeScreen = screenWidth >= 500;
 
 const BulletinMainHeader = ({onBackPress}) => {
     return (
@@ -35,16 +38,17 @@ const styles = StyleSheet.create({
     headerText: {
         color: '#F5F5F5',
         fontWeight: '700',
-        fontSize: 20,
+        fontSize: isLargeScreen ? 40 : 20,
         width: '20%',
         textAlign: 'center',
         marginRight: '55%',
-        marginLeft: -10,
+        marginLeft: isLargeScreen ? -300 : -10,
 
     },
     iconStyleBack: {
-        width: 25, 
-        height: 25, 
+        width: isLargeScreen ? 50 : 25, 
+        height: isLargeScreen ? 50 : 25, 
+        marginLeft: isLargeScreen ? -150 : 0,
         resizeMode: 'contain',
     },
     iconStyleSetting: {

@@ -6,6 +6,8 @@ import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 
 const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
+const isLargeScreen = screenWidth >= 1000;
 
 const ChatScreen = () => {
   const router = useRouter();
@@ -55,9 +57,9 @@ const ChatScreen = () => {
               .chat-bubble {
                 position: fixed;
                 bottom: 70px;
-                left: 20px;
-                width: 310px;
-                height: 100px;
+                ${isLargeScreen ? 'right: 50px;' : 'left: 20px;'}
+                width: ${isLargeScreen ? 420 : 310}px;
+                height: ${isLargeScreen ? 120 : 100}px;
                 background-image: url('${chatBubbleUri}');
                 background-size: contain;
                 background-repeat: no-repeat;

@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 10, 
     overflow: 'hidden', 
-    width: isLargeTablet ? 360 : '100%',
+    width: '100%',
     height: isLargeTablet ? 150 : 120,
   },
   imageStyle: {
@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
   textContainer: {
     padding: isLargeTablet ? 10 : 8,
     justifyContent: 'center',
-    width: isLargeTablet ? '55%' : undefined,
-    flex: isMobile ? 1 : undefined,
+    flex: (isMobile || isLargeTablet) ? 1 : undefined,
   },
   titleStyle: {
     fontWeight: '700',

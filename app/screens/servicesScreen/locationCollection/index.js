@@ -30,15 +30,16 @@ function LocationCollection({navigation, route}) {
         title = 'Klinik Subfertiliti';
     }
 
-    // Fetch the closest premises
+    // Fetch premises (all for Pejabat, closest for others)
     const fetchClosestPremises = async () => {
-        if (location) {
+        const shouldFetch = location || query === 'Pejabat';
+        if (shouldFetch) {
             try {
                 const premisesData = await getPremisesData(query, location);
                 setResponseData(premisesData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching closest premises:', error);
+                console.error('Error fetching premises:', error);
                 setLoading(false);
             }
         }

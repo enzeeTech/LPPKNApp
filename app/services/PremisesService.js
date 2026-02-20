@@ -27,13 +27,18 @@ export const getPremisesData = async (query, userLocation) => {
         let filteredPremises = [];
         if (query === 'Pejabat') {
             filteredPremises = allPremises.filter(premise => premise.title.includes('Pejabat') || premise.title.includes('Pusat Keluarga'));
+            // Pejabat LPPKN Negeri: show all offices, no distance filter
+            return filteredPremises;
         } else {
             filteredPremises = allPremises.filter(premise => premise.title.includes(query));
         }
 
-        // Calculate distance and sort by closest
-        const userLatitude = userLocation.coords.latitude;
-        const userLongitude = userLocation.coords.longitude;
+        // Calculate distance and sort by closest (for non-Pejabat only)
+        const userLatitude = userLocation?.coords?.latitude;
+        const userLongitude = userLocation?.coords?.longitude;
+        if (userLatitude == null || userLongitude == null) {
+            return filteredPremises;
+        }
         const premisesWithDistance = filteredPremises.map(premise => {
             const [lat, lon] = premise.locationURL.split('?q=')[1].split(',');
             const distance = haversine(userLatitude, userLongitude, parseFloat(lat), parseFloat(lon));

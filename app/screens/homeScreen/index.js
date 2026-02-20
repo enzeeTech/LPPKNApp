@@ -41,8 +41,8 @@ const HomeScreen = ({ navigation }) => {
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const rowOne = iconsData.slice(0, 8);
-  const rowTwo = iconsData.slice(8, iconsData.length);
+  const rowOne = iconsData.slice(0, 7);
+  const rowTwo = iconsData.slice(7, iconsData.length);
 
   const formatDate = (dateString) => {
     const options = { day: 'numeric', month: 'long', year: 'numeric' };

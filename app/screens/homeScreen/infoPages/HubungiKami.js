@@ -54,46 +54,77 @@ const Hubungikami = ({ navigation }) => {
               style={styles.backgroundContainer}
           >
           <View style={styles.headerStyle}>
-            <TouchableOpacity onPress={handleBackPress}
-              style={{
-                  flex: 1,
+            {isLargeScreen ? (
+              <View
+                style={{
                   flexDirection: "row",
-                  justifyContent: "flex-start",
-                  width: 40,
-                  marginTop: Platform.OS === "ios" ? "15%" : "17%",
-                  marginLeft: "5%",
                   alignItems: "center",
-              }}
-            >
-              <Image source={require("../../../assets/backArrowKey.png")} style={{width:30, height: 30, resizeMode: 'contain'}} />
-            </TouchableOpacity>
-            <View
-              style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  marginTop: Platform.OS === "ios" ? "15%" : "17%",
-                  marginLeft: "-30%",
-              }}
-            >
-              <Text style={styles.utamaStyle}>Utama</Text>
-            </View>
-            <View 
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                marginRight: "5%",
-                marginTop: Platform.OS === "ios" ? "15%" : "17%",
-                width: 25,
-                alignItems: "center",
-              }}
-            >
-              {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
-                <Image source={require("../../../assets/settingsIcon.png")} style={{width:25, height: 25, resizeMode: 'contain', marginTop:5}} />
-              </TouchableOpacity> */}
-            </View>
+                  marginTop: Platform.OS === "ios" ? "7%" : "9%",
+                  paddingHorizontal: 24,
+                }}
+              >
+                <TouchableOpacity
+                  onPress={handleBackPress}
+                  style={{
+                    width: Math.round(52 * largeScale),
+                    height: Math.round(52 * largeScale),
+                    marginBottom: Math.max(30, Math.min(0, Math.round(-8 * largeScale))),
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    source={require("../../../assets/backArrowKey.png")}
+                    style={{
+                      width: Math.round(34 * largeScale),
+                      height: Math.round(34 * largeScale),
+                      resizeMode: "contain",
+                    }}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.utamaStyle}>Utama</Text>
+              </View>
+            ) : (
+              <>
+                <TouchableOpacity
+                  onPress={handleBackPress}
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    width: 40,
+                    marginTop: Platform.OS === "ios" ? "15%" : "17%",
+                    marginLeft: "5%",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image source={require("../../../assets/backArrowKey.png")} style={{ width: 30, height: 30, resizeMode: "contain" }} />
+                </TouchableOpacity>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    marginTop: Platform.OS === "ios" ? "15%" : "17%",
+                    marginLeft: "-30%",
+                  }}
+                >
+                  <Text style={styles.utamaStyle}>Utama</Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                    marginRight: "5%",
+                    marginTop: Platform.OS === "ios" ? "15%" : "17%",
+                    width: 25,
+                    alignItems: "center",
+                  }}
+                />
+              </>
+            )}
           </View>
 
           
@@ -201,11 +232,14 @@ const Hubungikami = ({ navigation }) => {
       zIndex: 2,
     },
     utamaStyle: {
-      marginLeft: "10%",
+      marginLeft: isLargeScreen 
+        ? Math.max(40, Math.min(120, Math.round(80 * largeScale))) : "10%",
+      marginTop: isLargeScreen 
+        ? Math.max(-40, Math.min(-12, Math.round(-30 * largeScale))) : 0,
       color: "#F5F5F5",
-      fontSize: isLargeScreen ? Math.round(23 * largeScale) : 20,
+      fontSize: isLargeScreen ? Math.round(30 * largeScale) : 20,
       fontStyle: "normal",
-      fontWeight: "600",
+      fontWeight: isLargeScreen ? "700" : "600",
     },
     childTwoContainer: {
       flex: 1,
@@ -246,8 +280,7 @@ const Hubungikami = ({ navigation }) => {
       flex: isLargeScreen ? 0.26 : 0.2,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: 0,
-      marginBottom: isLargeScreen ? "6%" : "11%",
+      marginBottom: isLargeScreen ? "30%" : "11%",
     },
     container2: {
       flexDirection: 'column',

@@ -24,7 +24,6 @@ const iconsData = [
 ];
 
 function ServicesScreen({ navigation }) {
-
   const renderServiceIcon = ({ item }) => (
     <ServiceIcon 
       iconSource={item.iconSource} 
@@ -97,8 +96,8 @@ function ServicesScreen({ navigation }) {
             data={iconsData}
             renderItem={renderServiceIcon}
             keyExtractor={(item, index) => index.toString()}
-            numColumns={isTablet ? 5 : 4}
-            key={isTablet ? 'tablet-grid' : 'mobile-grid'} 
+            numColumns={isTablet ? 4 : 4}
+            key={isTablet ? 'tablet-grid-4' : 'mobile-grid'} 
             contentContainerStyle={styles.listContent}
             scrollEnabled={true} 
             showsVerticalScrollIndicator={false}

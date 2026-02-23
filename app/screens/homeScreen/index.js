@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
 
-  sorotanContainer: { backgroundColor: '#ECDDFF', marginTop: 5, paddingBottom: 80 },
+  sorotanContainer: { backgroundColor: '#ECDDFF', marginTop: 5, paddingBottom: isLargeTablet ? 150 : 80, },
   sorotanText: { fontWeight: '800', color: '#9448DA', fontSize: isLargeTablet ? 40 : 19, marginLeft: 13, marginTop: 20 },
   sorotanSubText: { fontWeight: '600', color: '#9A9C9E', fontSize: isLargeTablet ? 25 : 11, marginTop: 20 },
   rightArrowSorotan: { width: 8, height: 8, marginLeft: 3, marginTop: 20, resizeMode: 'contain' },

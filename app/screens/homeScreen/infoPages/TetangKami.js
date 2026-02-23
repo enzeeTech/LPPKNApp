@@ -4,6 +4,8 @@ import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, ScrollVie
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const isLargeScreen = screenWidth >= 500;
+const longestSide = Math.max(screenWidth, screenHeight);
+const largeScale = isLargeScreen ? Math.min(Math.max(longestSide / 1280, 1), 1.12) : 1;
 
 
 function TetangKami({ navigation }) {
@@ -17,46 +19,80 @@ function TetangKami({ navigation }) {
       <SafeAreaView style={{ flex: 1,backgroundColor: "#9448DA" }}>
         <View style={styles.parentContainer}>
             <View style={styles.headerStyle}>
-                <TouchableOpacity onPress={handleBackPress}
-                style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    width: 40,
-                    marginTop: Platform.OS === "ios" ? "15%" : "17%",
-                    marginLeft: "5%",
-                    alignItems: "center",
-                }}
-                >
-                <Image source={require("../../../assets/backArrowKey.png")} style={{width:30, height: 30, resizeMode: 'contain'}}/>
-                </TouchableOpacity>
-                <View
-                style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginTop: Platform.OS === "ios" ? "15%" : "17%",
-                    marginLeft: "-30%",
-                }}
-                >
-                <Text style={styles.utamaStyle}>Utama</Text>
-                </View>
-                <View
-                style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                    marginRight: "5%",
-                    marginTop: Platform.OS === "ios" ? "15%" : "17%",
-                    width: 25,
-                    alignItems: "center",
-                }}
-                >
-                    {/* <TouchableOpacity onPress={() => console.log('Settings Button Pressed!')}>
-                        <Image source={require("../../../assets/settingsIcon.png")} style={{width:25, height: 25, resizeMode: 'contain', marginTop:5}}/>
-                    </TouchableOpacity> */}
-                </View>
+                {isLargeScreen ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginTop: Platform.OS === "ios" ? "7%" : "9%",
+                      paddingHorizontal: 24,
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={handleBackPress}
+                      style={{
+                        width: 52,
+                        height: 52,
+                        marginBottom: Math.max(22, Math.min(0, Math.round(-8 * largeScale))),
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Image
+                        source={require("../../../assets/backArrowKey.png")}
+                        style={{
+                          width: 34,
+                          height: 34,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.utamaStyle}>Utama</Text>
+                  </View>
+                ) : (
+                  <>
+                    <TouchableOpacity
+                      onPress={handleBackPress}
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        width: 40,
+                        marginTop: Platform.OS === "ios" ? "15%" : "17%",
+                        marginLeft: "5%",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Image
+                        source={require("../../../assets/backArrowKey.png")}
+                        style={{ width: 30, height: 30, resizeMode: "contain" }}
+                      />
+                    </TouchableOpacity>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        marginTop: Platform.OS === "ios" ? "15%" : "17%",
+                        marginLeft: "-30%",
+                      }}
+                    >
+                      <Text style={styles.utamaStyle}>Utama</Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        marginRight: "5%",
+                        marginTop: Platform.OS === "ios" ? "15%" : "17%",
+                        width: 25,
+                        alignItems: "center",
+                      }}
+                    />
+                  </>
+                )}
             </View>
             <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -206,11 +242,12 @@ function TetangKami({ navigation }) {
       zIndex: 2,
     },
     utamaStyle: {
-      marginLeft: "10%",
+      marginLeft: isLargeScreen ? Math.max(40, Math.min(120, Math.round(80 * largeScale))) : "10%",
+      marginTop: isLargeScreen ? Math.max(-40, Math.min(-12, Math.round(-24 * largeScale))) : 0,
       color: "#F5F5F5",
-      fontSize: 20,
+      fontSize: isLargeScreen ? 30 : 20,
       fontStyle: "normal",
-      fontWeight: "600",
+      fontWeight: isLargeScreen ? "700" : "600",
     //   lineHeight: "normal",
     },
     childTwoContainer: {
@@ -239,7 +276,7 @@ function TetangKami({ navigation }) {
       alignItems: "center",
     },
     textContainer: {
-        marginBottom: isLargeScreen ? "9%" : "20%",
+        marginBottom: isLargeScreen ? "6%" : "20%",
         alignItems: "center",
         paddingRight: "10%",
         paddingLeft: "10%",
@@ -247,7 +284,7 @@ function TetangKami({ navigation }) {
     },
   
     titleStyle: {
-      marginTop: "3.5%",
+      marginTop: isLargeScreen ? "0.5%" : "3.5%",
       color: "#9448DA",
       textAlign: "center",
       fontSize: isLargeScreen ? 30 : 28,
@@ -256,7 +293,7 @@ function TetangKami({ navigation }) {
     //   lineHeight: "normal",
     },
     centeredText: {
-      marginTop: "3.5%",
+      marginTop: isLargeScreen ? "3%" : "3.5%",
       color: "#777",
       textAlign: "center",
       fontSize:  isLargeScreen ? 20 : 14,
@@ -266,8 +303,8 @@ function TetangKami({ navigation }) {
     },
     nilaibersamaParentContainer: {
       width: "100%",
-      marginTop: isLargeScreen ? "-8%" : "-15%",
-      marginBottom: "30%",
+      marginTop: isLargeScreen ? "-6%" : "-15%",
+      marginBottom: isLargeScreen ? "12%" : "30%",
       flexDirection: isLargeScreen ? "row" : "column",
       justifyContent: "center",
       alignItems: isLargeScreen ? "flex-start" : "stretch",

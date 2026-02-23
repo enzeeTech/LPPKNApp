@@ -1,7 +1,13 @@
 import React from 'react';
-import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
+import { Image, TouchableOpacity, StyleSheet, View, Text, Platform, StatusBar, useWindowDimensions } from 'react-native';
 
 function Header({navigation}) {
+    const { width, height } = useWindowDimensions();
+    const smallestSide = Math.min(width, height);
+    const longestSide = Math.max(width, height);
+    const isLargeScreen = smallestSide >= 500 || longestSide >= 960;
+    const largeScale = isLargeScreen ? Math.min(Math.max(longestSide / 1280, 1), 1.15) : 1;
+    const styles = createStyles(isLargeScreen, largeScale);
 
     // navigate back to the previous screen
     const handleBackButton = () => {
@@ -29,7 +35,7 @@ function Header({navigation}) {
     );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (isLargeScreen, largeScale) => StyleSheet.create({
     outerContainer: {
         backgroundColor: '#9448DA',
         borderBottomLeftRadius: 15,
@@ -38,23 +44,24 @@ const styles = StyleSheet.create({
         zIndex: 5,
     },
     headerContainer: {
-        height: 68, 
+        height: isLargeScreen ? Math.round(74 * largeScale) : 68,
         flexDirection: 'row',
         alignItems: 'center', 
-        justifyContent: 'space-between',
-        paddingHorizontal: 15, 
+        justifyContent: isLargeScreen ? 'flex-start' : 'space-between',
+        paddingHorizontal: isLargeScreen ? Math.max(20, Math.min(40, Math.round(24 * largeScale))) : 15,
     },
     headerText: {
         color: '#F5F5F5',
         fontWeight: '700',
-        fontSize: 20,
-        flex: 1, 
-        textAlign: 'center', 
-        marginRight: '25%',
+        fontSize: isLargeScreen ? Math.round(30 * largeScale) : 20,
+        flex: isLargeScreen ? undefined : 1,
+        textAlign: isLargeScreen ? 'left' : 'center',
+        marginRight: isLargeScreen ? 0 : '25%',
+        marginLeft: isLargeScreen ? 16 : 0,
     },
     iconStyleBack: {
-        width: 25, 
-        height: 25, 
+        width: isLargeScreen ? Math.round(34 * largeScale) : 25,
+        height: isLargeScreen ? Math.round(34 * largeScale) : 25,
         resizeMode: 'contain',
     },
     iconStyleSetting: {

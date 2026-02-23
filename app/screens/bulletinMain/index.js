@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard, useWindowDimensions } from 'react-native';
 import Header from './BulletinMainHeader';
 import { Platform } from 'react-native';
 import { ScrollView } from 'react-native';
@@ -8,11 +8,13 @@ import BulletinDetailsSection from './BulletinDetailsSection';
 import SarinBottomSheet from './SarinBottomSheet';
 import GlobalApi from '../../services/GlobalApi';
 
-  const screenWidth = Dimensions.get('window').width;
-  const isTablet = screenWidth > 600;
-  const isLargeScreen = screenWidth >= 500;
-
 function BulletinMain({navigation}) {
+  const { width, height } = useWindowDimensions();
+  const smallestSide = Math.min(width, height);
+  const longestSide = Math.max(width, height);
+  const isLargeScreen = smallestSide >= 500 || longestSide >= 960;
+  const largeScale = isLargeScreen ? Math.min(Math.max(longestSide / 1280, 1), 1.15) : 1;
+  const styles = createStyles(isLargeScreen, largeScale, width);
 
   {/*Definitions for load more feature*/}
   const ITEMS_PER_PAGE = 10;
@@ -203,7 +205,7 @@ function BulletinMain({navigation}) {
               <TextInput 
                 style={styles.searchText}
                 placeholder="Masukkan carian"
-                placeholderTextColor="#A6A6A6"
+                placeholderTextColor="#8A8A8A"
                 value={searchQuery}
                 onChangeText={handleSearch}
                 allowFontScaling={false}
@@ -238,7 +240,7 @@ function BulletinMain({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (isLargeScreen, largeScale, width) => StyleSheet.create({
   container: {
     flex: 1, 
     backgroundColor: '#FFFFFF', 
@@ -247,24 +249,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#9448DA', 
     zIndex: 10,
   },
-subHeaderContainer: {
+  subHeaderContainer: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    height: isLargeScreen ? 110 : undefined,
-    paddingVertical: isLargeScreen ? 0 : 15, 
+    height: isLargeScreen ? Math.round(86 * largeScale) : undefined,
+    paddingVertical: isLargeScreen ? 0 : 15,
     width: '100%',
     alignItems: 'center',
-    justifyContent: isLargeScreen ? 'flex-start' : 'center', 
+    justifyContent: isLargeScreen ? 'flex-start' : 'center',
+    paddingHorizontal: isLargeScreen ? Math.max(16, Math.min(42, Math.round(width * 0.03))) : 0,
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
     zIndex: 10,
-    marginTop: isLargeScreen ? '1%' : 0,
+    marginTop: isLargeScreen ? 6 : 0,
   },
   searchTab: {
-  width: isLargeScreen ? '80%' : (isTablet ? '87%' : '75%'),
-  height: isLargeScreen ? '80%' : 45,
-    marginTop: isLargeScreen ? '2%' : 0,
-    marginLeft: isLargeScreen ? '4%' : 0,
+    width: isLargeScreen ? '86%' : '75%',
+    height: isLargeScreen ? '72%' : 45,
+    marginTop: isLargeScreen ? 0 : 0,
+    marginLeft: isLargeScreen ? 0 : 0,
     borderRadius: 10,
     borderWidth: 1.5,
     borderColor: '#CBCBCB',
@@ -274,47 +277,47 @@ subHeaderContainer: {
     paddingHorizontal: 10,
   },
   searchIconContainer: {
-    width: isLargeScreen ? '25%' : undefined,
-    height: isLargeScreen ? '100%' : undefined,
+    width: '100%',
+    height: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: isLargeScreen ? 'center' : 'flex-start',
-    flex: isLargeScreen ? undefined : 1, 
+    justifyContent: 'flex-start',
+    flex: 1,
   },
   searchIcon: {
-    width: isLargeScreen ? 30 : 20,
-    height: isLargeScreen ? 30 : 20,
+    width: isLargeScreen ? Math.round(24 * largeScale) : 20,
+    height: isLargeScreen ? Math.round(24 * largeScale) : 20,
     resizeMode: 'contain',
-    marginLeft: isLargeScreen ? '85%' : 0,
-    marginTop: isLargeScreen ? 0 : 0,
+    marginLeft: isLargeScreen ? 2 : 0,
+    marginTop: 0,
   },
   seachTextContainer: {
-    width: isLargeScreen ? 400 : undefined,
-    height: isLargeScreen ? '100%' : undefined,
-    flex: isLargeScreen ? undefined : 1,
-    marginLeft: isLargeScreen ? '15%' : 10,
+    flex: 1,
+    width: isLargeScreen ? 'auto' : undefined,
+    height: '100%',
+    marginLeft: isLargeScreen ? 8 : 10,
     justifyContent: isLargeScreen ? 'center' : 'flex-start',
   },
   searchText: {
     color: '#333333',
-    fontSize: isLargeScreen ? 29 : 15,
+    fontSize: isLargeScreen ? Math.round(22 * largeScale) : 15,
     padding: 0,
-    marginTop: isLargeScreen ? 0 : 0,
-    marginLeft: isLargeScreen ? 0 : 0,
-    marginBottom: isLargeScreen ? 0 : 0,
+    marginTop: 0,
+    marginLeft: isLargeScreen ? 20 : 0,
+    marginBottom: 0,
     textAlignVertical: 'center',
   },
   sarineIconContainer: {
-    width: isLargeScreen ? 70 : 45,
-    height: isLargeScreen ? 70 : 45,
-    marginLeft: isLargeScreen ? 30 : 10, 
-    marginTop: isLargeScreen ? '3%' : 0,
+    width: isLargeScreen ? Math.round(62 * largeScale) : 45,
+    height: isLargeScreen ? Math.round(62 * largeScale) : 45,
+    marginLeft: isLargeScreen ? 12 : 10,
+    marginTop: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
   sarineIcon: {
-    width: isLargeScreen ? 73 : 30,
-    height: isLargeScreen ? 73 : 30,
+    width: isLargeScreen ? Math.round(62 * largeScale) : 30,
+    height: isLargeScreen ? Math.round(62 * largeScale) : 30,
     resizeMode: 'contain',
   },
   detailsContainer: {

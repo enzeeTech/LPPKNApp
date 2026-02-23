@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, TextInput, Keyboard, useWindowDimensions } from 'react-native';
 import Header from './SorotanHeader';
 import { Platform } from 'react-native';
 import { ScrollView } from 'react-native';
@@ -8,10 +8,13 @@ import SorotanDetailsSection from './SorotanDetailsSection';
 import SarinBottomSheet from '../bulletinMain/SarinBottomSheet';
 import GlobalApi from '../../services/GlobalApi';
 
-const screenWidth = Dimensions.get('window').width;
-const isLargeScreen = screenWidth >= 500;
-
 function SorotanMain({navigation}) {
+  const { width, height } = useWindowDimensions();
+  const smallestSide = Math.min(width, height);
+  const longestSide = Math.max(width, height);
+  const isLargeScreen = smallestSide >= 500 || longestSide >= 960;
+  const largeScale = isLargeScreen ? Math.min(Math.max(longestSide / 1280, 1), 1.15) : 1;
+  const styles = createStyles(isLargeScreen, largeScale, width);
 
   {/*Definitions for load more feature*/}
   const [posterItems, setPosterItems] = useState([]); 
@@ -178,7 +181,7 @@ function SorotanMain({navigation}) {
                     <TextInput 
                     style={styles.searchText}
                     placeholder="Masukkan carian"
-                    placeholderTextColor="#A6A6A6"
+                    placeholderTextColor="#8A8A8A"
                     value={searchQuery}
                     onChangeText={handleSearch}
                     >
@@ -207,7 +210,7 @@ function SorotanMain({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (isLargeScreen, largeScale, width) => StyleSheet.create({
   container: {
     flex: 1, 
     backgroundColor: '#9448DA',
@@ -219,17 +222,21 @@ const styles = StyleSheet.create({
   subHeaderContainer: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    height: isLargeScreen ? 110 : 60,
+    height: isLargeScreen ? Math.round(86 * largeScale) : 60,
     width: '100%',
-    marginTop: isLargeScreen ? '1%' : '5%',
+    marginTop: isLargeScreen ? 6 : '5%',
     justifyContent: isLargeScreen ? 'flex-start' : 'flex-start',
     alignItems: 'center',
+    paddingHorizontal: isLargeScreen ? Math.max(16, Math.min(42, Math.round(width * 0.03))) : 0,
   },
   searchTab: {
-    width: isLargeScreen ? '80%' : '75%',
-    height: isLargeScreen ? '80%' : '65%',
-    marginTop: isLargeScreen ? '2%' : '3%',
-    marginLeft: isLargeScreen ? '4%' : '6%',
+    width: isLargeScreen ? '86%' : '75%',
+    height: isLargeScreen ? '72%' : '65%',
+    marginTop: isLargeScreen ? 0 : '3%',
+    marginLeft: isLargeScreen ? 0 : '6%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: isLargeScreen ? 10 : 0,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderTopLeftRadius: 10,
@@ -238,53 +245,54 @@ const styles = StyleSheet.create({
     borderColor: '#CBCBCB',
   },
   searchIconContainer: {
-    width: isLargeScreen ? '25%' : '15%',
+    width: '100%',
     height: '100%',
     flexDirection: 'row',
-    justifyContent: isLargeScreen ? 'center' : 'flex-start',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   searchIcon: {
-    width: isLargeScreen ? 30 : '60%',
-    height: isLargeScreen ? 30 : '60%',
+    width: isLargeScreen ? Math.round(24 * largeScale) : '60%',
+    height: isLargeScreen ? Math.round(24 * largeScale) : '60%',
     resizeMode: 'contain',
-    marginLeft: isLargeScreen ? '85%' : '25%',
+    marginLeft: isLargeScreen ? 2 : '25%',
     marginTop: isLargeScreen ? 0 : '15%',
   },
   seachTextContainer: {
-    width: isLargeScreen ? 400 : 200,
+    flex: 1,
+    width: isLargeScreen ? 'auto' : 200,
     height: '100%',
-    marginLeft: isLargeScreen ? '15%' : 0,
+    marginLeft: isLargeScreen ? 8 : 0,
     justifyContent: isLargeScreen ? 'center' : 'flex-start',
   },
   searchText: {
-    color: '#A6A6A6',
-    fontSize: isLargeScreen ? 29 : 14,
+    color: '#6F6F6F',
+    fontSize: isLargeScreen ? Math.round(22 * largeScale) : 14,
     marginTop: isLargeScreen ? 0 : '5%',
-    marginLeft: isLargeScreen ? 0 : '8%',
+    marginLeft: isLargeScreen ? 20 : '8%',
     marginBottom: isLargeScreen ? 0 : (Platform.OS === 'android' ? '4.5%' : 0),
     textAlignVertical: 'center',
   },
   sarineIconContainer: {
-    width: isLargeScreen ? 70 : '13%',
-    height: isLargeScreen ? 70 : '65%',
-    marginTop: isLargeScreen ? '3%' : '3.5%',
-    marginLeft: isLargeScreen ? 30 : '2%',
+    width: isLargeScreen ? Math.round(62 * largeScale) : '13%',
+    height: isLargeScreen ? Math.round(62 * largeScale) : '65%',
+    marginTop: isLargeScreen ? 0 : '3.5%',
+    marginLeft: isLargeScreen ? 12 : '2%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   sarineIcon: {
-    width: isLargeScreen ? 73 : '100%',
-    height: isLargeScreen ? 73 : '100%',
+    width: isLargeScreen ? Math.round(62 * largeScale) : '100%',
+    height: isLargeScreen ? Math.round(62 * largeScale) : '100%',
     resizeMode: 'contain',
   },
   detailsContainer: {
     flex: 1, 
     backgroundColor: '#FFFF',
-    marginTop: isLargeScreen ? 8 : -13,
+    marginTop: isLargeScreen ? 6 : -13,
   },
   listContainer: {
-    marginTop: isLargeScreen ? 8 : 0,
+    marginTop: isLargeScreen ? 6 : 0,
   },
 });
 

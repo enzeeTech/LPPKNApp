@@ -1,27 +1,30 @@
 import React from 'react';
-import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, Dimensions } from 'react-native';
-
-const screenWidth = Dimensions.get('window').width;
-const isLargeScreen = screenWidth >= 500;
+import { Image, TouchableOpacity, StyleSheet, View, Text, Platform, StatusBar, useWindowDimensions } from 'react-native';
 
 const BulletinMainHeader = ({onBackPress}) => {
+    const { width, height } = useWindowDimensions();
+    const smallestSide = Math.min(width, height);
+    const longestSide = Math.max(width, height);
+    const isLargeScreen = smallestSide >= 500 || longestSide >= 960;
+    const largeScale = isLargeScreen ? Math.min(Math.max(longestSide / 1280, 1), 1.15) : 1;
+    const styles = createStyles(isLargeScreen, largeScale);
+
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={onBackPress}>
+                <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
                     <Image 
                         source={require('../../assets/backArrowKey.png')}
                         style = {styles.iconStyleBack}
                     />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Utama</Text>
-
             </View>
         </View>
     );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (isLargeScreen, largeScale) => StyleSheet.create({
     outerContainer: {
         backgroundColor: '#9448DA',
         borderBottomLeftRadius: 15,
@@ -29,26 +32,28 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight+15: 0,
     },
     headerContainer: {
-        height: 68, 
+        height: isLargeScreen ? Math.round(74 * largeScale) : 68,
         flexDirection: 'row',
-        alignItems: 'center', 
-        justifyContent: 'space-evenly',
-        // paddingHorizontal: 15, 
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingHorizontal: isLargeScreen ? Math.max(20, Math.min(40, Math.round(24 * largeScale))) : 12,
+    },
+    backButton: {
+        width: isLargeScreen ? Math.round(52 * largeScale) : 28,
+        height: isLargeScreen ? Math.round(52 * largeScale) : 28,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     headerText: {
         color: '#F5F5F5',
         fontWeight: '700',
-        fontSize: isLargeScreen ? 40 : 20,
-        width: '20%',
-        textAlign: 'center',
-        marginRight: '55%',
-        marginLeft: isLargeScreen ? -300 : -10,
-
+        fontSize: isLargeScreen ? Math.round(30 * largeScale) : 20,
+        textAlign: 'left',
+        marginLeft: isLargeScreen ? 100 : 9,
     },
     iconStyleBack: {
-        width: isLargeScreen ? 50 : 25, 
-        height: isLargeScreen ? 50 : 25, 
-        marginLeft: isLargeScreen ? -150 : 0,
+        width: isLargeScreen ? Math.round(34 * largeScale) : 25,
+        height: isLargeScreen ? Math.round(34 * largeScale) : 25,
         resizeMode: 'contain',
     },
     iconStyleSetting: {

@@ -1,7 +1,14 @@
 import React from 'react';
-import { Image, TouchableOpacity, StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
+import { Image, TouchableOpacity, StyleSheet, View, Text, Platform, StatusBar, useWindowDimensions } from 'react-native';
 
 function Header() {
+    const { width, height } = useWindowDimensions();
+    const smallestSide = Math.min(width, height);
+    const longestSide = Math.max(width, height);
+    const isLargeScreen = smallestSide >= 500 || longestSide >= 960;
+    const largeScale = isLargeScreen ? Math.min(Math.max(longestSide / 1280, 1), 1.15) : 1;
+    const styles = createStyles(isLargeScreen, largeScale);
+
     return (
         <View style={styles.outerContainer}>
             <View style={styles.headerContainer}>
@@ -19,7 +26,7 @@ function Header() {
     );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (isLargeScreen, largeScale) => StyleSheet.create({
     outerContainer: {
         backgroundColor: '#9448DA',
         borderBottomLeftRadius: 15,
@@ -34,7 +41,7 @@ const styles = StyleSheet.create({
     headerText: {
         color: '#F5F5F5',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: isLargeScreen ? Math.round(30 * largeScale) : 20,
         flex: 1, 
         textAlign: 'center', 
     },

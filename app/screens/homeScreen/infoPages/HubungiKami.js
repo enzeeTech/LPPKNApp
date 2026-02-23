@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, Linking, TouchableOpacity, Platform, TurboModuleRegistry, Dimensions } from 'react-native';
-
-const screenWidth = Dimensions.get('window').width;
-const isLargeScreen = screenWidth >= 500;
+import { View, Text, StyleSheet, SafeAreaView, Image, ImageBackground, Linking, TouchableOpacity, Platform, useWindowDimensions } from 'react-native';
 
 const Hubungikami = ({ navigation }) => {
+  const { width, height } = useWindowDimensions();
+  const smallestSide = Math.min(width, height);
+  const longestSide = Math.max(width, height);
+  const isLargeScreen = smallestSide >= 500 || longestSide >= 960;
+  const largeScale = isLargeScreen ? Math.min(Math.max(longestSide / 1280, 1), 1.12) : 1;
+  const styles = createStyles(isLargeScreen, largeScale);
 
   const handleBackPress = () => {
     navigation.goBack();
@@ -102,7 +105,7 @@ const Hubungikami = ({ navigation }) => {
             >
               <View style={styles.childTwoContent}>
                 <View style={styles.iconsContainer}>
-                  <TouchableOpacity onPress={handleLocationPress} style={[styles.container2,{marginTop: 20}]}>
+                  <TouchableOpacity onPress={handleLocationPress} style={[styles.container2, styles.locationBlock]}>
                     <Image source={require("../../../assets/locationIcon.png")} />
                     <View style={styles.textContainer}>
                       <Text style={styles.centeredText}>
@@ -111,7 +114,7 @@ const Hubungikami = ({ navigation }) => {
                       </Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={handlePhonePress} style={[styles.container2, {marginTop: -5}]}>
+                  <TouchableOpacity onPress={handlePhonePress} style={[styles.container2, styles.phoneBlock]}>
                     <Image source={require("../../../assets/phoneIconUtama.png")}  />
                     <View style={styles.textContainer2}>
                       <Text style={styles.centeredText2}>03-2613 7555</Text>
@@ -123,7 +126,7 @@ const Hubungikami = ({ navigation }) => {
                       <Text style={styles.centeredText2}>03-2693 7250</Text>
                     </View>
                   </View> */}
-                  <TouchableOpacity onPress={handleEmailPress} style={[styles.container2, {marginTop: 20}]}>
+                  <TouchableOpacity onPress={handleEmailPress} style={[styles.container2, styles.locationBlock]}>
                     <Image source={require("../../../assets/emailIcon.png")}  />
                     <View style={styles.textContainer2}>
                       <Text style={styles.centeredText2}>
@@ -134,32 +137,24 @@ const Hubungikami = ({ navigation }) => {
                 </View>
               </View>
               <View style={styles.socialmediaContainer}>
-                <Text style={{color: "#777", textAlign: "center", fontSize: isLargeScreen ? 30 : 17, fontStyle: "normal", fontWeight: 'bold', marginBottom: isLargeScreen ? 20 : 30}}>Pautan Pantas</Text>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: Platform.OS === "ios" ? "30%" : "40%",
-                  }}
-                >
-                  <TouchableOpacity onPress={handleFacebookPress}style={{width: isLargeScreen ? 43 : 40, height: isLargeScreen ? 43 : 40, marginRight: 15, marginLeft: 20}} >
+                <Text style={styles.socialTitle}>Pautan Pantas</Text>
+                <View style={styles.socialRow}>
+                  <TouchableOpacity onPress={handleFacebookPress} style={[styles.socialIcon, styles.firstSocialIcon]}>
                     <Image source={require("../../../assets/facebook.png")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={handleYouTubePress} style={{width: isLargeScreen ? 48 : 45, height: isLargeScreen ? 48 : 45, marginRight: 15, marginTop:15}} >
+                  <TouchableOpacity onPress={handleYouTubePress} style={[styles.socialIcon, styles.youtubeIcon]} >
                     <Image source={require("../../../assets/youtube.jpg")} style={{resizeMode: "cover"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={handletwitterPress} style={{width: isLargeScreen ? 43 : 40, height: isLargeScreen ? 43 : 40, marginRight: 15, marginTop:5}} >
+                  <TouchableOpacity onPress={handletwitterPress} style={styles.socialIcon} >
                     <Image source={require("../../../assets/x.jpg")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={handleInstagramPress} style={{width: isLargeScreen ? 43 : 40, height: isLargeScreen ? 43 : 40, marginRight: 15, marginTop:5}} >
+                  <TouchableOpacity onPress={handleInstagramPress} style={styles.socialIcon} >
                     <Image source={require("../../../assets/instagram.jpg")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={tiktokPress} style={{width: isLargeScreen ? 43 : 40, height: isLargeScreen ? 43 : 40, marginRight: 7, marginTop:5}} >
+                  <TouchableOpacity onPress={tiktokPress} style={[styles.socialIcon, styles.socialIconTight]} >
                     <Image source={require("../../../assets/tiktok.png")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={handleWebPress} style={{width: isLargeScreen ? 43 : 40, height: isLargeScreen ? 43 : 40, marginRight: 15, marginTop:6}} >
+                  <TouchableOpacity onPress={handleWebPress} style={styles.socialIcon} >
                     <Image source={require("../../../assets/web.jpg")} style={{resizeMode: "contain"}}/>
                   </TouchableOpacity>
                 </View>
@@ -174,7 +169,7 @@ const Hubungikami = ({ navigation }) => {
 }
 
   //Hubungikami page style
-  const styles = StyleSheet.create({
+  const createStyles = (isLargeScreen, largeScale) => StyleSheet.create({
     parentContainer: {
       flexShrink: 0,
       flex: 1,
@@ -208,7 +203,7 @@ const Hubungikami = ({ navigation }) => {
     utamaStyle: {
       marginLeft: "10%",
       color: "#F5F5F5",
-      fontSize: isLargeScreen ? 23 : 20,
+      fontSize: isLargeScreen ? Math.round(23 * largeScale) : 20,
       fontStyle: "normal",
       fontWeight: "600",
     },
@@ -233,7 +228,7 @@ const Hubungikami = ({ navigation }) => {
     iconsContainer: {
       flex: 1,
       alignItems: "center",
-      marginTop: isLargeScreen ? 90 : 0,
+      marginTop: isLargeScreen ? 36 : 0,
     },
     textContainer: {
       marginTop: "3.5%",
@@ -243,22 +238,28 @@ const Hubungikami = ({ navigation }) => {
     centeredText: {
       color: "#777",
       textAlign: "center",
-      fontSize: isLargeScreen ? 25 : 16,
+      fontSize: isLargeScreen ? Math.round(25 * largeScale) : 16,
       fontStyle: "normal",
       fontWeight: "500",
     },
     socialmediaContainer: {
-      flex: 0.2,
+      flex: isLargeScreen ? 0.26 : 0.2,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: isLargeScreen ? -2700 : 0,
-      marginBottom: "11%",
+      marginTop: 0,
+      marginBottom: isLargeScreen ? "6%" : "11%",
     },
     container2: {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       marginVertical: 10,
+    },
+    locationBlock: {
+      marginTop: isLargeScreen ? 18 : 20,
+    },
+    phoneBlock: {
+      marginTop: isLargeScreen ? 8 : -5,
     },
     textContainer2: {
       justifyContent: 'center',
@@ -267,9 +268,44 @@ const Hubungikami = ({ navigation }) => {
     centeredText2: {
       color: "#777",
       textAlign: "center",
-      fontSize: isLargeScreen ? 25 : 16,
+      fontSize: isLargeScreen ? Math.round(25 * largeScale) : 16,
       fontStyle: "normal",
       fontWeight: "500",
+    },
+    socialTitle: {
+      color: "#777",
+      textAlign: "center",
+      fontSize: isLargeScreen ? Math.round(30 * largeScale) : 17,
+      fontStyle: "normal",
+      fontWeight: 'bold',
+      marginBottom: isLargeScreen ? 20 : 30,
+    },
+    socialRow: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      marginBottom: isLargeScreen ? "8%" : (Platform.OS === "ios" ? "30%" : "40%"),
+    },
+    socialIcon: {
+      width: isLargeScreen ? Math.round(43 * largeScale) : 40,
+      height: isLargeScreen ? Math.round(43 * largeScale) : 40,
+      marginRight: 15,
+      marginLeft: 0,
+      marginTop: isLargeScreen ? 5 : 5,
+    },
+    firstSocialIcon: {
+      marginLeft: 20,
+    },
+    youtubeIcon: {
+      width: isLargeScreen ? Math.round(48 * largeScale) : 45,
+      height: isLargeScreen ? Math.round(48 * largeScale) : 45,
+      marginTop: isLargeScreen ? 15 : 15,
+      marginLeft: 0,
+    },
+    socialIconTight: {
+      marginRight: 7,
+      marginLeft: 0,
     },
   });
 

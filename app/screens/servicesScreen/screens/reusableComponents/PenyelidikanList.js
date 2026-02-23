@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet, useWindowDimensions } from 'react-native';
 
 const PenyelidikanList = ({ title, imageSource, additionalText, titleStyle }) => {
+  const { width } = useWindowDimensions();
+  const isLargeScreen = width >= 500;
+
   return (
-    <View style={[styles.parentContainer]}>
+    <View style={[styles.parentContainer, isLargeScreen && styles.parentContainerLarge]}>
       <Image source={imageSource} style={styles.imageAboveTitle} />
       <Text style={[styles.title, titleStyle]}>{title}</Text>
-      <View style={styles.textContainer}>
+      <View style={[styles.textContainer, isLargeScreen && styles.textContainerLarge]}>
         <Text style={styles.text}>{additionalText}</Text>
       </View>
     </View>
@@ -33,6 +36,9 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 2,
   },
+  parentContainerLarge: {
+    height: 520,
+  },
   imageAboveTitle: {
     width: '85%',
     height: 170,
@@ -48,6 +54,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 15, 
     paddingHorizontal: 15,
+  },
+  textContainerLarge: {
+    paddingVertical: 20,
   },
   title: {
     marginTop: 10,

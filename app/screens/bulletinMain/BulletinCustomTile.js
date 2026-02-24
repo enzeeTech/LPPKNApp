@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         marginTop: 25,
         alignSelf: 'center',
         width: '92%',
-        minHeight: 280, 
+        minHeight: 360, 
         elevation: 4,
         shadowColor: "#000",
         shadowOffset: {width: 0, height: 2},
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '100%',
-        height: isTablet ? 250 : 220, 
+        height: isTablet ? 340 : 300,
     },
     image: {
         width: '100%',

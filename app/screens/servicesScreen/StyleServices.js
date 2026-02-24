@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native";
 import { Platform } from 'react-native';
 
+// 32-inch / large display: use smaller banner (like Berita LPPKN – no large hero); avoid Hubungi Kami 38% size
+export const LARGE_SCREEN_BREAKPOINT = 768;
+export const getBannerHeight = (screenHeight, isLargeScreen) =>
+  isLargeScreen ? Math.round(screenHeight * 0.26) : 230;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

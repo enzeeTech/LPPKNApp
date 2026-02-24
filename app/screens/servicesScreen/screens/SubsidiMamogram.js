@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 import Header from './Header';
-import styles from '../StyleServices';
+import styles, { LARGE_SCREEN_BREAKPOINT, getBannerHeight } from '../StyleServices';
 import GlobalApi from '../../../services/GlobalApi';
 import CriteriaDropdown from './reusableComponents/dropdownListItems/CriteriaDropdown';
 import { extractGalleryData } from '../../../utilities/GalleryExtract';
@@ -12,6 +12,9 @@ const SubsidiMamogram = ({ navigation }) => {
   const [responseData, setResponseData] = useState([]);
   const [componentData, setComponentData] = useState([]);
   const [kriteriaData, setKriteriaData] = useState([]);
+  const { width, height } = useWindowDimensions();
+  const isLargeScreen = width >= LARGE_SCREEN_BREAKPOINT;
+  const bannerHeight = getBannerHeight(height, isLargeScreen);
 
   const fetchPerkhidmatanKeluarga = async () => {
     try {
@@ -92,8 +95,8 @@ const SubsidiMamogram = ({ navigation }) => {
                     style={{ marginTop: -10, backgroundColor: '#FFF' }}
                     showsVerticalScrollIndicator={false}
                 >
-                <View style={styles.backgroundContainer}>
-                    <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                <View style={[styles.backgroundContainer, { height: bannerHeight }]}>
+                    <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={[styles.backgroundImage, { height: bannerHeight }]} />
                 </View>
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
@@ -115,8 +118,8 @@ const SubsidiMamogram = ({ navigation }) => {
                 style={{ marginTop: -10, backgroundColor: '#FFF', paddingBottom: 50 }}
                 showsVerticalScrollIndicator={false}
             >
-        <View style={styles.backgroundContainer}>
-          <Image source={{uri : responseData.ServiceImage}} style={styles.backgroundImage} />
+        <View style={[styles.backgroundContainer, { height: bannerHeight }]}>
+          <Image source={{uri : responseData.ServiceImage}} style={[styles.backgroundImage, { height: bannerHeight }]} />
         </View>
         <View style={styles.contentContainer}>
           <View style={styles.headerContainer}>

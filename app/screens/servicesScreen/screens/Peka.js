@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking, useWindowDimensions } from 'react-native';
 import Header from './Header';
-import styles from '../StyleServices';
+import styles, { LARGE_SCREEN_BREAKPOINT, getBannerHeight } from '../StyleServices';
 import DropdownMenu from './reusableComponents/ServicesDropdownList';
 import GlobalApi from '../../../services/GlobalApi';
 import HPVPriceTile from './reusableComponents/HPVPriceTile';
@@ -17,6 +17,9 @@ const Peka = ({ navigation }) => {
     const [ticket1, setTicket1] = useState([]);
     const [buttonData, setButtonData] = useState([]);
     const [priceTilesData, setPriceTilesData] = useState([]);
+    const { width, height } = useWindowDimensions();
+    const isLargeScreen = width >= LARGE_SCREEN_BREAKPOINT;
+    const bannerHeight = getBannerHeight(height, isLargeScreen);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -145,8 +148,8 @@ const Peka = ({ navigation }) => {
                     style={{ marginTop: -10, backgroundColor: '#FFF' }}
                     showsVerticalScrollIndicator={false}
                 >
-                    <View style={styles.backgroundContainer}>
-                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                    <View style={[styles.backgroundContainer, { height: bannerHeight }]}>
+                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={[styles.backgroundImage, { height: bannerHeight }]} />
                     </View>
                     <View style={styles.contentContainer}>
                         <View style={styles.headerContainer}>
@@ -169,9 +172,9 @@ const Peka = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                 >
                 {/* Background Image */}
-                <View style={styles.backgroundContainer}>
-                    <Image source={{uri: responseData.ServiceImage}} 
-                    style={styles.backgroundImage}
+                <View style={[styles.backgroundContainer, { height: bannerHeight }]}>
+                    <Image source={{uri: responseData.ServiceImage}}
+                        style={[styles.backgroundImage, { height: bannerHeight }]}
                     />
                 </View>
                 {/* Content */}

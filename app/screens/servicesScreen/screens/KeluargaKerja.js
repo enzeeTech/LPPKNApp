@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking } from 'react-native';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Modal, Linking, useWindowDimensions } from 'react-native';
 import Header from './Header';
-import styles from '../StyleServices';
+import styles, { LARGE_SCREEN_BREAKPOINT, getBannerHeight } from '../StyleServices';
 import PriceTabTile from './reusableComponents/PriceTabTile';
 import GlobalApi from '../../../services/GlobalApi';
 import { extractGalleryData } from '../../../utilities/GalleryExtract';
@@ -14,6 +14,9 @@ const KeluargaKerja = ({ navigation }) => {
     const [componentData, setComponentData] = useState([]);
     const [activeTab, setActiveTab] = useState('resident');
     const [buttonData, setButtonData] = useState([]);
+    const { width, height } = useWindowDimensions();
+    const isLargeScreen = width >= LARGE_SCREEN_BREAKPOINT;
+    const bannerHeight = getBannerHeight(height, isLargeScreen);
 
     const fetchPerkhidmatanKeluarga = async () => {
         try {
@@ -108,8 +111,8 @@ const KeluargaKerja = ({ navigation }) => {
                     style={{ marginTop: -10, backgroundColor: '#FFF' }}
                     showsVerticalScrollIndicator={false}
                 >
-                    <View style={styles.backgroundContainer}>
-                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                    <View style={[styles.backgroundContainer, { height: bannerHeight }]}>
+                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={[styles.backgroundImage, { height: bannerHeight }]} />
                     </View>
                     <View style={styles.contentContainer}>
                         <View style={styles.headerContainer}>
@@ -132,9 +135,9 @@ const KeluargaKerja = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                 >
                 {/* Background Image */}
-                <View style={styles.backgroundContainer}>
+                <View style={[styles.backgroundContainer, { height: bannerHeight }]}>
                     <Image source={{ uri: responseData.ServiceImage }} 
-                    style={styles.backgroundImage}
+                    style={[styles.backgroundImage, { height: bannerHeight }]}
                     />
                 </View>
                 {/* Content */}

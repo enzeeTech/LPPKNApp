@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Linking, Platform } from 'react-native';
+import { View, Image, ScrollView, SafeAreaView, Text, TouchableOpacity, Linking, Platform, useWindowDimensions } from 'react-native';
 import Header from './Header';
-import styles from '../StyleServices';
+import styles, { LARGE_SCREEN_BREAKPOINT, getBannerHeight } from '../StyleServices';
 import GlobalApi from '../../../services/GlobalApi';
 import GreenTickListItems from './reusableComponents/tileListItems/GreenTickListItems';
 import GalleryBasic from './reusableComponents/galleryOptions/GalleryBasic';
@@ -12,6 +12,9 @@ const KafeTEEN = ({ navigation }) => {
     const [componentData, setComponentData] = useState([]);
     const playStoreURL = 'https://play.google.com/store/apps/details?id=com.wasabisnorter.kafeteenDiscover';
     const appStoreURL = 'TO_BE_ADDED';
+    const { width, height } = useWindowDimensions();
+    const isLargeScreen = width >= LARGE_SCREEN_BREAKPOINT;
+    const bannerHeight = getBannerHeight(height, isLargeScreen);
 
     const fetchPerkhidmatanKafeTeen = async () => {
         try {
@@ -80,8 +83,8 @@ const KafeTEEN = ({ navigation }) => {
                     style={{ marginTop: -10, backgroundColor: '#FFF' }}
                     showsVerticalScrollIndicator={false}
                 >
-                    <View style={styles.backgroundContainer}>
-                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
+                    <View style={[styles.backgroundContainer, { height: bannerHeight }]}>
+                        <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={[styles.backgroundImage, { height: bannerHeight }]} />
                     </View>
                     <View style={styles.contentContainer}>
                         <View style={styles.headerContainer}>
@@ -119,9 +122,9 @@ const KafeTEEN = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                 >
                 {/* Background Image */}
-                <View style={styles.backgroundContainer}>
+                <View style={[styles.backgroundContainer, { height: bannerHeight }]}>
                     <Image source={{ uri: responseData.ServiceImage }} 
-                    style={styles.backgroundImage}
+                    style={[styles.backgroundImage, { height: bannerHeight }]}
                     />
                 </View>
                 {/* Content */}

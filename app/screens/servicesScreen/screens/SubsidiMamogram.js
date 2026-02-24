@@ -88,7 +88,10 @@ const SubsidiMamogram = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header onBackPress={handleBackPress} />
-            <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+            <ScrollView
+                    style={{ marginTop: -10, backgroundColor: '#FFF' }}
+                    showsVerticalScrollIndicator={false}
+                >
                 <View style={styles.backgroundContainer}>
                     <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
                 </View>
@@ -108,7 +111,10 @@ const SubsidiMamogram = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Header onBackPress={handleBackPress} />
-      <ScrollView style={{ marginTop: -10, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
+      <ScrollView
+                style={{ marginTop: -10, backgroundColor: '#FFF', paddingBottom: 50 }}
+                showsVerticalScrollIndicator={false}
+            >
         <View style={styles.backgroundContainer}>
           <Image source={{uri : responseData.ServiceImage}} style={styles.backgroundImage} />
         </View>

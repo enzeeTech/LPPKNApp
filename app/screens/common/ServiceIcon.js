@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         width: COLUMN_WIDTH, 
         marginTop: 10,
         alignItems: 'center',
-        marginHorizontal: isLargeTablet ? 12 : (isTablet ? 10 : 5),
+        marginHorizontal: isLargeTablet ? 12 : (isTablet ? 10 : 2),
     },
     iconCircle: {
         width: CIRCLE_SIZE,

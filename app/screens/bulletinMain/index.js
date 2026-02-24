@@ -302,7 +302,7 @@ const createStyles = (isLargeScreen, largeScale, width) => StyleSheet.create({
     color: '#333333',
     fontSize: isLargeScreen ? Math.round(22 * largeScale) : 15,
     padding: 0,
-    marginTop: 0,
+    marginTop: isLargeScreen ? 0 : 10,
     marginLeft: isLargeScreen ? 20 : 0,
     marginBottom: 0,
     textAlignVertical: 'center',

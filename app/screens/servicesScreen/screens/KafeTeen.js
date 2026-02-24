@@ -76,7 +76,10 @@ const KafeTEEN = ({ navigation }) => {
         return (
             <SafeAreaView style={styles.container}>
                 <Header onBackPress={handleBackPress} />
-                <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+                <ScrollView
+                    style={{ marginTop: -10, backgroundColor: '#FFF' }}
+                    showsVerticalScrollIndicator={false}
+                >
                     <View style={styles.backgroundContainer}>
                         <Image source={{uri: 'https://placehold.co/150x150/DEDEDE/DEDEDE/png'}} style={styles.backgroundImage} />
                     </View>
@@ -111,7 +114,10 @@ const KafeTEEN = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header onBackPress={handleBackPress} />
-            <ScrollView style={{marginTop: -10}} showsVerticalScrollIndicator={false}>
+            <ScrollView
+                    style={{ marginTop: -10, backgroundColor: '#FFF' }}
+                    showsVerticalScrollIndicator={false}
+                >
                 {/* Background Image */}
                 <View style={styles.backgroundContainer}>
                     <Image source={{ uri: responseData.ServiceImage }} 

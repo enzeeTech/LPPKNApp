@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Platform } from 'react-native';
-import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { openURL } from 'expo-linking';
-import { Alert } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text, Modal } from 'react-native';
+import { Alert, Linking } from 'react-native';
 
 function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime, locationURL, activeState}) {
+    const [showFallbackModal, setShowFallbackModal] = useState(false);
+    const [fallbackPhoneNumber, setFallbackPhoneNumber] = useState('');
 
     // Lihat Peta Button Pressed
     const onLihatPetaPressed = () => {
@@ -17,39 +18,63 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime, locat
             );
             return;
         }
-        openURL(locationURL);
+        Linking.openURL(locationURL);
     };
 
     // Hubungi Pejabat Button Pressed
-    const onHubungiPejabatPressed = (phoneNumber) => {
-        // Split the phone number string into an array of numbers
-        const phoneNumbers = phoneNumber.split(' / ').map(number => {
-            // Remove spaces and hyphens, and ignore extension part for dialing
-            let cleanedNumber = number.split(' ext.')[0].replace(/[\s-]/g, '');
-            return cleanedNumber;
-        });
-    
-        // Function to dial a single number 
-        const dialNumber = (number) => {
-            openURL(`tel:${number}`);
-        };
-        
-        // If there's only one number, dial it directly. If there are multiple numbers, let the user choose.
-        if (phoneNumbers.length === 1) {
-            // Only one number, dial it directly
-            dialNumber(phoneNumbers[0]);
-        } else {
-            // Multiple numbers, let the user choose
-            Alert.alert(
-                'Select Number',
-                'Which number would you like to call?',
-                phoneNumbers.map((number) => ({
-                    text: number,
-                    onPress: () => dialNumber(number),
-                })).concat([{ text: 'Cancel', style: 'cancel' }]), 
-                { cancelable: true },
-            );
+    const showPhoneFallbackAlert = (number) => {
+        setFallbackPhoneNumber(number);
+        setShowFallbackModal(true);
+    };
+
+    const dialNumber = async (number) => {
+        const telURL = `tel:${number}`;
+
+        try {
+            const canDial = await Linking.canOpenURL(telURL);
+            if (!canDial) {
+                showPhoneFallbackAlert(number);
+                return;
+            }
+            await Linking.openURL(telURL);
+        } catch (error) {
+            console.error('Failed to open phone dialer:', error);
+            showPhoneFallbackAlert(number);
         }
+    };
+
+    const onHubungiPejabatPressed = async (phoneNumber) => {
+        const rawNumber = String(phoneNumber || '').trim();
+        if (!rawNumber || rawNumber === '-') {
+            return;
+        }
+
+        // Split by "/" with flexible spacing and clean each number.
+        const phoneNumbers = rawNumber
+            .split(/\s*\/\s*/)
+            .map((number) => number.split(' ext.')[0].replace(/[\s-]/g, '').trim())
+            .filter(Boolean);
+
+        if (phoneNumbers.length === 0) {
+            return;
+        }
+
+        if (phoneNumbers.length === 1) {
+            await dialNumber(phoneNumbers[0]);
+            return;
+        }
+
+        Alert.alert(
+            'Select Number',
+            'Which number would you like to call?',
+            phoneNumbers.map((number) => ({
+                text: number,
+                onPress: () => {
+                    dialNumber(number);
+                },
+            })).concat([{ text: 'Cancel', style: 'cancel' }]),
+            { cancelable: true },
+        );
     };
 
     // Function to check if phone number is empty or has '-' in it
@@ -64,6 +89,35 @@ function InfoScreen({title, location, icon, phoneNo, faxNo, operationTime, locat
 
     return (
         <View style={styles.container}>
+            <Modal
+                transparent={true}
+                animationType="fade"
+                visible={showFallbackModal}
+                onRequestClose={() => setShowFallbackModal(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalCard}>
+                        <Text style={styles.modalTitle}>Panggilan Tidak Berjaya</Text>
+                        <Text style={styles.modalDescription}>
+                            {`\nPeranti ini tidak dapat membuat panggilan. Sila gunakan telefon bimbit anda untuk hubungi:`}
+                        </Text>
+                        <View style={styles.modalPhoneRow}>
+                            <Image
+                                source={require('../../assets/phoneIcon.png')}
+                                style={styles.modalPhoneIcon}
+                            />
+                            <Text style={styles.modalPhoneText}>{fallbackPhoneNumber}</Text>
+                        </View>
+                        <TouchableOpacity
+                            style={styles.modalOkButton}
+                            onPress={() => setShowFallbackModal(false)}
+                        >
+                            <Text style={styles.modalOkText}>OK</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
             <View style={styles.contentContainer}>
                 {/* Title and Building Icon */}
                 <View style={styles.titleContainer}>
@@ -277,7 +331,72 @@ const styles = StyleSheet.create({
         color: '#9448DA',
         fontWeight: 'bold',
         fontSize: 16,
-      },
+    },
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.35)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 24,
+    },
+    modalCard: {
+        width: '100%',
+        maxWidth: 460,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 18,
+        borderWidth: 2,
+        borderColor: '#9448DA',
+        paddingVertical: 33,
+        paddingHorizontal: 30,
+    },
+    modalTitle: {
+        color: '#9448DA',
+        fontSize: 22,
+        fontWeight: '700',
+        textAlign: 'center',
+    },
+    modalDescription: {
+        color: '#777777',
+        fontSize: 15,
+        fontWeight: '600',
+        textAlign: 'center',
+        marginTop: 10,
+    },
+    modalPhoneRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 16,
+    },
+    modalPhoneIcon: {
+        width: 24,
+        height: 24,
+        resizeMode: 'contain',
+        marginRight: 8,
+    },
+    modalPhoneText: {
+        color: '#777777',
+        fontSize: 20,
+        fontWeight: '700',
+    },
+    modalOkButton: {
+        alignSelf: 'center',
+        minWidth: 120,
+        marginTop: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 22,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#9448DA',
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+    },
+    modalOkText: {
+        color: '#9448DA',
+        fontWeight: '700',
+        fontSize: 16,
+        textAlign: 'center',
+    },
   });
 
 export default InfoScreen;  

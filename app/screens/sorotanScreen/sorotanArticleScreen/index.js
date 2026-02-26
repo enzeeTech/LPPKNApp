@@ -10,12 +10,16 @@ import GlobalApi from '../../../services/GlobalApi';
 
 // Get the full height of the screen
 const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
+const isLargeScreen = screenWidth >= 600;
 
 const SorotanArticleMain = ({navigation, route}) => {
     const insets = useSafeAreaInsets();
     const bottomNavBarHeight = insets.bottom;
     const {itemId} = route.params;
     const [itemDetails, setItemDetails] = useState(null);
+    const [containerHeight, setContainerHeight] = useState(0);
+    const [contentHeight, setContentHeight] = useState(0);
 
     // Function to format the date correctly
     const formatDate = (dateString) => {
@@ -64,14 +68,19 @@ const SorotanArticleMain = ({navigation, route}) => {
         navigation.goBack();
     }
 
+    const shouldEnableScroll = !isLargeScreen || contentHeight > containerHeight + 1;
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <Header onBackPress={handleBackPress} />
             </View>
             <ScrollView 
+                scrollEnabled={shouldEnableScroll}
                 showsVerticalScrollIndicator={false} 
-                style={{marginTop: -10}}
+                style={[styles.scrollView, isLargeScreen && styles.scrollViewLarge]}
+                onLayout={(event) => setContainerHeight(event.nativeEvent.layout.height)}
+                onContentSizeChange={(_, height) => setContentHeight(height)}
             >
                 <View style={[styles.infoContainer, infoContainerStyle]}>
                         <InfoSection
@@ -81,8 +90,9 @@ const SorotanArticleMain = ({navigation, route}) => {
                             information={itemDetails?.information}
                             link={itemDetails?.link}
                         />
-                        {/* Filler to fit to screen */}
-                        <View style={{height: 100, backgroundColor: '#FFFFFF'}}></View>
+                        {!isLargeScreen && (
+                            <View style={{height: 100, backgroundColor: '#FFFFFF'}}></View>
+                        )}
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -110,6 +120,12 @@ const styles = StyleSheet.create({
     infoContainer: {
         flex:1,
         
+    },
+    scrollView: {
+        marginTop: -10,
+    },
+    scrollViewLarge: {
+        backgroundColor: '#FFF',
     },
 });
 

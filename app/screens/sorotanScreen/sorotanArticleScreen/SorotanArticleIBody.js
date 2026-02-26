@@ -10,6 +10,7 @@ import { openURL } from 'expo-linking';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 const sliderImageHeight = screenHeight * 0.3;
+const isLargeScreen = screenWidth >= 600;
 
 const SorotanArticleBody = ({title, date, images, information, link}) => {
     const [activeSlide, setActiveSlide] = useState(0);
@@ -80,9 +81,9 @@ const SorotanArticleBody = ({title, date, images, information, link}) => {
                         {title}
                     </Text>
                 </View>
-                <View style={styles.subHeaderContainer}>
-                    <Image source={require('../../../assets/calendarIcon.png')} style={styles.calendarIcon} />
-                    <Text style={styles.subHeaderText}>
+                <View style={[styles.subHeaderContainer, isLargeScreen && styles.subHeaderContainerLarge]}>
+                    <Image source={require('../../../assets/calendarIcon.png')} style={[styles.calendarIcon, isLargeScreen && styles.calendarIconLarge]} />
+                    <Text style={[styles.subHeaderText, isLargeScreen && styles.subHeaderTextLarge]}>
                         {date}
                     </Text>
 
@@ -116,6 +117,7 @@ const SorotanArticleBody = ({title, date, images, information, link}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#FFF', 
     },
     innerContainer: {
         backgroundColor: '#FFF', 
@@ -144,6 +146,9 @@ const styles = StyleSheet.create({
         width: '94%',
         height: 50,
     },
+    subHeaderContainerLarge: {
+        alignItems: 'center',
+    },
     subHeaderText: {
         color: '#777777',
         fontSize: Platform.OS === 'ios' ? 15 : 16,
@@ -151,11 +156,18 @@ const styles = StyleSheet.create({
         marginLeft: '4.5%',
         marginTop: Platform.OS === 'ios' ? 14 : 11,
     },
+    subHeaderTextLarge: {
+        marginLeft: 8,
+        marginTop: 0,
+    },
     calendarIcon: {
         width: 25,
         height: 25,
         marginTop: '2.5%',
         resizeMode: 'contain',
+    },
+    calendarIconLarge: {
+        marginTop: 0,
     },
     shareIcon: {
         width: 23,
